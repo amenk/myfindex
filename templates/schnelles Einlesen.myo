@@ -1,0 +1,12 @@
+[Options]
+FileIDDIZ=0
+DescriptION=0
+[Ignore]
+Hidden=1
+0Byte=1
+EmptyFolder=1
+Files=*.~*,*.tmp
+[Preview]
+PlugIns=
+MP3=0
+Img=0

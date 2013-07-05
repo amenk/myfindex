@@ -1,0 +1,94 @@
+[Compiler]
+A=1
+B=0
+C=1
+D=1
+E=0
+F=0
+G=1
+H=1
+I=1
+J=1
+K=0
+L=1
+M=0
+N=1
+O=1
+P=1
+Q=1
+R=0
+S=0
+T=0
+U=0
+V=1
+W=0
+X=1
+Y=0
+Z=1
+ShowHints=1
+ShowWarnings=1
+UnitAliases=WinTypes=Windows;WinProcs=Windows;DbiTypes=BDE;DbiProcs=BDE;DbiErrs=BDE;
+[Linker]
+MapFile=0
+OutputObjs=0
+ConsoleApp=1
+DebugInfo=0
+RemoteSymbols=0
+MinStackSize=16384
+MaxStackSize=5242880
+ImageBase=4194304
+ExeDescription=
+[Directories]
+OutputDir=
+UnitOutputDir=
+PackageDLLOutputDir=
+PackageDCPOutputDir=
+SearchPath=$(DELPHI)\Units;$(DELPHI)\RX\Units;$(DELPHI)\vcl\EldoS\ElTree\Code\Source;$(DELPHI)\vcl\EldoS;$(DELPHI)\vcl;$(DELPHI)\vcl\TreeNT;$(DELPHI)\Units;$(DELPHI)\Vcl\DelphiX\Source;$(DELPHI)\Vcl\gif
+Packages=VCL50;VCLDB50;VCLBDE50;Vclx50;DragDropD5;nt50;RxBDE5
+Conditionals=
+DebugSourceDirs=
+UsePackages=0
+[Parameters]
+RunParams=
+HostApplication=
+[Resource DLL Projects]
+Item0=Englisch (USA)*$00000409*ENU*ENU\
+Item1=Französisch (Frankreich)*$0000040C*FRA*FRA\
+[Language]
+ActiveLang=
+ProjectLang=$00000407
+RootDir=D:\Delphi\Projects\MyFiles\
+[Version Info]
+IncludeVerInfo=1
+AutoIncBuild=1
+MajorVer=3
+MinorVer=4
+Release=0
+Build=95
+Debug=0
+PreRelease=0
+Special=0
+Private=0
+DLL=0
+Locale=1031
+CodePage=1252
+[Version Info Keys]
+CompanyName=self soft free software - www.self-soft.de
+FileDescription=Programm zum schnellen Auffinden von Dateien in deiner CD-ROM-Sammlung
+FileVersion=3.4.0.95
+InternalName=MyFiles
+LegalCopyright=Copyright © 2000-04 by Alexander Menk (self)
+LegalTrademarks=
+OriginalFilename=MyFiles.exe
+ProductName=MyFindex
+ProductVersion=3.4
+Comments=
+[HistoryLists\hlUnitAliases]
+Count=1
+Item0=WinTypes=Windows;WinProcs=Windows;DbiTypes=BDE;DbiProcs=BDE;DbiErrs=BDE;
+[HistoryLists\hlSearchPath]
+Count=4
+Item0=$(DELPHI)\Units;$(DELPHI)\RX\Units;$(DELPHI)\vcl\EldoS\ElTree\Code\Source;$(DELPHI)\vcl\EldoS;$(DELPHI)\vcl;$(DELPHI)\vcl\TreeNT;$(DELPHI)\Units;$(DELPHI)\Vcl\DelphiX\Source;$(DELPHI)\Vcl\gif
+Item1=$(DELPHI)\Units;$(DELPHI)\RX\Units;$(DELPHI)\vcl\EldoS\ElTree\Code\Source;$(DELPHI)\vcl\EldoS;$(DELPHI)\vcl;$(DELPHI)\vcl\TreeNT;$(DELPHI)\Units;$(DELPHI)\Vcl\DelphiX\Source;C:\Programme\Borland\Delphi5\Vcl\gif
+Item2=$(DELPHI)\Units;$(DELPHI)\RX\Units;$(DELPHI)\vcl\EldoS\ElTree\Code\Source;$(DELPHI)\vcl\EldoS;$(DELPHI)\vcl;$(DELPHI)\vcl\TreeNT;$(DELPHI)\Units;C:\Programme\Borland\Delphi5\Vcl\DelphiX\Source
+Item3=$(DELPHI)\Units;$(DELPHI)\RX\Units;$(DELPHI)\vcl\EldoS\ElTree\Code\Source;$(DELPHI)\vcl\EldoS;$(DELPHI)\vcl;$(DELPHI)\vcl\TreeNT;$(DELPHI)\Units

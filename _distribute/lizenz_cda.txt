@@ -1,0 +1,15 @@
+self soft MyFiles ENDBENUTZER LIZENZVEREINBARUNG
+
+Die Software, self soft MyFiles, wird geliefert wie sie ist, ohne irgendwelche ausdrückliche oder inbegriffene Garantie. Es ist nach dem Stand der Technik nicht möglich, Computersoftware zu erstellen, die unter allen Hard- und Software Kombinationen fehlerfrei arbeitet. Der Nutzer der Software trägt selbst jedes Risiko.
+
+Der Autor haftet nicht für Datenverluste, finanzielle Verluste, Beschädigungen oder andere Verluste/Schäden die mit dem Gebrauch oder Missbrauch der Software in Zusammenhang stehen.
+
+Insbesondere wird darauf hingewiesen, dass eine regelmäßige Datensicherung der durch MyFiles angelegten Datenbestände angelegt werden sollte. Nährere Informationen dazu findest du in FAQ.htm.
+
+Es ist nicht erlaubt, die MyFiles-Dateien (MyFiles.exe, Datenbankstruktur) in irgendeiner Weise zu verändern oder zurückzuentwickeln (Dekompilierung, Deassemblierung etc.)
+
+Diese Software stellt das geistige Eigentum von Alexander Menk (self@self-soft.de) dar. Alle Rechte vorbehalten.
+
+Vor der massenhaften Verbreitung auf Software CD-ROMs o.ä. ist die Erlaubnis des Autors einzuholen.
+
+Hompage: www.self-soft.de

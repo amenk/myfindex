@@ -1,0 +1,25 @@
+self soft MyFindex (ehem. MyFiles) ENDBENUTZER LIZENZVEREINBARUNG
+
+self soft MyFindex ist Freeware.
+
+
+Die Software, self soft MyFindex, wird geliefert wie sie ist, ohne irgendwelche ausdrückliche oder inbegriffene Garantie. Es ist nach dem Stand der Technik nicht möglich, Computersoftware zu erstellen, die unter allen Hard- und Software Kombinationen fehlerfrei arbeitet. Der Nutzer der Software trägt selbst jedes Risiko.
+
+Der Autor haftet nicht für Datenverluste, finanzielle Verluste, Beschädigungen oder andere Verluste/Schäden die mit dem Gebrauch oder Missbrauch der Software in Zusammenhang stehen.
+
+Insbesondere wird darauf hingewiesen, dass eine regelmäßige Datensicherung der durch MyFindex angelegten Datenbestände angelegt werden sollte. Nährere Informationen dazu findest du in FAQ.htm.
+
+Es ist nicht erlaubt, die MyFindex-Dateien (MyFindex.exe, Datenbankstruktur) in irgendeiner Weise zu verändern oder zurückzuentwickeln (Dekompilierung, Deassemblierung etc.)
+
+Diese Software stellt das geistige Eigentum von Alexander Menk (self@self-soft.de) dar. Alle Rechte vorbehalten.
+
+Vor der massenhaften Verbreitung auf Software CD-ROMs o.ä. ist die Erlaubnis des Autors einzuholen.
+
+Private Verbreitung ist erlaubt, vorausgesetzt, die Setup-Datei wird unverändert und intakt weitergegeben.
+Es darf keine Gebühr für MyFindex erhoben werden (außer angemessenen Gebühren für die Datenträger).
+
+Die ungregistrierte Version von enthält keinerlei Einschränkungen bezüglich der Funktionalität und darf unbegrenzt benutzt werden.
+
+Falls MyFindex jedoch regelmäßig genutzt wird, sollte MyFindex registriert werden.
+
+Hompage: www.self-soft.de

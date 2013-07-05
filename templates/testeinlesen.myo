@@ -1,0 +1,13 @@
+[Options]
+FileIDDIZ=1
+DescriptION=1
+Files=*.tif
+[Ignore]
+Hidden=1
+0Byte=0
+EmptyFolder=0
+Files=*.~*,*.tmp
+[Preview]
+PlugIns=archv.Dateianzahl,archv.Dateien,archv.Ordneranzahl,archv.Originalgröße,audio.Album,audio.Bitrate,audio.Copyright,audio.CRC,audio.Emphasis,audio.Encoder,audio.Frames,audio.Genre,audio.ID3,audio.Interpret,audio.Jahr,audio.Kanäle,audio.Kommentar,audio.Länge,audio.MPEG-Typ,audio.Original,audio.Samplerate,audio.Titel,audio.Track,audio.VBR,mydoc.Autor,mydoc.Beschreibung,mydoc.Inhalt,mydoc.Keywords,mydoc.Seiten,mydoc.Titel,mydoc.Wörter,image.Auflösung,image.Farben,image.Farbtiefe,image.Format,movie.Auflösung,movie.Bitrate,movie.Frames,movie.Länge,movie.Sprache,movie.Titel
+MP3=1
+Img=1

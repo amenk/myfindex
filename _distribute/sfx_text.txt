@@ -1,0 +1,43 @@
+MyFindex v... Full-Install
+
+Die Installationsdateien müssen zuerst in ein Temp-Verzeichnis extrahiert werden.
+MyFindex-Setup wird dann automatisch gestartet.
+
+- Nachrichtentyp: OK Abbrechen
+- Immer überschreiben
+
+SETUP.EXE
+
+[ ] Dateiliste
+[ ] Erfolgsnachricht
+[ ] Kommandozeilen-Zugriff
+[x] Autorun
+[x] Überschreiben verstecken
+
+
+----
+
+
+Standardmäßig extrahieren nach: c:\Programme\self-soft\MyFiles
+
+MyFindex v... (Update)
+
+Für dieses Update muss bereits eine MyFiles/MyFindex-Version ab v2.x
+installiert sein.
+Vor dem Update muss das Programm beendet sein.
+Bei "Unzip nach" muss der Installationsordner angegeben
+werden.
+Es gelten die Bestimmungen in der Datei lizenz.txt
+
+
+
+- Nachrichtentyp: OK Abbrechen
+- Immer überschreiben
+
+MyFiles.exe
+
+[x] Dateiliste
+[x] Erfolgsnachricht
+[x] Kommandozeilen-Zugriff
+[ ] Autorun
+[ ] Überschreiben verstecken
