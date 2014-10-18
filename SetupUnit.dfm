@@ -121,7 +121,7 @@ object frmConfig: TfrmConfig
       Font.Style = [fsBold]
       ParentFont = False
     end
-    object seDur: TRxSpinEdit
+    object seDur: TJvSpinEdit
       Tag = 1
       Left = 16
       Top = 40
@@ -188,7 +188,7 @@ object frmConfig: TfrmConfig
       TabOrder = 0
       OnClick = clbPlugInsClick
     end
-    object fbAboutPlugin: TFlatButton
+    object fbAboutPlugin: TSpeedButton
       Left = 56
       Top = 133
       Width = 92
@@ -209,7 +209,7 @@ object frmConfig: TfrmConfig
       BevelWidthDown = 1
       NumGlyphs = 2
     end
-    object fbConfigPlugin: TFlatButton
+    object fbConfigPlugin: TSpeedButton
       Left = 155
       Top = 133
       Width = 94
@@ -306,7 +306,7 @@ object frmConfig: TfrmConfig
       Font.Style = []
       ParentFont = False
     end
-    object seWidth: TRxSpinEdit
+    object seWidth: TJvSpinEdit
       Tag = 1
       Left = 53
       Top = 50
@@ -316,7 +316,7 @@ object frmConfig: TfrmConfig
       ButtonKind = bkStandard
       TabOrder = 0
     end
-    object seHeight: TRxSpinEdit
+    object seHeight: TJvSpinEdit
       Tag = 1
       Left = 157
       Top = 50
@@ -394,7 +394,7 @@ object frmConfig: TfrmConfig
       Height = 13
       Caption = '(MyFiles Neustart nötig)'
     end
-    object sePrevWidth: TRxSpinEdit
+    object sePrevWidth: TJvSpinEdit
       Tag = 1
       Left = 53
       Top = 66
@@ -404,7 +404,7 @@ object frmConfig: TfrmConfig
       ButtonKind = bkStandard
       TabOrder = 0
     end
-    object sePrevHeight: TRxSpinEdit
+    object sePrevHeight: TJvSpinEdit
       Tag = 1
       Left = 157
       Top = 66
@@ -589,7 +589,7 @@ object frmConfig: TfrmConfig
       Caption = 'Verlauf speichern'
       TabOrder = 0
     end
-    object seHist: TRxSpinEdit
+    object seHist: TJvSpinEdit
       Tag = 1
       Left = 195
       Top = 37
@@ -783,7 +783,7 @@ object frmConfig: TfrmConfig
       OnButtonClick = cedtDiskButtonClick
     end
   end
-  object btnOk: TFlatButton
+  object btnOk: TSpeedButton
     Left = 144
     Top = 176
     Width = 86
@@ -815,7 +815,7 @@ object frmConfig: TfrmConfig
       0000}
     NumGlyphs = 2
   end
-  object btnAbort: TFlatButton
+  object btnAbort: TSpeedButton
     Left = 240
     Top = 176
     Width = 86
@@ -833,7 +833,7 @@ object frmConfig: TfrmConfig
     BevelWidthDown = 1
     Kind = bkCancel
   end
-  object btnReset: TFlatButton
+  object btnReset: TSpeedButton
     Left = 336
     Top = 176
     Width = 73

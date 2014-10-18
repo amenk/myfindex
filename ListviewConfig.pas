@@ -10,8 +10,8 @@ type
   TfrmListViewConfig = class(TForm)
     gb1: TGroupBox;
     clbCols: TCheckListBox;
-    btnOk: TFlatButton;
-    btnAbort: TFlatButton;
+    btnOk: TSpeedButton;
+    btnAbort: TSpeedButton;
     gbOptions: TGroupBox;
     Label1: TLabel;
     cbSizeFmt: TComboBox;

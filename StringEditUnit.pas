@@ -10,8 +10,8 @@ uses
 type
   TfrmStringEdit = class(TForm)
     pnlHead: TPanel;
-    btnCancel: TFlatButton;
-    btnOK: TFlatButton;
+    btnCancel: TSpeedButton;
+    btnOK: TSpeedButton;
     rbBegriffe: TRadioButton;
     rbWildcard: TRadioButton;
     rbRegExp: TRadioButton;

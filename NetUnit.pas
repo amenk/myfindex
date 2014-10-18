@@ -14,13 +14,13 @@ type
     Shape2: TShape;
     Label5: TLabel;
     Label1: TLabel;
-    FlatButton1: TFlatButton;
-    FlatButton3: TFlatButton;
-    FlatButton4: TFlatButton;
-    FlatButton5: TFlatButton;
-    FlatButton6: TFlatButton;
-    FlatButton7: TFlatButton;
-    FlatButton2: TFlatButton;
+    FlatButton1: TSpeedButton;
+    FlatButton3: TSpeedButton;
+    FlatButton4: TSpeedButton;
+    FlatButton5: TSpeedButton;
+    FlatButton6: TSpeedButton;
+    FlatButton7: TSpeedButton;
+    FlatButton2: TSpeedButton;
     procedure FlatButton6Click(Sender: TObject);
   private
     { Private-Deklarationen }

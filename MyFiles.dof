@@ -51,20 +51,20 @@ UsePackages=0
 [Parameters]
 RunParams=
 HostApplication=
-[Resource DLL Projects]
-Item0=Englisch (USA)*$00000409*ENU*ENU\
-Item1=Französisch (Frankreich)*$0000040C*FRA*FRA\
+;[Resource DLL Projects]
+;Item0=Englisch (USA)*$00000409*ENU*ENU\
+;Item1=Französisch (Frankreich)*$0000040C*FRA*FRA\
 [Language]
 ActiveLang=
 ProjectLang=$00000407
-RootDir=D:\Delphi\Projects\MyFiles\
+RootDir=C:\Projekte\myfindex
 [Version Info]
 IncludeVerInfo=1
 AutoIncBuild=1
-MajorVer=3
-MinorVer=4
+MajorVer=4
+MinorVer=0
 Release=0
-Build=95
+Build=0
 Debug=0
 PreRelease=0
 Special=0
@@ -73,15 +73,15 @@ DLL=0
 Locale=1031
 CodePage=1252
 [Version Info Keys]
-CompanyName=self soft free software - www.self-soft.de
-FileDescription=Programm zum schnellen Auffinden von Dateien in deiner CD-ROM-Sammlung
-FileVersion=3.4.0.95
+CompanyName=
+FileDescription=Programm zum schnellen Auffinden von Dateien in verschiedenen Medien
+FileVersion=4.0
 InternalName=MyFiles
-LegalCopyright=Copyright © 2000-04 by Alexander Menk (self)
+LegalCopyright=Copyright © 2002-08 by Alexander Menk (self), 2014 by Tim Richter
 LegalTrademarks=
 OriginalFilename=MyFiles.exe
 ProductName=MyFindex
-ProductVersion=3.4
+ProductVersion=4
 Comments=
 [HistoryLists\hlUnitAliases]
 Count=1

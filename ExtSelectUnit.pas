@@ -4,13 +4,13 @@ interface
 
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  StdCtrls, FlatButton, ExtCtrls, ComCtrls, XPMenu;
+  StdCtrls, ExtCtrls, ComCtrls, XPMenu;
 
 type
   TfrmExtSelect = class(TForm)
     pnlHead: TPanel;
-    btnCancel: TFlatButton;
-    btnOK: TFlatButton;
+    btnCancel: TSpeedButton;
+    btnOK: TSpeedButton;
     lvListSel: TListView;
     procedure pnlHeadMouseDown(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);

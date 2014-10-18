@@ -156,7 +156,7 @@ object frmReadDisk: TfrmReadDisk
     WordWrap = True
     OnClick = tbOpenClick
   end
-  object btnStart: TFlatButton
+  object btnStart: TSpeedButton
     Left = 232
     Top = 288
     Width = 87
@@ -169,7 +169,7 @@ object frmReadDisk: TfrmReadDisk
     BevelWidthDown = 1
     Kind = bkOK
   end
-  object btnFinish: TFlatButton
+  object btnFinish: TSpeedButton
     Left = 328
     Top = 288
     Width = 87
@@ -203,7 +203,7 @@ object frmReadDisk: TfrmReadDisk
       5990555555555555577755555555555555555555555555555555}
     NumGlyphs = 2
   end
-  object btnCancel: TFlatButton
+  object btnCancel: TSpeedButton
     Left = 328
     Top = 288
     Width = 87
@@ -439,7 +439,7 @@ object frmReadDisk: TfrmReadDisk
         TabOrder = 0
         OnChange = tvInstalledChange
       end
-      object fbAdd: TFlatButton
+      object fbAdd: TSpeedButton
         Left = 165
         Top = 38
         Width = 31
@@ -468,7 +468,7 @@ object frmReadDisk: TfrmReadDisk
           3000333333333333377733333333333333333333333333333333}
         NumGlyphs = 2
       end
-      object fbDel: TFlatButton
+      object fbDel: TSpeedButton
         Left = 165
         Top = 62
         Width = 31
@@ -526,7 +526,7 @@ object frmReadDisk: TfrmReadDisk
         ViewStyle = vsReport
         OnSelectItem = lvUsedPluginsSelectItem
       end
-      object fbPUp: TFlatButton
+      object fbPUp: TSpeedButton
         Left = 178
         Top = 128
         Width = 20
@@ -555,7 +555,7 @@ object frmReadDisk: TfrmReadDisk
           333333333337F333333333333330333333333333333733333333}
         NumGlyphs = 2
       end
-      object fbPDown: TFlatButton
+      object fbPDown: TSpeedButton
         Left = 178
         Top = 151
         Width = 20
@@ -606,7 +606,7 @@ object frmReadDisk: TfrmReadDisk
           Caption = '&MP3-Vorschau "Hörbeispiel"'
           TabOrder = 2
         end
-        object fbCfgMP3: TFlatButton
+        object fbCfgMP3: TSpeedButton
           Tag = 2
           Left = 176
           Top = 54
@@ -633,7 +633,7 @@ object frmReadDisk: TfrmReadDisk
           Caption = '&Bilder-Thumbnail'
           TabOrder = 0
         end
-        object fbCfgImg: TFlatButton
+        object fbCfgImg: TSpeedButton
           Tag = 1
           Left = 176
           Top = 22

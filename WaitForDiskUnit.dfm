@@ -484,7 +484,7 @@ object frmWaitForDisk: TfrmWaitForDisk
     Font.Style = [fsBold]
     ParentFont = False
   end
-  object fbCancel: TFlatButton
+  object fbCancel: TSpeedButton
     Left = 312
     Top = 164
     Width = 89
@@ -496,7 +496,7 @@ object frmWaitForDisk: TfrmWaitForDisk
     BevelWidthDown = 1
     Kind = bkCancel
   end
-  object fbLWs: TFlatButton
+  object fbLWs: TSpeedButton
     Left = 8
     Top = 164
     Width = 89
@@ -518,7 +518,7 @@ object frmWaitForDisk: TfrmWaitForDisk
     ReadOnly = True
     TabOrder = 3
   end
-  object fbOK: TFlatButton
+  object fbOK: TSpeedButton
     Left = 216
     Top = 164
     Width = 89

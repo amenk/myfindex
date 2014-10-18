@@ -151,7 +151,7 @@ object NetForm: TNetForm
         0000}
       Transparent = True
     end
-    object FlatButton1: TFlatButton
+    object FlatButton1: TSpeedButton
       Left = 8
       Top = 56
       Width = 82
@@ -162,7 +162,7 @@ object NetForm: TNetForm
       BevelWidthM = 2
       BevelWidthDown = 1
     end
-    object FlatButton3: TFlatButton
+    object FlatButton3: TSpeedButton
       Left = 96
       Top = 56
       Width = 82
@@ -173,7 +173,7 @@ object NetForm: TNetForm
       BevelWidthM = 2
       BevelWidthDown = 1
     end
-    object FlatButton4: TFlatButton
+    object FlatButton4: TSpeedButton
       Left = 216
       Top = 56
       Width = 57
@@ -184,7 +184,7 @@ object NetForm: TNetForm
       BevelWidthM = 2
       BevelWidthDown = 1
     end
-    object FlatButton5: TFlatButton
+    object FlatButton5: TSpeedButton
       Left = 275
       Top = 56
       Width = 54
@@ -195,7 +195,7 @@ object NetForm: TNetForm
       BevelWidthM = 2
       BevelWidthDown = 1
     end
-    object FlatButton6: TFlatButton
+    object FlatButton6: TSpeedButton
       Left = 331
       Top = 56
       Width = 59
@@ -207,7 +207,7 @@ object NetForm: TNetForm
       BevelWidthM = 2
       BevelWidthDown = 1
     end
-    object FlatButton7: TFlatButton
+    object FlatButton7: TSpeedButton
       Left = 392
       Top = 56
       Width = 56
@@ -218,7 +218,7 @@ object NetForm: TNetForm
       BevelWidthM = 2
       BevelWidthDown = 1
     end
-    object FlatButton2: TFlatButton
+    object FlatButton2: TSpeedButton
       Left = 528
       Top = 56
       Width = 57

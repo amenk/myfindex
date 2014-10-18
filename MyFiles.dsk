@@ -1,22 +1,22 @@
 [Closed Files]
-File_0=SourceModule,'C:\DOKUME~1\SELF\LOKALE~1\TEMP\GFX_TIFF.PAS',0,1,4,17,14,0,0
-File_1=SourceModule,'D:\Delphi\Projects\MyFiles\ExtSelectUnit.pas',0,1,47,10,65,0,0
-File_2=SourceModule,'D:\Delphi\Projects\MyFiles\ListCompareOptUnit.pas',0,1,183,15,211,1,0
-File_3=SourceModule,'D:\Delphi\Projects\MyFiles\ListviewConfig.pas',0,1,1,10,1,1,0
-File_4=SourceModule,'D:\Delphi\Projects\MyFiles\myf_consts.pas',0,1,336,1,351,0,0
-File_5=SourceModule,'D:\Delphi\Projects\MyFiles\myf_lists.pas',0,1,1,1,1,0,0
-File_6=SourceModule,'D:\Delphi\Projects\MyFiles\myf_main.pas',0,1,600,62,601,0,0
-File_7=SourceModule,'D:\Delphi\Projects\MyFiles\myf_plugins.pas',0,1,13,43,13,0,0
-File_8=SourceModule,'D:\Delphi\Projects\MyFiles\myf_search.pas',0,1,1,45,20,0,0
-File_9=SourceModule,'D:\Delphi\Projects\MyFiles\CopyToDisksUnit.pas',0,1,1,36,9,0,0
+;File_0=SourceModule,'C:\DOKUME~1\SELF\LOKALE~1\TEMP\GFX_TIFF.PAS',0,1,4,17,14,0,0
+;File_1=SourceModule,'C:\Projekte\myfindex\ExtSelectUnit.pas',0,1,47,10,65,0,0
+;File_2=SourceModule,'C:\Projekte\myfindex\ListCompareOptUnit.pas',0,1,183,15,211,1,0
+;File_3=SourceModule,'C:\Projekte\myfindex\ListviewConfig.pas',0,1,1,10,1,1,0
+;File_4=SourceModule,'C:\Projekte\myfindex\myf_consts.pas',0,1,336,1,351,0,0
+;File_5=SourceModule,'C:\Projekte\myfindex\myf_lists.pas',0,1,1,1,1,0,0
+;File_6=SourceModule,'C:\Projekte\myfindex\myf_main.pas',0,1,600,62,601,0,0
+;File_7=SourceModule,'C:\Projekte\myfindex\myf_plugins.pas',0,1,13,43,13,0,0
+;File_8=SourceModule,'C:\Projekte\myfindex\myf_search.pas',0,1,1,45,20,0,0
+;File_9=SourceModule,'C:\Projekte\myfindex\CopyToDisksUnit.pas',0,1,1,36,9,0,0
 
 [Modules]
-Module0=D:\Delphi\Projects\MyFiles\RepairUnit.pas
-Module1=D:\Delphi\Projects\MyFiles\Unit1.pas
-Module2=D:\Delphi\Projects\MyFiles\ReadDiskUnit.pas
-Module3=D:\Delphi\Projects\MyFiles\ExportOptUnit.pas
-Module4=c:\programme\borland\delphi5\Units\gfx\gfx_tiff.pas
-Module5=C:\Programme\Borland\Delphi5\Units\selfMP3Header.pas
+Module0=C:\Projekte\myfindex\RepairUnit.pas
+Module1=C:\Projekte\myfindex\Unit1.pas
+Module2=C:\Projekte\myfindex\ReadDiskUnit.pas
+Module3=C:\Projekte\myfindex\ExportOptUnit.pas
+;Module4=c:\programme\borland\delphi5\Units\gfx\gfx_tiff.pas
+;Module5=C:\Programme\Borland\Delphi5\Units\selfMP3Header.pas
 Count=6
 EditWindowCount=1
 

@@ -621,7 +621,7 @@ object MyFiles3Form: TMyFiles3Form
                   'MB'
                   'GB')
               end
-              object seMinSize: TRxSpinEdit
+              object seMinSize: TJvSpinEdit
                 Left = 80
                 Top = 8
                 Width = 73
@@ -648,7 +648,7 @@ object MyFiles3Form: TMyFiles3Form
                 TabOrder = 3
                 OnClick = chkMaxSizeClick
               end
-              object seMaxSize: TRxSpinEdit
+              object seMaxSize: TJvSpinEdit
                 Left = 80
                 Top = 32
                 Width = 73
@@ -854,7 +854,7 @@ object MyFiles3Form: TMyFiles3Form
                 OnClick = lbSearchInClick
                 OnDblClick = lbSearchInDblClick
               end
-              object fbAdd: TFlatButton
+              object fbAdd: TSpeedButton
                 Left = 8
                 Top = 7
                 Width = 38
@@ -880,7 +880,7 @@ object MyFiles3Form: TMyFiles3Form
                   3000333333333333377733333333333333333333333333333333}
                 NumGlyphs = 2
               end
-              object fbDel: TFlatButton
+              object fbDel: TSpeedButton
                 Left = 49
                 Top = 7
                 Width = 38
@@ -1112,7 +1112,7 @@ object MyFiles3Form: TMyFiles3Form
                 OnExit = cbWertExit
                 OnKeyPress = cbWertKeyPress
               end
-              object fbAddE: TFlatButton
+              object fbAddE: TSpeedButton
                 Left = 8
                 Top = 90
                 Width = 33
@@ -1139,7 +1139,7 @@ object MyFiles3Form: TMyFiles3Form
                   3000333333333333377733333333333333333333333333333333}
                 NumGlyphs = 2
               end
-              object fbDelE: TFlatButton
+              object fbDelE: TSpeedButton
                 Left = 43
                 Top = 90
                 Width = 33
@@ -1296,7 +1296,7 @@ object MyFiles3Form: TMyFiles3Form
                 Align = alTop
                 Shape = bsBottomLine
               end
-              object btnStart: TFlatButton
+              object btnStart: TSpeedButton
                 Left = 30
                 Top = 15
                 Width = 123
@@ -1330,7 +1330,7 @@ object MyFiles3Form: TMyFiles3Form
                   0000}
                 NumGlyphs = 2
               end
-              object fbSearchReset: TFlatButton
+              object fbSearchReset: TSpeedButton
                 Left = 29
                 Top = 44
                 Width = 124
@@ -1719,7 +1719,7 @@ object MyFiles3Form: TMyFiles3Form
           end
         end
       end
-      object fbPropHide: TFlatButton
+      object fbPropHide: TSpeedButton
         Left = 2
         Top = 1
         Width = 12
@@ -3041,7 +3041,7 @@ object MyFiles3Form: TMyFiles3Form
         Style = tbsDropDown
         OnClick = menListLayoutClick
       end
-      object btnReg: TFlatButton
+      object btnReg: TSpeedButton
         Left = 474
         Top = 0
         Width = 109

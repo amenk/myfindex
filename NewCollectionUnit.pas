@@ -10,8 +10,8 @@ type
   TfrmSammlung = class(TForm)
     gb1: TGroupBox;
     edtName: TEdit;
-    btnOk: TFlatButton;
-    btnAbort: TFlatButton;
+    btnOk: TSpeedButton;
+    btnAbort: TSpeedButton;
     gb2: TGroupBox;
     cbAutoUpdate: TCheckBox;
     edtDrives: TEdit;

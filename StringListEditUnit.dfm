@@ -43,7 +43,7 @@ object frmBegriffe: TfrmBegriffe
     ParentFont = False
     TabOrder = 4
     OnMouseDown = pnlHeadMouseDown
-    object btnCancel: TFlatButton
+    object btnCancel: TSpeedButton
       Left = 2
       Top = 2
       Width = 36
@@ -60,7 +60,7 @@ object frmBegriffe: TfrmBegriffe
       BevelWidthDown = 1
       Kind = bkCancel
     end
-    object btnOK: TFlatButton
+    object btnOK: TSpeedButton
       Left = 176
       Top = 2
       Width = 38
@@ -101,7 +101,7 @@ object frmBegriffe: TfrmBegriffe
     OnChange = edtStringChange
     OnKeyPress = edtStringKeyPress
   end
-  object fbDel: TFlatButton
+  object fbDel: TSpeedButton
     Left = 52
     Top = 58
     Width = 38
@@ -128,7 +128,7 @@ object frmBegriffe: TfrmBegriffe
       3000333333333333377733333333333333333333333333333333}
     NumGlyphs = 2
   end
-  object fbAdd: TFlatButton
+  object fbAdd: TSpeedButton
     Left = 8
     Top = 58
     Width = 38

@@ -33,7 +33,7 @@ object frmListViewConfig: TfrmListViewConfig
       TabOrder = 0
     end
   end
-  object btnOk: TFlatButton
+  object btnOk: TSpeedButton
     Left = 200
     Top = 128
     Width = 89
@@ -64,7 +64,7 @@ object frmListViewConfig: TfrmListViewConfig
       0000}
     NumGlyphs = 2
   end
-  object btnAbort: TFlatButton
+  object btnAbort: TSpeedButton
     Left = 200
     Top = 160
     Width = 89

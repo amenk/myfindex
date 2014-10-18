@@ -35,7 +35,7 @@ object frmSammlung: TfrmSammlung
       OnChange = Validate
     end
   end
-  object btnOk: TFlatButton
+  object btnOk: TSpeedButton
     Left = 8
     Top = 222
     Width = 86
@@ -68,7 +68,7 @@ object frmSammlung: TfrmSammlung
       0000}
     NumGlyphs = 2
   end
-  object btnAbort: TFlatButton
+  object btnAbort: TSpeedButton
     Left = 106
     Top = 222
     Width = 86

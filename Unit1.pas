@@ -22,7 +22,7 @@ interface
 uses
   myf_consts, myf_main, myf_lists, myf_search, myf_plugins,
   SysIconCache, UsefulPrcs, db,
-  Windows, Messages, SysUtils, Forms, ShlObj, CommCtrl, RXSpin, ToolWin,
+  Windows, Messages, SysUtils, Forms, ShlObj, CommCtrl, JvSpin, ToolWin,
   ExtCtrls, Menus, StdCtrls, Dialogs, Controls, ComCtrls, Classes, Graphics,
   ShellAPI, DropSource, Spin, Buttons, ImgList, Grids, dbtables, IniFiles,
   Clipbrd, AppEvnts, CheckLst, jpeg, ElSounds, itemprop, SplashFUnit, DBGrids,
@@ -187,7 +187,7 @@ type
     ToolButton10: TToolButton;
     tbView: TToolButton;
     ToolButton9: TToolButton;
-    btnReg: TFlatButton;
+    btnReg: TSpeedButton;
     tbUpd: TToolButton;
     tbHelp: TToolButton;
     MenuBar: TMenuBar;
@@ -255,8 +255,8 @@ type
     lblSearchDate: TLabel;
     pSearchIn: TPanel;
     lbSearchIn: TListBox;
-    fbAdd: TFlatButton;
-    fbDel: TFlatButton;
+    fbAdd: TSpeedButton;
+    fbDel: TSpeedButton;
     pnlHSearchIn: TPanel;
     lblSearchIn: TLabel;
     Panel6: TPanel;
@@ -270,8 +270,8 @@ type
     Label1: TLabel;
     cbProp: TComboBox;
     cbWert: TComboEdit;
-    fbAddE: TFlatButton;
-    fbDelE: TFlatButton;
+    fbAddE: TSpeedButton;
+    fbDelE: TSpeedButton;
     lbContents: TListBox;
     pHAttribute: TPanel;
     lblAttribute: TLabel;
@@ -282,17 +282,17 @@ type
     cbAS: TCheckBox;
     cbMinSize: TComboBox;
     cbMaxSize: TComboBox;
-    seMinSize: TRxSpinEdit;
+    seMinSize: TJvSpinEdit;
     chkMinSize: TCheckBox;
     chkMaxSize: TCheckBox;
-    seMaxSize: TRxSpinEdit;
+    seMaxSize: TJvSpinEdit;
     chkMinDate: TCheckBox;
     chkMaxDate: TCheckBox;
     dtpMinTime: TDateTimePicker;
     dtpMaxTime: TDateTimePicker;
     pBottom: TPanel;
-    btnStart: TFlatButton;
-    fbSearchReset: TFlatButton;
+    btnStart: TSpeedButton;
+    fbSearchReset: TSpeedButton;
     bvBottom: TBevel;
     pListview: TPanel;
     ListView: TListView;
@@ -336,7 +336,7 @@ type
     XPMenu: TXPMenu;
     N17: TMenuItem;
     Splitter3: TSplitter;
-    fbPropHide: TFlatButton;
+    fbPropHide: TSpeedButton;
     menLaySaveAs: TMenuItem;
     menLayDel: TMenuItem;
     N28: TMenuItem;
@@ -5135,9 +5135,9 @@ begin
 //      ckProt.Checked := True;
       ckStartmen.Checked := True;
     end;
-    if Sender is TFlatButton then
+    if Sender is TSpeedButton then
     begin
-      case (Sender as TFlatButton).Tag of
+      case (Sender as TSpeedButton).Tag of
         1 : tv.Selected := tv.Items[0].getNextSibling.Item[1].Item[0];
         2 : tv.Selected := tv.Items[0].getNextSibling.Item[1].Item[1];
       end;
@@ -6242,7 +6242,7 @@ var
   attryes,attrno,i : integer;
   idx : integer;
 
-  function ControlsToSize(spin:TRxSpinEdit;cb:TComboBox):Int64;
+  function ControlsToSize(spin:TJvSpinEdit;cb:TComboBox):Int64;
   begin
     Result := trunc(spin.Value * IntPower(1024,cb.ItemIndex));
   end;

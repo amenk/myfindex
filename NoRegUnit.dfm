@@ -76,7 +76,7 @@ object NoRegForm: TNoRegForm
     ScrollBars = ssVertical
     TabOrder = 2
   end
-  object btnOk: TFlatButton
+  object btnOk: TSpeedButton
     Left = 323
     Top = 232
     Width = 86
@@ -88,7 +88,7 @@ object NoRegForm: TNoRegForm
     BevelWidthDown = 1
     Kind = bkOK
   end
-  object btnRegMe: TFlatButton
+  object btnRegMe: TSpeedButton
     Left = 8
     Top = 233
     Width = 105

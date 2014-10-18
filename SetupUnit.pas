@@ -4,23 +4,23 @@ interface
 
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  StdCtrls, RXSpin, Buttons, ComCtrls, myf_consts, Registry, ActiveX, ComObj,
+  StdCtrls, JvSpin, Buttons, ComCtrls, myf_consts, Registry, ActiveX, ComObj,
   ShlObj, UseFulPrcs, FlatButton, CheckLst,
   myf_plugins, Mask, XPMenu, ExtCtrls, ToolEdit;
 
 
 type
   TfrmConfig = class(TForm)
-    btnOk: TFlatButton;
-    btnAbort: TFlatButton;
-    btnReset: TFlatButton;
+    btnOk: TSpeedButton;
+    btnAbort: TSpeedButton;
+    btnReset: TSpeedButton;
     tv: TTreeView;
     gb12: TGroupBox;
     ckProt: TCheckBox;
     ckStartMen: TCheckBox;
     gb1: TGroupBox;
     ckHist: TCheckBox;
-    seHist: TRxSpinEdit;
+    seHist: TJvSpinEdit;
     Label7: TLabel;
     Label11: TLabel;
     Label14: TLabel;
@@ -33,9 +33,9 @@ type
     gb211: TGroupBox;
     Label13: TLabel;
     Label2: TLabel;
-    seWidth: TRxSpinEdit;
+    seWidth: TJvSpinEdit;
     Label1: TLabel;
-    seHeight: TRxSpinEdit;
+    seHeight: TJvSpinEdit;
     tbQual: TTrackBar;
     Label9: TLabel;
     Label3: TLabel;
@@ -45,14 +45,14 @@ type
     Label6: TLabel;
     Label4: TLabel;
     Label12: TLabel;
-    seDur: TRxSpinEdit;
+    seDur: TJvSpinEdit;
     cbQual: TComboBox;
     edtParam: TEdit;
     Label10: TLabel;
     gb22: TGroupBox;
     clbPlugIns: TCheckListBox;
-    fbAboutPlugin: TFlatButton;
-    fbConfigPlugin: TFlatButton;
+    fbAboutPlugin: TSpeedButton;
+    fbConfigPlugin: TSpeedButton;
     lblNotLoad: TLabel;
     ckOfficeXP: TCheckBox;
     ckToolbarPicture: TCheckBox;
@@ -73,7 +73,7 @@ type
     Label21: TLabel;
     Label22: TLabel;
     sePrevWidth: TRxSpinEdit;
-    sePrevHeight: TRxSpinEdit;
+    sePrevHeight: TJvSpinEdit;
     Label23: TLabel;
     Label24: TLabel;
     GroupBox4: TGroupBox;

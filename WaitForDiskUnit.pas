@@ -11,12 +11,12 @@ type
     gifimge21: Tgifimge2;
     Label5: TLabel;
     Shape2: TShape;
-    fbCancel: TFlatButton;
+    fbCancel: TSpeedButton;
     Label1: TLabel;
-    fbLWs: TFlatButton;
+    fbLWs: TSpeedButton;
     lblDisk: TLabel;
     mNote: TMemo;
-    fbOK: TFlatButton;
+    fbOK: TSpeedButton;
     procedure fbLWsClick(Sender: TObject);
     procedure fbOKClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);

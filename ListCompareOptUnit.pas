@@ -5,14 +5,14 @@ interface
 
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  StdCtrls, CheckLst, Buttons, myf_consts, ExtCtrls, FlatButton, myf_main,
+  StdCtrls, CheckLst, Buttons, myf_consts, ExtCtrls, myf_main,
   myf_lists, XPMenu;
 
 type
   TfrmListCompareOpt = class(TForm)
     gb2: TGroupBox;
-    btnOk: TFlatButton;
-    btnAbort: TFlatButton;
+    btnOk: TSpeedButton;
+    btnAbort: TSpeedButton;
     clbOptions: TCheckListBox;
     Label1: TLabel;
     cbIDs: TCheckBox;

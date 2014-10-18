@@ -152,7 +152,7 @@ object frmListExport: TfrmListExport
     WordWrap = True
     OnClick = tbOpenClick
   end
-  object btnOk: TFlatButton
+  object btnOk: TSpeedButton
     Left = 176
     Top = 376
     Width = 86
@@ -166,7 +166,7 @@ object frmListExport: TfrmListExport
     BevelWidthDown = 1
     Kind = bkOK
   end
-  object btnAbort: TFlatButton
+  object btnAbort: TSpeedButton
     Left = 272
     Top = 376
     Width = 87

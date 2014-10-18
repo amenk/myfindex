@@ -11,8 +11,8 @@ type
     Shape1: TShape;
     Label8: TLabel;
     mLizenz: TMemo;
-    btnOk: TFlatButton;
-    btnRegMe: TFlatButton;
+    btnOk: TSpeedButton;
+    btnRegMe: TSpeedButton;
     XPMenu: TXPMenu;
   private
     { Private-Deklarationen }

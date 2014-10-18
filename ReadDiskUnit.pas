@@ -41,9 +41,9 @@ type
     Shape1: TShape;
     lblCaption: TLabel;
     imgCaption: TImage;
-    btnStart: TFlatButton;
-    btnFinish: TFlatButton;
-    btnCancel: TFlatButton;
+    btnStart: TSpeedButton;
+    btnFinish: TSpeedButton;
+    btnCancel: TSpeedButton;
     ilDrives: TImageList;
     ImageList2: TImageList;
     pmEinlesen: TPopupMenu;
@@ -72,11 +72,11 @@ type
     tbSave: TToolButton;
     cbStapel: TCheckBox;
     tvInstalled: TTreeView;
-    fbAdd: TFlatButton;
-    fbDel: TFlatButton;
+    fbAdd: TSpeedButton;
+    fbDel: TSpeedButton;
     lvUsedPlugins: TListView;
-    fbPUp: TFlatButton;
-    fbPDown: TFlatButton;
+    fbPUp: TSpeedButton;
+    fbPDown: TSpeedButton;
     Label1: TLabel;
     Label3: TLabel;
     Label2: TLabel;
@@ -92,7 +92,7 @@ type
     icF: TImage;
     gbMM: TGroupBox;
     ckMP3Prev: TCheckBox;
-    fbCfgMP3: TFlatButton;
+    fbCfgMP3: TSpeedButton;
     gbNotes: TGroupBox;
     ckFILEIDDIZ: TCheckBox;
     gbDontRead: TGroupBox;
@@ -105,7 +105,7 @@ type
     od: TOpenDialog;
     sd: TSaveDialog;
     ckImgPrev: TCheckBox;
-    fbCfgImg: TFlatButton;
+    fbCfgImg: TSpeedButton;
     gbStat: TGroupBox;
     Label7: TLabel;
     Label8: TLabel;

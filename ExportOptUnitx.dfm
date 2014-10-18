@@ -230,7 +230,7 @@ object frmListExport: TfrmListExport
         Caption = 'feste Spaltenbreiten:'
         TabOrder = 0
       end
-      object seC1: TRxSpinEdit
+      object seC1: TJvSpinEdit
         Tag = 1
         Left = 152
         Top = 20
@@ -241,7 +241,7 @@ object frmListExport: TfrmListExport
         Value = 45
         TabOrder = 1
       end
-      object seC2: TRxSpinEdit
+      object seC2: TJvSpinEdit
         Tag = 1
         Left = 200
         Top = 20
@@ -252,7 +252,7 @@ object frmListExport: TfrmListExport
         Value = 12
         TabOrder = 2
       end
-      object seC3: TRxSpinEdit
+      object seC3: TJvSpinEdit
         Tag = 1
         Left = 248
         Top = 20

@@ -9,12 +9,12 @@ uses
 type
   TfrmBegriffe = class(TForm)
     pnlHead: TPanel;
-    btnCancel: TFlatButton;
-    btnOK: TFlatButton;
+    btnCancel: TSpeedButton;
+    btnOK: TSpeedButton;
     lbList: TListBox;
     edtString: TEdit;
-    fbDel: TFlatButton;
-    fbAdd: TFlatButton;
+    fbDel: TSpeedButton;
+    fbAdd: TSpeedButton;
     lblCount: TLabel;
     procedure fbAddClick(Sender: TObject);
     procedure fbDelClick(Sender: TObject);

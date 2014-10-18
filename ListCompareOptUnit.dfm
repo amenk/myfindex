@@ -168,7 +168,7 @@ object frmListCompareOpt: TfrmListCompareOpt
       OnClick = cbIDsClick
     end
   end
-  object btnOk: TFlatButton
+  object btnOk: TSpeedButton
     Left = 256
     Top = 296
     Width = 86
@@ -182,7 +182,7 @@ object frmListCompareOpt: TfrmListCompareOpt
     BevelWidthDown = 1
     Kind = bkOK
   end
-  object btnAbort: TFlatButton
+  object btnAbort: TSpeedButton
     Left = 256
     Top = 328
     Width = 86

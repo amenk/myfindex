@@ -1,49 +1,45 @@
 [Closed Files]
-File_0=SourceModule,'C:\Programme\Borland\Delphi5\Projects\MyFiles\MyFiles.dpr',0,1,1,57,30,0,0
-File_1=SourceModule,'X:\Projects\MyFiles\Unit1.pas',0,1,5754,22,5769,0,0
-File_2=SourceModule,'X:\Projects\MyFiles\ReadDiskUnit.pas',0,1,2057,10,2057,0,0
-File_3=SourceModule,'X:\Projects\MyFiles\SysIconCache.pas',0,1,50,49,65,0,0
-File_4=SourceModule,'X:\Projects\MyFiles\UsefulPrcs.pas',0,1,98,35,117,0,0
-File_5=SourceModule,'X:\Projects\MyFiles\NoRegUnit.pas',0,1,1,1,1,0,0
-File_6=SourceModule,'X:\Projects\MyFiles\myf_main.pas',0,1,311,39,330,0,0
+File_0=SourceModule,'C:\Projekte\myfindex\MyFiles.dpr',0,1,1,57,30,0,0
+File_1=SourceModule,'C:\Projekte\myfindex\Unit1.pas',0,1,5754,22,5769,0,0
+File_2=SourceModule,'C:\Projekte\myfindex\ReadDiskUnit.pas',0,1,2057,10,2057,0,0
+File_3=SourceModule,'C:\Projekte\myfindex\SysIconCache.pas',0,1,50,49,65,0,0
+File_4=SourceModule,'C:\Projekte\myfindex\UsefulPrcs.pas',0,1,98,35,117,0,0
+File_5=SourceModule,'C:\Projekte\myfindex\NoRegUnit.pas',0,1,1,1,1,0,0
+File_6=SourceModule,'C:\Projekte\myfindex\myf_main.pas',0,1,311,39,330,0,0
 
 [Modules]
-Module0=X:\Projects\MyFiles\DataModule.pas
-Module1=X:\Projects\MyFiles\MyFiles.dpr
-Module2=X:\Projects\MyFiles\ENU\MyFiles.dpr
-Module3=X:\Projects\MyFiles\FRA\MyFiles.dpr
+Module0=C:\Projekte\myfindex\DataModule.pas
+Module1=C:\Projekte\myfindex\MyFiles.dpr
+Module2=C:\Projekte\myfindex\ENU\MyFiles.dpr
+Module3=C:\Projekte\myfindex\FRA\MyFiles.dpr
 Count=4
 EditWindowCount=1
 
-[X:\Projects\MyFiles\DataModule.pas]
+[C:\Projekte\myfindex\DataModule.pas]
 ModuleType=SourceModule
 FormState=1
 FormOnTop=0
 
-[X:\Projects\MyFiles\MyFiles.dpr]
+[C:\Projekte\myfindex\MyFiles.dpr]
 ModuleType=SourceModule
 FormState=0
 FormOnTop=0
 
-[X:\Projects\MyFiles\ENU\MyFiles.dpr]
+[C:\Projekte\myfindex\ENU\MyFiles.dpr]
 ModuleType=SourceModule
 FormState=0
 FormOnTop=0
 
-[X:\Projects\MyFiles\FRA\MyFiles.dpr]
+[C:\Projekte\myfindex\FRA\MyFiles.dpr]
 ModuleType=SourceModule
 FormState=0
 FormOnTop=0
 
-[X:\Projects\MyFiles\FRA\NoRegUnit.dfm]
+[C:\Projekte\myfindex\FRA\NoRegUnit.dfm]
 FormState=1
 FormOnTop=1
 
-[X:\Projects\MyFiles\MyFiles-PG.bpg]
-FormState=0
-FormOnTop=0
-
-[X:\Projects\MyFiles\MyFiles.todo]
+[C:\Projekte\myfindex\MyFiles-PG.bpg]
 FormState=0
 FormOnTop=0
 
@@ -76,28 +72,28 @@ BottomPanelClients=DockSite0
 BottomPanelData=0000040000000000000000000000000000000000000000000001000000000000000009000000446F636B5369746530FFFFFFFF
 
 [View0]
-Module=X:\Projects\MyFiles\MyFiles.dpr
+Module=C:\Projekte\myfindex\MyFiles.dpr
 CursorX=36
 CursorY=4
 TopLine=1
 LeftCol=1
 
 [View1]
-Module=X:\Projects\MyFiles\DataModule.pas
+Module=C:\Projekte\myfindex\DataModule.pas
 CursorX=30
 CursorY=108
 TopLine=106
 LeftCol=1
 
 [View2]
-Module=X:\Projects\MyFiles\ENU\MyFiles.dpr
+Module=C:\Projekte\myfindex\ENU\MyFiles.dpr
 CursorX=1
 CursorY=1
 TopLine=1
 LeftCol=1
 
 [View3]
-Module=X:\Projects\MyFiles\FRA\MyFiles.dpr
+Module=C:\Projekte\myfindex\FRA\MyFiles.dpr
 CursorX=1
 CursorY=1
 TopLine=1

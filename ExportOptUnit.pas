@@ -4,13 +4,13 @@ interface
 
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  StdCtrls, Buttons, RXSpin, ExtCtrls, FlatButton, ComCtrls,
+  StdCtrls, Buttons, JvSpin, ExtCtrls, ComCtrls,
   CheckLst, IniFiles, ToolWin, XPMenu;
 
 type
   TfrmListExport = class(TForm)
-    btnOk: TFlatButton;
-    btnAbort: TFlatButton;
+    btnOk: TSpeedButton;
+    btnAbort: TSpeedButton;
     Shape1: TShape;
     Label8: TLabel;
     Image2: TImage;

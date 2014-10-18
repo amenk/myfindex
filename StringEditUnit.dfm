@@ -31,7 +31,7 @@ object frmStringEdit: TfrmStringEdit
     ParentFont = False
     TabOrder = 6
     OnMouseDown = pnlHeadMouseDown
-    object btnCancel: TFlatButton
+    object btnCancel: TSpeedButton
       Left = 2
       Top = 2
       Width = 36
@@ -48,7 +48,7 @@ object frmStringEdit: TfrmStringEdit
       BevelWidthDown = 1
       Kind = bkCancel
     end
-    object btnOK: TFlatButton
+    object btnOK: TSpeedButton
       Left = 212
       Top = 2
       Width = 38
