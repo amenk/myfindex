@@ -100,7 +100,7 @@ type
     ckIgHidden: TCheckBox;
     ckIg0Byte: TCheckBox;
     ckIgEmptyFolder: TCheckBox;
-    cbIgFiles: TComboEdit;
+    cbIgFiles: TEdit;
     fd: TFolderDialog;
     od: TOpenDialog;
     sd: TSaveDialog;
@@ -127,7 +127,7 @@ type
     Label13: TLabel;
     lblEject: TLabel;
     lblPreset: TLabel;
-    cbIncludeFiles: TComboEdit;
+    cbIncludeFiles: TEdit;
     Label12: TLabel;
     procedure btnStartClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -152,7 +152,6 @@ type
     procedure fbPDownClick(Sender: TObject);
     procedure tvInstalledChange(Sender: TObject; Node: TTreeNode);
     procedure fbBasisOrdnerClick(Sender: TObject);
-    procedure cbIgFilesButtonClick(Sender: TObject);
     procedure tbOpenClick(Sender: TObject);
     procedure tbSaveClick(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -2016,6 +2015,7 @@ begin
   end;
 end;
 
+{//ToBeConverted
 procedure TfrmReadDisk.cbIgFilesButtonClick(Sender: TObject);
 var
   MousePos : TPoint;
@@ -2034,7 +2034,7 @@ begin
     Free;
   end;
 end;
-
+}
 procedure TfrmReadDisk.tbOpenClick(Sender: TObject);
 begin
   with od do

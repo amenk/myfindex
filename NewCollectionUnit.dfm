@@ -70,6 +70,10 @@ object frmSammlung: TfrmSammlung
     Width = 86
     Height = 25
     Caption = 'Abbrechen'
+<<<<<<< Updated upstream
+=======
+    Kind = bkCancel
+>>>>>>> Stashed changes
   end
   object gb2: TGroupBox
     Left = 8

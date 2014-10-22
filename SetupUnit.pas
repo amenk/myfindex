@@ -77,12 +77,12 @@ type
     Label23: TLabel;
     Label24: TLabel;
     GroupBox4: TGroupBox;
-    cedtDisk: TComboEdit;
+    cedtDisk: TEdit;
     Label25: TLabel;
     Label26: TLabel;
-    cedtFolder: TComboEdit;
+    cedtFolder: TEdit;
     Label27: TLabel;
-    cedtFile: TComboEdit;
+    cedtFile: TEdit;
     Label29: TLabel;
     ckFastSwitch: TCheckBox;
     procedure FormCreate(Sender: TObject);
@@ -96,7 +96,6 @@ type
     procedure fbConfigPluginClick(Sender: TObject);
     procedure ckOfficeXPClick(Sender: TObject);
     procedure ColorPanelClick(Sender: TObject);
-    procedure cedtDiskButtonClick(Sender: TObject);
   private
     { Private-Deklarationen }
   public
@@ -391,7 +390,7 @@ begin
       Font.Color := ColorDialog.Color;
   end;
 end;
-
+{//ToBeConverted
 procedure TfrmConfig.cedtDiskButtonClick(Sender: TObject);
 var
   MousePos : TPoint;
@@ -409,5 +408,5 @@ begin
     Free;
   end;
 end;
-
+}
 end.

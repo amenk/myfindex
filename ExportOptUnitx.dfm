@@ -302,7 +302,6 @@ object frmListExport: TfrmListExport
     Caption = 'OK'
     Default = True
     ModalResult = 1
-    TabOrder = 3
     Glyph.Data = {
       DE010000424DDE01000000000000760000002800000024000000120000000100
       0400000000006801000000000000000000001000000000000000000000000000
@@ -321,6 +320,7 @@ object frmListExport: TfrmListExport
       333A333333333333333338330000333333333333333333333333333333333333
       0000}
     NumGlyphs = 2
+	Kind = bkOK
   end
   object btnAbort: TBitBtn
     Left = 186

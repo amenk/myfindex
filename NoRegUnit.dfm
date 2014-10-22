@@ -82,6 +82,10 @@ object NoRegForm: TNoRegForm
     Width = 86
     Height = 25
     Caption = 'OK'
+<<<<<<< Updated upstream
+=======
+    Kind = bkOK
+>>>>>>> Stashed changes
   end
   object btnRegMe: TSpeedButton
     Left = 8

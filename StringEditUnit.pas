@@ -28,17 +28,16 @@ type
     p1: TPanel;
     p2: TPanel;
     p3: TPanel;
-    cedtAND: TComboEdit;
-    cedtNOT: TComboEdit;
+    cedtAND: TEdit;
+    cedtNOT: TEdit;
     Label6: TLabel;
-    cedtOR: TComboEdit;
+    cedtOR: TEdit;
     lblSyntaxLink: TLabel;
     Label7: TLabel;
     tbLevel: TTrackBar;
     Label8: TLabel;
     Label9: TLabel;
     procedure rbGenClick(Sender: TObject);
-    procedure cedtButtonClick(Sender: TObject);
     procedure lblSyntaxLinkClick(Sender: TObject);
     procedure SetValue(Value : string);
     function GetValue:string;
@@ -159,7 +158,7 @@ begin
       self.ClientHeight := Top + Height + 5;
 
 end;
-
+{//ToBeConverted
 procedure TfrmStringEdit.cedtButtonClick(Sender: TObject);
 var
   MousePos : TPoint;
@@ -176,7 +175,7 @@ begin
     Free;
   end;
 end;
-
+}
 procedure TfrmStringEdit.lblSyntaxLinkClick(Sender: TObject);
 begin
   ShellExecute(Self.Handle, 'open', 'http://go.self-soft.de/?regexprsyntax', nil, nil, sw_shownormal);

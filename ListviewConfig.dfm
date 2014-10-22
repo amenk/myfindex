@@ -66,6 +66,11 @@ object frmListViewConfig: TfrmListViewConfig
     Width = 89
     Height = 25
     Caption = 'Abbrechen'
+<<<<<<< Updated upstream
+=======
+    TabOrder = 3
+    Kind = bkCancel
+>>>>>>> Stashed changes
   end
   object gbOptions: TGroupBox
     Left = 192

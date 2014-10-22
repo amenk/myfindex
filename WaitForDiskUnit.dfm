@@ -490,6 +490,10 @@ object frmWaitForDisk: TfrmWaitForDisk
     Width = 89
     Height = 25
     Caption = 'Abbrechen'
+<<<<<<< Updated upstream
+=======
+    Kind = bkCancel
+>>>>>>> Stashed changes
   end
   object fbLWs: TSpeedButton
     Left = 8
@@ -516,5 +520,9 @@ object frmWaitForDisk: TfrmWaitForDisk
     Height = 25
     Caption = 'OK'
     OnClick = fbOKClick
+<<<<<<< Updated upstream
+=======
+    Kind = bkOK
+>>>>>>> Stashed changes
   end
 end

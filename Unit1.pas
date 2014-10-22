@@ -260,7 +260,7 @@ type
     pnlHSearchIn: TPanel;
     lblSearchIn: TLabel;
     Panel6: TPanel;
-    ScbName: TComboEdit;
+    ScbName: TEdit;
     pnlHFileName: TPanel;
     lblName: TLabel;
     pnlHNote: TPanel;
@@ -269,7 +269,7 @@ type
     Label6: TLabel;
     Label1: TLabel;
     cbProp: TComboBox;
-    cbWert: TComboEdit;
+    cbWert: TEdit;
     fbAddE: TSpeedButton;
     fbDelE: TSpeedButton;
     lbContents: TListBox;
@@ -505,7 +505,6 @@ type
     procedure btnStartClick(Sender: TObject);
     procedure ExtEditAccept(Sender: TObject);
     procedure tbExportClick(Sender: TObject);
-    procedure ScbNameButtonClick(Sender: TObject);
     procedure lblSearchDateClick(Sender: TObject);
     procedure lblSizeClick(Sender: TObject);
     procedure genSearchInPMClick(Sender: TObject);
@@ -517,11 +516,7 @@ type
     procedure lbSearchInClick(Sender: TObject);
     procedure fbDelEClick(Sender: TObject);
     procedure lbContentsClick(Sender: TObject);
-    procedure cbWertKeyPress(Sender: TObject; var Key: Char);
-    procedure cbWertExit(Sender: TObject);
-    procedure ScbNameKeyPress(Sender: TObject; var Key: Char);
     procedure lbContentsDblClick(Sender: TObject);
-    procedure cbContChange(Sender: TObject);
     procedure genSizeEditExit(Sender: TObject);
     procedure chkMinSizeClick(Sender: TObject);
     procedure chkMaxSizeClick(Sender: TObject);
@@ -6486,7 +6481,7 @@ begin
   pnlSearch.Height := pBottom.Top + pBottom.Height + 3;
   pnlSearch.Width := sbSearch.ClientWidth - (pnlSearch.Left * 2);
 end;
-
+{//ToBeConverted
 procedure TMyFiles3Form.ScbNameButtonClick(Sender: TObject);
 var
   MousePos : TPoint;
@@ -6503,7 +6498,7 @@ begin
     Free;
   end;
 end;
-
+}
 procedure TMyFiles3Form.lblSearchDateClick(Sender: TObject);
 begin
   ToggleControl(lblSearchDate, pSearchDate);
@@ -6637,7 +6632,7 @@ procedure TMyFiles3Form.lbContentsClick(Sender: TObject);
 begin
   fbDelE.Enabled := True;
 end;
-
+{//ToBeConverted
 procedure TMyFiles3Form.cbWertKeyPress(Sender: TObject; var Key: Char);
 begin
   if key = #13 then
@@ -6646,12 +6641,14 @@ begin
     fbAddEClick(nil);    
   end;
 end;
-
+}
+{//ToBeConverted
 procedure TMyFiles3Form.cbWertExit(Sender: TObject);
 begin
   try fbAddEClick(nil) except end;
 end;
-
+}
+{//ToBeConverted
 procedure TMyFiles3Form.ScbNameKeyPress(Sender: TObject; var Key: Char);
 begin
   if key = #13 then
@@ -6660,7 +6657,7 @@ begin
     btnStartClick(nil);
   end;
 end;
-
+}
 procedure TMyFiles3Form.lbContentsDblClick(Sender: TObject);
 var
   s : string;
@@ -6672,12 +6669,12 @@ begin
   cbProp.Text := Copy(s,1,idx-1);
   cbWert.Text := Copy(s,idx+2,maxInt);
 end;
-
+{//ToBeConverted
 procedure TMyFiles3Form.cbContChange(Sender: TObject);
 begin
   fbAddE.Enabled := (cbProp.Text <> '') and (cbWert.Text <> '');
 end;
-
+}
 procedure TMyFiles3Form.genSizeEditExit(Sender: TObject);
 var
   factor : integer;

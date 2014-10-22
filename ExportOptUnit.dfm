@@ -160,6 +160,10 @@ object frmListExport: TfrmListExport
     Caption = 'OK'
     Enabled = False
     OnClick = btnOkClick
+<<<<<<< Updated upstream
+=======
+    Kind = bkOK
+>>>>>>> Stashed changes
   end
   object btnAbort: TSpeedButton
     Left = 272
@@ -167,6 +171,10 @@ object frmListExport: TfrmListExport
     Width = 87
     Height = 25
     Caption = 'Abbrechen'
+<<<<<<< Updated upstream
+=======
+    Kind = bkCancel
+>>>>>>> Stashed changes
   end
   object gb1: TGroupBox
     Left = 8

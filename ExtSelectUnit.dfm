@@ -42,6 +42,10 @@ object frmExtSelect: TfrmExtSelect
       Font.Name = 'MS Sans Serif'
       Font.Style = []
       ParentFont = False
+<<<<<<< Updated upstream
+=======
+      Kind = bkCancel
+>>>>>>> Stashed changes
     end
     object btnOK: TSpeedButton
       Left = 161
@@ -55,6 +59,10 @@ object frmExtSelect: TfrmExtSelect
       Font.Name = 'MS Sans Serif'
       Font.Style = []
       ParentFont = False
+<<<<<<< Updated upstream
+=======
+      Kind = bkOK
+>>>>>>> Stashed changes
     end
   end
   object lvListSel: TListView
