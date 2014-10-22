@@ -1384,7 +1384,6 @@ object MyFiles3Form: TMyFiles3Form
       Align = alClient
       Color = clWindow
       ParentColor = False
-      TabO
       TabOrder = 1
       OnResize = sbPropsResize
       object lblPrevNoSelection: TLabel
@@ -3015,28 +3014,6 @@ object MyFiles3Form: TMyFiles3Form
         ImageIndex = 10
         Style = tbsSeparator
       end
-    end
-    object MenuBar: TMenuBar
-      Left = 11
-      Top = 2
-      Width = 280
-      Height = 21
-      AutoSize = True
-      ButtonHeight = 21
-      ButtonWidth = 66
-      Caption = 'MenuBar'
-      Color = cl3DDkShadow
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -11
-      Font.Name = 'MS Sans Serif'
-      Font.Style = []
-      ParentColor = False
-      ParentFont = False
-      TabOrder = 0
-      Transparent = True
-      Wrapable = False
-      Menu = MainMenu
     end
     object tbAddress: TToolBar
       Left = 11

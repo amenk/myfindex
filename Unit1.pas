@@ -26,7 +26,7 @@ uses
   ExtCtrls, Menus, StdCtrls, Dialogs, Controls, ComCtrls, Classes, Graphics,
   ShellAPI, DropSource, Spin, Buttons, ImgList, Grids, dbtables, IniFiles,
   Clipbrd, AppEvnts, CheckLst, jpeg, ElSounds, itemprop, SplashFUnit, DBGrids,
-  MenuBar, ElHeader, FlatButton, Animate, Registry, Mask,
+  ElHeader, FlatButton, Animate, Registry, Mask,
   ToolEdit, XPMenu, FoldrDlg;
 
 const
@@ -190,7 +190,6 @@ type
     btnReg: TSpeedButton;
     tbUpd: TToolButton;
     tbHelp: TToolButton;
-    MenuBar: TMenuBar;
     tbAddress: TToolBar;
     cbAdresse: TComboBox;
     tbtnAddress: TToolButton;
@@ -4432,11 +4431,13 @@ begin
     WriteInteger(ini_guimain, 'sgProps0', sgProps.ColWidths[0]);
 
     WriteBool(ini_guimain, 'toolbar', toolbar.visible);
+   {//ToBeConverted
    with MenuBar do
    begin
      WriteInteger(ini_guimain, 'menubar.left', left);
      WriteInteger(ini_guimain, 'menubar.top', top);
    end;
+   }
    with tbAddress do
    begin
      WriteInteger(ini_guimain, 'adrpnl.left', left);
@@ -4494,11 +4495,13 @@ begin
       Left := readinteger(ini_guimain, 'adrpnl.left', left);
       Top := readinteger(ini_guimain, 'adrpnl.top', top);
     end;
-    with MenuBar do
+    {//ToBeConverted
+	with MenuBar do
     begin
       Left := readinteger(ini_guimain, 'menubar.left', left);
       Top := readinteger(ini_guimain, 'menubar.top', top);
     end;
+	}
     with Toolbar do
     begin
       Left := readinteger(ini_guimain, 'toolbar.left', left);
@@ -5759,17 +5762,23 @@ end;
 procedure TMyFiles3Form.ControlBarBandInfo(Sender: TObject; Control: TControl;
   var Insets: TRect; var PreferredSize, RowCount: Integer);
 begin
+  {//ToBeConverted
   with MenuBar do if Tag = 0 then Tag := Width;
+  }
   if Control = ToolBar then
     PreferredSize := tbHelp.Left + tbHelp.Width + 1 else
     if Control = tbAddress then
     begin
-      PreferredSize := MenuBar.Tag; {Screen.Width}
-      tbAddressResize(nil);
+      {//ToBeConverted
+	  PreferredSize := MenuBar.Tag; {Screen.Width}
+      }
+	  tbAddressResize(nil);
     end
       else
-      if Control = MenuBar then
+      {//ToBeConverted
+	  if Control = MenuBar then
         PreferredSize := MenuBar.Tag;
+	  }
 end;
 
 procedure TMyFiles3Form.ControlBarBandMove(Sender: TObject; Control: TControl;
