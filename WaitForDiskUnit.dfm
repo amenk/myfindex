@@ -490,11 +490,6 @@ object frmWaitForDisk: TfrmWaitForDisk
     Width = 89
     Height = 25
     Caption = 'Abbrechen'
-    TabOrder = 1
-    BevelWidth = 1
-    BevelWidthM = 2
-    BevelWidthDown = 1
-    Kind = bkCancel
   end
   object fbLWs: TSpeedButton
     Left = 8
@@ -502,11 +497,7 @@ object frmWaitForDisk: TfrmWaitForDisk
     Width = 89
     Height = 25
     Caption = 'Laufwerke...'
-    TabOrder = 2
     OnClick = fbLWsClick
-    BevelWidth = 1
-    BevelWidthM = 2
-    BevelWidthDown = 1
   end
   object mNote: TMemo
     Left = 184
@@ -524,11 +515,6 @@ object frmWaitForDisk: TfrmWaitForDisk
     Width = 89
     Height = 25
     Caption = 'OK'
-    TabOrder = 0
     OnClick = fbOKClick
-    BevelWidth = 1
-    BevelWidthM = 2
-    BevelWidthDown = 1
-    Kind = bkOK
   end
 end

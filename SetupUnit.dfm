@@ -202,11 +202,7 @@ object frmConfig: TfrmConfig
       Font.Name = 'MS Sans Serif'
       Font.Style = []
       ParentFont = False
-      TabOrder = 1
       OnClick = fbAboutPluginClick
-      BevelWidth = 1
-      BevelWidthM = 2
-      BevelWidthDown = 1
       NumGlyphs = 2
     end
     object fbConfigPlugin: TSpeedButton
@@ -223,11 +219,7 @@ object frmConfig: TfrmConfig
       Font.Name = 'MS Sans Serif'
       Font.Style = []
       ParentFont = False
-      TabOrder = 2
       OnClick = fbConfigPluginClick
-      BevelWidth = 1
-      BevelWidthM = 2
-      BevelWidthDown = 1
       NumGlyphs = 2
     end
   end
@@ -791,11 +783,7 @@ object frmConfig: TfrmConfig
     Caption = 'OK'
     Default = True
     ModalResult = 1
-    TabOrder = 0
     OnClick = btnOkClick
-    BevelWidth = 1
-    BevelWidthM = 2
-    BevelWidthDown = 1
     Glyph.Data = {
       DE010000424DDE01000000000000760000002800000024000000120000000100
       0400000000006801000000000000000000001000000000000000000000000000
@@ -827,11 +815,6 @@ object frmConfig: TfrmConfig
     Font.Name = 'MS Sans Serif'
     Font.Style = []
     ParentFont = False
-    TabOrder = 1
-    BevelWidth = 1
-    BevelWidthM = 2
-    BevelWidthDown = 1
-    Kind = bkCancel
   end
   object btnReset: TSpeedButton
     Left = 336
@@ -839,11 +822,7 @@ object frmConfig: TfrmConfig
     Width = 73
     Height = 26
     Caption = 'Reset'
-    TabOrder = 2
     OnClick = btnResetClick
-    BevelWidth = 1
-    BevelWidthM = 2
-    BevelWidthDown = 1
     Glyph.Data = {
       DE010000424DDE01000000000000760000002800000024000000120000000100
       0400000000006801000000000000000000001000000000000000000000000000

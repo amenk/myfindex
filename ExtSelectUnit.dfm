@@ -42,11 +42,6 @@ object frmExtSelect: TfrmExtSelect
       Font.Name = 'MS Sans Serif'
       Font.Style = []
       ParentFont = False
-      TabOrder = 0
-      BevelWidth = 1
-      BevelWidthM = 2
-      BevelWidthDown = 1
-      Kind = bkCancel
     end
     object btnOK: TSpeedButton
       Left = 161
@@ -60,11 +55,6 @@ object frmExtSelect: TfrmExtSelect
       Font.Name = 'MS Sans Serif'
       Font.Style = []
       ParentFont = False
-      TabOrder = 1
-      BevelWidth = 1
-      BevelWidthM = 2
-      BevelWidthDown = 1
-      Kind = bkOK
     end
   end
   object lvListSel: TListView

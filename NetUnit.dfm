@@ -157,10 +157,6 @@ object NetForm: TNetForm
       Width = 82
       Height = 22
       Caption = '< Seite zur¸ck'
-      TabOrder = 0
-      BevelWidth = 1
-      BevelWidthM = 2
-      BevelWidthDown = 1
     end
     object FlatButton3: TSpeedButton
       Left = 96
@@ -168,10 +164,6 @@ object NetForm: TNetForm
       Width = 82
       Height = 22
       Caption = 'Seite vor >'
-      TabOrder = 1
-      BevelWidth = 1
-      BevelWidthM = 2
-      BevelWidthDown = 1
     end
     object FlatButton4: TSpeedButton
       Left = 216
@@ -179,10 +171,6 @@ object NetForm: TNetForm
       Width = 57
       Height = 22
       Caption = 'Hilfe Index'
-      TabOrder = 2
-      BevelWidth = 1
-      BevelWidthM = 2
-      BevelWidthDown = 1
     end
     object FlatButton5: TSpeedButton
       Left = 275
@@ -190,10 +178,6 @@ object NetForm: TNetForm
       Width = 54
       Height = 22
       Caption = 'Forum'
-      TabOrder = 3
-      BevelWidth = 1
-      BevelWidthM = 2
-      BevelWidthDown = 1
     end
     object FlatButton6: TSpeedButton
       Left = 331
@@ -201,11 +185,7 @@ object NetForm: TNetForm
       Width = 59
       Height = 22
       Caption = 'self soft'
-      TabOrder = 4
       OnClick = FlatButton6Click
-      BevelWidth = 1
-      BevelWidthM = 2
-      BevelWidthDown = 1
     end
     object FlatButton7: TSpeedButton
       Left = 392
@@ -213,10 +193,6 @@ object NetForm: TNetForm
       Width = 56
       Height = 22
       Caption = 'Update?'
-      TabOrder = 5
-      BevelWidth = 1
-      BevelWidthM = 2
-      BevelWidthDown = 1
     end
     object FlatButton2: TSpeedButton
       Left = 528
@@ -225,10 +201,6 @@ object NetForm: TNetForm
       Height = 22
       Anchors = [akLeft, akTop, akRight]
       Caption = 'schlieﬂen'
-      TabOrder = 6
-      BevelWidth = 1
-      BevelWidthM = 2
-      BevelWidthDown = 1
     end
   end
 end

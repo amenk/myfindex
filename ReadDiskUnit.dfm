@@ -162,12 +162,7 @@ object frmReadDisk: TfrmReadDisk
     Width = 87
     Height = 26
     Caption = 'Einlesen'
-    TabOrder = 1
     OnClick = btnStartClick
-    BevelWidth = 1
-    BevelWidthM = 2
-    BevelWidthDown = 1
-    Kind = bkOK
   end
   object btnFinish: TSpeedButton
     Left = 328
@@ -183,11 +178,7 @@ object frmReadDisk: TfrmReadDisk
     Font.Style = []
     ModalResult = 2
     ParentFont = False
-    TabOrder = 2
     OnClick = btnFinishClick
-    BevelWidth = 1
-    BevelWidthM = 2
-    BevelWidthDown = 1
     Glyph.Data = {
       76010000424D7601000000000000760000002800000020000000100000000100
       0400000000000001000000000000000000001000000000000000000000000000
@@ -209,12 +200,7 @@ object frmReadDisk: TfrmReadDisk
     Width = 87
     Height = 26
     Caption = 'Abbrechen'
-    TabOrder = 3
     OnClick = btnCancelClick
-    BevelWidth = 1
-    BevelWidthM = 2
-    BevelWidthDown = 1
-    Kind = bkCancel
   end
   object tsOptions: TPageControl
     Left = 8
@@ -447,12 +433,7 @@ object frmReadDisk: TfrmReadDisk
         Hint = 'Feld/PlugIn beim Einlesen nutzen.'
         Cancel = True
         Enabled = False
-        TabOrder = 1
-        TabStop = False
         OnClick = fbAddClick
-        BevelWidth = 1
-        BevelWidthM = 2
-        BevelWidthDown = 1
         Glyph.Data = {
           76010000424D7601000000000000760000002800000020000000100000000100
           0400000000000001000000000000000000001000000000000000000000000000
@@ -476,12 +457,7 @@ object frmReadDisk: TfrmReadDisk
         Hint = 'Feld/PlugIn NICHT beim Einlesen nutzen.'
         Cancel = True
         Enabled = False
-        TabOrder = 2
-        TabStop = False
         OnClick = fbDelClick
-        BevelWidth = 1
-        BevelWidthM = 2
-        BevelWidthDown = 1
         Glyph.Data = {
           76010000424D7601000000000000760000002800000020000000100000000100
           0400000000000001000000000000000000001000000000000000000000000000
@@ -534,12 +510,7 @@ object frmReadDisk: TfrmReadDisk
         Hint = 'Priorität erhöhen.'
         Cancel = True
         Enabled = False
-        TabOrder = 4
-        TabStop = False
         OnClick = fbPUpClick
-        BevelWidth = 1
-        BevelWidthM = 2
-        BevelWidthDown = 1
         Glyph.Data = {
           76010000424D7601000000000000760000002800000020000000100000000100
           04000000000000010000120B0000120B00001000000000000000000000000000
@@ -563,12 +534,7 @@ object frmReadDisk: TfrmReadDisk
         Hint = 'Priorität niedriger.'
         Cancel = True
         Enabled = False
-        TabOrder = 5
-        TabStop = False
         OnClick = fbPDownClick
-        BevelWidth = 1
-        BevelWidthM = 2
-        BevelWidthDown = 1
         Glyph.Data = {
           76010000424D7601000000000000760000002800000020000000100000000100
           04000000000000010000120B0000120B00001000000000000000000000000000
@@ -615,11 +581,7 @@ object frmReadDisk: TfrmReadDisk
           Hint = 'MP3-Vorschau Optionen'
           Cancel = True
           Caption = 'Optionen...'
-          TabOrder = 3
           OnClick = fbCfgGenClick
-          BevelWidth = 1
-          BevelWidthM = 2
-          BevelWidthDown = 1
           NumGlyphs = 2
         end
         object ckImgPrev: TCheckBox
@@ -642,11 +604,7 @@ object frmReadDisk: TfrmReadDisk
           Hint = 'Bild-Vorschau Optionen'
           Cancel = True
           Caption = 'Optionen...'
-          TabOrder = 1
           OnClick = fbCfgGenClick
-          BevelWidth = 1
-          BevelWidthM = 2
-          BevelWidthDown = 1
           NumGlyphs = 2
         end
       end
@@ -666,7 +624,6 @@ object frmReadDisk: TfrmReadDisk
             'FileID.DIZ in jedem Ordner'#13#10'suchen und falls vorhanden,'#13#10'die Ord' +
             'nernotiz mit dem Inhalt'#13#10'der Datei füllen.'
           Caption = 'FileID.DIZ'
-          TabOrder = 0
         end
         object ckDescriptION: TCheckBox
           Left = 8

@@ -54,10 +54,6 @@ object frmBegriffe: TfrmBegriffe
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsBold]
       ParentFont = False
-      TabOrder = 0
-      BevelWidth = 1
-      BevelWidthM = 2
-      BevelWidthDown = 1
       Kind = bkCancel
     end
     object btnOK: TSpeedButton
@@ -72,10 +68,6 @@ object frmBegriffe: TfrmBegriffe
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsBold]
       ParentFont = False
-      TabOrder = 1
-      BevelWidth = 1
-      BevelWidthM = 2
-      BevelWidthDown = 1
       Kind = bkOK
     end
   end
@@ -108,11 +100,7 @@ object frmBegriffe: TfrmBegriffe
     Height = 20
     Hint = 'aus Liste entfernen'
     Enabled = False
-    TabOrder = 2
     OnClick = fbDelClick
-    BevelWidth = 1
-    BevelWidthM = 2
-    BevelWidthDown = 1
     Glyph.Data = {
       76010000424D7601000000000000760000002800000020000000100000000100
       04000000000000010000130B0000130B00001000000000000000000000000000
@@ -134,11 +122,7 @@ object frmBegriffe: TfrmBegriffe
     Width = 38
     Height = 20
     Hint = 'zu Liste hinzufügen'
-    TabOrder = 1
     OnClick = fbAddClick
-    BevelWidth = 1
-    BevelWidthM = 2
-    BevelWidthDown = 1
     Glyph.Data = {
       76010000424D7601000000000000760000002800000020000000100000000100
       04000000000000010000130B0000130B00001000000000000000000000000000

@@ -159,12 +159,7 @@ object frmListExport: TfrmListExport
     Height = 25
     Caption = 'OK'
     Enabled = False
-    TabOrder = 0
     OnClick = btnOkClick
-    BevelWidth = 1
-    BevelWidthM = 2
-    BevelWidthDown = 1
-    Kind = bkOK
   end
   object btnAbort: TSpeedButton
     Left = 272
@@ -172,11 +167,6 @@ object frmListExport: TfrmListExport
     Width = 87
     Height = 25
     Caption = 'Abbrechen'
-    TabOrder = 1
-    BevelWidth = 1
-    BevelWidthM = 2
-    BevelWidthDown = 1
-    Kind = bkCancel
   end
   object gb1: TGroupBox
     Left = 8
@@ -541,14 +531,13 @@ object frmListExport: TfrmListExport
         Height = 89
         Caption = ' Sortierungs-Spalten '
         TabOrder = 1
-        object fsbUp: TFlatSpeedButton
+        object fsbUp: TSpeedButton
           Tag = -1
           Left = 152
           Top = 24
           Width = 25
           Height = 25
           Enabled = False
-          Flat = True
           Glyph.Data = {
             76010000424D7601000000000000760000002800000020000000100000000100
             04000000000000010000120B0000120B00001000000000000000000000000000
@@ -565,14 +554,13 @@ object frmListExport: TfrmListExport
           NumGlyphs = 2
           OnClick = fsbExcGenClick
         end
-        object fsbDown: TFlatSpeedButton
+        object fsbDown: TSpeedButton
           Tag = 1
           Left = 152
           Top = 56
           Width = 25
           Height = 25
           Enabled = False
-          Flat = True
           Glyph.Data = {
             76010000424D7601000000000000760000002800000020000000100000000100
             04000000000000010000120B0000120B00001000000000000000000000000000

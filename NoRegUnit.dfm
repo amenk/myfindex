@@ -82,11 +82,6 @@ object NoRegForm: TNoRegForm
     Width = 86
     Height = 25
     Caption = 'OK'
-    TabOrder = 1
-    BevelWidth = 1
-    BevelWidthM = 2
-    BevelWidthDown = 1
-    Kind = bkOK
   end
   object btnRegMe: TSpeedButton
     Left = 8
@@ -96,10 +91,6 @@ object NoRegForm: TNoRegForm
     Caption = 'jetzt &registrieren'
     Default = True
     ModalResult = 6
-    TabOrder = 0
-    BevelWidth = 1
-    BevelWidthM = 2
-    BevelWidthDown = 1
     NumGlyphs = 2
   end
   object XPMenu: TXPMenu

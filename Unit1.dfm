@@ -860,11 +860,7 @@ object MyFiles3Form: TMyFiles3Form
                 Width = 38
                 Height = 20
                 Hint = 'Einschränkung des Suchbereichs hinzufügen.'
-                TabOrder = 0
                 OnClick = fbAddClick
-                BevelWidth = 1
-                BevelWidthM = 2
-                BevelWidthDown = 1
                 Glyph.Data = {
                   76010000424D7601000000000000760000002800000020000000100000000100
                   04000000000000010000130B0000130B00001000000000000000000000000000
@@ -886,11 +882,7 @@ object MyFiles3Form: TMyFiles3Form
                 Width = 38
                 Height = 20
                 Hint = 'Einschränkung löschen.'
-                TabOrder = 1
                 OnClick = fbDelClick
-                BevelWidth = 1
-                BevelWidthM = 2
-                BevelWidthDown = 1
                 Glyph.Data = {
                   76010000424D7601000000000000760000002800000020000000100000000100
                   04000000000000010000130B0000130B00001000000000000000000000000000
@@ -1119,11 +1111,7 @@ object MyFiles3Form: TMyFiles3Form
                 Height = 20
                 Hint = 'Bedingung hinzufügen.'
                 Enabled = False
-                TabOrder = 2
                 OnClick = fbAddEClick
-                BevelWidth = 1
-                BevelWidthM = 2
-                BevelWidthDown = 1
                 Glyph.Data = {
                   76010000424D7601000000000000760000002800000020000000100000000100
                   04000000000000010000130B0000130B00001000000000000000000000000000
@@ -1146,11 +1134,7 @@ object MyFiles3Form: TMyFiles3Form
                 Height = 20
                 Hint = 'Bedingung löschen.'
                 Enabled = False
-                TabOrder = 3
                 OnClick = fbDelEClick
-                BevelWidth = 1
-                BevelWidthM = 2
-                BevelWidthDown = 1
                 Glyph.Data = {
                   76010000424D7601000000000000760000002800000020000000100000000100
                   04000000000000010000130B0000130B00001000000000000000000000000000
@@ -1306,11 +1290,7 @@ object MyFiles3Form: TMyFiles3Form
                   'brochen werden.'
                 Anchors = [akTop]
                 Caption = 'Su&che starten'
-                TabOrder = 0
                 OnClick = btnStartClick
-                BevelWidth = 1
-                BevelWidthM = 2
-                BevelWidthDown = 1
                 Glyph.Data = {
                   DE010000424DDE01000000000000760000002800000024000000120000000100
                   0400000000006801000000000000000000001000000000000000000000000000
@@ -1338,11 +1318,7 @@ object MyFiles3Form: TMyFiles3Form
                 Hint = 'Alle Eingaben löschen. (Vorsicht!)'
                 Anchors = [akTop]
                 Caption = 'neue Suche'
-                TabOrder = 1
                 OnClick = fbSearchResetClick
-                BevelWidth = 1
-                BevelWidthM = 2
-                BevelWidthDown = 1
                 Glyph.Data = {
                   76010000424D7601000000000000760000002800000020000000100000000100
                   04000000000000010000120B0000120B00001000000000000000000000000000
@@ -1422,7 +1398,6 @@ object MyFiles3Form: TMyFiles3Form
             Height = 17
             Anchors = [akLeft, akTop, akRight]
             Caption = 'Laufwerksstatus abfragen'
-            Flat = True
             Font.Charset = DEFAULT_CHARSET
             Font.Color = clWindowText
             Font.Height = -9
@@ -1444,6 +1419,7 @@ object MyFiles3Form: TMyFiles3Form
       Align = alClient
       Color = clWindow
       ParentColor = False
+      TabO
       TabOrder = 1
       OnResize = sbPropsResize
       object lblPrevNoSelection: TLabel
@@ -1732,12 +1708,7 @@ object MyFiles3Form: TMyFiles3Form
         Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
-        TabOrder = 1
-        TabStop = False
         OnClick = fbPropHideClick
-        BevelWidth = 1
-        BevelWidthM = 2
-        BevelWidthDown = 1
       end
     end
   end
@@ -3053,11 +3024,7 @@ object MyFiles3Form: TMyFiles3Form
         Font.Name = 'Arial'
         Font.Style = [fsBold, fsItalic]
         ParentFont = False
-        TabOrder = 0
         OnClick = btnRegClick
-        BevelWidth = 1
-        BevelWidthM = 2
-        BevelWidthDown = 1
       end
       object tbUpd: TToolButton
         Left = 583

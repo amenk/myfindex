@@ -44,11 +44,7 @@ object frmSammlung: TfrmSammlung
     Default = True
     Enabled = False
     ModalResult = 1
-    TabOrder = 2
     OnClick = btnOkClick
-    BevelWidth = 1
-    BevelWidthM = 2
-    BevelWidthDown = 1
     Glyph.Data = {
       DE010000424DDE01000000000000760000002800000024000000120000000100
       0400000000006801000000000000000000001000000000000000000000000000
@@ -74,11 +70,6 @@ object frmSammlung: TfrmSammlung
     Width = 86
     Height = 25
     Caption = 'Abbrechen'
-    TabOrder = 3
-    BevelWidth = 1
-    BevelWidthM = 2
-    BevelWidthDown = 1
-    Kind = bkCancel
   end
   object gb2: TGroupBox
     Left = 8

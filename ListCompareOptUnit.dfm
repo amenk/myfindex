@@ -175,12 +175,7 @@ object frmListCompareOpt: TfrmListCompareOpt
     Height = 25
     Caption = 'OK'
     Enabled = False
-    TabOrder = 1
     OnClick = btnOkClick
-    BevelWidth = 1
-    BevelWidthM = 2
-    BevelWidthDown = 1
-    Kind = bkOK
   end
   object btnAbort: TSpeedButton
     Left = 256
@@ -188,11 +183,6 @@ object frmListCompareOpt: TfrmListCompareOpt
     Width = 86
     Height = 25
     Caption = 'Abbrechen'
-    TabOrder = 2
-    BevelWidth = 1
-    BevelWidthM = 2
-    BevelWidthDown = 1
-    Kind = bkCancel
   end
   object gb1: TGroupBox
     Left = 16
