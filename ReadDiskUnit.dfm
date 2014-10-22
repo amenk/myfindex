@@ -163,10 +163,6 @@ object frmReadDisk: TfrmReadDisk
     Height = 26
     Caption = 'Einlesen'
     OnClick = btnStartClick
-<<<<<<< Updated upstream
-=======
-    Kind = bkOK
->>>>>>> Stashed changes
   end
   object btnFinish: TSpeedButton
     Left = 328
@@ -205,10 +201,6 @@ object frmReadDisk: TfrmReadDisk
     Height = 26
     Caption = 'Abbrechen'
     OnClick = btnCancelClick
-<<<<<<< Updated upstream
-=======
-    Kind = bkCancel
->>>>>>> Stashed changes
   end
   object tsOptions: TPageControl
     Left = 8

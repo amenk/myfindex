@@ -27,7 +27,7 @@ uses
   ShellAPI, DropSource, Spin, Buttons, ImgList, Grids, dbtables, IniFiles,
   Clipbrd, AppEvnts, CheckLst, jpeg, ElSounds, itemprop, SplashFUnit, DBGrids,
   ElHeader, FlatButton, Animate, Registry, Mask,
-  ToolEdit, XPMenu, FoldrDlg;
+  ToolEdit, XPMenu, FoldrDlg, JvMaskEdit;
 
 const
   lvt_file = 1;

@@ -160,10 +160,6 @@ object frmListExport: TfrmListExport
     Caption = 'OK'
     Enabled = False
     OnClick = btnOkClick
-<<<<<<< Updated upstream
-=======
-    Kind = bkOK
->>>>>>> Stashed changes
   end
   object btnAbort: TSpeedButton
     Left = 272

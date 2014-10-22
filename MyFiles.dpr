@@ -34,7 +34,8 @@ uses
   StringListEditUnit in 'StringListEditUnit.pas' {frmBegriffe},
   myf_search in 'myf_search.pas',
   myf_plugins in 'myf_plugins.pas',
-  CopyToDisksUnit in 'CopyToDisksUnit.pas' {frmCopyDisksUsed};
+  CopyToDisksUnit in 'CopyToDisksUnit.pas' {frmCopyDisksUsed},
+  ElSounds in 'DummyUnits\ElSounds.pas';
 
 //  NetUnit in 'NetUnit.pas' {NetForm};
 

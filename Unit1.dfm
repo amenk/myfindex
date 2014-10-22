@@ -3,7 +3,7 @@ object MyFiles3Form: TMyFiles3Form
   Top = 143
   HelpContext = 10000
   AutoScroll = False
-  Caption = 'MyFindex - keine Sammlung geöffnet'
+  Caption = 'MyFindex - keine Sammlung ge'#246'ffnet'
   ClientHeight = 625
   ClientWidth = 809
   Color = clBtnFace
@@ -19,14 +19,15 @@ object MyFiles3Form: TMyFiles3Form
   OnDestroy = FormDestroy
   OnPaint = FormPaint
   OnShortCut = FormShortCut
+  DesignSize = (
+    809
+    625)
   PixelsPerInch = 96
   TextHeight = 13
   object Splitter1: TSplitter
     Left = 250
     Top = 106
-    Width = 3
     Height = 500
-    Cursor = crHSplit
     ResizeStyle = rsUpdate
   end
   object sbMain: TStatusBar
@@ -43,11 +44,10 @@ object MyFiles3Form: TMyFiles3Form
       end
       item
         Text = 
-          'Copyright © 2000-04 by Alexander Menk aka '#39'self'#39' - Alle Rechte v' +
+          'Copyright '#169' 2000-04 by Alexander Menk aka '#39'self'#39' - Alle Rechte v' +
           'orbehalten.'
         Width = 594
       end>
-    SimplePanel = False
   end
   object pbProgress: TProgressBar
     Left = 288
@@ -56,8 +56,6 @@ object MyFiles3Form: TMyFiles3Form
     Height = 11
     Cursor = crHourGlass
     Anchors = [akLeft, akRight, akBottom]
-    Min = 0
-    Max = 100
     TabOrder = 4
     Visible = False
   end
@@ -149,7 +147,7 @@ object MyFiles3Form: TMyFiles3Form
       end
       object tsDisks: TTabSheet
         HelpContext = 920
-        Caption = 'Daten&träger'
+        Caption = 'Daten&tr'#228'ger'
         ImageIndex = -1
         OnEnter = tspc1Enter
         object btnTVDummy: TButton
@@ -194,6 +192,9 @@ object MyFiles3Form: TMyFiles3Form
           Align = alTop
           BevelOuter = bvNone
           TabOrder = 0
+          DesignSize = (
+            238
+            52)
           object Shape2: TShape
             Left = 0
             Top = 0
@@ -316,7 +317,7 @@ object MyFiles3Form: TMyFiles3Form
             object tblColor: TToolButton
               Left = 23
               Top = 0
-              Hint = 'Farbe des Liste wählen.'
+              Hint = 'Farbe des Liste w'#228'hlen.'
               Caption = 'Farbe...'
               Enabled = False
               ImageIndex = 51
@@ -359,8 +360,8 @@ object MyFiles3Form: TMyFiles3Form
             object tbLDel: TToolButton
               Left = 115
               Top = 0
-              Hint = 'Liste löschen.'
-              Caption = 'Löschen'
+              Hint = 'Liste l'#246'schen.'
+              Caption = 'L'#246'schen'
               Enabled = False
               ImageIndex = 12
               MenuItem = menLRemove
@@ -408,6 +409,9 @@ object MyFiles3Form: TMyFiles3Form
         ImageIndex = 10
         OnEnter = tsSearchEnter
         OnResize = tsSearchResize
+        DesignSize = (
+          238
+          199)
         object spToleranz: TSpeedButton
           Left = 157
           Top = 7
@@ -569,12 +573,15 @@ object MyFiles3Form: TMyFiles3Form
               ParentCtl3D = False
               TabOrder = 0
               Visible = False
+              DesignSize = (
+                200
+                61)
               object chkMinSize: TCheckBox
                 Left = 8
                 Top = 16
                 Width = 57
                 Height = 17
-                Hint = 'Mindestgröße festlegen.'
+                Hint = 'Mindestgr'#246#223'e festlegen.'
                 Caption = '&minimal'
                 Ctl3D = True
                 ParentCtl3D = False
@@ -586,7 +593,7 @@ object MyFiles3Form: TMyFiles3Form
                 Top = 8
                 Width = 40
                 Height = 21
-                Hint = 'Einheit der Größenangabe.'
+                Hint = 'Einheit der Gr'#246#223'enangabe.'
                 Style = csDropDownList
                 Anchors = [akTop, akRight]
                 Ctl3D = True
@@ -606,7 +613,7 @@ object MyFiles3Form: TMyFiles3Form
                 Top = 32
                 Width = 40
                 Height = 21
-                Hint = 'Einheit der Größenangabe.'
+                Hint = 'Einheit der Gr'#246#223'enangabe.'
                 Style = csDropDownList
                 Anchors = [akTop, akRight]
                 Ctl3D = True
@@ -626,9 +633,9 @@ object MyFiles3Form: TMyFiles3Form
                 Top = 8
                 Width = 73
                 Height = 21
-                Hint = 'Größenangabe.'
+                Hint = 'Gr'#246#223'enangabe.'
                 Alignment = taRightJustify
-                MaxValue = 2147483647
+                MaxValue = 2147483647.000000000000000000
                 Ctl3D = True
                 Anchors = [akLeft, akTop, akRight]
                 ParentCtl3D = False
@@ -641,7 +648,7 @@ object MyFiles3Form: TMyFiles3Form
                 Top = 40
                 Width = 57
                 Height = 17
-                Hint = 'Maximalgröße festlegen.'
+                Hint = 'Maximalgr'#246#223'e festlegen.'
                 Caption = 'ma&ximal'
                 Ctl3D = True
                 ParentCtl3D = False
@@ -653,9 +660,9 @@ object MyFiles3Form: TMyFiles3Form
                 Top = 32
                 Width = 73
                 Height = 21
-                Hint = 'Größenangabe.'
+                Hint = 'Gr'#246#223'enangabe.'
                 Alignment = taRightJustify
-                MaxValue = 2147483647
+                MaxValue = 2147483647.000000000000000000
                 Ctl3D = True
                 Anchors = [akLeft, akTop, akRight]
                 ParentCtl3D = False
@@ -680,8 +687,8 @@ object MyFiles3Form: TMyFiles3Form
                 Width = 38
                 Height = 13
                 Cursor = crHandPoint
-                Hint = 'öffnet ==> Eingrenzung nach Dateigröße.'
-                Caption = '&Größe »'
+                Hint = #246'ffnet ==> Eingrenzung nach Dateigr'#246#223'e.'
+                Caption = '&Gr'#246#223'e '#187
                 FocusControl = pHSize
                 Font.Charset = DEFAULT_CHARSET
                 Font.Color = clBlue
@@ -712,7 +719,7 @@ object MyFiles3Form: TMyFiles3Form
                 Width = 153
                 Height = 17
                 Hint = 'Minmaldatum festlegen.'
-                Caption = '&kleinstes (ältestes) Datum'
+                Caption = '&kleinstes ('#228'ltestes) Datum'
                 Ctl3D = True
                 ParentCtl3D = False
                 TabOrder = 0
@@ -724,13 +731,8 @@ object MyFiles3Form: TMyFiles3Form
                 Width = 81
                 Height = 21
                 Hint = 'Datum.'
-                CalAlignment = dtaLeft
-                Date = 37167.6910709375
-                Time = 37167.6910709375
-                DateFormat = dfShort
-                DateMode = dmComboBox
-                Kind = dtkDate
-                ParseInput = False
+                Date = 37167.691070937500000000
+                Time = 37167.691070937500000000
                 TabOrder = 1
                 Visible = False
                 OnChange = dtpMinDateChange
@@ -741,13 +743,8 @@ object MyFiles3Form: TMyFiles3Form
                 Width = 81
                 Height = 21
                 Hint = 'Datum.'
-                CalAlignment = dtaLeft
-                Date = 37167.6910709375
-                Time = 37167.6910709375
-                DateFormat = dfShort
-                DateMode = dmComboBox
-                Kind = dtkDate
-                ParseInput = False
+                Date = 37167.691070937500000000
+                Time = 37167.691070937500000000
                 TabOrder = 5
                 Visible = False
                 OnChange = dtpMaxDateChange
@@ -758,7 +755,7 @@ object MyFiles3Form: TMyFiles3Form
                 Width = 153
                 Height = 17
                 Hint = 'Maximaldatum festlegen.'
-                Caption = '&größtes (jüngstes) Datum'
+                Caption = '&gr'#246#223'tes (j'#252'ngstes) Datum'
                 Ctl3D = True
                 ParentCtl3D = False
                 TabOrder = 3
@@ -770,13 +767,9 @@ object MyFiles3Form: TMyFiles3Form
                 Width = 73
                 Height = 21
                 Hint = 'Uhrzeit.'
-                CalAlignment = dtaLeft
-                Date = 37167
-                Time = 37167
-                DateFormat = dfShort
-                DateMode = dmComboBox
+                Date = 37167.000000000000000000
+                Time = 37167.000000000000000000
                 Kind = dtkTime
-                ParseInput = False
                 TabOrder = 2
                 Visible = False
                 OnChange = dtpMinTimeChange
@@ -787,13 +780,9 @@ object MyFiles3Form: TMyFiles3Form
                 Width = 73
                 Height = 21
                 Hint = 'Uhrzeit.'
-                CalAlignment = dtaLeft
-                Date = 37167
-                Time = 37167
-                DateFormat = dfShort
-                DateMode = dmComboBox
+                Date = 37167.000000000000000000
+                Time = 37167.000000000000000000
                 Kind = dtkTime
-                ParseInput = False
                 TabOrder = 4
                 Visible = False
                 OnChange = dtpMaxTimeChange
@@ -815,8 +804,8 @@ object MyFiles3Form: TMyFiles3Form
                 Width = 89
                 Height = 13
                 Cursor = crHandPoint
-                Hint = 'öffnet ==> Eingrenzung nach Änderungsdatum.'
-                Caption = 'Ä&nderungsdatum »'
+                Hint = #246'ffnet ==> Eingrenzung nach '#196'nderungsdatum.'
+                Caption = #196'&nderungsdatum '#187
                 FocusControl = pHSearchDate
                 Font.Charset = DEFAULT_CHARSET
                 Font.Color = clBlue
@@ -841,26 +830,15 @@ object MyFiles3Form: TMyFiles3Form
               ParentCtl3D = False
               TabOrder = 4
               Visible = False
-              object lbSearchIn: TListBox
-                Left = 8
-                Top = 29
-                Width = 69
-                Height = 66
-                Anchors = [akLeft, akTop, akRight]
-                Ctl3D = True
-                ItemHeight = 13
-                ParentCtl3D = False
-                TabOrder = 2
-                OnClick = lbSearchInClick
-                OnDblClick = lbSearchInDblClick
-              end
+              DesignSize = (
+                200
+                102)
               object fbAdd: TSpeedButton
                 Left = 8
                 Top = 7
                 Width = 38
                 Height = 20
-                Hint = 'Einschränkung des Suchbereichs hinzufügen.'
-                OnClick = fbAddClick
+                Hint = 'Einschr'#228'nkung des Suchbereichs hinzuf'#252'gen.'
                 Glyph.Data = {
                   76010000424D7601000000000000760000002800000020000000100000000100
                   04000000000000010000130B0000130B00001000000000000000000000000000
@@ -875,14 +853,14 @@ object MyFiles3Form: TMyFiles3Form
                   333333333337733333FF3333333C333330003333333733333777333333333333
                   3000333333333333377733333333333333333333333333333333}
                 NumGlyphs = 2
+                OnClick = fbAddClick
               end
               object fbDel: TSpeedButton
                 Left = 49
                 Top = 7
                 Width = 38
                 Height = 20
-                Hint = 'Einschränkung löschen.'
-                OnClick = fbDelClick
+                Hint = 'Einschr'#228'nkung l'#246'schen.'
                 Glyph.Data = {
                   76010000424D7601000000000000760000002800000020000000100000000100
                   04000000000000010000130B0000130B00001000000000000000000000000000
@@ -897,6 +875,20 @@ object MyFiles3Form: TMyFiles3Form
                   333333377F33333333FF3333C333333330003333733333333777333333333333
                   3000333333333333377733333333333333333333333333333333}
                 NumGlyphs = 2
+                OnClick = fbDelClick
+              end
+              object lbSearchIn: TListBox
+                Left = 8
+                Top = 29
+                Width = 67
+                Height = 66
+                Anchors = [akLeft, akTop, akRight]
+                Ctl3D = True
+                ItemHeight = 13
+                ParentCtl3D = False
+                TabOrder = 0
+                OnClick = lbSearchInClick
+                OnDblClick = lbSearchInDblClick
               end
             end
             object pnlHSearchIn: TPanel
@@ -915,8 +907,8 @@ object MyFiles3Form: TMyFiles3Form
                 Width = 57
                 Height = 13
                 Cursor = crHandPoint
-                Hint = 'öffnet ==> Einschränkung des Suchbereichs.'
-                Caption = 'S&uchen in »'
+                Hint = #246'ffnet ==> Einschr'#228'nkung des Suchbereichs.'
+                Caption = 'S&uchen in '#187
                 FocusControl = pnlHSearchIn
                 Font.Charset = DEFAULT_CHARSET
                 Font.Color = clBlue
@@ -940,14 +932,17 @@ object MyFiles3Form: TMyFiles3Form
               Ctl3D = False
               ParentCtl3D = False
               TabOrder = 7
+              DesignSize = (
+                200
+                35)
               object ScbName: TEdit
                 Left = 8
                 Top = 7
-                Width = 185
+                Width = 183
                 Height = 21
-                Hint = 'Suchtext: Alt+Nach unten öffnet den Suchtexteditor.'
-                Ctl3D = True
+                Hint = 'Suchtext: Alt+Nach unten '#246'ffnet den Suchtexteditor.'
                 Anchors = [akLeft, akTop, akRight]
+                Ctl3D = True
                 ParentCtl3D = False
                 TabOrder = 0
               end
@@ -1000,9 +995,9 @@ object MyFiles3Form: TMyFiles3Form
                 Height = 13
                 Cursor = crHandPoint
                 Hint = 
-                  'öffnet ==> Suche nach Dateieigenschaften (in Vorschau oder Notiz' +
+                  #246'ffnet ==> Suche nach Dateieigenschaften (in Vorschau oder Notiz' +
                   ')'
-                Caption = '&Inhalt (Vorschau, Notiz) »'
+                Caption = '&Inhalt (Vorschau, Notiz) '#187
                 FocusControl = pnlHNote
                 Font.Charset = DEFAULT_CHARSET
                 Font.Color = clBlue
@@ -1027,6 +1022,9 @@ object MyFiles3Form: TMyFiles3Form
               ParentCtl3D = False
               TabOrder = 9
               Visible = False
+              DesignSize = (
+                200
+                162)
               object Label6: TLabel
                 Left = 9
                 Top = 47
@@ -1041,13 +1039,59 @@ object MyFiles3Form: TMyFiles3Form
                 Height = 13
                 Caption = 'Eigenschaft:'
               end
+              object fbAddE: TSpeedButton
+                Left = 8
+                Top = 90
+                Width = 33
+                Height = 20
+                Hint = 'Bedingung hinzuf'#252'gen.'
+                Enabled = False
+                Glyph.Data = {
+                  76010000424D7601000000000000760000002800000020000000100000000100
+                  04000000000000010000130B0000130B00001000000000000000000000000000
+                  800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+                  FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00333333333333
+                  33333333FF33333333FF333993333333300033377F3333333777333993333333
+                  300033F77FFF3333377739999993333333333777777F3333333F399999933333
+                  33003777777333333377333993333333330033377F3333333377333993333333
+                  3333333773333333333F333333333333330033333333F33333773333333C3333
+                  330033333337FF3333773333333CC333333333FFFFF77FFF3FF33CCCCCCCCCC3
+                  993337777777777F77F33CCCCCCCCCC3993337777777777377333333333CC333
+                  333333333337733333FF3333333C333330003333333733333777333333333333
+                  3000333333333333377733333333333333333333333333333333}
+                NumGlyphs = 2
+                OnClick = fbAddEClick
+              end
+              object fbDelE: TSpeedButton
+                Left = 43
+                Top = 90
+                Width = 33
+                Height = 20
+                Hint = 'Bedingung l'#246'schen.'
+                Enabled = False
+                Glyph.Data = {
+                  76010000424D7601000000000000760000002800000020000000100000000100
+                  04000000000000010000130B0000130B00001000000000000000000000000000
+                  800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+                  FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00333333333333
+                  333333333333333333FF33333333333330003333333333333777333333333333
+                  300033FFFFFF3333377739999993333333333777777F3333333F399999933333
+                  3300377777733333337733333333333333003333333333333377333333333333
+                  3333333333333333333F333333333333330033333F33333333773333C3333333
+                  330033337F3333333377333CC3333333333333F77FFFFFFF3FF33CCCCCCCCCC3
+                  993337777777777F77F33CCCCCCCCCC399333777777777737733333CC3333333
+                  333333377F33333333FF3333C333333330003333733333333777333333333333
+                  3000333333333333377733333333333333333333333333333333}
+                NumGlyphs = 2
+                OnClick = fbDelEClick
+              end
               object cbProp: TComboBox
                 Left = 8
                 Top = 24
                 Width = 184
                 Height = 21
                 Hint = 
-                  'Durchsuchte Eigenschaft oder "alles" für komplette Notiz / Vorsc' +
+                  'Durchsuchte Eigenschaft oder "alles" f'#252'r komplette Notiz / Vorsc' +
                   'hau.'
                 Anchors = [akLeft, akTop, akRight]
                 ItemHeight = 13
@@ -1063,57 +1107,11 @@ object MyFiles3Form: TMyFiles3Form
                 Top = 63
                 Width = 185
                 Height = 21
-                Hint = 'Suchtext: Alt+Nach unten öffnet den Suchtexteditor.'
-                Ctl3D = True
+                Hint = 'Suchtext: Alt+Nach unten '#246'ffnet den Suchtexteditor.'
                 Anchors = [akLeft, akTop, akRight]
+                Ctl3D = True
                 ParentCtl3D = False
                 TabOrder = 1
-              end
-              object fbAddE: TSpeedButton
-                Left = 8
-                Top = 90
-                Width = 33
-                Height = 20
-                Hint = 'Bedingung hinzufügen.'
-                Enabled = False
-                OnClick = fbAddEClick
-                Glyph.Data = {
-                  76010000424D7601000000000000760000002800000020000000100000000100
-                  04000000000000010000130B0000130B00001000000000000000000000000000
-                  800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
-                  FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00333333333333
-                  33333333FF33333333FF333993333333300033377F3333333777333993333333
-                  300033F77FFF3333377739999993333333333777777F3333333F399999933333
-                  33003777777333333377333993333333330033377F3333333377333993333333
-                  3333333773333333333F333333333333330033333333F33333773333333C3333
-                  330033333337FF3333773333333CC333333333FFFFF77FFF3FF33CCCCCCCCCC3
-                  993337777777777F77F33CCCCCCCCCC3993337777777777377333333333CC333
-                  333333333337733333FF3333333C333330003333333733333777333333333333
-                  3000333333333333377733333333333333333333333333333333}
-                NumGlyphs = 2
-              end
-              object fbDelE: TSpeedButton
-                Left = 43
-                Top = 90
-                Width = 33
-                Height = 20
-                Hint = 'Bedingung löschen.'
-                Enabled = False
-                OnClick = fbDelEClick
-                Glyph.Data = {
-                  76010000424D7601000000000000760000002800000020000000100000000100
-                  04000000000000010000130B0000130B00001000000000000000000000000000
-                  800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
-                  FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00333333333333
-                  333333333333333333FF33333333333330003333333333333777333333333333
-                  300033FFFFFF3333377739999993333333333777777F3333333F399999933333
-                  3300377777733333337733333333333333003333333333333377333333333333
-                  3333333333333333333F333333333333330033333F33333333773333C3333333
-                  330033337F3333333377333CC3333333333333F77FFFFFFF3FF33CCCCCCCCCC3
-                  993337777777777F77F33CCCCCCCCCC399333777777777737733333CC3333333
-                  333333377F33333333FF3333C333333330003333733333333777333333333333
-                  3000333333333333377733333333333333333333333333333333}
-                NumGlyphs = 2
               end
               object lbContents: TListBox
                 Left = 8
@@ -1124,7 +1122,7 @@ object MyFiles3Form: TMyFiles3Form
                 Ctl3D = True
                 ItemHeight = 13
                 ParentCtl3D = False
-                TabOrder = 4
+                TabOrder = 2
                 OnClick = lbContentsClick
                 OnDblClick = lbContentsDblClick
               end
@@ -1145,8 +1143,8 @@ object MyFiles3Form: TMyFiles3Form
                 Width = 48
                 Height = 13
                 Cursor = crHandPoint
-                Hint = 'öffnet ==> Festlegung der Attribute.'
-                Caption = '&Attribute »'
+                Hint = #246'ffnet ==> Festlegung der Attribute.'
+                Caption = '&Attribute '#187
                 FocusControl = pHAttribute
                 Font.Charset = DEFAULT_CHARSET
                 Font.Color = clBlue
@@ -1237,6 +1235,9 @@ object MyFiles3Form: TMyFiles3Form
               BevelOuter = bvNone
               Color = clWindow
               TabOrder = 12
+              DesignSize = (
+                202
+                73)
               object bvBottom: TBevel
                 Left = 0
                 Top = 0
@@ -1255,7 +1256,6 @@ object MyFiles3Form: TMyFiles3Form
                   'brochen werden.'
                 Anchors = [akTop]
                 Caption = 'Su&che starten'
-                OnClick = btnStartClick
                 Glyph.Data = {
                   DE010000424DDE01000000000000760000002800000024000000120000000100
                   0400000000006801000000000000000000001000000000000000000000000000
@@ -1274,16 +1274,16 @@ object MyFiles3Form: TMyFiles3Form
                   8888888888888778888888880000888888888888888888888888888888888888
                   0000}
                 NumGlyphs = 2
+                OnClick = btnStartClick
               end
               object fbSearchReset: TSpeedButton
                 Left = 29
                 Top = 44
                 Width = 124
                 Height = 26
-                Hint = 'Alle Eingaben löschen. (Vorsicht!)'
+                Hint = 'Alle Eingaben l'#246'schen. (Vorsicht!)'
                 Anchors = [akTop]
                 Caption = 'neue Suche'
-                OnClick = fbSearchResetClick
                 Glyph.Data = {
                   76010000424D7601000000000000760000002800000020000000100000000100
                   04000000000000010000120B0000120B00001000000000000000000000000000
@@ -1298,6 +1298,7 @@ object MyFiles3Form: TMyFiles3Form
                   BBB35555F55555575F555550555555550BBB55575555555575F5555555555555
                   50BB555555555555575F555555555555550B5555555555555575}
                 NumGlyphs = 2
+                OnClick = fbSearchResetClick
               end
             end
           end
@@ -1326,8 +1327,8 @@ object MyFiles3Form: TMyFiles3Form
           Left = 0
           Top = 0
           Width = 219
-          Height = 88
-          Hint = '*Überblick über den Status der überwachten Laufwerke.'
+          Height = 90
+          Hint = '*'#220'berblick '#252'ber den Status der '#252'berwachten Laufwerke.'
           HelpContext = 971
           Align = alClient
           Columns = <
@@ -1349,13 +1350,16 @@ object MyFiles3Form: TMyFiles3Form
         end
         object pnlManUpdate: TPanel
           Left = 0
-          Top = 88
+          Top = 90
           Width = 219
           Height = 20
           Align = alBottom
           BevelOuter = bvNone
           TabOrder = 1
           Visible = False
+          DesignSize = (
+            219
+            20)
           object spUpdateDrv: TSpeedButton
             Left = 2
             Top = 2
@@ -1386,6 +1390,9 @@ object MyFiles3Form: TMyFiles3Form
       ParentColor = False
       TabOrder = 1
       OnResize = sbPropsResize
+      DesignSize = (
+        242
+        143)
       object lblPrevNoSelection: TLabel
         Left = 8
         Top = 17
@@ -1395,7 +1402,7 @@ object MyFiles3Form: TMyFiles3Form
         Anchors = [akLeft, akTop, akRight]
         AutoSize = False
         Caption = 
-          'Wähle rechts eine Datei, einen Ordner'#13#10'oder Datenträger und die ' +
+          'W'#228'hle rechts eine Datei, einen Ordner'#13#10'oder Datentr'#228'ger und die ' +
           'Vorschau, Notiz'#13#10'sowie Informationsfelder erscheinen hier.'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clGrayText
@@ -1403,6 +1410,21 @@ object MyFiles3Form: TMyFiles3Form
         Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
+      end
+      object fbPropHide: TSpeedButton
+        Left = 2
+        Top = 1
+        Width = 12
+        Height = 14
+        Hint = 'Eigenschaftsfenster mini- bzw. maximieren'
+        Caption = '-'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+        OnClick = fbPropHideClick
       end
       object pnlProps: TPanel
         Left = 6
@@ -1485,7 +1507,7 @@ object MyFiles3Form: TMyFiles3Form
             Width = 36
             Height = 13
             Cursor = crHandPoint
-            Hint = 'öffnet ==> Einschränkung des Suchbereichs.'
+            Hint = #246'ffnet ==> Einschr'#228'nkung des Suchbereichs.'
             Caption = 'Befehle'
             FocusControl = pnlHProps
             Font.Charset = DEFAULT_CHARSET
@@ -1527,7 +1549,7 @@ object MyFiles3Form: TMyFiles3Form
           Top = 54
           Width = 229
           Height = 58
-          Hint = '*Notizen zu Datenträgern, (Verbund-)Ordnern oder Dateien.'
+          Hint = '*Notizen zu Datentr'#228'gern, (Verbund-)Ordnern oder Dateien.'
           HelpContext = 972
           Align = alTop
           Font.Charset = DEFAULT_CHARSET
@@ -1645,7 +1667,7 @@ object MyFiles3Form: TMyFiles3Form
               end
               item
                 Alignment = taRightJustify
-                Caption = 'Größe'
+                Caption = 'Gr'#246#223'e'
                 Width = 66
               end
               item
@@ -1659,21 +1681,6 @@ object MyFiles3Form: TMyFiles3Form
           end
         end
       end
-      object fbPropHide: TSpeedButton
-        Left = 2
-        Top = 1
-        Width = 12
-        Height = 14
-        Hint = 'Eigenschaftsfenster mini- bzw. maximieren'
-        Caption = '-'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -9
-        Font.Name = 'Arial'
-        Font.Style = []
-        ParentFont = False
-        OnClick = fbPropHideClick
-      end
     end
   end
   object aniFind: TAnimate
@@ -1681,7 +1688,6 @@ object MyFiles3Form: TMyFiles3Form
     Top = 185
     Width = 80
     Height = 50
-    Active = False
     Color = clWhite
     CommonAVI = aviFindFolder
     ParentColor = False
@@ -2859,9 +2865,12 @@ object MyFiles3Form: TMyFiles3Form
     TabOrder = 5
     OnBandInfo = ControlBarBandInfo
     OnBandMove = ControlBarBandMove
+    DesignSize = (
+      809
+      106)
     object ToolBar: TToolBar
       Left = 11
-      Top = 27
+      Top = 2
       Width = 631
       Height = 52
       AutoSize = True
@@ -2880,7 +2889,7 @@ object MyFiles3Form: TMyFiles3Form
       object tbCol: TToolButton
         Left = 0
         Top = 0
-        Hint = 'Erstellt eine neue Sammlung / wählt vorhandene Sammlungen aus.'
+        Hint = 'Erstellt eine neue Sammlung / w'#228'hlt vorhandene Sammlungen aus.'
         Caption = 'Sammlungen'
         DropdownMenu = pmCols
         ImageIndex = 0
@@ -2888,15 +2897,15 @@ object MyFiles3Form: TMyFiles3Form
         OnClick = menNewColClick
       end
       object tbAddDisk: TToolButton
-        Left = 66
+        Left = 68
         Top = 0
-        Hint = 'Liest einen oder mehrere neue Datenträger ein.'
+        Hint = 'Liest einen oder mehrere neue Datentr'#228'ger ein.'
         Caption = 'Einlesen'
         ImageIndex = 1
         OnClick = menAnyDiskAddClick
       end
       object ToolButton12: TToolButton
-        Left = 119
+        Left = 121
         Top = 0
         Width = 8
         Caption = 'ToolButton12'
@@ -2904,7 +2913,7 @@ object MyFiles3Form: TMyFiles3Form
         Style = tbsSeparator
       end
       object tbSearch: TToolButton
-        Left = 127
+        Left = 129
         Top = 0
         Hint = 'Durchsucht die aktuelle Sammlung nach Dateien oder Ordnern.'
         Caption = 'Suchen'
@@ -2912,7 +2921,7 @@ object MyFiles3Form: TMyFiles3Form
         OnClick = menSearchClick
       end
       object ToolButton11: TToolButton
-        Left = 180
+        Left = 182
         Top = 0
         Width = 8
         Caption = 'ToolButton11'
@@ -2920,7 +2929,7 @@ object MyFiles3Form: TMyFiles3Form
         Style = tbsSeparator
       end
       object tbNewList: TToolButton
-        Left = 188
+        Left = 190
         Top = 0
         Hint = 'Erstellt eine neue (leere) Liste.'
         Caption = 'neue Liste'
@@ -2928,10 +2937,10 @@ object MyFiles3Form: TMyFiles3Form
         OnClick = tbNewListClick
       end
       object tbList: TToolButton
-        Left = 241
+        Left = 243
         Top = 0
         Hint = 
-          'Speichert alle angezeigten Dateien, Ordner und Datenträger'#13#10'in e' +
+          'Speichert alle angezeigten Dateien, Ordner und Datentr'#228'ger'#13#10'in e' +
           'iner Liste, die z.B. exportiert werden kann.|Ansicht in Liste sp' +
           'eichern'
         Caption = 'Liste aus An.'
@@ -2939,7 +2948,7 @@ object MyFiles3Form: TMyFiles3Form
         OnClick = menSaveViewToListClick
       end
       object tbGenList: TToolButton
-        Left = 294
+        Left = 296
         Top = 0
         Hint = 
           'Erzeugt aus bestehenden Listen neue Listen mit z.B.'#13#10'doppelten D' +
@@ -2949,7 +2958,7 @@ object MyFiles3Form: TMyFiles3Form
         OnClick = tbGenListClick
       end
       object tbExport: TToolButton
-        Left = 347
+        Left = 349
         Top = 0
         Hint = 
           'Exportiert eine Liste z.B. zur Weitergabe oder -verarbeitung.|Li' +
@@ -2959,7 +2968,7 @@ object MyFiles3Form: TMyFiles3Form
         OnClick = tbExportClick
       end
       object ToolButton10: TToolButton
-        Left = 400
+        Left = 402
         Top = 0
         Width = 8
         Caption = 'ToolButton10'
@@ -2967,7 +2976,7 @@ object MyFiles3Form: TMyFiles3Form
         Style = tbsSeparator
       end
       object tbView: TToolButton
-        Left = 408
+        Left = 410
         Top = 0
         Hint = 'Konfiguriert die Listenansicht.'
         Caption = 'Ansicht'
@@ -2977,7 +2986,7 @@ object MyFiles3Form: TMyFiles3Form
         OnClick = menListLayoutClick
       end
       object btnReg: TSpeedButton
-        Left = 474
+        Left = 478
         Top = 0
         Width = 109
         Height = 52
@@ -2991,15 +3000,15 @@ object MyFiles3Form: TMyFiles3Form
         OnClick = btnRegClick
       end
       object tbUpd: TToolButton
-        Left = 583
+        Left = 587
         Top = 0
-        Hint = 'Prüft online auf Updates.'
+        Hint = 'Pr'#252'ft online auf Updates.'
         Caption = 'Update?'
         ImageIndex = 8
         OnClick = menCheckUpdateClick
       end
       object tbHelp: TToolButton
-        Left = 636
+        Left = 640
         Top = 0
         Hint = 'Ruft die Hilfe im Internet auf.'
         Caption = 'Net-Hilfe'
@@ -3007,7 +3016,7 @@ object MyFiles3Form: TMyFiles3Form
         OnClick = menWebHelpClick
       end
       object ToolButton9: TToolButton
-        Left = 689
+        Left = 693
         Top = 0
         Width = 8
         Caption = 'ToolButton9'
@@ -3017,7 +3026,7 @@ object MyFiles3Form: TMyFiles3Form
     end
     object tbAddress: TToolBar
       Left = 11
-      Top = 83
+      Top = 58
       Width = 678
       Height = 21
       Align = alNone
@@ -3034,10 +3043,13 @@ object MyFiles3Form: TMyFiles3Form
       Font.Style = [fsBold]
       ParentFont = False
       ShowCaptions = True
-      TabOrder = 2
+      TabOrder = 0
       Transparent = True
       Wrapable = False
       OnResize = tbAddressResize
+      DesignSize = (
+        678
+        21)
       object tbtnAddress: TToolButton
         Left = 0
         Top = 0
@@ -3052,12 +3064,12 @@ object MyFiles3Form: TMyFiles3Form
         Width = 466
         Height = 21
         Hint = 
-          'Adresse der angezeigten Dateien.'#13#10'Syntax:'#13#10'  <Datenträger> = Dat' +
-          'enträgerinhalt'#13#10'  <Datenträger>\Pfad = Normaler Ordner'#13#10'  \Pfad ' +
+          'Adresse der angezeigten Dateien.'#13#10'Syntax:'#13#10'  <Datentr'#228'ger> = Dat' +
+          'entr'#228'gerinhalt'#13#10'  <Datentr'#228'ger>\Pfad = Normaler Ordner'#13#10'  \Pfad ' +
           '= Verbundordner'#13#10'  Search: Begriffe /parameter = Suchergebnis|Ad' +
           'resse der angezeigten Dateien.'#13#10'  List:Listenname = Dateiliste'#13#10 +
-          '  [<Datenträger>]\Pfad\Dateiname = Öffnet die angegebene Datei (' +
-          '<Datenträger optional>)'
+          '  [<Datentr'#228'ger>]\Pfad\Dateiname = '#214'ffnet die angegebene Datei (' +
+          '<Datentr'#228'ger optional>)'
         HelpContext = 950
         Anchors = [akLeft, akTop, akRight, akBottom]
         Constraints.MinWidth = 30
@@ -3079,9 +3091,7 @@ object MyFiles3Form: TMyFiles3Form
       object Splitter4: TSplitter
         Left = 523
         Top = 0
-        Width = 3
         Height = 21
-        Cursor = crHSplit
         ResizeStyle = rsUpdate
         OnCanResize = Splitter4CanResize
       end
@@ -3095,7 +3105,7 @@ object MyFiles3Form: TMyFiles3Form
         OnClick = menListLayoutClick
       end
       object cbLayout: TComboBox
-        Left = 599
+        Left = 601
         Top = 0
         Width = 145
         Height = 21
@@ -3189,9 +3199,9 @@ object MyFiles3Form: TMyFiles3Form
       end
       object menFileDelete: TMenuItem
         Tag = -1
-        Caption = 'Lös&chen'
+        Caption = 'L'#246's&chen'
         HelpContext = 116
-        Hint = 'Sammlung löschen.'
+        Hint = 'Sammlung l'#246'schen.'
         ImageIndex = 6
       end
       object menRepair: TMenuItem
@@ -3233,15 +3243,15 @@ object MyFiles3Form: TMyFiles3Form
       object menColConfig: TMenuItem
         Caption = '&Eigenschaften...'
         HelpContext = 121
-        Hint = 'Sammlungstitel und überwachte Laufwerke festlegen.'
+        Hint = 'Sammlungstitel und '#252'berwachte Laufwerke festlegen.'
         ImageIndex = 3
         ShortCut = 40973
         OnClick = menColConfigClick
       end
       object menAnyDiskAdd: TMenuItem
-        Caption = 'Datenträger &hinzufügen...'
+        Caption = 'Datentr'#228'ger &hinzuf'#252'gen...'
         HelpContext = 122
-        Hint = 'Einen Datenträger einlesen.'
+        Hint = 'Einen Datentr'#228'ger einlesen.'
         ImageIndex = 4
         ShortCut = 8237
         OnClick = menAnyDiskAddClick
@@ -3296,7 +3306,7 @@ object MyFiles3Form: TMyFiles3Form
       Caption = '&Funktionen'
       HelpContext = 160
       Hint = 
-        'Vordefinierte Funktionen auf die gewählen oder alle Dateien der ' +
+        'Vordefinierte Funktionen auf die gew'#228'hlen oder alle Dateien der ' +
         'Ansicht anwenden.'
       object menQuickCopy: TMenuItem
         Caption = 'Dateien kopieren nach...'
@@ -3393,9 +3403,9 @@ object MyFiles3Form: TMyFiles3Form
         Hint = 'Tuning'
         ImageIndex = 37
         object menDiskviewFirst: TMenuItem
-          Caption = 'Datenträgeranzeige bevorzugt'
+          Caption = 'Datentr'#228'geranzeige bevorzugt'
           HelpContext = 241
-          Hint = 'Vertauscht die Position von "Verbund" und "Datenträger" Anzeige.'
+          Hint = 'Vertauscht die Position von "Verbund" und "Datentr'#228'ger" Anzeige.'
           OnClick = menDiskviewFirstClick
         end
         object menCombomodeDisabled: TMenuItem
@@ -3420,12 +3430,12 @@ object MyFiles3Form: TMyFiles3Form
       object menWebHelp: TMenuItem
         Caption = 'Hilfe... (www)'
         HelpContext = 151
-        Hint = '[Online] Hilfe im Internet öffnen.'
+        Hint = '[Online] Hilfe im Internet '#246'ffnen.'
         ImageIndex = 16
         OnClick = menWebHelpClick
       end
       object menFAQ: TMenuItem
-        Caption = 'Häufig gestellte Fragen...'
+        Caption = 'H'#228'ufig gestellte Fragen...'
         Default = True
         OnClick = menFAQClick
       end
@@ -3433,9 +3443,9 @@ object MyFiles3Form: TMyFiles3Form
         Caption = '-'
       end
       object menCheckUpdate: TMenuItem
-        Caption = 'Auf Updates prüfen... (www)'
+        Caption = 'Auf Updates pr'#252'fen... (www)'
         HelpContext = 152
-        Hint = '[Online] Prüfen, ob die aktuellste Version benutzt wird.'
+        Hint = '[Online] Pr'#252'fen, ob die aktuellste Version benutzt wird.'
         ImageIndex = 19
         OnClick = menCheckUpdateClick
       end
@@ -3445,7 +3455,7 @@ object MyFiles3Form: TMyFiles3Form
       object INFO1: TMenuItem
         Caption = 'Info...'
         HelpContext = 153
-        Hint = 'Informationen und Statistik über MyFindex.'
+        Hint = 'Informationen und Statistik '#252'ber MyFindex.'
         ImageIndex = 17
         OnClick = INFO1Click
       end
@@ -3480,7 +3490,7 @@ object MyFiles3Form: TMyFiles3Form
     end
     object menDiskAdd: TMenuItem
       Tag = 1
-      Caption = 'Datenträger hinzufügen...'
+      Caption = 'Datentr'#228'ger hinzuf'#252'gen...'
       Enabled = False
       HelpContext = 122
       ImageIndex = 4
@@ -3489,18 +3499,18 @@ object MyFiles3Form: TMyFiles3Form
     end
     object menDiskRefresh: TMenuItem
       Tag = 1
-      Caption = 'Datenträger aktualisieren...'
+      Caption = 'Datentr'#228'ger aktualisieren...'
       HelpContext = 510
-      Hint = '*Liest den Datenträger neu ein'
+      Hint = '*Liest den Datentr'#228'ger neu ein'
       ImageIndex = 22
       ShortCut = 116
       OnClick = menDiskRefreshClick
     end
     object menDiskDelete2: TMenuItem
       Tag = 1
-      Caption = 'Datenträger entfernen'
+      Caption = 'Datentr'#228'ger entfernen'
       HelpContext = 511
-      Hint = 'Entfernt den Datenträger aus der Sammlung'
+      Hint = 'Entfernt den Datentr'#228'ger aus der Sammlung'
       ImageIndex = 5
       ShortCut = 46
       OnClick = menDiskDelete2Click
@@ -3512,7 +3522,7 @@ object MyFiles3Form: TMyFiles3Form
     object Laufwerke1: TMenuItem
       Caption = 'Laufwerksverwaltung...'
       HelpContext = 121
-      Hint = '*Öffnet den Dialog um u.a. die überwachten Laufwerke festzulegen'
+      Hint = '*'#214'ffnet den Dialog um u.a. die '#252'berwachten Laufwerke festzulegen'
       ImageIndex = 3
       ShortCut = 32781
       OnClick = menColConfigClick
@@ -3533,35 +3543,35 @@ object MyFiles3Form: TMyFiles3Form
     Top = 192
     object menOpen: TMenuItem
       Tag = 14
-      Caption = 'Öffnen'
+      Caption = #214'ffnen'
       HelpContext = 501
-      Hint = 'Öffnen'
+      Hint = #214'ffnen'
       ImageIndex = 2
       OnClick = ListViewDblClick
     end
     object menFileOpen: TMenuItem
       Tag = 769
-      Caption = 'Öffnen'
+      Caption = #214'ffnen'
       HelpContext = 502
-      Hint = 'Öffnen'
+      Hint = #214'ffnen'
       ImageIndex = 2
       ShortCut = 13
       OnClick = ListViewDblClick
     end
     object OpenImExplorer: TMenuItem
       Tag = 778
-      Caption = 'Im Explorer öffnen'
+      Caption = 'Im Explorer '#246'ffnen'
       HelpContext = 503
-      Hint = 'Öffnet das Ziel im Explorer '
+      Hint = #214'ffnet das Ziel im Explorer '
       ImageIndex = 13
       ShortCut = 16453
       OnClick = OpenImExplorerClick
     end
     object menJump: TMenuItem
       Tag = 7
-      Caption = 'Enthaltenden Ordner öffnen'
+      Caption = 'Enthaltenden Ordner '#246'ffnen'
       HelpContext = 504
-      Hint = 'Öffnet den Ordner mit dem Ziel'
+      Hint = #214'ffnet den Ordner mit dem Ziel'
       ImageIndex = 44
       ShortCut = 16397
       OnClick = menJumpClick
@@ -3570,7 +3580,7 @@ object MyFiles3Form: TMyFiles3Form
       Tag = 259
       Caption = 'Enthaltender Ordner (Explorer)'
       HelpContext = 504
-      Hint = 'Öffnet den Ordner mit dem Ziel im Explorer'
+      Hint = #214'ffnet den Ordner mit dem Ziel im Explorer'
       ImageIndex = 44
       ShortCut = 24645
       OnClick = menExplorerJumpClick
@@ -3581,18 +3591,18 @@ object MyFiles3Form: TMyFiles3Form
     end
     object menLVDiskRefresh: TMenuItem
       Tag = 8
-      Caption = 'Datenträger aktualisieren...'
+      Caption = 'Datentr'#228'ger aktualisieren...'
       HelpContext = 510
-      Hint = '*Liest den Datenträger neu ein'
+      Hint = '*Liest den Datentr'#228'ger neu ein'
       ImageIndex = 22
       ShortCut = 8308
       OnClick = menLVDiskRefreshClick
     end
     object menDiskDelete: TMenuItem
       Tag = 520
-      Caption = 'Datenträger entfernen'
+      Caption = 'Datentr'#228'ger entfernen'
       HelpContext = 511
-      Hint = 'Entfernt den Datenträger aus der Sammlung'
+      Hint = 'Entfernt den Datentr'#228'ger aus der Sammlung'
       ImageIndex = 5
       ShortCut = 8238
       OnClick = menDiskDeleteClick
@@ -3613,7 +3623,7 @@ object MyFiles3Form: TMyFiles3Form
       HelpContext = 520
       Hint = 
         'Kopiert das Objekt in die Zwischenablage (um es an anderer Stell' +
-        'e mit Strg+V einzufügen)'
+        'e mit Strg+V einzuf'#252'gen)'
       ImageIndex = 20
       ShortCut = 16451
       OnClick = menCopyClick
@@ -3622,7 +3632,7 @@ object MyFiles3Form: TMyFiles3Form
       Tag = 515
       Caption = 'Namen kopieren'
       HelpContext = 521
-      Hint = 'Kopiert den vollständigen Namen der Datei'
+      Hint = 'Kopiert den vollst'#228'ndigen Namen der Datei'
       ImageIndex = 21
       ShortCut = 49219
       OnClick = menCopyNameClick
@@ -3634,7 +3644,7 @@ object MyFiles3Form: TMyFiles3Form
       Tag = 526
       Caption = 'Markierte Durchsuchen...'
       HelpContext = 530
-      Hint = 'Durchsucht nur die markierten Ordner/Datenträger'
+      Hint = 'Durchsucht nur die markierten Ordner/Datentr'#228'ger'
       ImageIndex = 35
       ShortCut = 24688
       OnClick = menSearchInSelClick
@@ -3654,7 +3664,7 @@ object MyFiles3Form: TMyFiles3Form
       end
       object menLAdd: TMenuItem
         Tag = 1
-        Caption = 'Hinzufügen'
+        Caption = 'Hinzuf'#252'gen'
         HelpContext = 533
         ImageIndex = 27
         ShortCut = 45
@@ -3698,14 +3708,14 @@ object MyFiles3Form: TMyFiles3Form
       Caption = '-'
     end
     object menLevelUp: TMenuItem
-      Caption = 'Ebene Aufwärts'
+      Caption = 'Ebene Aufw'#228'rts'
       HelpContext = 550
       ImageIndex = 14
       ShortCut = 8
       OnClick = menLevelUpClick
     end
     object menBack: TMenuItem
-      Caption = 'Zurück'
+      Caption = 'Zur'#252'ck'
       HelpContext = 560
       ImageIndex = 1
       ShortCut = 226
@@ -3729,14 +3739,14 @@ object MyFiles3Form: TMyFiles3Form
       Tag = 779
       Caption = 'Weitere Aktionen...'
       HelpContext = 580
-      Hint = 'Zeigt die im Explorer verfügbaren Befehle'
+      Hint = 'Zeigt die im Explorer verf'#252'gbaren Befehle'
       ImageIndex = 39
       ShortCut = 17
       OnClick = menCommandsClick
     end
     object menCreateLink: TMenuItem
       Tag = 527
-      Caption = 'Verküpfung auf Desktop'
+      Caption = 'Verk'#252'pfung auf Desktop'
       HelpContext = 581
       ImageIndex = 46
       ShortCut = 24643
@@ -3747,7 +3757,7 @@ object MyFiles3Form: TMyFiles3Form
     end
     object menDeleteColItem: TMenuItem
       Tag = 515
-      Caption = 'Element aus der Sammlung löschen'
+      Caption = 'Element aus der Sammlung l'#246'schen'
       OnClick = menDeleteColItemClick
     end
   end
@@ -5788,7 +5798,7 @@ object MyFiles3Form: TMyFiles3Form
       Tag = 1
       Caption = 'Farbe...'
       Enabled = False
-      Hint = 'Farbe des Liste wählen.'
+      Hint = 'Farbe des Liste w'#228'hlen.'
       ImageIndex = 51
       OnClick = tblColorClick
     end
@@ -5798,8 +5808,8 @@ object MyFiles3Form: TMyFiles3Form
     end
     object menLGen: TMenuItem
       Tag = 1
-      Caption = 'Verknüpfen'
-      Hint = 'Liste(n) verknüpfen.'
+      Caption = 'Verkn'#252'pfen'
+      Hint = 'Liste(n) verkn'#252'pfen.'
       ImageIndex = 8
       object menListDoub1: TMenuItem
         Caption = 'doppelte Dateien'
@@ -5853,9 +5863,9 @@ object MyFiles3Form: TMyFiles3Form
     end
     object menLRemove: TMenuItem
       Tag = 1
-      Caption = 'Löschen'
+      Caption = 'L'#246'schen'
       Enabled = False
-      Hint = 'Liste löschen.'
+      Hint = 'Liste l'#246'schen.'
       ImageIndex = 12
       ShortCut = 46
       OnClick = tbLDelClick
@@ -5881,23 +5891,6 @@ object MyFiles3Form: TMyFiles3Form
       ShortCut = 16454
       OnClick = menGoSearchInListClick
     end
-  end
-  object elpMan: TElPlayerMan
-    Players = <
-      item
-        InputMode = imFile
-        OutputMode = omMMSystem
-        ModuleName = '(Module not initialized)'
-        StartPos = 0
-        EndPos = 0
-        Priority = 0
-        BuffersCount = 1
-        BufferSize = 256
-        OutputDevNum = -1
-        UseEqualizer = False
-      end>
-    Left = 185
-    Top = 558
   end
   object tmrAutoPlay: TTimer
     Enabled = False
@@ -14745,18 +14738,18 @@ object MyFiles3Form: TMyFiles3Form
     Top = 112
     object menTvDiskAkt: TMenuItem
       Tag = 1
-      Caption = 'Datenträger aktualisieren...'
+      Caption = 'Datentr'#228'ger aktualisieren...'
       HelpContext = 510
-      Hint = '*Liest den Datenträger neu ein'
+      Hint = '*Liest den Datentr'#228'ger neu ein'
       ImageIndex = 22
       ShortCut = 8308
       OnClick = menLVDiskRefreshClick
     end
     object menTvDiskDel: TMenuItem
       Tag = 1
-      Caption = 'Datenträger entfernen'
+      Caption = 'Datentr'#228'ger entfernen'
       HelpContext = 511
-      Hint = 'Entfernt den Datenträger aus der Sammlung'
+      Hint = 'Entfernt den Datentr'#228'ger aus der Sammlung'
       ImageIndex = 5
       ShortCut = 8238
       OnClick = menDiskDeleteClick
@@ -14798,26 +14791,14 @@ object MyFiles3Form: TMyFiles3Form
     Left = 145
     Top = 499
     object menNoteNext: TMenuItem
-      Caption = 'Nächster Eintrag'
+      Caption = 'N'#228'chster Eintrag'
       ShortCut = 8205
       OnClick = menNoteNextClick
     end
   end
   object ColorDialog: TColorDialog
-    Ctl3D = True
     Left = 46
     Top = 132
-  end
-  object dropFS: TDropFileSource
-    Dragtypes = [dtCopy]
-    ImageIndex = 0
-    ShowImage = False
-    ImageHotSpotX = 16
-    ImageHotSpotY = 16
-    Files.Strings = (
-      'c:\autoexec.bat')
-    Left = 256
-    Top = 96
   end
   object pmGenList: TPopupMenu
     Images = ilMenus
@@ -14862,11 +14843,11 @@ object MyFiles3Form: TMyFiles3Form
       OnClick = genSearchInPMClick
     end
     object menSearchInDisk: TMenuItem
-      Caption = 'Datenträger...'
+      Caption = 'Datentr'#228'ger...'
       OnClick = genSearchInPMClick
     end
     object menSearchInList: TMenuItem
-      Caption = 'Beschränken auf Liste...'
+      Caption = 'Beschr'#228'nken auf Liste...'
       OnClick = genSearchInPMClick
     end
   end
@@ -14875,7 +14856,7 @@ object MyFiles3Form: TMyFiles3Form
     Left = 136
     Top = 350
     object menResetProp: TMenuItem
-      Caption = 'Feld zurücksetzen'
+      Caption = 'Feld zur'#252'cksetzen'
       OnClick = menResetPropClick
     end
     object N29: TMenuItem
@@ -14891,19 +14872,10 @@ object MyFiles3Form: TMyFiles3Form
       Caption = 'Datenbank'
       Visible = False
       object MultiMediaVorschaulschen1: TMenuItem
-        Caption = 'MultiMedia-Vorschau löschen'
+        Caption = 'MultiMedia-Vorschau l'#246'schen'
         OnClick = MultiMediaVorschaulschen1Click
       end
     end
-  end
-  object fdCopyFiles: TFolderDialog
-    Top = 106
-    Left = 453
-    Title = 'Zielordner wählen'
-    Text = 
-      'Bitte wähle den Ordner, in den die Dateien kopiert werden sollen' +
-      ':'
-    CustomButton = cbCopyFilesCreateSub
   end
   object pmLayout: TPopupMenu
     Images = ilMenus
@@ -14928,9 +14900,9 @@ object MyFiles3Form: TMyFiles3Form
       OnClick = menLayoutSaveClick
     end
     object menLayoutSaveForAdr: TMenuItem
-      Caption = 'für Adresse speichern'
+      Caption = 'f'#252'r Adresse speichern'
       HelpContext = 954
-      Hint = 'Layout für diesen Ordner/Adresse festlegen'
+      Hint = 'Layout f'#252'r diesen Ordner/Adresse festlegen'
       ImageIndex = 55
       OnClick = menLayoutSaveForAdrClick
     end
@@ -14938,7 +14910,7 @@ object MyFiles3Form: TMyFiles3Form
       Caption = 'Speichern unter'
     end
     object menLayDel: TMenuItem
-      Caption = 'Löschen / Reset'
+      Caption = 'L'#246'schen / Reset'
     end
     object N17: TMenuItem
       Caption = '-'
@@ -14947,37 +14919,9 @@ object MyFiles3Form: TMyFiles3Form
       Caption = 'Automatisch speichern'
       HelpContext = 955
       Hint = 
-        'Alle Ändernungen an der Listenansicht werden sofort unter dem ak' +
+        'Alle '#196'ndernungen an der Listenansicht werden sofort unter dem ak' +
         'tuellen Layout gespeichert.'
       OnClick = menLayoutAutoSaveClick
     end
-  end
-  object XPMenu: TXPMenu
-    DimLevel = 30
-    GrayLevel = 10
-    Font.Charset = ANSI_CHARSET
-    Font.Color = clMenuText
-    Font.Height = -11
-    Font.Name = 'Tahoma'
-    Font.Style = []
-    Color = clBtnFace
-    IconBackColor = clBtnFace
-    MenuBarColor = clBtnFace
-    SelectColor = clHighlight
-    SelectBorderColor = clHighlight
-    SelectFontColor = clMenuText
-    DisabledColor = clInactiveCaption
-    SeparatorColor = clBtnFace
-    CheckedColor = clHighlight
-    IconWidth = 24
-    DrawSelect = True
-    UseSystemColors = True
-    OverrideOwnerDraw = True
-    Gradient = False
-    FlatMenu = False
-    AutoDetect = False
-    Active = False
-    Left = 40
-    Top = 8
   end
 end
