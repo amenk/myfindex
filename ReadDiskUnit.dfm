@@ -169,7 +169,6 @@ object frmReadDisk: TfrmReadDisk
     Top = 288
     Width = 87
     Height = 26
-    Cancel = True
     Caption = 'Fertig'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
