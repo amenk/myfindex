@@ -24,10 +24,9 @@ uses
   SysIconCache, UsefulPrcs, db,
   Windows, Messages, SysUtils, Forms, ShlObj, CommCtrl, JvSpin, ToolWin,
   ExtCtrls, Menus, StdCtrls, Dialogs, Controls, ComCtrls, Classes, Graphics,
-  ShellAPI, DropSource, Spin, Buttons, ImgList, Grids, dbtables, IniFiles,
-  Clipbrd, AppEvnts, CheckLst, jpeg, ElSounds, itemprop, SplashFUnit, DBGrids,
-  ElHeader, FlatButton, Animate, Registry, Mask,
-  ToolEdit, XPMenu, FoldrDlg, JvMaskEdit;
+  ShellAPI, Spin, Buttons, ImgList, Grids, dbtables, IniFiles,
+  Clipbrd, AppEvnts, CheckLst, jpeg, SplashFUnit, DBGrids, Registry, Mask,
+  JvMaskEdit;
 
 const
   lvt_file = 1;
@@ -130,7 +129,6 @@ type
     tvDisks: TTreeView;
     tvVerbund: TTreeView;
     menSearchInSel: TMenuItem;
-    elpMan: TElPlayerMan;
     tmrAutoPlay: TTimer;
     tmrMP3CtrlSync: TTimer;
     menCommands: TMenuItem;
@@ -217,7 +215,6 @@ type
     menLView: TMenuItem;
     menLExp: TMenuItem;
     menLRemove: TMenuItem;
-    dropFS: TDropFileSource;
     Listen1: TMenuItem;
     menLRename: TMenuItem;
     N22: TMenuItem;
@@ -321,7 +318,9 @@ type
     Exportieren1: TMenuItem;
     Generieren1: TMenuItem;
     lvPZip: TListView;
-    fdCopyFiles: TFolderDialog;
+    {//ToBeConverted
+	fdCopyFiles: TFolderDialog;
+	}
     cbCopyFilesCreateSub: TCheckBox;
     tbtnLayout: TToolButton;
     cbLayout: TComboBox;
@@ -332,7 +331,6 @@ type
     N9: TMenuItem;
     menSpalten: TMenuItem;
     menLayoutSaveForAdr: TMenuItem;
-    XPMenu: TXPMenu;
     N17: TMenuItem;
     Splitter3: TSplitter;
     fbPropHide: TSpeedButton;
@@ -578,6 +576,7 @@ type
     procedure menColEditorClick(Sender: TObject);
     procedure menDeleteColItemClick(Sender: TObject);
     procedure menFAQClick(Sender: TObject);
+	procedure cbContChange(Sender: TObject);
   private
     dblock : Boolean;
     FPlugIns : TMyPlugins;
@@ -621,7 +620,7 @@ type
     procedure cleartvs;
     procedure clearlistview;
     procedure AddCurrentFile2Listview(VerbundMode: boolean);
-    procedure begindrag(copymode: Boolean);
+    {//ToBeConverted procedure begindrag(copymode: Boolean);}
     function doDiskDelete(lbl: string): Boolean;
     procedure DeleteDisk(diskid: smallint);
     function doDiskAdd(disk: char; upd: boolean): Boolean;
@@ -696,8 +695,6 @@ type
 
     function MakeListName(Caption: string): string;
     procedure DebugMail(CorruptFile:string);
-    procedure GimmeXP(frm:TForm);
-
     
     { Schnittstellen }
     { Public-Deklarationen }
@@ -1038,11 +1035,13 @@ begin
   btnReg.Visible := not isreg;
 
   defhint := sbMain.panels[2].Text;
+  {//ToBeConverted
   with elpMan.players[0] do
   begin
     PathToDll := file_mpdll;
     InputName := gettempdir + 'MyFiles.mp3';
   end;
+  }
   lvkeydown := False;
 
   thumbmaxw := ini.ReadInteger(ini_guilv, 'ThumbWidth', 64);
@@ -1054,8 +1053,6 @@ begin
   LoadPlugins;
 
   if not ini.ReadBool(ini_gui, ini_toolbg, False) then ControlBar.Picture := nil;
-
-  XPMenu.Gradient := ini.ReadBool(ini_gui, ini_xpgrad, false);
 
   dodefaultlayouts;
 
@@ -1194,7 +1191,7 @@ begin
     Free;
   end;
 end;
-
+{//ToBeConverted
 procedure TMyFiles3Form.begindrag(copymode: Boolean);
 var
   i: integer;
@@ -1206,11 +1203,12 @@ begin
   dropFS.DragTypes := [dtCopy];
   dropFS.Files.Clear;
   for i := 0 to Listview.items.Count - 1 do
-    { wenn ausgewählt und verfügbar... }
+    // wenn ausgewählt und verfügbar...
     if (Listview.items.item[i].Selected) and IsAvailable(LVMyI(Listview.items.item[i])) then
       dropFS.Files.Add(GetLVIFileName(Listview.items.item[i], True));
   if copymode then dropFS.copytoclipboard else dropFS.execute;
 end;
+}
 
 procedure TMyFiles3Form.ListViewMouseMove(Sender: TObject; Shift: TShiftState;
   X, Y: Integer);
@@ -1399,12 +1397,14 @@ begin
   tmrAutoPlay.Enabled := False;
   { Flackern vermeiden, falls mit Cursor-Tasten gerollt wird }
   if (lvkeydown) and (listview.selcount = 0) then Exit;
+  {//ToBeConverted
   with elpMan.Players[0] do
   try
     if Initialized and (PlayerMode > pmClosed) then
       Close;
   except
   end;
+  }
 
   mNotes.Enabled := ListView.Selcount = 1;
   if not mNotes.Enabled then mNotes.Text := '';
@@ -2095,9 +2095,11 @@ begin
     Free;
   end;
   if Assigned(ColIni) then ColIni.Free;
+  {//ToBeConverted
   with elpMan.players[0] do // sch*** MP3-Player freigeben :)
     if Initialized then Deinit;
   deletefile(elpMan.players[0].InputName);
+  }
   FPlugIns.Free;
   ClearSearchCache;
   FSearchCache.Free;
@@ -2641,13 +2643,13 @@ var
       if MinSize <> -1 then
       begin
         chkMinSize.Checked := true;
-        seMinSize.Value := MinSize;
-        cbMinSize.ItemIndex := 0;
+        {//ToBeConverted seMinSize.Value := MinSize;}
+        {//ToBeConverted cbMinSize.ItemIndex := 0;}
       end;
       if MaxSize <> -1 then
       begin
         chkMaxSize.Checked := true;
-        seMaxSize.Value := MaxSize;
+        {//ToBeConverted seMaxSize.Value := MaxSize;}
         cbMaxSize.ItemIndex := 0;
       end;
 
@@ -3769,7 +3771,6 @@ begin
   
 (*  if ini.ReadBool(ini_gui, ini_xpmen, True) then Toolbar.DisabledImages := nil else
     Toolbar.DisabledImages := ilTbGray;*)
-  XPMenu.Active := ini.ReadBool(ini_gui, ini_xpmen, true);
 
 end;
 
@@ -4812,7 +4813,8 @@ begin
   if not sbPlayMpeg.Down then
     closempeg
   else
-    with elpMan.Players[0] do
+    {//ToBeConverted
+	with elpMan.Players[0] do
     begin
       if not Initialized then Init;
       dm.tblFilesBinPreview.savetofile(elpMan.Players[0].InputName);
@@ -4829,10 +4831,12 @@ begin
         raise;
       end;
     end;
+	}
 end;
 
 procedure TMyFiles3Form.CloseMPEG;
 begin
+  {//ToBeConverted
   with elpMan.Players[0] do
   try
     if Initialized and (PlayerMode = pmPlaying) then
@@ -4843,6 +4847,7 @@ begin
     end;
   except
   end;
+  }
 end;
 
 procedure TMyFiles3Form.tmrAutoPlayTimer(Sender: TObject);
@@ -4854,6 +4859,7 @@ end;
 
 procedure TMyFiles3Form.tmrMP3CtrlSyncTimer(Sender: TObject);
 begin
+  {//ToBeConverted
   if elpMan.Players[0].Initialized then
   begin
     sbPlayMPEG.down := elpMan.Players[0].PlayerMode in [pmPlaying];
@@ -4866,6 +4872,7 @@ begin
       except
       end;
   end;
+  }
 end;
 
 { Windows-Shell-Contextmenü }
@@ -4889,9 +4896,9 @@ begin
   getcursorpos(pt);
   b := False;
   if ListView.SelCount = 1 then
-    DisplayContextMenu(GetLVIFileName(mainitem, True), Handle, Pt, false, b)
+    {//ToBeConverted DisplayContextMenu(GetLVIFileName(mainitem, True), Handle, Pt, false, b)}
   else
-  begin { MultiSelection -> erst Liste mit Dateinamen aufbauen }
+  begin // MultiSelection -> erst Liste mit Dateinamen aufbauen
     Names := TStringList.Create;
     try
       path := ExtractFilePath(GetLVIFileName(mainitem, True));
@@ -4909,7 +4916,7 @@ begin
               werden die entsprechenden Dateien deselektiert }
           end;
 
-      DisplayContextMenu(path, Names, Handle, Pt, false, b)
+      {//ToBeConverted DisplayContextMenu(path, Names, Handle, Pt, false, b)}
     finally
       Names.Free;
     end;
@@ -5143,8 +5150,7 @@ begin
     if ShowModal <> mrAbort then
     begin
       { Oberfläche übernehmen }
-      XPMenu.Active := ini.ReadBool(ini_gui, ini_xpmen, true);
-      XPMenu.Gradient := ini.ReadBool(ini_gui, ini_xpgrad, false);
+
       { PlugIns laden }
       FPlugIns.Clear;
       LoadPlugins;
@@ -5770,7 +5776,7 @@ begin
     if Control = tbAddress then
     begin
       {//ToBeConverted
-	  PreferredSize := MenuBar.Tag; {Screen.Width}
+	  PreferredSize := MenuBar.Tag; //Screen.Width
       }
 	  tbAddressResize(nil);
     end
@@ -6246,20 +6252,24 @@ var
   attryes,attrno,i : integer;
   idx : integer;
 
+  {//ToBeConverted
   function ControlsToSize(spin:TJvSpinEdit;cb:TComboBox):Int64;
   begin
     Result := trunc(spin.Value * IntPower(1024,cb.ItemIndex));
   end;
+  }
 
 begin
   with TMySearch.Create('') do
   begin
      NameStr.Value := ScbName.Text;
     { Size / Date }
+    {//ToBeConverted
     if chkMinSize.Checked then
       MinSize := ControlsToSize(seMinSize, cbMinSize);
     if chkMaxSize.Checked then
       MaxSize := ControlsToSize(seMaxSize, cbMaxSize);
+    }
     if chkMinDate.Checked then
       MinDate := dtpMinDate.DateTime;
     if chkMaxDate.Checked then
@@ -6678,12 +6688,14 @@ begin
   cbProp.Text := Copy(s,1,idx-1);
   cbWert.Text := Copy(s,idx+2,maxInt);
 end;
-{//ToBeConverted
+
 procedure TMyFiles3Form.cbContChange(Sender: TObject);
 begin
+  {//ToBeConverted
   fbAddE.Enabled := (cbProp.Text <> '') and (cbWert.Text <> '');
+  }
 end;
-}
+
 procedure TMyFiles3Form.genSizeEditExit(Sender: TObject);
 var
   factor : integer;
@@ -6716,14 +6728,14 @@ end;
 procedure TMyFiles3Form.chkMinSizeClick(Sender: TObject);
 begin
   cbMinSize.Visible := chkMinSize.Checked;
-  seMinSize.Visible := chkMinSize.Checked;
+  {//ToBeConverted seMinSize.Visible := chkMinSize.Checked;}
   MaintainSize(nil);
 end;
 
 procedure TMyFiles3Form.chkMaxSizeClick(Sender: TObject);
 begin
   cbMaxSize.Visible := chkMaxSize.Checked;
-  seMaxSize.Visible := chkMaxSize.Checked;
+  {//ToBeConverted seMaxSize.Visible := chkMaxSize.Checked;}
   MaintainSize(nil);  
 end;
 
@@ -6746,8 +6758,10 @@ begin
   cbMinSize.ItemIndex := abs(LvColumns.SizeFactor-1);
   chkMaxSize.Checked := False;
   cbMaxSize.ItemIndex := abs(LvColumns.SizeFactor-1);
+  {//ToBeConverted
   seMinSize.Value := 0;
-  seMaxSize.Value := 1;  
+  seMaxSize.Value := 1;
+  }
   { Änderungsdatum }
   chkMinDate.Checked := False;
   dtpMinDate.DateTime := Now();
@@ -6869,6 +6883,7 @@ begin
   dtpMinDate.MaxDate := dtpMaxDate.DateTime-1;
 end;
 
+{//ToBeConverted
 procedure TMyFiles3Form.MaintainSize(Sender: TObject);
 begin
   if chkMaxSize.Checked then
@@ -6883,6 +6898,7 @@ begin
     if seMaxSize.Value < seMaxSize.MinValue then seMaxSize.Value := seMaxSize.MinValue;
   end else seMaxSize.MinValue := 0;
 end;
+}
 
 procedure TMyFiles3Form.sgPropsSelectCell(Sender: TObject; ACol,
   ARow: Integer; var CanSelect: Boolean);
@@ -7222,18 +7238,6 @@ begin
     lblNote.Font.Color := clBlue else lblNote.Font.Color := clGrayText;
 end;
 
-procedure TMyFiles3Form.GimmeXP(frm:TForm);
-begin
-  with TXPMenu.Create(frm) do
-  begin
-    Active := XPMenu.Active;
-    Gradient := XPMenu.Gradient;
-    FlatMenu := XPMenu.FlatMenu;
-    XPContainers := XPMenu.XPContainers;
-    XPControls := XPMenu.XPControls;
-  end;
-end;
-
 procedure TMyFiles3Form.Splitter4CanResize(Sender: TObject;
   var NewSize: Integer; var Accept: Boolean);
 var
@@ -7550,12 +7554,14 @@ var
   createsub,res : Boolean;
   destination : string;
 begin
+  {//ToBeConverted
   if not Assigned(lvLists.Selected) then Exit;
   with fdCopyFiles do
     if not Execute then
       exit
     else
       destination := Directory;
+  }
   createsub := cbCopyFilesCreateSub.Checked;
 
   frmCopyDisksUsed := TfrmCopyDisksUsed.Create(Self);
@@ -7747,6 +7753,11 @@ end;
 procedure TMyFiles3Form.menFAQClick(Sender: TObject);
 begin
   ShellExecute(Self.Handle, nil, PChar(extractfilepath(Application.ExeName)+'FAQ.htm'), nil, nil, sw_shownormal);
+end;
+
+procedure TMyFiles3Form.MaintainSize(Sender: TObject);
+begin
+  //Dummyfunction
 end;
 
 end.

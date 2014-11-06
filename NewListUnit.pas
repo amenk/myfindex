@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  StdCtrls, Buttons, ShlObj, XPMenu;
+  StdCtrls, Buttons, ShlObj;
 
 type
   TfrmNewList = class(TForm)
@@ -55,7 +55,7 @@ end;
 
 procedure TfrmNewList.FormCreate(Sender: TObject);
 begin
-  MyFiles3Form.GimmeXP(Self);
+  //
 end;
 
 end.

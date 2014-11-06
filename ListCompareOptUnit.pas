@@ -6,7 +6,7 @@ interface
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   StdCtrls, CheckLst, Buttons, myf_consts, ExtCtrls, myf_main,
-  myf_lists, XPMenu;
+  myf_lists;
 
 type
   TfrmListCompareOpt = class(TForm)
@@ -81,7 +81,6 @@ procedure TfrmListCompareOpt.FormCreate(Sender: TObject);
 var
   i : integer;
 begin
-  MyFiles3Form.GimmeXP(Self);
   ShowListAfterCreation := False;
   with clbOptions do
   begin

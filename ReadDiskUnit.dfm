@@ -3,7 +3,7 @@ object frmReadDisk: TfrmReadDisk
   Top = 315
   HelpContext = 2000
   BorderStyle = bsDialog
-  Caption = 'Datenträger einlesen'
+  Caption = 'Datentr'#228'ger einlesen'
   ClientHeight = 322
   ClientWidth = 434
   Color = clBtnFace
@@ -33,7 +33,7 @@ object frmReadDisk: TfrmReadDisk
     Top = 2
     Width = 235
     Height = 28
-    Caption = 'Datenträger einlesen'
+    Caption = 'Datentr'#228'ger einlesen'
     Color = clWhite
     Font.Charset = DEFAULT_CHARSET
     Font.Color = 10485760
@@ -175,9 +175,6 @@ object frmReadDisk: TfrmReadDisk
     Font.Height = -11
     Font.Name = 'MS Sans Serif'
     Font.Style = []
-    ModalResult = 2
-    ParentFont = False
-    OnClick = btnFinishClick
     Glyph.Data = {
       76010000424D7601000000000000760000002800000020000000100000000100
       0400000000000001000000000000000000001000000000000000000000000000
@@ -192,6 +189,8 @@ object frmReadDisk: TfrmReadDisk
       05555555555555777FF5555555555557905555555555555777FF555555555555
       5990555555555555577755555555555555555555555555555555}
     NumGlyphs = 2
+    ParentFont = False
+    OnClick = btnFinishClick
   end
   object btnCancel: TSpeedButton
     Left = 328
@@ -219,7 +218,7 @@ object frmReadDisk: TfrmReadDisk
         Top = 2
         Width = 395
         Height = 121
-        Caption = ' &Datenträger / Laufwerk '
+        Caption = ' &Datentr'#228'ger / Laufwerk '
         TabOrder = 0
         object Label12: TLabel
           Left = 235
@@ -258,9 +257,9 @@ object frmReadDisk: TfrmReadDisk
           Height = 17
           Hint = 
             'Aktiviert den Stapelmodus.'#13#10'Alle in die mit einem Haken makierte' +
-            'n'#13#10'Laufwerke eingeleten Datenträger werden'#13#10'eingelesen, falls no' +
+            'n'#13#10'Laufwerke eingeleten Datentr'#228'ger werden'#13#10'eingelesen, falls no' +
             'ch nicht in der Sammlung'#13#10'vorhanden.'
-          Caption = 'mehrere Datenträger einlesen (&Stapel)'
+          Caption = 'mehrere Datentr'#228'ger einlesen (&Stapel)'
           ParentShowHint = False
           ShowHint = True
           TabOrder = 1
@@ -273,7 +272,7 @@ object frmReadDisk: TfrmReadDisk
           Height = 21
           Hint = 
             'Gib hier Datei- oder Ordnermasken an, die'#13#10'nicht eingelesen werd' +
-            'en sollen.'#13#10#13#10'Alt+Nach unten öffnet den Editor.'
+            'en sollen.'#13#10#13#10'Alt+Nach unten '#246'ffnet den Editor.'
           Ctl3D = True
           ParentCtl3D = False
           TabOrder = 3
@@ -284,7 +283,7 @@ object frmReadDisk: TfrmReadDisk
         Top = 128
         Width = 249
         Height = 57
-        Caption = ' Datenträger '
+        Caption = ' Datentr'#228'ger '
         TabOrder = 1
         object Label5: TLabel
           Left = 8
@@ -300,8 +299,8 @@ object frmReadDisk: TfrmReadDisk
           Width = 152
           Height = 21
           Hint = 
-            'Name des Datenträgers.'#13#10'(kann in MyFiles verändert werden, falls' +
-            #13#10'vergessen wurde, den Datenträger beim'#13#10'Brennen richtig zu benn' +
+            'Name des Datentr'#228'gers.'#13#10'(kann in MyFiles ver'#228'ndert werden, falls' +
+            #13#10'vergessen wurde, den Datentr'#228'ger beim'#13#10'Brennen richtig zu benn' +
             'en)'
           HelpContext = 2005
           MaxLength = 50
@@ -344,7 +343,7 @@ object frmReadDisk: TfrmReadDisk
             Left = 0
             Top = 0
             Hint = 'Einleseoptionen laden.'
-            Caption = '&Öffnen'
+            Caption = '&'#214'ffnen'
             ImageIndex = 52
             ParentShowHint = False
             ShowHint = True
@@ -354,7 +353,7 @@ object frmReadDisk: TfrmReadDisk
             Left = 61
             Top = 0
             Hint = 
-              'Einleseoptionen speichern.'#13#10'Wähle als Dateinamen "default"'#13#10'um d' +
+              'Einleseoptionen speichern.'#13#10'W'#228'hle als Dateinamen "default"'#13#10'um d' +
               'ie Optionen beim Einlesen'#13#10'immer automatisch zu laden.'
             Caption = '&Speichern'
             ImageIndex = 53
@@ -371,7 +370,7 @@ object frmReadDisk: TfrmReadDisk
         Top = 8
         Width = 153
         Height = 13
-        Caption = 'Verfügbare Informations-&PlugIns:'
+        Caption = 'Verf'#252'gbare Informations-&PlugIns:'
       end
       object Label3: TLabel
         Left = 200
@@ -385,7 +384,7 @@ object frmReadDisk: TfrmReadDisk
         Top = 113
         Width = 35
         Height = 12
-        Caption = 'Priorität:'
+        Caption = 'Priorit'#228't:'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -9
@@ -393,31 +392,13 @@ object frmReadDisk: TfrmReadDisk
         Font.Style = []
         ParentFont = False
       end
-      object tvInstalled: TTreeView
-        Left = 8
-        Top = 32
-        Width = 153
-        Height = 153
-        Hint = 
-          'Übersicht über alle Installierten'#13#10'PlugIns und die jeweils verfü' +
-          'gbaren'#13#10'Info-Felder.'
-        HideSelection = False
-        Images = ImageList2
-        Indent = 19
-        PopupMenu = pmInstalled
-        ReadOnly = True
-        TabOrder = 0
-        OnChange = tvInstalledChange
-      end
       object fbAdd: TSpeedButton
         Left = 165
         Top = 38
         Width = 31
         Height = 20
         Hint = 'Feld/PlugIn beim Einlesen nutzen.'
-        Cancel = True
         Enabled = False
-        OnClick = fbAddClick
         Glyph.Data = {
           76010000424D7601000000000000760000002800000020000000100000000100
           0400000000000001000000000000000000001000000000000000000000000000
@@ -432,6 +413,7 @@ object frmReadDisk: TfrmReadDisk
           333333333337733333FF3333333C333330003333333733333777333333333333
           3000333333333333377733333333333333333333333333333333}
         NumGlyphs = 2
+        OnClick = fbAddClick
       end
       object fbDel: TSpeedButton
         Left = 165
@@ -439,9 +421,7 @@ object frmReadDisk: TfrmReadDisk
         Width = 31
         Height = 20
         Hint = 'Feld/PlugIn NICHT beim Einlesen nutzen.'
-        Cancel = True
         Enabled = False
-        OnClick = fbDelClick
         Glyph.Data = {
           76010000424D7601000000000000760000002800000020000000100000000100
           0400000000000001000000000000000000001000000000000000000000000000
@@ -456,45 +436,15 @@ object frmReadDisk: TfrmReadDisk
           333333377F33333333FF3333C333333330003333733333333777333333333333
           3000333333333333377733333333333333333333333333333333}
         NumGlyphs = 2
-      end
-      object lvUsedPlugins: TListView
-        Left = 200
-        Top = 32
-        Width = 201
-        Height = 153
-        Hint = 
-          'Die beim Einlesen auszulesenden'#13#10'Info-Felder. '#13#10'Falls mehrere Pl' +
-          'ugIns ein und das selbe'#13#10'Info-Feld für eine Datei zurückliefern,' +
-          #13#10'wird das zuerst (oben) stehende PlugIn'#13#10'verwendet.'
-        Columns = <
-          item
-            Caption = 'Eigenschaft'
-            Width = 80
-          end
-          item
-            Caption = 'zuständiges Plugin'
-            Width = 100
-          end>
-        ColumnClick = False
-        HideSelection = False
-        MultiSelect = True
-        ReadOnly = True
-        RowSelect = True
-        PopupMenu = pmUsedPlugins
-        SmallImages = ImageList2
-        TabOrder = 3
-        ViewStyle = vsReport
-        OnSelectItem = lvUsedPluginsSelectItem
+        OnClick = fbDelClick
       end
       object fbPUp: TSpeedButton
         Left = 178
         Top = 128
         Width = 20
         Height = 20
-        Hint = 'Priorität erhöhen.'
-        Cancel = True
+        Hint = 'Priorit'#228't erh'#246'hen.'
         Enabled = False
-        OnClick = fbPUpClick
         Glyph.Data = {
           76010000424D7601000000000000760000002800000020000000100000000100
           04000000000000010000120B0000120B00001000000000000000000000000000
@@ -509,16 +459,15 @@ object frmReadDisk: TfrmReadDisk
           33333333337F7F33333333333309033333333333337373333333333333303333
           333333333337F333333333333330333333333333333733333333}
         NumGlyphs = 2
+        OnClick = fbPUpClick
       end
       object fbPDown: TSpeedButton
         Left = 178
         Top = 151
         Width = 20
         Height = 20
-        Hint = 'Priorität niedriger.'
-        Cancel = True
+        Hint = 'Priorit'#228't niedriger.'
         Enabled = False
-        OnClick = fbPDownClick
         Glyph.Data = {
           76010000424D7601000000000000760000002800000020000000100000000100
           04000000000000010000120B0000120B00001000000000000000000000000000
@@ -533,6 +482,52 @@ object frmReadDisk: TfrmReadDisk
           33333333337F7F33333333333309033333333333337F7F333333333333090333
           33333333337F7F33333333333300033333333333337773333333}
         NumGlyphs = 2
+        OnClick = fbPDownClick
+      end
+      object tvInstalled: TTreeView
+        Left = 8
+        Top = 32
+        Width = 153
+        Height = 153
+        Hint = 
+          #220'bersicht '#252'ber alle Installierten'#13#10'PlugIns und die jeweils verf'#252 +
+          'gbaren'#13#10'Info-Felder.'
+        HideSelection = False
+        Images = ImageList2
+        Indent = 19
+        PopupMenu = pmInstalled
+        ReadOnly = True
+        TabOrder = 0
+        OnChange = tvInstalledChange
+      end
+      object lvUsedPlugins: TListView
+        Left = 200
+        Top = 32
+        Width = 201
+        Height = 153
+        Hint = 
+          'Die beim Einlesen auszulesenden'#13#10'Info-Felder. '#13#10'Falls mehrere Pl' +
+          'ugIns ein und das selbe'#13#10'Info-Feld f'#252'r eine Datei zur'#252'ckliefern,' +
+          #13#10'wird das zuerst (oben) stehende PlugIn'#13#10'verwendet.'
+        Columns = <
+          item
+            Caption = 'Eigenschaft'
+            Width = 80
+          end
+          item
+            Caption = 'zust'#228'ndiges Plugin'
+            Width = 100
+          end>
+        ColumnClick = False
+        HideSelection = False
+        MultiSelect = True
+        ReadOnly = True
+        RowSelect = True
+        PopupMenu = pmUsedPlugins
+        SmallImages = ImageList2
+        TabOrder = 1
+        ViewStyle = vsReport
+        OnSelectItem = lvUsedPluginsSelectItem
       end
     end
     object TabSheet2: TTabSheet
@@ -545,17 +540,6 @@ object frmReadDisk: TfrmReadDisk
         Height = 94
         Caption = ' MultiMedia Vorschau '
         TabOrder = 1
-        object ckMP3Prev: TCheckBox
-          Left = 16
-          Top = 56
-          Width = 159
-          Height = 17
-          Hint = 
-            'Beim Einlesen zu MP3-Dateien'#13#10'einen kurzen Ausschnitt erzeugen,'#13 +
-            #10'der auch ohne den Datenträger'#13#10'angehört werden kann.'
-          Caption = '&MP3-Vorschau "Hörbeispiel"'
-          TabOrder = 2
-        end
         object fbCfgMP3: TSpeedButton
           Tag = 2
           Left = 176
@@ -563,21 +547,9 @@ object frmReadDisk: TfrmReadDisk
           Width = 81
           Height = 21
           Hint = 'MP3-Vorschau Optionen'
-          Cancel = True
           Caption = 'Optionen...'
-          OnClick = fbCfgGenClick
           NumGlyphs = 2
-        end
-        object ckImgPrev: TCheckBox
-          Left = 16
-          Top = 24
-          Width = 159
-          Height = 17
-          Hint = 
-            'Beim Einlesen zu Bildern ein'#13#10'Miniatur-Bild erzeugen, welches'#13#10'a' +
-            'uch ohne den Datenträger'#13#10'angezeigt wird.'
-          Caption = '&Bilder-Thumbnail'
-          TabOrder = 0
+          OnClick = fbCfgGenClick
         end
         object fbCfgImg: TSpeedButton
           Tag = 1
@@ -586,10 +558,31 @@ object frmReadDisk: TfrmReadDisk
           Width = 81
           Height = 21
           Hint = 'Bild-Vorschau Optionen'
-          Cancel = True
           Caption = 'Optionen...'
-          OnClick = fbCfgGenClick
           NumGlyphs = 2
+          OnClick = fbCfgGenClick
+        end
+        object ckMP3Prev: TCheckBox
+          Left = 16
+          Top = 56
+          Width = 159
+          Height = 17
+          Hint = 
+            'Beim Einlesen zu MP3-Dateien'#13#10'einen kurzen Ausschnitt erzeugen,'#13 +
+            #10'der auch ohne den Datentr'#228'ger'#13#10'angeh'#246'rt werden kann.'
+          Caption = '&MP3-Vorschau "H'#246'rbeispiel"'
+          TabOrder = 1
+        end
+        object ckImgPrev: TCheckBox
+          Left = 16
+          Top = 24
+          Width = 159
+          Height = 17
+          Hint = 
+            'Beim Einlesen zu Bildern ein'#13#10'Miniatur-Bild erzeugen, welches'#13#10'a' +
+            'uch ohne den Datentr'#228'ger'#13#10'angezeigt wird.'
+          Caption = '&Bilder-Thumbnail'
+          TabOrder = 0
         end
       end
       object gbNotes: TGroupBox
@@ -606,8 +599,9 @@ object frmReadDisk: TfrmReadDisk
           Height = 17
           Hint = 
             'FileID.DIZ in jedem Ordner'#13#10'suchen und falls vorhanden,'#13#10'die Ord' +
-            'nernotiz mit dem Inhalt'#13#10'der Datei füllen.'
+            'nernotiz mit dem Inhalt'#13#10'der Datei f'#252'llen.'
           Caption = 'FileID.DIZ'
+          TabOrder = 0
         end
         object ckDescriptION: TCheckBox
           Left = 8
@@ -616,7 +610,7 @@ object frmReadDisk: TfrmReadDisk
           Height = 17
           Hint = 
             'In jedem Ordner nach einer'#13#10'Datei DESCRIPT.ION suchen,'#13#10'und fall' +
-            's vorhanden die'#13#10'Dateinotizen mit deren Inhalt'#13#10'füllen.'
+            's vorhanden die'#13#10'Dateinotizen mit deren Inhalt'#13#10'f'#252'llen.'
           Caption = 'DESCRIPT.ION'
           TabOrder = 1
         end
@@ -679,7 +673,7 @@ object frmReadDisk: TfrmReadDisk
           Height = 21
           Hint = 
             'Gib hier Datei- oder Ordnermasken an, die'#13#10'nicht eingelesen werd' +
-            'en sollen.'#13#10#13#10'Alt+Nach unten öffnet den Editor.'
+            'en sollen.'#13#10#13#10'Alt+Nach unten '#246'ffnet den Editor.'
           Ctl3D = True
           ParentCtl3D = False
           TabOrder = 3
@@ -744,7 +738,6 @@ object frmReadDisk: TfrmReadDisk
         Top = 67
         Width = 272
         Height = 60
-        Active = False
         CommonAVI = aviCopyFiles
         StopFrame = 34
       end
@@ -753,8 +746,6 @@ object frmReadDisk: TfrmReadDisk
         Top = 162
         Width = 393
         Height = 14
-        Min = 0
-        Max = 100
         TabOrder = 0
       end
       object Panel2: TPanel
@@ -949,7 +940,7 @@ object frmReadDisk: TfrmReadDisk
           Alignment = taCenter
           AutoSize = False
           Caption = 
-            'Bitte lege die einzulesenden Datenträger'#13#10'in die gewählten Laufw' +
+            'Bitte lege die einzulesenden Datentr'#228'ger'#13#10'in die gew'#228'hlten Laufw' +
             'erke ein...'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlue
@@ -964,7 +955,7 @@ object frmReadDisk: TfrmReadDisk
           Width = 353
           Height = 13
           Caption = 
-            'Klicke "Fertig", falls jetzt keine Datenträger mehr eingelesen w' +
+            'Klicke "Fertig", falls jetzt keine Datentr'#228'ger mehr eingelesen w' +
             'erden sollen.'
         end
         object lblEject: TLabel
@@ -983,10 +974,6 @@ object frmReadDisk: TfrmReadDisk
         end
       end
     end
-  end
-  object extZipFile: TZipFile
-    Left = 240
-    Top = 481
   end
   object ilMenus: TImageList
     Left = 97
@@ -1151,7 +1138,7 @@ object frmReadDisk: TfrmReadDisk
       Caption = '-'
     end
     object menDelRule: TMenuItem
-      Caption = 'Regel löschen'
+      Caption = 'Regel l'#246'schen'
       ImageIndex = 3
       ShortCut = 46
     end
@@ -2927,7 +2914,7 @@ object frmReadDisk: TfrmReadDisk
     Left = 48
     Top = 168
     object menAdd: TMenuItem
-      Caption = 'hinzufügen'
+      Caption = 'hinzuf'#252'gen'
       Enabled = False
       ImageIndex = 0
       ShortCut = 45
@@ -2941,7 +2928,7 @@ object frmReadDisk: TfrmReadDisk
         OnClick = menPlugConfigClick
       end
       object menPlugAbout: TMenuItem
-        Caption = 'über...'
+        Caption = #252'ber...'
         OnClick = menPlugAboutClick
       end
     end
@@ -2949,19 +2936,9 @@ object frmReadDisk: TfrmReadDisk
       Caption = '-'
     end
     object menAddAll: TMenuItem
-      Caption = 'Alle PlugIns hinzufügen'
+      Caption = 'Alle PlugIns hinzuf'#252'gen'
       OnClick = fbAddClick
     end
-  end
-  object fd: TFolderDialog
-    Top = 128
-    Left = 124
-    Title = 'Ordner auswählen'
-    Text = 
-      'Wähle einen Basis-Ordner zum einlesen aus. Es wird dann nur der ' +
-      'gewählte Ordner (und Unterordner) eingelesen.'
-    Options = [bfFileSysDirsOnly, bfStatusText, bfFileSysAncestors, bfShowPathInStatusArea, bfSyncCustomButton, bfAlignCustomButton, bfParentCenter]
-    RootFolder = sfoMyComputer
   end
   object od: TOpenDialog
     DefaultExt = 'myo'

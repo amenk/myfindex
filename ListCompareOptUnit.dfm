@@ -176,10 +176,6 @@ object frmListCompareOpt: TfrmListCompareOpt
     Caption = 'OK'
     Enabled = False
     OnClick = btnOkClick
-<<<<<<< Updated upstream
-=======
-    Kind = bkOK
->>>>>>> Stashed changes
   end
   object btnAbort: TSpeedButton
     Left = 256
@@ -187,10 +183,6 @@ object frmListCompareOpt: TfrmListCompareOpt
     Width = 86
     Height = 25
     Caption = 'Abbrechen'
-<<<<<<< Updated upstream
-=======
-    Kind = bkCancel
->>>>>>> Stashed changes
   end
   object gb1: TGroupBox
     Left = 16

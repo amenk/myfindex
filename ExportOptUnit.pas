@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   StdCtrls, Buttons, JvSpin, ExtCtrls, ComCtrls,
-  CheckLst, IniFiles, ToolWin, XPMenu;
+  CheckLst, IniFiles, ToolWin;
 
 type
   TfrmListExport = class(TForm)
@@ -41,8 +41,8 @@ type
     cbGroupCol: TCheckBox;
     cbHideCol: TCheckBox;
     GroupBox5: TGroupBox;
-    fsbUp: TFlatSpeedButton;
-    fsbDown: TFlatSpeedButton;
+    fsbUp: TSpeedButton;
+    fsbDown: TSpeedButton;
     Label15: TLabel;
     Label17: TLabel;
     gbCol2: TGroupBox;
@@ -116,7 +116,6 @@ var
   i : integer;
   dir : string;
 begin
-  MyFiles3Form.GimmeXP(Self);
   FCurSet := TMemIniFile.Create('');
   cbDefFunctions.ItemIndex := 0;
   rgFormat.ItemIndex := 0;
@@ -285,8 +284,8 @@ var
 begin
   with clbCols do
   begin
-    if (Sender is TFlatSpeedButton) then
-      items.Exchange(ItemIndex,ItemIndex+(Sender as TFlatSpeedButton).Tag);
+    if (Sender is TSpeedButton) then
+      items.Exchange(ItemIndex,ItemIndex+(Sender as TSpeedButton).Tag);
     end;
   with TStringList.Create do
   try

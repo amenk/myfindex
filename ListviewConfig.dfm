@@ -16,31 +16,12 @@ object frmListViewConfig: TfrmListViewConfig
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
-  object gb1: TGroupBox
-    Left = 8
-    Top = 8
-    Width = 177
-    Height = 185
-    Caption = ' Spalten '
-    TabOrder = 0
-    object clbCols: TCheckListBox
-      Left = 8
-      Top = 16
-      Width = 161
-      Height = 161
-      HelpContext = 5001
-      ItemHeight = 13
-      TabOrder = 0
-    end
-  end
   object btnOk: TSpeedButton
     Left = 200
     Top = 128
     Width = 89
     Height = 25
     Caption = 'OK'
-    Default = True
-    ModalResult = 1
     Glyph.Data = {
       DE010000424DDE01000000000000760000002800000024000000120000000100
       0400000000006801000000000000000000001000000000000000000000000000
@@ -66,11 +47,23 @@ object frmListViewConfig: TfrmListViewConfig
     Width = 89
     Height = 25
     Caption = 'Abbrechen'
-<<<<<<< Updated upstream
-=======
-    TabOrder = 3
-    Kind = bkCancel
->>>>>>> Stashed changes
+  end
+  object gb1: TGroupBox
+    Left = 8
+    Top = 8
+    Width = 177
+    Height = 185
+    Caption = ' Spalten '
+    TabOrder = 0
+    object clbCols: TCheckListBox
+      Left = 8
+      Top = 16
+      Width = 161
+      Height = 161
+      HelpContext = 5001
+      ItemHeight = 13
+      TabOrder = 0
+    end
   end
   object gbOptions: TGroupBox
     Left = 192
@@ -84,7 +77,7 @@ object frmListViewConfig: TfrmListViewConfig
       Top = 24
       Width = 63
       Height = 13
-      Caption = 'Dateigröße in'
+      Caption = 'Dateigr'#246#223'e in'
     end
     object cbSizeFmt: TComboBox
       Left = 8

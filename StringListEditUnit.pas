@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  StdCtrls, FlatButton, ExtCtrls, XPMenu;
+  StdCtrls, ExtCtrls, Buttons;
 
 type
   TfrmBegriffe = class(TForm)
@@ -120,14 +120,14 @@ end;
 
 procedure TfrmBegriffe.FormShow(Sender: TObject);
 begin
-  btnOk.default := False;
+  {//ToBeConverted btnOk.default := False;}
   fbAdd.Enabled := lbList.Items.IndexOf(edtString.Text) = -1;
   updcount;
 end;
 
 procedure TfrmBegriffe.FormCreate(Sender: TObject);
 begin
-  MyFiles3Form.GimmeXP(Self);
+  //
 end;
 
 end.

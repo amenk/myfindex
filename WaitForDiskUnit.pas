@@ -4,11 +4,11 @@ interface
 
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  StdCtrls, FlatButton, ExtCtrls, gifimge2, XPMenu;
+  StdCtrls, ExtCtrls, Buttons;
 
 type
   TfrmWaitForDisk = class(TForm)
-    gifimge21: Tgifimge2;
+    {//ToBeConverted gifimge21: Tgifimge2;}
     Label5: TLabel;
     Shape2: TShape;
     fbCancel: TSpeedButton;
@@ -47,7 +47,7 @@ end;
 
 procedure TfrmWaitForDisk.FormCreate(Sender: TObject);
 begin
-  MyFiles3Form.GimmeXP(Self);
+  //
 end;
 
 end.

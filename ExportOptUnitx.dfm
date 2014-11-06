@@ -320,7 +320,6 @@ object frmListExport: TfrmListExport
       333A333333333333333338330000333333333333333333333333333333333333
       0000}
     NumGlyphs = 2
-	Kind = bkOK
   end
   object btnAbort: TBitBtn
     Left = 186

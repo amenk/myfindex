@@ -134,12 +134,3 @@ OriginalFilename=MyFiles.exe
 ProductName=MyFindex
 ProductVersion=4
 Comments=
-[HistoryLists\hlUnitAliases]
-Count=1
-Item0=WinTypes=Windows;WinProcs=Windows;DbiTypes=BDE;DbiProcs=BDE;DbiErrs=BDE;
-[HistoryLists\hlSearchPath]
-Count=4
-Item0=$(DELPHI)\Units;$(DELPHI)\RX\Units;$(DELPHI)\vcl\EldoS\ElTree\Code\Source;$(DELPHI)\vcl\EldoS;$(DELPHI)\vcl;$(DELPHI)\vcl\TreeNT;$(DELPHI)\Units;$(DELPHI)\Vcl\DelphiX\Source;$(DELPHI)\Vcl\gif
-Item1=$(DELPHI)\Units;$(DELPHI)\RX\Units;$(DELPHI)\vcl\EldoS\ElTree\Code\Source;$(DELPHI)\vcl\EldoS;$(DELPHI)\vcl;$(DELPHI)\vcl\TreeNT;$(DELPHI)\Units;$(DELPHI)\Vcl\DelphiX\Source;C:\Programme\Borland\Delphi5\Vcl\gif
-Item2=$(DELPHI)\Units;$(DELPHI)\RX\Units;$(DELPHI)\vcl\EldoS\ElTree\Code\Source;$(DELPHI)\vcl\EldoS;$(DELPHI)\vcl;$(DELPHI)\vcl\TreeNT;$(DELPHI)\Units;C:\Programme\Borland\Delphi5\Vcl\DelphiX\Source
-Item3=$(DELPHI)\Units;$(DELPHI)\RX\Units;$(DELPHI)\vcl\EldoS\ElTree\Code\Source;$(DELPHI)\vcl\EldoS;$(DELPHI)\vcl;$(DELPHI)\vcl\TreeNT;$(DELPHI)\Units

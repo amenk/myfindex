@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  StdCtrls, ExtCtrls, ComCtrls, XPMenu;
+  StdCtrls, ExtCtrls, ComCtrls, Buttons;
 
 type
   TfrmExtSelect = class(TForm)
@@ -62,7 +62,7 @@ end;
 
 procedure TfrmExtSelect.FormCreate(Sender: TObject);
 begin
-  MyFiles3Form.GimmeXP(Self);
+  //
 end;
 
 end.

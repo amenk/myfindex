@@ -167,10 +167,6 @@ object frmListExport: TfrmListExport
     Width = 87
     Height = 25
     Caption = 'Abbrechen'
-<<<<<<< Updated upstream
-=======
-    Kind = bkCancel
->>>>>>> Stashed changes
   end
   object gb1: TGroupBox
     Left = 8
@@ -178,7 +174,7 @@ object frmListExport: TfrmListExport
     Width = 217
     Height = 57
     Caption = ' Liste '
-    TabOrder = 2
+    TabOrder = 1
     object cbList: TComboBox
       Left = 16
       Top = 24
@@ -224,7 +220,7 @@ object frmListExport: TfrmListExport
         Caption = ' Listentyp '
         Items.Strings = (
           'MyFiles-Auflistung'
-          'Gruppiert (ähnlich DIR)')
+          'Gruppiert ('#228'hnlich DIR)')
         TabOrder = 0
         OnClick = rgFormatClick
       end
@@ -695,7 +691,7 @@ object frmListExport: TfrmListExport
             Top = 88
             Width = 145
             Height = 17
-            Caption = 'Datei nicht öffnen'
+            Caption = 'Datei nicht '#246'ffnen'
             TabOrder = 3
             OnClick = chkDontOpenClick
           end
@@ -798,7 +794,7 @@ object frmListExport: TfrmListExport
     Width = 137
     Height = 58
     Caption = ' Vorlage '
-    TabOrder = 4
+    TabOrder = 0
     object ToolBar1: TToolBar
       Left = 12
       Top = 15
@@ -821,7 +817,7 @@ object frmListExport: TfrmListExport
       object tbOpen: TToolButton
         Left = 0
         Top = 0
-        Caption = 'Öffnen'
+        Caption = #214'ffnen'
         ImageIndex = 52
         OnClick = tbOpenClick
       end
@@ -839,7 +835,7 @@ object frmListExport: TfrmListExport
     Top = 120
     Width = 361
     Height = 41
-    TabOrder = 5
+    TabOrder = 2
     object Label1: TLabel
       Left = 14
       Top = 16
@@ -873,7 +869,7 @@ object frmListExport: TfrmListExport
     DefaultExt = 'myt'
     Filter = 'MyFiles-Exportvorlage (*.myt)|*.myt'
     Options = [ofHideReadOnly, ofPathMustExist, ofFileMustExist, ofEnableSizing]
-    Title = 'Vorlage öffnen'
+    Title = 'Vorlage '#246'ffnen'
     Left = 252
     Top = 71
   end

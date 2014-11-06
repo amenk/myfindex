@@ -20,7 +20,6 @@ uses
   ListCompareOptUnit in 'ListCompareOptUnit.pas' {frmListCompareOpt},
   myf_consts in 'myf_consts.pas',
   SetupUnit in 'SetupUnit.pas' {frmConfig},
-  selfMP3Header in '..\..\Units\selfMP3Header.pas',
   ListviewConfig in 'ListviewConfig.pas' {frmListViewConfig},
   RepairUnit in 'RepairUnit.pas' {frmRepair},
   myf_lists in 'myf_lists.pas',
@@ -34,10 +33,7 @@ uses
   StringListEditUnit in 'StringListEditUnit.pas' {frmBegriffe},
   myf_search in 'myf_search.pas',
   myf_plugins in 'myf_plugins.pas',
-  CopyToDisksUnit in 'CopyToDisksUnit.pas' {frmCopyDisksUsed},
-  ElSounds in 'DummyUnits\ElSounds.pas';
-
-//  NetUnit in 'NetUnit.pas' {NetForm};
+  CopyToDisksUnit in 'CopyToDisksUnit.pas' {frmCopyDisksUsed};
 
 {$R *.RES}
 

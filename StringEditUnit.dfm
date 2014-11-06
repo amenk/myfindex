@@ -17,7 +17,7 @@ object frmStringEdit: TfrmStringEdit
   object pnlHead: TPanel
     Left = 0
     Top = 0
-    Width = 252
+    Width = 227
     Height = 24
     Align = alTop
     BevelOuter = bvNone
@@ -31,6 +31,9 @@ object frmStringEdit: TfrmStringEdit
     ParentFont = False
     TabOrder = 6
     OnMouseDown = pnlHeadMouseDown
+    DesignSize = (
+      227
+      24)
     object btnCancel: TSpeedButton
       Left = 2
       Top = 2
@@ -42,10 +45,6 @@ object frmStringEdit: TfrmStringEdit
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsBold]
       ParentFont = False
-<<<<<<< Updated upstream
-=======
-      Kind = bkCancel
->>>>>>> Stashed changes
     end
     object btnOK: TSpeedButton
       Left = 212
@@ -59,16 +58,12 @@ object frmStringEdit: TfrmStringEdit
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsBold]
       ParentFont = False
-<<<<<<< Updated upstream
-=======
-      Kind = bkOK
->>>>>>> Stashed changes
     end
   end
   object p1: TPanel
     Left = 0
     Top = 24
-    Width = 252
+    Width = 227
     Height = 22
     Align = alTop
     BevelOuter = bvNone
@@ -94,7 +89,7 @@ object frmStringEdit: TfrmStringEdit
   object p2: TPanel
     Left = 0
     Top = 210
-    Width = 252
+    Width = 227
     Height = 17
     Align = alTop
     BevelOuter = bvNone
@@ -120,7 +115,7 @@ object frmStringEdit: TfrmStringEdit
   object p3: TPanel
     Left = 0
     Top = 290
-    Width = 252
+    Width = 227
     Height = 17
     Align = alTop
     BevelOuter = bvNone
@@ -132,7 +127,7 @@ object frmStringEdit: TfrmStringEdit
       Width = 177
       Height = 17
       Cursor = crHandPoint
-      Caption = 'Regulärer Ausdruck'
+      Caption = 'Regul'#228'rer Ausdruck'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clBlue
       Font.Height = -11
@@ -146,24 +141,27 @@ object frmStringEdit: TfrmStringEdit
   object pnlBegriffe: TPanel
     Left = 0
     Top = 46
-    Width = 252
+    Width = 227
     Height = 164
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 1
+    DesignSize = (
+      227
+      164)
     object Label1: TLabel
       Left = 8
       Top = 48
       Width = 176
       Height = 13
-      Caption = 'Diese Begriffe MÜSSEN vorkommen:'
+      Caption = 'Diese Begriffe M'#220'SSEN vorkommen:'
     end
     object Label2: TLabel
       Left = 8
       Top = 91
       Width = 211
       Height = 13
-      Caption = 'Diese Begriffe DÜRFEN NICHT vorkommen:'
+      Caption = 'Diese Begriffe D'#220'RFEN NICHT vorkommen:'
     end
     object Label6: TLabel
       Left = 8
@@ -211,7 +209,7 @@ object frmStringEdit: TfrmStringEdit
       Top = 64
       Width = 234
       Height = 21
-      Hint = 'Alt+Nach unten öffnet den Begriffseditor.'
+      Hint = 'Alt+Nach unten '#246'ffnet den Begriffseditor.'
       Anchors = [akLeft, akTop, akRight]
       ParentShowHint = False
       ShowHint = True
@@ -222,7 +220,7 @@ object frmStringEdit: TfrmStringEdit
       Top = 107
       Width = 234
       Height = 21
-      Hint = 'Alt+Nach unten öffnet den Begriffseditor.'
+      Hint = 'Alt+Nach unten '#246'ffnet den Begriffseditor.'
       Anchors = [akLeft, akTop, akRight]
       ParentShowHint = False
       ShowHint = True
@@ -233,7 +231,7 @@ object frmStringEdit: TfrmStringEdit
       Top = 21
       Width = 234
       Height = 21
-      Hint = 'Alt+Nach unten öffnet den Begriffseditor.'
+      Hint = 'Alt+Nach unten '#246'ffnet den Begriffseditor.'
       Anchors = [akLeft, akTop, akRight]
       ParentShowHint = False
       ShowHint = True
@@ -246,32 +244,28 @@ object frmStringEdit: TfrmStringEdit
       Height = 19
       Anchors = [akLeft, akTop, akRight]
       Max = 3
-      Orientation = trHorizontal
       PageSize = 1
-      Frequency = 1
-      Position = 0
-      SelEnd = 0
-      SelStart = 0
       TabOrder = 3
       ThumbLength = 10
-      TickMarks = tmBottomRight
-      TickStyle = tsAuto
     end
   end
   object pnlWildcard: TPanel
     Left = 0
     Top = 227
-    Width = 252
+    Width = 227
     Height = 63
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 3
+    DesignSize = (
+      227
+      63)
     object Label3: TLabel
       Left = 8
       Top = 5
       Width = 142
       Height = 13
-      Caption = 'Suchtext (Platzhalter möglich):'
+      Caption = 'Suchtext (Platzhalter m'#246'glich):'
     end
     object Label4: TLabel
       Left = 10
@@ -299,11 +293,14 @@ object frmStringEdit: TfrmStringEdit
   object pnlRegExp: TPanel
     Left = 0
     Top = 307
-    Width = 252
+    Width = 227
     Height = 63
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 5
+    DesignSize = (
+      227
+      63)
     object Label5: TLabel
       Left = 8
       Top = 5
@@ -318,7 +315,7 @@ object frmStringEdit: TfrmStringEdit
       Height = 12
       Cursor = crHandPoint
       Anchors = [akTop]
-      Caption = 'Syntax von Regulären Ausdrücken (Online)'
+      Caption = 'Syntax von Regul'#228'ren Ausdr'#252'cken (Online)'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clBlue
       Font.Height = -9

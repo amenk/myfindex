@@ -3,7 +3,7 @@ unit myf_search;
 interface
 
 uses myf_main, myf_lists, DataModule,
-     SysUtils, Classes, UsefulPrcs, RegExpr, ComCtrls, CommCtrl, Windows;
+     SysUtils, Classes, UsefulPrcs, ComCtrls, CommCtrl, Windows;
 
 type
   { Wird für jedes gef. Element aufgerufen;
@@ -18,7 +18,7 @@ type
     FORs, FANDs, FNOTs : TStringList;
     FString : string;
 //    FValue : string;
-    FRegEx : TRegExpr;
+    {//ToBeConverted FRegEx : TRegExpr;}
     function GetValue:string;
     procedure SetValue(Value:string);
     procedure SetString(s:string);
@@ -124,7 +124,7 @@ begin
   FANDs := nil;
   FNOTs := nil;
   FORs := nil;
-  FRegEx := nil;
+  {//ToBeConverted FRegEx := nil;}
   SetValue(Value);
 end;
 
@@ -136,7 +136,7 @@ begin
   if Assigned(FANDs) then FreeAndNil(FANDs);
   if Assigned(FORs) then FreeAndNil(FORs);
   if Assigned(FNOTs) then FreeAndNil(FNOTs);
-  if Assigned(FRegEx) then FreeAndNil(FRegEx);
+  {//ToBeConverted if Assigned(FRegEx) then FreeAndNil(FRegEx);}
 
   FMode := -1;
   if Length(Value) > 1 then
@@ -189,13 +189,15 @@ begin
     3 : begin
           if s = '' then raise Exception.Create('Regulärer Ausdruck darf nicht leer sein.');
           FString := s;
-          if not Assigned(FRegEx) then
+          {//ToBeConverted
+		  if not Assigned(FRegEx) then
           begin
             FRegEx := TRegExpr.Create;
-            FRegEx.ModifierI := True; { Groß/Kleinschreibung ignorieren }
+            FRegEx.ModifierI := True; // Groß/Kleinschreibung ignorieren
           end;
           FRegEx.Expression := s;
           FRegEx.Compile;
+		  }
         end;
   end;
 end;
@@ -235,7 +237,7 @@ begin
   if Assigned(FANDs) then FANDs.Free;
   if Assigned(FORs) then FORs.Free;
   if Assigned(FNOTs) then FNOTs.Free;
-  if Assigned(FRegEx) then FreeAndNil(FRegEx);
+  {//ToBeConverted if Assigned(FRegEx) then FreeAndNil(FRegEx);}
 end;
 
 function TMySearchString.Match(s:string):Boolean;
@@ -269,7 +271,7 @@ begin
       Result := Like(s,FString);
     end;
   3:begin { RegExp }
-      Result := FRegEx.Exec(s);
+      {//ToBeConverted Result := FRegEx.Exec(s);}
     end;
   else
     raise Exception.Create('mode ungültig');

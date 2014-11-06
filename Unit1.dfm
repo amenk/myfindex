@@ -1,6 +1,6 @@
 object MyFiles3Form: TMyFiles3Form
-  Left = 211
-  Top = 143
+  Left = 416
+  Top = 58
   HelpContext = 10000
   AutoScroll = False
   Caption = 'MyFindex - keine Sammlung ge'#246'ffnet'
@@ -419,7 +419,6 @@ object MyFiles3Form: TMyFiles3Form
           Height = 17
           AllowAllUp = True
           Anchors = [akTop, akRight]
-          Flat = True
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -9
@@ -880,7 +879,7 @@ object MyFiles3Form: TMyFiles3Form
               object lbSearchIn: TListBox
                 Left = 8
                 Top = 29
-                Width = 67
+                Width = 57
                 Height = 66
                 Anchors = [akLeft, akTop, akRight]
                 Ctl3D = True
@@ -938,7 +937,7 @@ object MyFiles3Form: TMyFiles3Form
               object ScbName: TEdit
                 Left = 8
                 Top = 7
-                Width = 183
+                Width = 173
                 Height = 21
                 Hint = 'Suchtext: Alt+Nach unten '#246'ffnet den Suchtexteditor.'
                 Anchors = [akLeft, akTop, akRight]

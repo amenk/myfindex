@@ -51,7 +51,6 @@ object frmNewList: TfrmNewList
     Caption = 'OK'
     Default = True
     Enabled = False
-    ModalResult = 1
     TabOrder = 1
     Glyph.Data = {
       DE010000424DDE01000000000000760000002800000024000000120000000100

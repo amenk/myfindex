@@ -18,7 +18,7 @@ object NoRegForm: TNoRegForm
   object Shape1: TShape
     Left = 0
     Top = 0
-    Width = 420
+    Width = 409
     Height = 32
     Align = alTop
     Pen.Style = psClear
@@ -38,6 +38,21 @@ object NoRegForm: TNoRegForm
     ParentColor = False
     ParentFont = False
   end
+  object btnOk: TSpeedButton
+    Left = 323
+    Top = 232
+    Width = 86
+    Height = 25
+    Caption = 'OK'
+  end
+  object btnRegMe: TSpeedButton
+    Left = 8
+    Top = 233
+    Width = 105
+    Height = 25
+    Caption = 'jetzt &registrieren'
+    NumGlyphs = 2
+  end
   object mLizenz: TMemo
     Left = 8
     Top = 40
@@ -51,19 +66,19 @@ object NoRegForm: TNoRegForm
     Lines.Strings = (
       'Du benutzt die unregistrierte Freewareversion von MyFindex.'
       ''
-      'Diese Version enthält keine Einschränkungen bezüglich der '
-      'Funktionalität (*) und unterliegt keinen Testzeitraum-'
-      'Beschränkungen.'
+      'Diese Version enth'#228'lt keine Einschr'#228'nkungen bez'#252'glich der '
+      'Funktionalit'#228't (*) und unterliegt keinen Testzeitraum-'
+      'Beschr'#228'nkungen.'
       
         '(*) aber: nach Registrierung verschwindet dieser Hinweis, und de' +
         'r '
       'Splash-Screen kann deaktiviert werden'
       ''
-      'Falls du MyFindex jedoch regelmäßig nutzt und an der schnellen '
+      'Falls du MyFindex jedoch regelm'#228#223'ig nutzt und an der schnellen '
       
         'Weiterentwicklung und Verbesserung intressiert bist, solltest du' +
         ' self '
-      'soft MyFindex registrieren. Außerdem MUSS MyFindex registriert '
+      'soft MyFindex registrieren. Au'#223'erdem MUSS MyFindex registriert '
       'werden,'
       'solltest du es kommerziell nutzen wollen.'
       ''
@@ -74,55 +89,6 @@ object NoRegForm: TNoRegForm
     ParentFont = False
     ReadOnly = True
     ScrollBars = ssVertical
-    TabOrder = 2
-  end
-  object btnOk: TSpeedButton
-    Left = 323
-    Top = 232
-    Width = 86
-    Height = 25
-    Caption = 'OK'
-<<<<<<< Updated upstream
-=======
-    Kind = bkOK
->>>>>>> Stashed changes
-  end
-  object btnRegMe: TSpeedButton
-    Left = 8
-    Top = 233
-    Width = 105
-    Height = 25
-    Caption = 'jetzt &registrieren'
-    Default = True
-    ModalResult = 6
-    NumGlyphs = 2
-  end
-  object XPMenu: TXPMenu
-    DimLevel = 30
-    GrayLevel = 10
-    Font.Charset = ANSI_CHARSET
-    Font.Color = clMenuText
-    Font.Height = -11
-    Font.Name = 'Tahoma'
-    Font.Style = []
-    Color = clBtnFace
-    IconBackColor = clBtnFace
-    MenuBarColor = clBtnFace
-    SelectColor = clHighlight
-    SelectBorderColor = clHighlight
-    SelectFontColor = clMenuText
-    DisabledColor = clInactiveCaption
-    SeparatorColor = clBtnFace
-    CheckedColor = clHighlight
-    IconWidth = 24
-    DrawSelect = True
-    UseSystemColors = True
-    OverrideOwnerDraw = False
-    Gradient = False
-    FlatMenu = True
-    AutoDetect = False
-    Active = True
-    Left = 8
-    Top = 8
+    TabOrder = 0
   end
 end

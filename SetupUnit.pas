@@ -5,8 +5,8 @@ interface
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   StdCtrls, JvSpin, Buttons, ComCtrls, myf_consts, Registry, ActiveX, ComObj,
-  ShlObj, UseFulPrcs, FlatButton, CheckLst,
-  myf_plugins, Mask, XPMenu, ExtCtrls, ToolEdit;
+  ShlObj, UseFulPrcs, CheckLst,
+  myf_plugins, Mask, ExtCtrls, JvMaskEdit;
 
 
 type
@@ -72,7 +72,7 @@ type
     Label20: TLabel;
     Label21: TLabel;
     Label22: TLabel;
-    sePrevWidth: TRxSpinEdit;
+    sePrevWidth: TJvSpinEdit;
     sePrevHeight: TJvSpinEdit;
     Label23: TLabel;
     Label24: TLabel;
@@ -302,7 +302,7 @@ end;
 
 procedure TfrmConfig.FormCreate(Sender: TObject);
 begin
-  MyFiles3Form.GimmeXP(Self);
+  //
   tv.selected := tv.Items[0];
   readini;
   tv.FullExpand;

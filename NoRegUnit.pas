@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  StdCtrls, ExtCtrls, FlatButton, XPMenu;
+  StdCtrls, ExtCtrls, Buttons;
 
 type
   TNoRegForm = class(TForm)
@@ -13,7 +13,6 @@ type
     mLizenz: TMemo;
     btnOk: TSpeedButton;
     btnRegMe: TSpeedButton;
-    XPMenu: TXPMenu;
   private
     { Private-Deklarationen }
   public

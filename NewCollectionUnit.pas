@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  Buttons, StdCtrls, UseFulPrcs, myf_consts, FlatButton, XPMenu;
+  Buttons, StdCtrls, UseFulPrcs, myf_consts;
 
 type
   TfrmSammlung = class(TForm)
@@ -142,7 +142,7 @@ end;
 
 procedure TfrmSammlung.FormCreate(Sender: TObject);
 begin
-  MyFiles3Form.GimmeXP(Self);
+  //
 end;
 
 end.

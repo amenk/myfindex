@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  StdCtrls, Buttons, CheckLst, myf_consts, FlatButton, XPMenu;
+  StdCtrls, Buttons, CheckLst, myf_consts;
 
 type
   TfrmListViewConfig = class(TForm)
@@ -50,7 +50,7 @@ end;*)
 
 procedure TfrmListViewConfig.FormCreate(Sender: TObject);
 begin
-  MyFiles3Form.GimmeXP(Self);
+  //
 end;
 
 end.

@@ -5,11 +5,11 @@ interface
 uses
   myf_consts, myf_main, myf_plugins,
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  StdCtrls, ComCtrls, UsefulPrcs, ExtCtrls, Buttons, CheckLst, TZip,
-  AppVerInfo, VersInfo, jpeg, db,
-  dbtables, ImgList, Menus, MapChar, DIB, CorelButton, FlatButton,
-  CommCtrl, Animate, OleCtrls, SHDocVw, GifImge2, ShellApi, ToolWin,
-  Mask, ToolEdit, FoldrDlg, IniFiles, XPMenu, gfx_tiff;
+  StdCtrls, ComCtrls, UsefulPrcs, ExtCtrls, Buttons, CheckLst,
+  jpeg, db,
+  dbtables, ImgList, Menus, MapChar,
+  CommCtrl, OleCtrls, SHDocVw, ShellApi, ToolWin,
+  Mask, IniFiles;
 
 type
   EPreview = class(Exception);
@@ -29,7 +29,7 @@ type
 
 type
   TfrmReadDisk = class(TForm)
-    extZipFile: TZipFile;
+    {//ToBeConverted extZipFile: TZipFile;}
     ilMenus: TImageList;
     pmRDOpt: TPopupMenu;
     pmOpt: TPopupMenu;
@@ -101,7 +101,7 @@ type
     ckIg0Byte: TCheckBox;
     ckIgEmptyFolder: TCheckBox;
     cbIgFiles: TEdit;
-    fd: TFolderDialog;
+    {//ToBeConverted fd: TFolderDialog;}
     od: TOpenDialog;
     sd: TSaveDialog;
     ckImgPrev: TCheckBox;
@@ -235,7 +235,7 @@ var
 
 implementation
 
-uses DataModule, Unit1, selfMP3header, NewListUnit, StringListEditUnit;
+uses DataModule, Unit1, NewListUnit, StringListEditUnit;
 
 const
   bit_noidx = 1; // nicht indizieren
@@ -643,7 +643,7 @@ var
 var
   fsIn, fsOut: TFileStream;
   header: dword;
-  mph: TselfMPEGHeader;
+  {//ToBeConverted mph: TselfMPEGHeader;}
   fbuf: Pointer;
   time: Double;
   Count, frames: integer;
@@ -661,14 +661,15 @@ begin
   time := 0;
   fnLameIn := gettempdir + 'MyFiles1.mp3';
   fnLameOut := gettempdir + 'MyFiles2.mp3';
-  mph := TselfMPEGHeader.Create;
+  {//ToBeConverted mph := TselfMPEGHeader.Create;}
   try
     try
       fsIn := TFileStream.Create(verzeichnis + filen, fmOpenRead or fmShareDenyWrite);
       fsOut := TFileStream.Create(fnLameIn, fmCreate or fmShareExclusive);
+      {//ToBeConverted 
       repeat
         if fsIn.Read(header, SizeOf(dword)) < 4 then break;
-        mph.data := header;
+        mph.data := header;}
         { syncronisieren falls defekter Dateianfang }
 (*        while (frames = 0) and (mph.error) and (fsIn.Position < fsIn.Size) and (Count < 5 * 1024) do
         begin
@@ -677,9 +678,10 @@ begin
           mph.data := header;
         end; *)
         { Abbruchbedingung }
-        if mph.error then break;
+        {//ToBeConverted if mph.error then break;}
         { Frame lesen }
         Inc(frames);
+        {//ToBeConverted 
         if fsIn.Position > (fsIn.Size div 3) then
         begin
           getMem(fbuf, mph.FrameSize - 4);
@@ -695,10 +697,11 @@ begin
         if time > p_dur then break;
       until mph.error;
       if fsOut.Size < 1 then raise EAbort.Create(str_Emp3);
+      }
     finally
       if Assigned(fsIn) then fsIn.Free;
       if Assigned(fsOut) then fsOut.Free;
-      if Assigned(mph) then mph.Free;
+      {//ToBeConverted if Assigned(mph) then mph.Free;}
     end;
     if not fileexists(fnLameIn) then raise EPreview.Create(format('File not created (%s%s)', [verzeichnis, filen]));
 
@@ -1626,7 +1629,6 @@ procedure TfrmReadDisk.FormCreate(Sender: TObject);
 var
   dir : string;
 begin
-  MyFiles3Form.GimmeXP(Self);
   slfolderopt := TStringList.Create;
   dbug := False;
 
@@ -1974,7 +1976,7 @@ end;
 
 procedure TfrmReadDisk.fbBasisOrdnerClick(Sender: TObject);
 begin
-  fd.execute;
+  {//ToBeConverted fd.execute;}
 end;
 
 procedure TfrmReadDisk.PlugInsFromString(const str:string);

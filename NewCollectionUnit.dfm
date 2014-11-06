@@ -17,34 +17,13 @@ object frmSammlung: TfrmSammlung
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
-  object gb1: TGroupBox
-    Left = 8
-    Top = 8
-    Width = 185
-    Height = 57
-    Caption = ' Name der Sammlung '
-    TabOrder = 0
-    object edtName: TEdit
-      Left = 16
-      Top = 24
-      Width = 153
-      Height = 21
-      HelpContext = 1001
-      MaxLength = 100
-      TabOrder = 0
-      OnChange = Validate
-    end
-  end
   object btnOk: TSpeedButton
     Left = 8
     Top = 222
     Width = 86
     Height = 25
     Caption = 'OK'
-    Default = True
     Enabled = False
-    ModalResult = 1
-    OnClick = btnOkClick
     Glyph.Data = {
       DE010000424DDE01000000000000760000002800000024000000120000000100
       0400000000006801000000000000000000001000000000000000000000000000
@@ -63,6 +42,7 @@ object frmSammlung: TfrmSammlung
       333A333333333333333338330000333333333333333333333333333333333333
       0000}
     NumGlyphs = 2
+    OnClick = btnOkClick
   end
   object btnAbort: TSpeedButton
     Left = 106
@@ -70,10 +50,24 @@ object frmSammlung: TfrmSammlung
     Width = 86
     Height = 25
     Caption = 'Abbrechen'
-<<<<<<< Updated upstream
-=======
-    Kind = bkCancel
->>>>>>> Stashed changes
+  end
+  object gb1: TGroupBox
+    Left = 8
+    Top = 8
+    Width = 185
+    Height = 57
+    Caption = ' Name der Sammlung '
+    TabOrder = 0
+    object edtName: TEdit
+      Left = 16
+      Top = 24
+      Width = 153
+      Height = 21
+      HelpContext = 1001
+      MaxLength = 100
+      TabOrder = 0
+      OnChange = Validate
+    end
   end
   object gb2: TGroupBox
     Left = 8
@@ -87,14 +81,14 @@ object frmSammlung: TfrmSammlung
       Top = 20
       Width = 114
       Height = 13
-      Caption = 'Überwachte Laufwerke:'
+      Caption = #220'berwachte Laufwerke:'
     end
     object Label1: TLabel
       Left = 16
       Top = 88
       Width = 135
       Height = 13
-      Caption = 'Datenträgeridentifikation via:'
+      Caption = 'Datentr'#228'geridentifikation via:'
     end
     object cbAutoUpdate: TCheckBox
       Left = 15
@@ -129,7 +123,7 @@ object frmSammlung: TfrmSammlung
       TabOrder = 2
       Items.Strings = (
         'Seriennummer (empfohlen)'
-        'Datenträgerbezeichnung')
+        'Datentr'#228'gerbezeichnung')
     end
   end
 end

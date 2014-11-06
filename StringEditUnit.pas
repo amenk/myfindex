@@ -4,8 +4,8 @@ interface
 
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  StdCtrls, FlatButton, ExtCtrls, Mask, ToolEdit, ShellApi, ComCtrls, UseFulPrcs,
-  XPMenu;
+  StdCtrls, ExtCtrls, Mask, ShellApi, ComCtrls, UseFulPrcs,
+  Buttons;
 
 type
   TfrmStringEdit = class(TForm)
@@ -178,7 +178,7 @@ end;
 }
 procedure TfrmStringEdit.lblSyntaxLinkClick(Sender: TObject);
 begin
-  ShellExecute(Self.Handle, 'open', 'http://go.self-soft.de/?regexprsyntax', nil, nil, sw_shownormal);
+  {//ToBeConverted ShellExecute(Self.Handle, 'open', 'http://go.self-soft.de/?regexprsyntax', nil, nil, sw_shownormal);}
 end;
 
 procedure TfrmStringEdit.pnlHeadMouseDown(Sender: TObject;
@@ -190,7 +190,7 @@ end;
 
 procedure TfrmStringEdit.FormCreate(Sender: TObject);
 begin
-  MyFiles3Form.GimmeXP(Self);
+  //
 end;
 
 end.
