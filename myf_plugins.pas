@@ -1,5 +1,7 @@
 unit myf_plugins;
 
+{$MODE Delphi}
+
 interface
 
 uses Classes, Dialogs, SysUtils, Windows;
@@ -128,11 +130,11 @@ var
 begin
   Index := FPlugIns.IndexOf(PlugInName);
   if Index = -1 then
-    raise EMyPluginError.Create(Format('PlugIn-ID ''%s'' ist ungültig',[PlugInName]));
+    raise EMyPluginError.Create(Format('PlugIn-ID ''%s'' ist ungÃ¼ltig',[PlugInName]));
   Result := GetItem(Index);
 end;
 
-// Läd die PlugIn-DLL
+// LÃ¤d die PlugIn-DLL
 constructor TMyPlugin.Create(const dll,inifn:string);
 begin
   FFileName := dll;
@@ -174,12 +176,12 @@ var
   i       : integer;
 begin
   if not (Assigned(FfExecute) and Assigned(FfgetSupportedTypes) and Assigned(FfgetFields)) then
-    EMyPluginError.Create('Execute, getSupportedTypes oder getFields nicht gefunden. Kein gültiges PlugIn.');
+    EMyPluginError.Create('Execute, getSupportedTypes oder getFields nicht gefunden. Kein gÃ¼ltiges PlugIn.');
   if Assigned(FfLoad) then
     infostr := StrPas(FfLoad(PChar(inifn)))
-  else raise EMyPluginError.Create('GetInfo nicht gefunden. Kein gültiges PlugIn.');
+  else raise EMyPluginError.Create('GetInfo nicht gefunden. Kein gÃ¼ltiges PlugIn.');
   if Length(infostr) < 7 then
-    EMyPluginError.Create('GetInfo lieferte ungültigte Rückgabe.');
+    EMyPluginError.Create('GetInfo lieferte ungÃ¼ltigte RÃ¼ckgabe.');
   FCanConfig := infostr[1] = 'C';
   FCanAbout := infostr[2] = 'A';
   FID := lowercase(Copy(infostr,3,5));
@@ -197,17 +199,17 @@ procedure TMyPlugin.About;
 begin
   if FCanAbout and Assigned(FfAbout) then
     FfAbout
-  else raise EMyPluginError.Create('About nicht verfügbar.');
+  else raise EMyPluginError.Create('About nicht verfÃ¼gbar.');
 end;
 
 procedure TMyPlugin.Config;
 begin
   if FCanConfig and Assigned(FfConfig) then
     FfConfig
-  else raise EMyPluginError.Create('Config nicht verfügbar.');
+  else raise EMyPluginError.Create('Config nicht verfÃ¼gbar.');
 end;
 
-// Gibt die vom Plugin gelieferten Felder für den Dateityp "ByType" bzw.
+// Gibt die vom Plugin gelieferten Felder fÃ¼r den Dateityp "ByType" bzw.
 function TMyPlugin.GetFields(ByType : string): TStringList;
 var
   idx : Integer;
@@ -216,7 +218,7 @@ begin
   if Idx = -1 then Result := nil else
     Result := FTypes.Objects[Idx] as TStringList;
 //  raise EMyPluginError.Create(
-//    Format('Dateityp ''%s'' wird von ''%s'' nicht unterstützt.',[ByType, FID]));
+//    Format('Dateityp ''%s'' wird von ''%s'' nicht unterstÃ¼tzt.',[ByType, FID]));
 end;
 
 procedure TMyPlugin.AddAllFieldsTo(sl:TStringList);

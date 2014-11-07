@@ -1,6 +1,8 @@
 {$R+}
 unit ListCompareOptUnit;
 
+{$MODE Delphi}
+
 interface
 
 uses
@@ -50,7 +52,7 @@ implementation
 
 uses Unit1;
 
-{$R *.DFM}
+{$R *.lfm}
 
 function TfrmListCompareOpt.CheckOk:boolean;
 var
@@ -141,7 +143,7 @@ const
   chars : array[0..3] of char = ('D','&','-','+');
 
 begin
-  { Index Spezifikationen für Listenvergleich erzeugen }
+  { Index Spezifikationen fÃ¼r Listenvergleich erzeugen }
   if cbIDs.Checked then
     IndexSpec := '='
   else

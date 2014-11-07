@@ -1,5 +1,7 @@
 unit myf_lists;
 
+{$MODE Delphi}
+
 interface
 
 uses Classes, SysUtils, DataModule, myf_main, Graphics, IniFiles, usefulprcs, myf_consts;
@@ -61,7 +63,7 @@ type
     property ListName: string read FListName write FListName;
     property Caption: string read FCaption write SetCaption;
     property Color: TColor read FColor write SetColor;
-    property ItemP[Index: Integer]: PMyItem read GetItemP;  // Pointer auf das Element, nur für Index etc.
+    property ItemP[Index: Integer]: PMyItem read GetItemP;  // Pointer auf das Element, nur fÃ¼r Index etc.
     procedure AddItems(List: TMyList);
     procedure AddDoubleItems(FirstList: TMyList; IndexSpec:string; StepWait: TNotifyEvent);
     procedure AddCombinedItems(FirstList, SecondList: TMyList; IndexSpec:string; ANDMode:Boolean; StepWait: TNotifyEvent);
@@ -156,7 +158,7 @@ end;
 *)
 
 // IdxSpecs:
-// 'N' nach Name  'E' nach .ext  'C' nach Changed  'S' nach Größe
+// 'N' nach Name  'E' nach .ext  'C' nach Changed  'S' nach GrÃ¶ÃŸe
 // kleine Schreibweise -> absteigend (zum kleinen hin)
 
 function CompareFunc(Item1, Item2: Pointer; IdxSpcs:TStringList; Ansi:boolean): Integer;
@@ -370,7 +372,7 @@ begin
   with FList do
   begin
     Sorted := False;
-    Insert(0,FCaption);    { Zusatzfelder hinzufüg. }
+    Insert(0,FCaption);    { Zusatzfelder hinzufÃ¼g. }
     Insert(1,IntToStr(Color));
     SaveToFile(DirName + ListName + '.myl');
     { Restaurieren }
@@ -392,7 +394,7 @@ begin
       FCaption := Strings[0];
       FColor := StrToInt(Strings[1]);
     except
-      raise EMyListError.Create('Listenheader ungültig');
+      raise EMyListError.Create('Listenheader ungÃ¼ltig');
     end;
     { Rekonstruieren }
     Delete(0); Delete(0);
@@ -427,7 +429,7 @@ begin
 end;
 
 // Vergleicht die durch Specs angegeben Felder der My-Items I1 und I2
-// Rückgabe: True - I1 = I2, False - I1 <> I2
+// RÃ¼ckgabe: True - I1 = I2, False - I1 <> I2
 
 function ItemsEqual(I1,I2:TMyItem;Specs:string):Boolean;
 var
@@ -540,7 +542,7 @@ begin
   FSortedList.Free;
 end;
 
-{ Gibt True zurück, falls die Group-Kriterien in gitem nicht mehr mit item übereinstimmen }
+{ Gibt True zurÃ¼ck, falls die Group-Kriterien in gitem nicht mehr mit item Ã¼bereinstimmen }
 function TMyListExport.isNewGroup(gitem,item : TMyItem):Boolean;
 var
   i : integer;
@@ -601,7 +603,7 @@ var
 begin
   spalten := TStringList.Create;
   try
-    for i := 0 to Cols.Count - 1 do  { Überschriften generieren }
+    for i := 0 to Cols.Count - 1 do  { Ãœberschriften generieren }
       spalten.Add( MyFormatStr(Cols.DID[i], FColumns.StringFormat) );
     Result := GenCols(Spalten,Cols);
   finally
@@ -649,7 +651,7 @@ begin
   end;
 end;
 // genspalten:
-// breite lesen, anordnung verändern
+// breite lesen, anordnung verÃ¤ndern
 
 function TMyListExport.GenGroups:string;
 var

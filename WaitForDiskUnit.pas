@@ -1,5 +1,7 @@
 unit WaitForDiskUnit;
 
+{$MODE Delphi}
+
 interface
 
 uses
@@ -33,7 +35,7 @@ implementation
 
 uses Unit1;
 
-{$R *.DFM}
+{$R *.lfm}
 
 procedure TfrmWaitForDisk.fbLWsClick(Sender: TObject);
 begin

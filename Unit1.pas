@@ -2,7 +2,7 @@
 (*
 
 - Toolbars
-- einlesedialog updaten bei datenträger update (Label)
+- einlesedialog updaten bei datentrÃ¤ger update (Label)
 
 *)
 (*
@@ -15,7 +15,9 @@ misc(str_...,'name')  -> str_....
 *)
 
 
-unit unit1;
+unit Unit1;
+
+{$MODE Delphi}
 
 interface
 
@@ -590,7 +592,7 @@ type
     DragPoint: TPoint;
     subjump: string;
     { Progressbar }
-    FWaitStep : integer; { Schrittgröße }
+    FWaitStep : integer; { SchrittgrÃ¶ÃŸe }
     FWaitInt : Int64;    { Interner Schrittcounter }
 
     { Aktuelle Sammlung }
@@ -669,7 +671,7 @@ type
 
     address, location, curcol, curcolname,jumpname: string;
     drivestate: TStringList;
-    avdiskids: string; { Verfügbare Diskids, durch Komma getrennt ... }
+    avdiskids: string; { VerfÃ¼gbare Diskids, durch Komma getrennt ... }
     SmallImages: TImageList;
 //    lvstyle: Byte;
 //    lvcolbit: Byte; // Bits 0 - 7
@@ -677,7 +679,7 @@ type
 //    lvsizefmt: Byte;
     thumbmaxw, thumbmaxh : integer;
     procedure CustListView(adr:string); // Listview-Layout automatisch laden
-    procedure updateLV; // Listview entsprechend cbAdresse füllen + Location setzen
+    procedure updateLV; // Listview entsprechend cbAdresse fÃ¼llen + Location setzen
     procedure updateTV; // richtiges Treeview entsprechend cbAdresse scrollen / zeigen
     procedure resetThumbs;
     procedure parseaddr(s: string; var drv, path: string);
@@ -723,7 +725,7 @@ uses ReadDiskUnit, NewCollectionUnit, NewListUnit,
   RepairUnit, DataModule, ExtSelectUnit, WaitForDiskUnit,
   NoRegUnit, StringEditUnit, CopyToDisksUnit;
 
-{$R *.DFM}
+{$R *.lfm}
 {$R ICNS.RES}
 
 { Was wird in der Spalte "Notiz" angezeigt? }
@@ -864,7 +866,7 @@ begin
     for i := 0 to sl.Count-1 do
     begin
       sl[i] := URLDecode(sl[i]);
-      idx := Pos('»',sl[i]);
+      idx := Pos('Â»',sl[i]);
       if idx <> 0 then
         if like(adr,Copy(sl[i],idx+1,maxInt)) then
         begin
@@ -947,7 +949,7 @@ var
   i : integer;
 begin
   PlugInDirectory := dir_plugins;
-  res := FindFirst(PlugInDirectory+'*.myp', faAnyFile, sr);
+  res := FindFirstUTF8(PlugInDirectory+'*.myp',faAnyFile,sr); { *Converted from FindFirst* }
   dontload := TStringList.Create;
   try
     dontload.CommaText := ini.ReadString(ini_plugins, ini_pidisabled, '');
@@ -958,19 +960,19 @@ begin
           FPlugIns.Add(TMyPlugin.Create( PlugInDirectory + sr.Name, ini.FileName ));
         except
           Application.MessageBox(PChar(Format(
-            'Die PlugIn-Datei ''%s'' ist ungültig und wird deaktiviert.'#13#10+
+            'Die PlugIn-Datei ''%s'' ist ungÃ¼ltig und wird deaktiviert.'#13#10+
             'Das PlugIn kann unter Ansicht | Einstellungen wieder aktviert'#13#10+
             'werden.', [sr.Name] )),
             'PlugIn-Fehler',
             mb_ok or mb_iconerror);
           dontload.Add( sr.Name );
         end;
-      res := FindNext(sr);
+      res := FindNextUTF8(sr); { *Converted from FindNext* }
     end;
     ini.WriteString(ini_plugins, ini_pidisabled, dontload.CommaText);
   finally
     dontload.Free;
-    FindClose(sr);
+    FindCloseUTF8(sr); { *Converted from FindClose* }
   end;
 
   for i := 0 to FPlugIns.AllProps.Count-1 do
@@ -1109,7 +1111,7 @@ begin
   if Assigned(splash) then
     splash.lblColStat.Caption := 'Ladevorgang:'#13#10+str_s1+#13#10+str_s2;
   { welche Sammlung? }
-  for i := 1 to paramcount do // Parameter zusammenfügen
+  for i := 1 to paramcount do // Parameter zusammenfÃ¼gen
     s := s + ParamStr(i) + ' ';
   callbyparam := paramcount <> 0;
   if Pos('myfiles:', lowercase(s)) = 1 then Delete(s, 1, 8);
@@ -1133,7 +1135,7 @@ begin
 
   if col = '' then // LastCol
     col := ini.ReadString('Main', 'LastCollection', '*');
-  if col = '' then  // Erste verfügbare
+  if col = '' then  // Erste verfÃ¼gbare
     begin
     tempsl := TStringList.Create;
       try
@@ -1145,7 +1147,7 @@ begin
       end;
     end;
 
-  { Ok, es wurde eine Col. gefunden! (wenn eine Neue Col erstellt wurde, muss sie hier nicht mehr geöffnet werden! }
+  { Ok, es wurde eine Col. gefunden! (wenn eine Neue Col erstellt wurde, muss sie hier nicht mehr geÃ¶ffnet werden! }
   if col = '*' then col := '';
   if col <> '' then
   begin
@@ -1203,7 +1205,7 @@ begin
   dropFS.DragTypes := [dtCopy];
   dropFS.Files.Clear;
   for i := 0 to Listview.items.Count - 1 do
-    // wenn ausgewählt und verfügbar...
+    // wenn ausgewÃ¤hlt und verfÃ¼gbar...
     if (Listview.items.item[i].Selected) and IsAvailable(LVMyI(Listview.items.item[i])) then
       dropFS.Files.Add(GetLVIFileName(Listview.items.item[i], True));
   if copymode then dropFS.copytoclipboard else dropFS.execute;
@@ -1287,7 +1289,7 @@ begin
         end;
 end;
 
-{ Datei / Ordner wird ausgewählt }
+{ Datei / Ordner wird ausgewÃ¤hlt }
 
 procedure TMyFiles3Form.ListViewSelectItem(Sender: TObject; Item: TListItem;
   Selected: Boolean);
@@ -1357,7 +1359,7 @@ var
 
       imgPImages.picture.assign(jpg);
 
-      { Für die Vorschau benötigte Höhe festlegen }
+      { FÃ¼r die Vorschau benÃ¶tigte HÃ¶he festlegen }
       pnlPrev.Tag := imgPImages.picture.Height;
 
 //      tsPreviewResize(Self);
@@ -1393,7 +1395,7 @@ begin
       if tblFoldersDISKID.Value = -1 then
         if tblFoldersNote.Value = '' then tblFolders.Delete;
     end;                                 *)
-  { MP3 schließen }
+  { MP3 schlieÃŸen }
   tmrAutoPlay.Enabled := False;
   { Flackern vermeiden, falls mit Cursor-Tasten gerollt wird }
   if (lvkeydown) and (listview.selcount = 0) then Exit;
@@ -1416,7 +1418,7 @@ begin
   begin
     if ListView.Selected.Data = nil then Exit;
     data := PLVData(ListView.Selected.Data)^;
-    { Datensätze positionieren, Notes anzeigen }
+    { DatensÃ¤tze positionieren, Notes anzeigen }
     with mNotes do
     begin
       Font.Color := clWindowText;
@@ -1497,7 +1499,7 @@ begin
         pnlPAudio.Tag := 0;
         imgPImages.Tag := 0;
         lvPZip.Tag := 0;
-        case tblFilesBKind.Value of { Binär }
+        case tblFilesBKind.Value of { BinÃ¤r }
           pk_img: begin prev := True; imgPImages.Tag := 1; picprev(tblFilesBinPreview); end;
           pk_mp3: begin prev := True; pnlPAudio.Tag := 1; mp3prev; end;
         end;
@@ -1608,7 +1610,7 @@ end;
 
 { In: DiskId }
 { ... lookup in tblDisks ... }
-{ Out: String mit Label oder Laufwerksbuchstabe, falls Datenträger eingelegt }
+{ Out: String mit Label oder Laufwerksbuchstabe, falls DatentrÃ¤ger eingelegt }
 
 function TMyFiles3Form.DiskId2String(diskid: integer; resolve: boolean): string;
 var
@@ -1643,7 +1645,7 @@ var
 begin
   with dm, tv, tblFolders do
   begin
-    // Einträge
+    // EintrÃ¤ge
     disableControls;
     s := 'Folder = ''' + escape(folder) + '*'' and Level = ' + IntToStr(level);
     if disk <> -1 then
@@ -1655,7 +1657,7 @@ begin
     while not eof do
     try
       s := ExtractLastFEntry(tblFoldersFolder.AsString);
-      if Assigned(newNode) then { Doppelte Einträge (Verbundanzeige!) verhindern ... }
+      if Assigned(newNode) then { Doppelte EintrÃ¤ge (Verbundanzeige!) verhindern ... }
         if lowercase(newNode.Text) = lowercase(s) then
           continue;
       newNode := Items.AddChild(ParentNode, s);
@@ -1682,7 +1684,7 @@ procedure TMyFiles3Form.updatetvs;
 var
   topNode, newNode: TTreeNode;
 begin
-  { Verbund tv füllen }
+  { Verbund tv fÃ¼llen }
   cleartvs;
   if not ini.ReadBool(ini_colpre + curcol, ini_combodis, False) then
   begin
@@ -1702,7 +1704,7 @@ begin
     topNode.Expand(false);
   end;
 
-  { Datenträger tv füllen }
+  { DatentrÃ¤ger tv fÃ¼llen }
   topNode := tvDisks.Items.Add(nil, ini.ReadString(ini_collections, curcol, 'root'));
   with topNode do
   begin
@@ -1768,13 +1770,13 @@ begin
   else Result := DiskId2String(item.id.DiskId, resolve) + '\';
 end;
 
-{ In: ListItem; Resolve: Statt Label Laufwerk falls verfügbar verwenden }
+{ In: ListItem; Resolve: Statt Label Laufwerk falls verfÃ¼gbar verwenden }
 function TMyFiles3Form.GetLVIFileName(item: TListItem; resolve: Boolean): string;
 begin
   Result := GetFileName(PLVData(item.Data)^.item,resolve);
 end;
 
-{ Fügt die Datei des aktuell in tblFiles ausgewählten DS in der Listenansicht hinzu }
+{ FÃ¼gt die Datei des aktuell in tblFiles ausgewÃ¤hlten DS in der Listenansicht hinzu }
 
 { neu }
 procedure TMyFiles3Form.AddItemToListview(Item:TMyItem; VerbundMode: Boolean);
@@ -1807,7 +1809,7 @@ begin
               if PLVData(data)^.Item.Changed > Item.Changed then
                 PLVData(data)^.Item.Changed := Item.Changed;
 
-              // Größe Erhöhen
+              // GrÃ¶ÃŸe ErhÃ¶hen
               PLVData(data)^.Item.Size := PLVData(data)^.Item.Size + Item.Size;
               if LvColumns.IndexOf(cl_size) <> -1 then
                 subitems[LvColumns.IndexOf(cl_size)-1] := LvColumns[PLVData(data)^.Item,LvColumns.IndexOf(cl_size)];
@@ -1816,14 +1818,14 @@ begin
               if LvColumns.IndexOf(cl_dskpfad) <> -1 then
                 subitems[LvColumns.IndexOf(cl_dskpfad)-1] := MyGetPath(PLVData(data)^.item.ID);
               if LvColumns.IndexOf(cl_attr) <> -1 then
-                subitems[LvColumns.IndexOf(cl_attr)-1] := '····';
+                subitems[LvColumns.IndexOf(cl_attr)-1] := 'Â·Â·Â·Â·';
               if LvColumns.IndexOf(cl_note) <> -1 then
                 subitems[LvColumns.IndexOf(cl_note)-1] := '';
               break;
             end;
       if foundit then Exit;
     end;
-    { Hinzufügen ... }
+    { HinzufÃ¼gen ... }
     lvItem := Items.Add;
     with lvItem do
     begin
@@ -1891,7 +1893,7 @@ begin
               if lvcols[cl_dskpfad] <> -1 then
                 subitems[lvcols[cl_dskpfad]] := dm.tblFolders.LookUp('FOLDERID', PLVData(Data)^.folderid, 'Folder');
               if lvcols[cl_attr] <> -1 then
-                subitems[lvcols[cl_attr]] := '····';
+                subitems[lvcols[cl_attr]] := 'Â·Â·Â·Â·';
               if lvcols[cl_note] <> -1 then
                 subitems[lvcols[cl_note]] := '';
 
@@ -1899,7 +1901,7 @@ begin
             end;
       if foundit then Exit;
     end;
-    { Hinzufügen ... }
+    { HinzufÃ¼gen ... }
     Item := Items.Add;
     with Item do
     begin
@@ -1925,9 +1927,9 @@ begin
 
     { Icons wird erst beim Draw geholt }
       ImageIndex := -1;
-      with SubItems do { Spalten füllen }
+      with SubItems do { Spalten fÃ¼llen }
       begin
-        if lvcols[cl_size] <> -1 then { Größe formatieren }
+        if lvcols[cl_size] <> -1 then { GrÃ¶ÃŸe formatieren }
           Add(FormatSize(trunc(tblFilesSize.AsFloat)));
         if lvcols[cl_typ] <> -1 then
           Add('');
@@ -1973,7 +1975,7 @@ begin
 end;
 *)
 { In: FolderId }
-{ ... Fügt die Dateien des mit FID bestimmen Ordners
+{ ... FÃ¼gt die Dateien des mit FID bestimmen Ordners
 in die Listenansicht ein und sortiert neu }
 
 procedure TMyFiles3Form.AddFolder2ListView(FID: Integer; VerbundMode: boolean);
@@ -2033,7 +2035,7 @@ begin
 end;
 
 { Enter/Doppelklick im ListView Handler }
-{ MultiSelect fähig }
+{ MultiSelect fÃ¤hig }
 
 procedure TMyFiles3Form.ListViewDblClick(Sender: TObject);
 var
@@ -2062,7 +2064,7 @@ begin
           begin
             MustBeAvailable(LVMyI(Items[i]));
             s := GetLVIFileName(Items[i], true);
-            ShellExecute(Self.Handle, nil, PChar(s), nil, nil, sw_shownormal);
+             OpenDocument(PChar(s)); { *Converted from ShellExecute* }
           end;
     lvt_disk: begin
         address := '<' + ListView.Selected.Caption + '>';
@@ -2122,7 +2124,7 @@ begin
     drivestate.Clear;
     for i := 1 to Length(drives) do
       drivestate.AddObject(Copy(MyVolumeID(drives[i]), 1, 25), Pointer(Ord(drives[i])));
-    if s <> drivestate.commatext then // Laufwerke geändert
+    if s <> drivestate.commatext then // Laufwerke geÃ¤ndert
     begin
       if Assigned(frmReadDisk) then
         with frmReadDisk do
@@ -2198,7 +2200,7 @@ begin
   end;
   if (tvDisks.Selected = tvDisks.Items[0]) then
   begin
-    address := ''; { Disk-Übersicht }
+    address := ''; { Disk-Ãœbersicht }
 //    location := cbAdresse.Text;
   end else
   begin
@@ -2347,7 +2349,7 @@ begin
   resetThumbs;
 end;
 
-// Ungültige Einträge entfernen, ggf. Meldung anzeigen
+// UngÃ¼ltige EintrÃ¤ge entfernen, ggf. Meldung anzeigen
 procedure TMyFiles3Form.CheckList(ListToCheck:TMyList);
 var
   oldcount,i : integer;
@@ -2373,7 +2375,7 @@ begin
         MB_ICONINFORMATION or MB_OK);
     end;
   end;
-  with lvLists do  // Evtl. wurde was gelöscht -> Update des Dateizählers
+  with lvLists do  // Evtl. wurde was gelÃ¶scht -> Update des DateizÃ¤hlers
     for i := 0 to Items.Count - 1 do
       Items[i].SubItems[0] := Format('%.0n',[TMyList(Items[i].Data).Count * 1.0]);
 end;
@@ -2411,7 +2413,7 @@ begin
     end else
     if pos('list:', lowercase(address)) = 1 then
     begin
-//      temp := gettempdir + 'myfiles_tmp.tmp';  { Temp Datei für Icons }
+//      temp := gettempdir + 'myfiles_tmp.tmp';  { Temp Datei fÃ¼r Icons }
       s := lowercase(Copy(address, 6, Length(address)));
       ListToShow := nil;
       with lvLists.Items do
@@ -2447,7 +2449,7 @@ begin
     begin
       parseaddr(address, drv, path);
       if (path = '') and (drv = '') then
-      begin { ### übersicht über alle disks ### }
+      begin { ### Ã¼bersicht Ã¼ber alle disks ### }
         ListView.Items.BeginUpdate;
         clearlistview;
         // custlistview(2);
@@ -2476,7 +2478,7 @@ begin
           // custlistview(4);
           custlistview(path);
           if ListView.ViewStyle <> vsIcon then ListView.Items.EndUpdate;
-        // FolderIDs aller betroffenen Ordner herausfinden & hinzufügen
+        // FolderIDs aller betroffenen Ordner herausfinden & hinzufÃ¼gen
           with dm, tblFolders do
           begin
             Filter := 'Folder = ''' + escape(path) + '''';
@@ -2500,7 +2502,7 @@ begin
           custlistview('<' + drv + '>' + path);
           if ListView.ViewStyle <> vsIcon then
             ListView.Items.EndUpdate;
-          // FolderID herausfinden & hinzufügen
+          // FolderID herausfinden & hinzufÃ¼gen
           with dm, dm.tblDisks do
           begin
             tblDisks.IndexName := 'IdxLabel';
@@ -2562,8 +2564,8 @@ begin
 end;
 
 { TreeView updaten }
-{ - richtiges TV auswählen (Verbund, Disks? }
-{ - Ausklappen, auswählen }
+{ - richtiges TV auswÃ¤hlen (Verbund, Disks? }
+{ - Ausklappen, auswÃ¤hlen }
 
 procedure TMyFiles3Form.updateTV;
 var
@@ -2733,7 +2735,7 @@ begin
       end else
       begin
         address := stringreplace(address, '/', '\', [rfReplaceAll]);
-(*          if check4file(address) then   // Prüfen ob eine bestimmte Datei angewählt wurde ...
+(*          if check4file(address) then   // PrÃ¼fen ob eine bestimmte Datei angewÃ¤hlt wurde ...
             begin
             location := address;
 (*            with cbAdresse do
@@ -2851,7 +2853,7 @@ begin
             begin
               if s1 = '' then // Ordner; Disk Ignorieren
                 s := 'Folder = ''' + escape(s2) + '*' + '''' else
-                with dm, dm.tblDisks do // DiskId raussuchen und dann im Filter berücksichtigen
+                with dm, dm.tblDisks do // DiskId raussuchen und dann im Filter berÃ¼cksichtigen
                 begin
                   tblDisks.IndexName := 'IdxLabel';
                   SetKey;
@@ -3003,7 +3005,7 @@ begin
             if match then
               if sbLastDate then
                 if tblFilesChanged.Value > sLastDate then match := False;
-            if match then { Größe }
+            if match then { GrÃ¶ÃŸe }
               if sbFirstSize then
                 if tblFilesSize.Value < sFirstSize then match := False;
             if match then
@@ -3292,8 +3294,8 @@ begin
 
 end;
 
-{ Disk löschen }
-{ MultiSelect fähig }
+{ Disk lÃ¶schen }
+{ MultiSelect fÃ¤hig }
 
 procedure TMyFiles3Form.menDiskDeleteClick(Sender: TObject);
 var
@@ -3319,7 +3321,7 @@ end;
 procedure TMyFiles3Form.mNotesKeyPress(Sender: TObject; var Key: Char);
 begin
   with mNotes do
-    if Tag = 0 then { Verbundnotiz kann nur beim Verbundordner geändert werden! }
+    if Tag = 0 then { Verbundnotiz kann nur beim Verbundordner geÃ¤ndert werden! }
     begin
       Text := '';
       Tag := lvt_ordner;
@@ -3328,7 +3330,7 @@ begin
 end;
 
 { Dateien ins Clipboard kopieren }
-{ MultiSelect fähig }
+{ MultiSelect fÃ¤hig }
 
 procedure TMyFiles3Form.menCopyClick(Sender: TObject);
 begin
@@ -3341,9 +3343,9 @@ end;
   lvt_verbund = 4
   lvt_disk = 8 }
 { + 256 -> Disablen, wenn not IsAvailable, sonst immer enabled }
-{ + 512 -> Multiselectfähig }
+{ + 512 -> MultiselectfÃ¤hig }
 
-{ muss kpl. überarbeitet werden! (wg. Multiselections) }
+{ muss kpl. Ã¼berarbeitet werden! (wg. Multiselections) }
 
 procedure TMyFiles3Form.pmListViewPopup(Sender: TObject);
 var
@@ -3369,7 +3371,7 @@ begin
         if listview.selcount > 0 then
         begin
           vs := True; en := True; { Visible, Enabled }
-          if not bool(Item.Tag and 512) then { nicht Multiselect fähige Items }
+          if not bool(Item.Tag and 512) then { nicht Multiselect fÃ¤hige Items }
             if listview.selcount > 1 then vs := False;
 
           if en then
@@ -3394,7 +3396,7 @@ begin
         end { selcount = 0 }
         else begin Item.Visible := False; Item.Enabled := False; end;
     end;
-  { Play für MP3 --- quite crappy }
+  { Play fÃ¼r MP3 --- quite crappy }
   if menOpen.Visible then
   begin
     menOpen.default := True;
@@ -3448,14 +3450,14 @@ begin
       Enabled := Visible;
     end;
   menlvRenameDisk.Enabled := not colini.ReadBool('Options','UseLabel',False);
-  { Ordner öffnen }
+  { Ordner Ã¶ffnen }
 //  parseaddr(location,s1,s2);
 //  menOpenThisFolder.Visible := (drivestate.IndexOf(s1) <> -1) and (s1 <> '');
 //  with menOpenThisFolder do Enabled := Visible;
 end;
 
-{ Einen Ordner im Explorer öffnen }
-{ MultiSelect fähig }
+{ Einen Ordner im Explorer Ã¶ffnen }
+{ MultiSelect fÃ¤hig }
 
 procedure TMyFiles3Form.OpenImExplorerClick(Sender: TObject);
 var
@@ -3467,11 +3469,11 @@ begin
     for i := 0 to Items.Count - 1 do
       if Items[i].selected then
         if IsAvailable(LVMyI(Items[i])) then
-          ShellExecute(0, 'explore', PChar(GetLVIFileName(items[i], True)), nil, nil, sw_shownormal);
+           OpenDocument(PChar(GetLVIFileName(items[i], True))); { *Converted from ShellExecute* }
 end;
 
 { Name(n) der Dateien / Ordner kopieren }
-{ MultiSelect fähig }
+{ MultiSelect fÃ¤hig }
 
 procedure TMyFiles3Form.menCopyNameClick(Sender: TObject);
 var
@@ -3547,8 +3549,8 @@ begin
   end;
 end;
 
-{ Disk hinzufügen }
-{ In: disk - A-Z oder '*' für keine Vorgabe }
+{ Disk hinzufÃ¼gen }
+{ In: disk - A-Z oder '*' fÃ¼r keine Vorgabe }
 { Result: erfolgreich? }
 
 function TMyFiles3Form.DoDiskAdd(disk: char; upd: boolean): Boolean;
@@ -3805,25 +3807,25 @@ begin
     s := dir_db + sl.names[(Sender as TMenuItem).tag] + '\';
     failed := False;
     try
-      res := FindFirst(s + '*.*', $3F, SR);
+      res := FindFirstUTF8(s + '*.*',$3F,SR); { *Converted from FindFirst* }
       while res = 0 do
       begin
         if (sr.Name <> '.') and (sr.Name <> '..') then
-          if not deletefile(s + sr.Name) then
+          if not DeleteFileUTF8(s + sr.Name) { *Converted from DeleteFile* } then
             failed := True;
-        res := FindNext(SR);
+        res := FindNextUTF8(SR); { *Converted from FindNext* }
       end;
     finally
-      FindClose(SR);
+      FindCloseUTF8(SR); { *Converted from FindClose* }
     end;
-    { Ordner löschen }
+    { Ordner lÃ¶schen }
     try
-      if fileexists(s + 'NUL') then
+      if FileExistsUTF8(s + 'NUL') { *Converted from FileExists* } then
         rmdir(s);
     except
       failed := True;
     end;
-    { INI aufräumen }
+    { INI aufrÃ¤umen }
     ini.DeleteKey(ini_collections, sl.names[(Sender as TMenuItem).Tag]);
     ini.EraseSection(ini_colpre + sl.names[(Sender as TMenuItem).Tag]);
     ini.EraseSection(ini_guimain);
@@ -3858,18 +3860,18 @@ var
     const
       str_idapidisabled =
       'Auf deinem System ist bereits ein Datenbanktreiber aktiv. Der mitgelieferte'+#13#10+
-      'Treiber wurde deaktiviert. Du solltest nun eine Sammlung öffnen/erstellen können.';
+      'Treiber wurde deaktiviert. Du solltest nun eine Sammlung Ã¶ffnen/erstellen kÃ¶nnen.';
       str_idapirestore =
       'MyFindex konnte keinen vorhanden Datenbanktreiber laden. Der mitgelieferte'+#13#10+
-      'Treiber wurde wieder aktiviert deaktiviert. Du solltest nun eine Sammlung öffnen/erstellen können.';
+      'Treiber wurde wieder aktiviert deaktiviert. Du solltest nun eine Sammlung Ã¶ffnen/erstellen kÃ¶nnen.';
       str_noidapi =
-      'MyFindex konnte keinen Datenbanktreiber finden. Bitte prüfe, ob du evtl. versehentlich ein'+
+      'MyFindex konnte keinen Datenbanktreiber finden. Bitte prÃ¼fe, ob du evtl. versehentlich ein'+
       'Update von MyFindex installiert hast, ohne das zuvor eine komplette Version vorhanden war.';
 
   begin
     p := ExtractFilePath(Application.ExeName);
     ErrCaption := str_error + ' $'+IntToHex(ErrNum,4);
-    if fileexists(p+iddll) then
+    if FileExistsUTF8(p+iddll) { *Converted from FileExists* } then
     begin
       MoveFileEx(PChar(p+iddll), PChar(p+'_'+iddll),MOVEFILE_REPLACE_EXISTING);
       Application.messagebox(PChar(str_idapidisabled),
@@ -3877,7 +3879,7 @@ var
         mb_ICONERROR or MB_OK);
     end
     else
-      if fileexists(p+'_'+iddll) then
+      if FileExistsUTF8(p+'_'+iddll) { *Converted from FileExists* } then
       begin
         MoveFileEx(PChar(p+'_'+iddll), PChar(p+iddll),MOVEFILE_REPLACE_EXISTING);
         Application.messagebox(PChar(str_idapirestore),
@@ -3986,13 +3988,13 @@ begin
             begin
               if Names[i] = ini_lastfile then continue;
               if Application.messagebox(PChar(Format(
-              'MyFindex ist beim Einlesen des Datenträgers #%s ''%s'' abgestürzt.'#13#10+
-              'Soll dieser Datenträger nun in der Datenbank bereinigt werden?'#13#10+
-              '(Es sollte unbedingt "Ja" gewählt werden!)'#13#10+
-              'Sollten während der Bereinigung irgendwelche Datenfehler auftreten, benutze'#13#10+
-              'bitte zuerst Datei|Reparieren und wähle dann die Sammlung erneut.'#13#10+
-              'Dannach kannst du den Datenträger erneut einlesen. Öffne dazu das Einlesen-Fenster'#13#10+
-              'und drücke die Taste [F9] um den Debugmodus zu aktivieren.'
+              'MyFindex ist beim Einlesen des DatentrÃ¤gers #%s ''%s'' abgestÃ¼rzt.'#13#10+
+              'Soll dieser DatentrÃ¤ger nun in der Datenbank bereinigt werden?'#13#10+
+              '(Es sollte unbedingt "Ja" gewÃ¤hlt werden!)'#13#10+
+              'Sollten wÃ¤hrend der Bereinigung irgendwelche Datenfehler auftreten, benutze'#13#10+
+              'bitte zuerst Datei|Reparieren und wÃ¤hle dann die Sammlung erneut.'#13#10+
+              'Dannach kannst du den DatentrÃ¤ger erneut einlesen. Ã–ffne dazu das Einlesen-Fenster'#13#10+
+              'und drÃ¼cke die Taste [F9] um den Debugmodus zu aktivieren.'
               , [Names[i], Values[Names[i]]]
               )),
               'Absturz beim Einlesen',
@@ -4004,7 +4006,7 @@ begin
           fixdisks.Free;
         end;
         { Listen Laden }
-        res := FindFirst(DBDir + '*.myl', $3F, SR);
+        res := FindFirstUTF8(DBDir + '*.myl',$3F,SR); { *Converted from FindFirst* }
         try
           while res = 0 do
           begin
@@ -4021,10 +4023,10 @@ begin
               TempListe.Free;
               raise;
             end;
-            res := FindNext(SR);
+            res := FindNextUTF8(SR); { *Converted from FindNext* }
           end;
         finally
-          FindClose(SR);
+          FindCloseUTF8(SR); { *Converted from FindClose* }
         end;
       except
         with dm do
@@ -4198,7 +4200,7 @@ begin
   end;
 end;
 
-{ Liest lvLists Checkboxes und füllt FCurLists entsprechend }
+{ Liest lvLists Checkboxes und fÃ¼llt FCurLists entsprechend }
 procedure TMyFiles3Form.ListActiveSelectionChanged;
 var
   i : integer;
@@ -4253,7 +4255,7 @@ begin
                   Filtered := False;
                   didup := False;
                 end;
-              lvt_ordner, lvt_verbund: begin { Ordner / Verbundordner rekursiv hinzufügen }
+              lvt_ordner, lvt_verbund: begin { Ordner / Verbundordner rekursiv hinzufÃ¼gen }
                   with dm, dm.tblFolders do
                   begin
                     if item.typ = lvt_ordner then
@@ -4367,7 +4369,7 @@ var
 begin
   sbMain.panels[2].Text := str_sb12;
   url := urlz_update + '&' + spyurl;
-  ShellExecute(Self.Handle, nil, PChar(url), nil, nil, sw_shownormal);
+   OpenDocument(PChar(url)); { *Converted from ShellExecute* }
 end;
 
 { Url mit Infos *g }
@@ -4389,7 +4391,7 @@ begin
     begin
       sbMain.panels[2].Text := str_sb13;
       url := urlz_help + 'context=' + IntToStr(data) + '&' + spyurl;
-      ShellExecute(Self.Handle, nil, PChar(url), nil, nil, sw_shownormal);
+       OpenDocument(PChar(url)); { *Converted from ShellExecute* }
       CallHelp := False;
       Result := True;
     end;
@@ -4617,11 +4619,11 @@ begin
   fbSearchResetClick(self);
 end;
 
-{ ListView Style ändern }
+{ ListView Style Ã¤ndern }
 
 procedure TMyFiles3Form.menViewClick(Sender: TObject);
 
-  { ImageIndizies rücksetzen }
+  { ImageIndizies rÃ¼cksetzen }
   procedure ResetImages;
   var
     i, x: integer;
@@ -4875,8 +4877,8 @@ begin
   }
 end;
 
-{ Windows-Shell-Contextmenü }
-{ MultiSelect fähig }
+{ Windows-Shell-ContextmenÃ¼ }
+{ MultiSelect fÃ¤hig }
 
 procedure TMyFiles3Form.menCommandsClick(Sender: TObject);
 var
@@ -4912,7 +4914,7 @@ begin
               Names.Add(ExtractFileName(s));
             end else
               Items[i].Selected := False;
-            { Kontextmenü nur für Dateien im gleichen Ordner, bei Verbundanzeige
+            { KontextmenÃ¼ nur fÃ¼r Dateien im gleichen Ordner, bei Verbundanzeige
               werden die entsprechenden Dateien deselektiert }
           end;
 
@@ -4949,7 +4951,7 @@ begin
   parseaddr(location, s1, s2);
   idx := drivestate.indexof(s1);
   if idx <> -1 then
-    ShellExecute(Self.Handle, 'explore', pchar(chr(integer(drivestate.objects[idx])) + ':' + s2), nil, nil, sw_shownormal);
+     OpenDocument(pchar(chr(integer(drivestate.objects[idx])) + ':' + s2)); { *Converted from ShellExecute* }
 end;
 
 procedure TMyFiles3Form.setsearchaddress;
@@ -5057,7 +5059,7 @@ begin
   else
   begin { Normale Icons }
 (*    ext := lowercase(extractfileext(item.Caption));
-    if ((ext = '.exe') or (ext = '.ico') or (ext = '.lnk') or (ext = '.cur') or (ext = '.ani')) and IsAvailable(item) then // Datei verfügbar + EXE etc.
+    if ((ext = '.exe') or (ext = '.ico') or (ext = '.lnk') or (ext = '.cur') or (ext = '.ani')) and IsAvailable(item) then // Datei verfÃ¼gbar + EXE etc.
     begin
       fname := GetLVIFileName(item, true);
       SHGetFileInfo(PChar(fname), 0, Info, SizeOf(TSHFileInfo), SHGFI_SYSIconIndex or SHGFI_TYPENAME);
@@ -5065,11 +5067,11 @@ begin
         if not fileexists(fname) then
           Info.szTypename := 'File not found';  {TODO : Update Triggern}
     end
-    else // Datei nicht verfügbar
-      if PLVData(item.Data)^.item.typ in [lvt_ordner, lvt_verbund] then // Icon für Folder besorgen
+    else // Datei nicht verfÃ¼gbar
+      if PLVData(item.Data)^.item.typ in [lvt_ordner, lvt_verbund] then // Icon fÃ¼r Folder besorgen
 //        SHGetFileInfo(PChar(extractfilepath(application.exename)), 0, Info, SizeOf(TSHFileInfo), SHGFI_SYSIconIndex or SHGFI_TYPENAME)
         SHGetFileInfo(nil, FILE_ATTRIBUTE_DIRECTORY, Info, SizeOf(TSHFileInfo), SHGFI_USEFILEATTRIBUTES or SHGFI_SYSIconIndex or SHGFI_TYPENAME)
-      else // Icon für Datei besorgen
+      else // Icon fÃ¼r Datei besorgen
         SHGetFileInfo(PChar(ext), FILE_ATTRIBUTE_NORMAL, Info, SizeOf(TSHFileInfo), SHGFI_USEFILEATTRIBUTES or SHGFI_SYSIconIndex or SHGFI_TYPENAME);
     item.ImageIndex := Info.iIcon;
     if (LvColumns.IndexOf(cl_typ) <> -1) and (PLVData(Item.Data)^.item.typ <> lvt_verbund) then
@@ -5105,7 +5107,7 @@ begin
     with newitem do
     begin
       if location = '' then
-      Caption := 'Alle Datenträger' else
+      Caption := 'Alle DatentrÃ¤ger' else
         Caption := location;
       SubItems.Add('0');
       Data := TMyList.Create;
@@ -5149,7 +5151,7 @@ begin
     end;
     if ShowModal <> mrAbort then
     begin
-      { Oberfläche übernehmen }
+      { OberflÃ¤che Ã¼bernehmen }
 
       { PlugIns laden }
       FPlugIns.Clear;
@@ -5189,13 +5191,13 @@ begin
   handled := True;
 end;
 
-{ Ordner in dem die Datei enthalten ist, im Explorer öffnen }
-{ NICHT MultiSelect fähig }
+{ Ordner in dem die Datei enthalten ist, im Explorer Ã¶ffnen }
+{ NICHT MultiSelect fÃ¤hig }
 
 procedure TMyFiles3Form.menExplorerJumpClick(Sender: TObject);
 begin
   MustBeAvailable(LVMyI(ListView.Selected));
-  ShellExecute(0, nil, PChar(extractfilepath(GetLVIFileName(ListView.selected, True))), nil, nil, sw_shownormal);
+   OpenDocument(PChar(extractfilepath(GetLVIFileName(ListView.selected, True)))); { *Converted from ShellExecute* }
 end;
 
 procedure TMyFiles3Form.menSearchFromLocationClick(Sender: TObject);
@@ -5208,8 +5210,8 @@ begin
   end;
 end;
 
-{ Prüft, ob der Benutzer diese Funktion bereits genutzt hat und nervt in sonst }
-{ damit, dass es evtl. zusätzliche Informationen gibt }
+{ PrÃ¼ft, ob der Benutzer diese Funktion bereits genutzt hat und nervt in sonst }
+{ damit, dass es evtl. zusÃ¤tzliche Informationen gibt }
 
 procedure TMyFiles3Form.quickinfo(hctx: integer);
 var
@@ -5235,7 +5237,7 @@ end;
 
 procedure TMyFiles3Form.menFeedbackClick(Sender: TObject);
 begin
-  ShellExecute(Self.Handle, nil, PChar(urlz_feedback+vers), nil, nil, sw_shownormal);
+   OpenDocument(PChar(urlz_feedback+vers)); { *Converted from ShellExecute* }
 end;
 
 procedure TMyFiles3Form.showit;
@@ -5396,7 +5398,7 @@ try  lvColumns.GetOrderAndWidthFromListview(listView);  except end;
         Free;
       end;
     end else
-    begin { Datenträgerübersicht }
+    begin { DatentrÃ¤gerÃ¼bersicht }
       with clbCols.Items do
         begin
           Add(cl_label);
@@ -5423,7 +5425,7 @@ try  lvColumns.GetOrderAndWidthFromListview(listView);  except end;
     if ShowModal = mrOk then
     begin
       LvColumns.SizeFactor := cbSizeFmt.ItemIndex;
-      { TODO LvColumns teilw. überschreiben um Widths beizubehalten }
+      { TODO LvColumns teilw. Ã¼berschreiben um Widths beizubehalten }
       j := 0;
       for i := 0 to clbCols.Items.Count - 1 do
         if clbCols.Checked[i] then
@@ -5479,7 +5481,7 @@ end;
 procedure TMyFiles3Form.btnRegClick(Sender: TObject);
 begin
   sbMain.panels[2].Text := str_connecting;
-  ShellExecute(Self.Handle, nil, PChar(urlz_reg), nil, nil, sw_shownormal);
+   OpenDocument(PChar(urlz_reg)); { *Converted from ShellExecute* }
 end;
 
 procedure TMyFiles3Form.lvDriveStateDblClick(Sender: TObject);
@@ -5999,9 +6001,9 @@ begin
     if (Count = 0) and (ListView.SelCount > 0) then
     begin
       if Application.MessageBox(PChar(Format(
-        'Die Liste ''%s'' enthält zur Zeit keine Dateien.'#13#10+
+        'Die Liste ''%s'' enthÃ¤lt zur Zeit keine Dateien.'#13#10+
         'Soll(en) die zur Zeit markierte(n) Datei(en)/Ordner der'#13#10+
-        'Liste hinzugefügt werden?',[s])),
+        'Liste hinzugefÃ¼gt werden?',[s])),
         'Liste',
         MB_ICONQUESTION or MB_YESNO) = idYes
       then
@@ -6049,7 +6051,7 @@ begin
       pchar(str_question), mb_yesno or mb_iconquestion
       or mb_defbutton2) <> idYes then Exit;
   List := TMyList(lvLists.Selected.Data);
-  deletefile(PChar(dm.tblFiles.DatabaseName + List.ListName + '.myl'));
+  DeleteFileUTF8(PChar(dm.tblFiles.DatabaseName + List.ListName + '.myl')); { *Converted from DeleteFile* }
   List.Free;
   lvLists.Selected.Delete;
 end;
@@ -6099,7 +6101,7 @@ end;
 
 procedure TMyFiles3Form.Listen1Click(Sender: TObject);
 begin
-  ShowMessage('Halte die [ALT]-Taste gedrückt und ziehe eine Datei/einen Ordner auf eine Liste um ihn der Listen hinzuzufügen.');
+  ShowMessage('Halte die [ALT]-Taste gedrÃ¼ckt und ziehe eine Datei/einen Ordner auf eine Liste um ihn der Listen hinzuzufÃ¼gen.');
 end;
 
 procedure TMyFiles3Form.menRenameList(Sender: TObject);
@@ -6129,7 +6131,7 @@ begin
 end;
 
 { Initialisieren des Dummy-Buttons um den Focus abzufangen ->
-  kein sofortiges Select bei anwählen des Verbund-/Disksheets }
+  kein sofortiges Select bei anwÃ¤hlen des Verbund-/Disksheets }
 
 procedure TMyFiles3Form.tspc1Enter(Sender: TObject);
 begin
@@ -6182,22 +6184,22 @@ begin
   Application.messagebox(PChar(Format(
     'MyFindex ist beim Einlesen der Datei'#13#10+
     '''%s'''#13#10+
-    'abgestürzt. Warscheinlich ist diese Datei defekt oder konnte aus anderen'#13#10+
-    'Gründen nicht korrekt von MyFindex verarbeitet werden.'#13#10+
+    'abgestÃ¼rzt. Warscheinlich ist diese Datei defekt oder konnte aus anderen'#13#10+
+    'GrÃ¼nden nicht korrekt von MyFindex verarbeitet werden.'#13#10+
     #13#10+
     'Damit MyFindex die Datei in Zukunft richtig einlesen kann, kontaktiere bitte'#13#10+
     'den Autor mit folgenden Informationen:'#13#10+
-    ' - Datenträger auf dem sich die Datei befindet (Festplatte, CD, CD verkrazt?)'#13#10+
-    ' - Welche Vorschauoptionen/Plugins wurden verwendet? oder hänge die Datei'#13#10+
+    ' - DatentrÃ¤ger auf dem sich die Datei befindet (Festplatte, CD, CD verkrazt?)'#13#10+
+    ' - Welche Vorschauoptionen/Plugins wurden verwendet? oder hÃ¤nge die Datei'#13#10+
     '   myfiles.ini im MyFindex-Ordner an die Mail'#13#10+
-    'Außerdem solltest du, falls möglich, die verursachende Datei selbst - möglichst'#13#10+
+    'AuÃŸerdem solltest du, falls mÃ¶glich, die verursachende Datei selbst - mÃ¶glichst'#13#10+
     'komprimiert - mitsenden.'#13#10+
-    'Vielen Dank für deine Mithilfe!'
+    'Vielen Dank fÃ¼r deine Mithilfe!'
     , [CorruptFile]
     )),
     'Debuginformationen gefunden',
     mb_ICONWARNING or MB_OK);
-  ShellExecute(Self.Handle, nil, PChar(urlz_crash+vers), nil, nil, sw_shownormal);
+   OpenDocument(PChar(urlz_crash+vers)); { *Converted from ShellExecute* }
 end;
 
 procedure TMyFiles3Form.tbGenListClick(Sender: TObject);
@@ -6401,7 +6403,7 @@ begin
             Settings.ReadString(ini_prop,'FileDesc','Text-Datei')]);
           sdExport.DefaultExt := Settings.ReadString(ini_prop,'DefaultExt','.txt');
           if not sdExport.Execute then Exit;
-        end else raise Exception.Create('not implemented - export in temporäre datei');
+        end else raise Exception.Create('not implemented - export in temporÃ¤re datei');
 
       { Liste }
       TheList := TMyList(Self.lvLists.Items[cbList.ItemIndex].Data);
@@ -6411,7 +6413,7 @@ begin
 
       with TMyListExport.Create(TheList, Settings, MyFiles3Form.StepWait) do
       try
-        { Listeneinstellungen übernehmen }
+        { Listeneinstellungen Ã¼bernehmen }
 //        SizeFmt := ini.readinteger(ini_guilv + '3', 'Size', szpredef[3]);
 //        if SizeFmt = 1 then SizeFmt := -1;
         if cbExpLayout.ItemIndex = 0 then
@@ -6428,7 +6430,7 @@ begin
         Execute;
         Lines.SaveToFile(sdExport.FileName);
         if not chkDontOpen.Checked then
-        ShellExecute(Self.Handle,nil,PChar(sdExport.FileName),nil,nil,sw_shownormal);
+         OpenDocument(PChar(sdExport.FileName)); { *Converted from ShellExecute* }
       finally
         {TMyListExport.Create}Free;
         StopWait;
@@ -6453,7 +6455,7 @@ begin
       if item.Note <> '' then
         mNote.Text := item.Note;
       if ShowModal = mrCancel then
-        raise EAbort.Create('Datenträger nicht vorhanden');
+        raise EAbort.Create('DatentrÃ¤ger nicht vorhanden');
     finally
       FreeAndNil(frmWaitForDisk);
     end;
@@ -6466,17 +6468,17 @@ var
   idx,i : integer;
 begin
   s := (Sender as TLabel).Caption;
-  idx := Pos(' »',s);
+  idx := Pos(' Â»',s);
   if idx <> 0 then
     s := Copy(s,1,idx-1);
-  if Pos('« ',s) = 1 then s := Copy(s,3,maxInt);
+  if Pos('Â« ',s) = 1 then s := Copy(s,3,maxInt);
   p.Visible := not p.Visible;
   case p.visible of
     True :
       with (Sender as TLabel) do
       begin
         p.Top := Parent.Top + Parent.Height;
-        Caption := '« '+s;
+        Caption := 'Â« '+s;
         Font.Color := clCaptionText;
         Font.Style := [];
         (Parent as TPanel).Color := clActiveCaption;
@@ -6490,7 +6492,7 @@ begin
     False :
       with (Sender as TLabel) do
       begin
-        Caption := s + ' »';
+        Caption := s + ' Â»';
         Font.Color := clBlue;
         Font.Style := [fsUnderline];
         (Parent as TPanel).Color := clWindow;
@@ -6551,7 +6553,7 @@ begin
       else if Sender = menSearchInDisk then
       begin
         kompo := tvDisks;
-        pnlHead.Caption := 'Datenträgerauswahl';
+        pnlHead.Caption := 'DatentrÃ¤gerauswahl';
       end
         else
         begin
@@ -6559,7 +6561,7 @@ begin
           pnlHead.Caption := 'Listenauswahl';
         end;
 
-    if kompo <> lvListSel then { Tree-Komponente Entführen }
+    if kompo <> lvListSel then { Tree-Komponente EntfÃ¼hren }
     begin
       oldparent := kompo.Parent;
       kompo.Parent := f;
@@ -6583,7 +6585,7 @@ begin
     Top := MousePos.Y;
     if ShowModal = mrOk then
     begin
-      { Auswahl übernehmen }
+      { Auswahl Ã¼bernehmen }
       if kompo = lvListSel then
         lbSearchIn.Items.Add('List:'+TMyList(lvLists.Items[lvListSel.Selected.Index].Data).ListName)
       else
@@ -6719,7 +6721,7 @@ begin
   try
     Text := Format('%.n',[trunc(StrToFloat(trim(Text)) * factor) * 1.0]);
   except
-    raise Exception.Create('Ungültige Größenangabe');
+    raise Exception.Create('UngÃ¼ltige GrÃ¶ÃŸenangabe');
     Text := '';
   end;
   (Sender as TEdit).Text := Text;
@@ -6753,7 +6755,7 @@ begin
   cbWert.Text := '';
   lbContents.Clear;
   fbDelE.Enabled := False;
-  { Größe }
+  { GrÃ¶ÃŸe }
   chkMinSize.Checked := False;
   cbMinSize.ItemIndex := abs(LvColumns.SizeFactor-1);
   chkMaxSize.Checked := False;
@@ -6762,7 +6764,7 @@ begin
   seMinSize.Value := 0;
   seMaxSize.Value := 1;
   }
-  { Änderungsdatum }
+  { Ã„nderungsdatum }
   chkMinDate.Checked := False;
   dtpMinDate.DateTime := Now();
   dtpMinTime.Time := 0;
@@ -6958,7 +6960,7 @@ begin
         Brush.Color := clInfoBk;
         Font.Color := clInfoText;
         FillRect(Rect);
-        Canvas.TextRect(Rect, Rect.Left+2, Rect.Top+2, '<-- klicke hier für neue Eigenschaften');
+        Canvas.TextRect(Rect, Rect.Left+2, Rect.Top+2, '<-- klicke hier fÃ¼r neue Eigenschaften');
       end;             *)
 end;
 
@@ -7042,7 +7044,7 @@ begin
     PCharToList(PChar(tx1), slX);
     PCharToList(PChar(tx2), slX);
     slX.Sort;
-    { Properties "unique" zu slX hinzufügen }
+    { Properties "unique" zu slX hinzufÃ¼gen }
     for i := 0 to slX.Count - 1 do
     begin
       prop := GetLineProp(slX[i]);
@@ -7076,8 +7078,8 @@ begin
       sgProps.RowCount := sl.Count + 1;
     end;
     sgProps.FixedRows := 1;
-    { tx1 -> hohe Prioität (Notiz)
-      tx2 -> niedrige Priorität (Vorschau)
+    { tx1 -> hohe PrioitÃ¤t (Notiz)
+      tx2 -> niedrige PrioritÃ¤t (Vorschau)
     }
     with sl do
       for i := 0 to Count - 1 do
@@ -7347,7 +7349,7 @@ end;
 
 procedure TMyFiles3Form.menLayoutSaveForAdrClick(Sender: TObject);
 begin
-  cbLayout.Text := '»'+location;
+  cbLayout.Text := 'Â»'+location;
   menLayoutSaveClick(nil);
 end;
 
@@ -7569,7 +7571,7 @@ begin
   frmCopyDisksUsed.Left := Left + 20;
 
   TheList := TMyList(lvLists.Selected.Data);
-  { Liste prüfen und sortieren }
+  { Liste prÃ¼fen und sortieren }
   CheckList(TheList);
   StartWait(TheList.Count*2,'');
   SortedList := TMyListIdx.Create(TheList, cl_disk+','+cl_pfad, True, StepWait);
@@ -7649,28 +7651,28 @@ begin
     exit;
   end;
   if Application.MessageBox(PChar(
-    'Mit dieser Funktion haben Sie die Möglichkeit einzelne Dateien oder'#13#10+
+    'Mit dieser Funktion haben Sie die MÃ¶glichkeit einzelne Dateien oder'#13#10+
     'ganze Ordner aus der Sammlung zu entfernen.'#13#10+
     '(die Ordner/Dateien werden nur als Eintrag der Sammlung, jedoch nicht vom'#13#10+
-    'entsprechenden Datenträger gelöscht)'#13#10+
-    'ACHTUNG: Beim Löschen gibt es keinerlei weitere Sicherheitsabfragen!'#13#10+
-    'Alles wirkt sich sofort aus. Sie sollten daher über ein Backup der'#13#10+
-    'Sammlung verfügen.'#13#10+
-    'Sie können den Editor-Modus jederzeit wieder über dieses Menü deaktivieren'#13#10+
-    'Möchten Sie die Sammlung jetzt bearbeiten?'),
+    'entsprechenden DatentrÃ¤ger gelÃ¶scht)'#13#10+
+    'ACHTUNG: Beim LÃ¶schen gibt es keinerlei weitere Sicherheitsabfragen!'#13#10+
+    'Alles wirkt sich sofort aus. Sie sollten daher Ã¼ber ein Backup der'#13#10+
+    'Sammlung verfÃ¼gen.'#13#10+
+    'Sie kÃ¶nnen den Editor-Modus jederzeit wieder Ã¼ber dieses MenÃ¼ deaktivieren'#13#10+
+    'MÃ¶chten Sie die Sammlung jetzt bearbeiten?'),
     'Sammlung bearbeiten',
     mb_iconwarning or mb_yesnocancel or mb_defbutton2) <> idYes then exit;
   Application.MessageBox(PChar(
-    'Sie können jetzt beliebige Dateien oder Ordner in der Dateilistenansicht'#13#10+
-    'über das Kontextmenü (Rechtklick) löschen.'#13#10+
-    'Denken Sie daran, später den Editor-Modus über dieses Menü zu deaktivieren.'),
+    'Sie kÃ¶nnen jetzt beliebige Dateien oder Ordner in der Dateilistenansicht'#13#10+
+    'Ã¼ber das KontextmenÃ¼ (Rechtklick) lÃ¶schen.'#13#10+
+    'Denken Sie daran, spÃ¤ter den Editor-Modus Ã¼ber dieses MenÃ¼ zu deaktivieren.'),
     'Editor-Modus aktiviert',
     mb_iconinformation or mb_ok);
   FEditorMode := true;
   menColEditor.Checked := true;
 end;
 
-// Elemente (Datei, Ordner) löschen
+// Elemente (Datei, Ordner) lÃ¶schen
 procedure TMyFiles3Form.menDeleteColItemClick(Sender: TObject);
 var
   i : integer;
@@ -7717,7 +7719,7 @@ begin
     begin
       filter := s;
       Filtered := True;
-      StartWait(RecordCount,'Lösche den kompletten Ordner');
+      StartWait(RecordCount,'LÃ¶sche den kompletten Ordner');
       First;
       while not eof do
       begin
@@ -7752,7 +7754,7 @@ end;
 
 procedure TMyFiles3Form.menFAQClick(Sender: TObject);
 begin
-  ShellExecute(Self.Handle, nil, PChar(extractfilepath(Application.ExeName)+'FAQ.htm'), nil, nil, sw_shownormal);
+   OpenDocument(PChar(extractfilepath(Application.ExeName)+'FAQ.htm')); { *Converted from ShellExecute* }
 end;
 
 procedure TMyFiles3Form.MaintainSize(Sender: TObject);

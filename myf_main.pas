@@ -1,9 +1,11 @@
 unit myf_main;
 
+{$MODE Delphi}
+
 interface
 
 uses SysUtils, Classes,
-  ComCtrls, CommCtrl, Windows, { für Listview }
+  ComCtrls, CommCtrl, Windows, { fÃ¼r Listview }
   UsefulPrcs, SysIconCache, Registry;
 
 { Elementart in files.db (Ordner, Datei) }
@@ -155,7 +157,7 @@ begin
   else if DID = cl_typ then
   begin
     if Item.Typ = ek_disk then
-      Result := 'Datenträger' else
+      Result := 'DatentrÃ¤ger' else
       if Item.Typ = ek_folder then
         Result := GetTypName(icDir) else
           Result := GetTypName(Item.Name)
@@ -250,7 +252,7 @@ end;
 
 
 { TMyColumns }
-{ Objekt zur Verwaltung Spalten (Listview, StringList für Export) }
+{ Objekt zur Verwaltung Spalten (Listview, StringList fÃ¼r Export) }
 
 constructor TMyColumns.Create;
 begin
@@ -345,7 +347,7 @@ var
 begin
   FColumns.CommaText := Value;
   if FColumns.Count < 3 then
-    raise EMyColumnsError.Create('Ungültiges MyColumns Stringformat (Header)');
+    raise EMyColumnsError.Create('UngÃ¼ltiges MyColumns Stringformat (Header)');
   sorder := FColumns[0];
   swidth := FColumns[1];
   FSizeFactor := StrToInt(FColumns[2]);
@@ -353,7 +355,7 @@ begin
   FColumns.Delete(0);
   FColumns.Delete(0);
 
-  with TStringList.Create do { FOrder füllen }
+  with TStringList.Create do { FOrder fÃ¼llen }
   try
     CommaText := sorder;
     SetLength(FOrder, Count);
@@ -363,11 +365,11 @@ begin
     Free;
   end;
 
-  with TStringList.Create do { FOrder füllen }
+  with TStringList.Create do { FOrder fÃ¼llen }
   try
     CommaText := swidth;
     if Count <> FColumns.Count then
-      EMyColumnsError.Create('Ungültige MyColumns Stringformat (Breiten)');
+      EMyColumnsError.Create('UngÃ¼ltige MyColumns Stringformat (Breiten)');
     for i := 0 to FColumns.Count - 1 do
       SetWidth(i, StrToInt(Strings[i]));
   finally
@@ -406,7 +408,7 @@ var
   NormOrder : array of integer;
 begin
   if lv.Columns.Count <> FColumns.Count then
-    raise EMyColumnsError.Create('ListView hat ungültige Anzahl an Spalten');
+    raise EMyColumnsError.Create('ListView hat ungÃ¼ltige Anzahl an Spalten');
   SetLength(FOrder, FColumns.Count);
   ListView_GetColumnOrderArray(lv.Handle, FColumns.Count, PInteger(FOrder));
 
@@ -428,7 +430,7 @@ begin
   for i := 0 to Length(FOrder)-1 do
     TempOrder[i] := FOrder[i];
   for i := 0 to Length(temporder)-2 do
-    if temporder[i] <> i then  // Austausch nötig
+    if temporder[i] <> i then  // Austausch nÃ¶tig
     begin
       sl.Exchange(i,i+1);
       temporder[i+1] := temporder[i];
@@ -499,7 +501,7 @@ begin
   Result := True;
   l := (Length(k) div 5);
 
-  // c1 prüfen
+  // c1 prÃ¼fen
 {  c1 := 0;
   For i := 1 to length(s) do
     case s[i] of
@@ -562,7 +564,7 @@ procedure RegMe(s:string);
 var
   Name, Key : string;
 begin
-  if messagebox(0,'Registriercode übernehmen?', 'Registrierung', mb_yesno or mb_iconquestion) =
+  if messagebox(0,'Registriercode Ã¼bernehmen?', 'Registrierung', mb_yesno or mb_iconquestion) =
     idYes then
   begin
     Delete(s,1,1);
@@ -571,7 +573,7 @@ begin
     key := Copy(s,1,Pos('$',s)-1);
     if not checkall(key) then
     begin
-      messagebox(0,'Der Eingegebene Registriercode ist ungültig.'#13#10+
+      messagebox(0,'Der Eingegebene Registriercode ist ungÃ¼ltig.'#13#10+
                    'Bitte stelle sicher, dass bei manueller Eingabe keine'#13#10+
                    'Tippfehler gemacht wurden.', 'Fehler', mb_ok or mb_iconerror);
       Exit;
@@ -585,7 +587,7 @@ begin
     finally
       Free;
     end;
-    messagebox(0,pchar('Der Registriercode für '''+Name+''' wurde übernommen.'#13#10+
+    messagebox(0,pchar('Der Registriercode fÃ¼r '''+Name+''' wurde Ã¼bernommen.'#13#10+
        'Um MyFindex registriert zu nutzen, musst du MyFindex neu starten.'), 'Registrierung', mb_ok or mb_iconinformation);
   end;
 

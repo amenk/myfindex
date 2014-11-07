@@ -1,5 +1,7 @@
 unit ExportOptUnit;
 
+{$MODE Delphi}
+
 interface
 
 uses
@@ -109,7 +111,7 @@ implementation
 
 uses Unit1, myf_consts, myf_lists, UseFulPrcs;
 
-{$R *.DFM}
+{$R *.lfm}
 
 procedure TfrmListExport.FormCreate(Sender: TObject);
 var
@@ -125,7 +127,7 @@ begin
   od.InitialDir := dir;
   sd.InitialDir := dir;
   LoadTemplate( dir + 'default.myt' );
-  if not FileExists( dir + 'default.myt' ) then
+  if not FileExistsUTF8(dir + 'default.myt' ) { *Converted from FileExists* } then
     tbOpenClick(nil);
   with MyFiles3Form.lvLists.Items do
     for i:=0 to Count-1 do
@@ -398,7 +400,7 @@ procedure TfrmListExport.btnOkClick(Sender: TObject);
 begin
   if TMyList(MyFiles3Form.lvLists.Items[cbList.ItemIndex].Data).Count = 0 then
   begin
-    Application.MessageBox('Die gew‰hlte Liste ist leer.','Export',mb_iconerror or mb_ok);
+    Application.MessageBox('Die gew√§hlte Liste ist leer.','Export',mb_iconerror or mb_ok);
     ModalResult := mrNone;
   end;
 end;

@@ -1,5 +1,7 @@
 unit NewListUnit;
 
+{$MODE Delphi}
+
 interface
 
 uses
@@ -29,7 +31,7 @@ implementation
 
 uses Unit1;
 
-{$R *.DFM}
+{$R *.lfm}
 
 procedure TfrmNewList.edtNameKeyPress(Sender: TObject; var Key: Char);
 begin

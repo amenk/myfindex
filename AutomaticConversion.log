@@ -1,0 +1,164 @@
+* Konvertiere Datei C:\Projekte\myfindex\MyFiles.dpr *
+Kodierung von cp1252 zu UTF-8 geändert
+Alle Unit-Dateien gefunden
+Unit "ShellApi" im uses Abschnitt entfernt.
+Unit "Windows" mit "LCLIntf, LCLType, LMessages" im uses Abschnitt ersetzt.
+* Berichtigung der verwendeten Units für Datei C:\Projekte\myfindex\MyFiles.dpr *
+
+*** Converting unit files belonging to project/package ***
+* Konvertiere Datei C:\Projekte\myfindex\Unit1.pas *
+Kodierung von cp1252 zu UTF-8 geändert
+Unit "Mask" mit "MaskEdit" im uses Abschnitt ersetzt.
+Unit "jpeg" im uses Abschnitt entfernt.
+Unit "dbtables" mit "sqldb" im uses Abschnitt ersetzt.
+Unit "ShellAPI" im uses Abschnitt entfernt.
+Unit "Windows" mit "LCLIntf, LCLType, LMessages" im uses Abschnitt ersetzt.
+Fixed unit name from unit1 to Unit1.
+Replaced call ShellExecute(Self.Handle, nil, PChar(extractfilepath(Application.ExeName)+'FAQ.htm'), nil, nil, sw_shownormal); with  OpenDocument(PChar(extractfilepath(Application.ExeName)+'FAQ.htm')); { *Converted from ShellExecute* }
+Replaced call ShellExecute(Self.Handle,nil,PChar(sdExport.FileName),nil,nil,sw_shownormal); with  OpenDocument(PChar(sdExport.FileName)); { *Converted from ShellExecute* }
+Replaced call ShellExecute(Self.Handle, nil, PChar(urlz_crash+vers), nil, nil, sw_shownormal); with  OpenDocument(PChar(urlz_crash+vers)); { *Converted from ShellExecute* }
+Replaced call deletefile(PChar(dm.tblFiles.DatabaseName + List.ListName + '.myl')); with DeleteFileUTF8(PChar(dm.tblFiles.DatabaseName + List.ListName + '.myl')); { *Converted from DeleteFile* }
+Added unit FileUtil to uses section
+Replaced call ShellExecute(Self.Handle, nil, PChar(urlz_reg), nil, nil, sw_shownormal); with  OpenDocument(PChar(urlz_reg)); { *Converted from ShellExecute* }
+Replaced call ShellExecute(Self.Handle, nil, PChar(urlz_feedback+vers), nil, nil, sw_shownormal); with  OpenDocument(PChar(urlz_feedback+vers)); { *Converted from ShellExecute* }
+Replaced call ShellExecute(0, nil, PChar(extractfilepath(GetLVIFileName(ListView.selected, True))), nil, nil, sw_shownormal); with  OpenDocument(PChar(extractfilepath(GetLVIFileName(ListView.selected, True)))); { *Converted from ShellExecute* }
+Replaced call ShellExecute(Self.Handle, 'explore', pchar(chr(integer(drivestate.objects[idx])) + ':' + s2), nil, nil, sw_shownormal); with  OpenDocument(pchar(chr(integer(drivestate.objects[idx])) + ':' + s2)); { *Converted from ShellExecute* }
+Replaced call ShellExecute(Self.Handle, nil, PChar(url), nil, nil, sw_shownormal); with  OpenDocument(PChar(url)); { *Converted from ShellExecute* }
+Replaced call ShellExecute(Self.Handle, nil, PChar(url), nil, nil, sw_shownormal); with  OpenDocument(PChar(url)); { *Converted from ShellExecute* }
+Replaced call FindClose(SR); with FindCloseUTF8(SR); { *Converted from FindClose* }
+Replaced call FindNext(SR); with FindNextUTF8(SR); { *Converted from FindNext* }
+Replaced call FindFirst(DBDir + '*.myl', $3F, SR); with FindFirstUTF8(DBDir + '*.myl',$3F,SR); { *Converted from FindFirst* }
+Replaced call fileexists(p+'_'+iddll) with FileExistsUTF8(p+'_'+iddll) { *Converted from FileExists* }
+Replaced call fileexists(p+iddll) with FileExistsUTF8(p+iddll) { *Converted from FileExists* }
+Replaced call fileexists(s + 'NUL') with FileExistsUTF8(s + 'NUL') { *Converted from FileExists* }
+Replaced call FindClose(SR); with FindCloseUTF8(SR); { *Converted from FindClose* }
+Replaced call FindNext(SR); with FindNextUTF8(SR); { *Converted from FindNext* }
+Replaced call deletefile(s + sr.Name) with DeleteFileUTF8(s + sr.Name) { *Converted from DeleteFile* }
+Replaced call FindFirst(s + '*.*', $3F, SR); with FindFirstUTF8(s + '*.*',$3F,SR); { *Converted from FindFirst* }
+Replaced call ShellExecute(0, 'explore', PChar(GetLVIFileName(items[i], True)), nil, nil, sw_shownormal); with  OpenDocument(PChar(GetLVIFileName(items[i], True))); { *Converted from ShellExecute* }
+Replaced call ShellExecute(Self.Handle, nil, PChar(s), nil, nil, sw_shownormal); with  OpenDocument(PChar(s)); { *Converted from ShellExecute* }
+Replaced call FindClose(sr); with FindCloseUTF8(sr); { *Converted from FindClose* }
+Replaced call FindNext(sr); with FindNextUTF8(sr); { *Converted from FindNext* }
+Replaced call FindFirst(PlugInDirectory+'*.myp', faAnyFile, sr); with FindFirstUTF8(PlugInDirectory+'*.myp',faAnyFile,sr); { *Converted from FindFirst* }
+* Konvertiere Datei C:\Projekte\myfindex\DataModule.pas *
+Kodierung von cp1252 zu UTF-8 geändert
+Unit "DBTables" mit "sqldb" im uses Abschnitt ersetzt.
+Unit "Windows" mit "LCLIntf, LCLType, LMessages" im uses Abschnitt ersetzt.
+* Konvertiere Datei C:\Projekte\myfindex\ReadDiskUnit.pas *
+Kodierung von cp1252 zu UTF-8 geändert
+Unit "Mask" mit "MaskEdit" im uses Abschnitt ersetzt.
+Unit "ShellApi" im uses Abschnitt entfernt.
+Unit "dbtables" mit "sqldb" im uses Abschnitt ersetzt.
+Unit "jpeg" im uses Abschnitt entfernt.
+Unit "Windows" mit "LCLIntf, LCLType, LMessages" im uses Abschnitt ersetzt.
+Replaced call FindClose(SR); with FindCloseUTF8(SR); { *Converted from FindClose* }
+Added unit FileUtil to uses section
+Replaced call FindNext(SR); with FindNextUTF8(SR); { *Converted from FindNext* }
+Replaced call fileexists(s) with FileExistsUTF8(s) { *Converted from FileExists* }
+Replaced call FindFirst(Verzeichnis + '*.*', $3F, SR); with FindFirstUTF8(Verzeichnis + '*.*',$3F,SR); { *Converted from FindFirst* }
+Replaced call fileexists(s); with FileExistsUTF8(s); { *Converted from FileExists* }
+Replaced call DirectoryExists(s) with DirectoryExistsUTF8(s) { *Converted from DirectoryExists* }
+Replaced call fileexists(s) with FileExistsUTF8(s) { *Converted from FileExists* }
+Replaced call deletefile(fnLameOut); with DeleteFileUTF8(fnLameOut); { *Converted from DeleteFile* }
+Replaced call deletefile(fnLameIn); with DeleteFileUTF8(fnLameIn); { *Converted from DeleteFile* }
+Replaced call fileexists(fnLameOut) with FileExistsUTF8(fnLameOut) { *Converted from FileExists* }
+Replaced call fileexists(fnLameOut) with FileExistsUTF8(fnLameOut) { *Converted from FileExists* }
+Replaced call deletefile(fnLameOut); with DeleteFileUTF8(fnLameOut); { *Converted from DeleteFile* }
+Replaced call fileexists(fnLameIn) with FileExistsUTF8(fnLameIn) { *Converted from FileExists* }
+* Konvertiere Datei C:\Projekte\myfindex\UsefulPrcs.pas *
+Kodierung von cp1252 zu UTF-8 geändert
+Unit "Windows" mit "LCLIntf, LCLType, LMessages" im uses Abschnitt ersetzt.
+Replaced call FindClose(Handle); with FindCloseUTF8(Handle); { *Converted from FindClose* }
+Added unit FileUtil to uses section
+Replaced call CloseHandle(hDevice); with FileClose(hDevice); { *Converted from CloseHandle* }
+Replaced call CreateFile(pchar(s),      GENERIC_READ, FILE_SHARE_READ,      nil, OPEN_EXISTING, 0, 0); with FileCreate(pchar(s)); { *Converted from CreateFile* }
+Replaced call CloseHandle(DevIoHandle); with FileClose(DevIoHandle); { *Converted from CloseHandle* }
+Replaced call CreateFile(    '\\.\vwin32',    Generic_Read or Generic_Write,    File_Share_Read or File_Share_Write,    nil,    Open_Existing,    File_Attribute_Normal,    0); with FileCreate('\\.\vwin32'); { *Converted from CreateFile* }
+* Konvertiere Datei C:\Projekte\myfindex\NewCollectionUnit.pas *
+Kodierung von cp1252 zu UTF-8 geändert
+Zeichenschreibweise von Unit "UseFulPrcs" auf "UsefulPrcs" korrigiert.
+Unit "Windows" mit "LCLIntf, LCLType, LMessages" im uses Abschnitt ersetzt.
+Replaced call FindClose(SR); with FindCloseUTF8(SR); { *Converted from FindClose* }
+Added unit FileUtil to uses section
+Replaced call FindNext(SR); with FindNextUTF8(SR); { *Converted from FindNext* }
+Replaced call FindFirst(dir_rawdb + '*.*', $3F, SR); with FindFirstUTF8(dir_rawdb + '*.*',$3F,SR); { *Converted from FindFirst* }
+Replaced call directoryexists(dir_db + s2) with DirectoryExistsUTF8(dir_db + s2) { *Converted from DirectoryExists* }
+Replaced call DirectoryExists(dir_db) with DirectoryExistsUTF8(dir_db) { *Converted from DirectoryExists* }
+* Konvertiere Datei C:\Projekte\myfindex\NewListUnit.pas *
+Unit "Windows" mit "LCLIntf, LCLType, LMessages" im uses Abschnitt ersetzt.
+* Konvertiere Datei C:\Projekte\myfindex\ExportOptUnit.pas *
+Kodierung von cp1252 zu UTF-8 geändert
+Zeichenschreibweise von Unit "UseFulPrcs" auf "UsefulPrcs" korrigiert.
+Unit "Windows" mit "LCLIntf, LCLType, LMessages" im uses Abschnitt ersetzt.
+Replaced call FileExists( dir + 'default.myt' ) with FileExistsUTF8(dir + 'default.myt' ) { *Converted from FileExists* }
+Added unit FileUtil to uses section
+* Konvertiere Datei C:\Projekte\myfindex\ListCompareOptUnit.pas *
+Kodierung von cp1252 zu UTF-8 geändert
+Kodierung von cp1252 zu UTF-8 geändert
+Unit "Windows" mit "LCLIntf, LCLType, LMessages" im uses Abschnitt ersetzt.
+* Konvertiere Datei C:\Projekte\myfindex\myf_consts.pas *
+Kodierung von cp1252 zu UTF-8 geändert
+Zeichenschreibweise von Unit "usefulprcs" auf "UsefulPrcs" korrigiert.
+* Konvertiere Datei C:\Projekte\myfindex\SetupUnit.pas *
+Zeichenschreibweise von Unit "UseFulPrcs" auf "UsefulPrcs" korrigiert.
+Unit "Mask" mit "MaskEdit" im uses Abschnitt ersetzt.
+Unit "Windows" mit "LCLIntf, LCLType, LMessages" im uses Abschnitt ersetzt.
+Replaced call DeleteFile(SpecialDirectory(CSIDL_Startmenu) + txt_startm); with DeleteFileUTF8(SpecialDirectory(CSIDL_Startmenu) + txt_startm); { *Converted from DeleteFile* }
+Added unit FileUtil to uses section
+Replaced call fileexists(SpecialDirectory(CSIDL_Startmenu) + txt_startm) with FileExistsUTF8(SpecialDirectory(CSIDL_Startmenu) + txt_startm) { *Converted from FileExists* }
+Replaced call fileexists(SpecialDirectory(CSIDL_Startmenu) + txt_startm); with FileExistsUTF8(SpecialDirectory(CSIDL_Startmenu) + txt_startm); { *Converted from FileExists* }
+* Konvertiere Datei C:\Projekte\myfindex\ListviewConfig.pas *
+Unit "Windows" mit "LCLIntf, LCLType, LMessages" im uses Abschnitt ersetzt.
+* Konvertiere Datei C:\Projekte\myfindex\RepairUnit.pas *
+Unit "ShellApi" im uses Abschnitt entfernt.
+Unit "DBTables" mit "sqldb" im uses Abschnitt ersetzt.
+Unit "Windows" mit "LCLIntf, LCLType, LMessages" im uses Abschnitt ersetzt.
+Replaced call ShellExecute(Self.Handle, nil, PChar('http://go.self-soft.de/?bdedpk'), nil, nil, sw_shownormal); with OpenURL(PChar('http://go.self-soft.de/?bdedpk')); { *Converted from ShellExecute* }
+* Konvertiere Datei C:\Projekte\myfindex\myf_lists.pas *
+Kodierung von cp1252 zu UTF-8 geändert
+Zeichenschreibweise von Unit "usefulprcs" auf "UsefulPrcs" korrigiert.
+* Konvertiere Datei C:\Projekte\myfindex\SplashFUnit.pas *
+Kodierung von cp1252 zu UTF-8 geändert
+Kodierung von cp1252 zu UTF-8 geändert
+Unit "jpeg" im uses Abschnitt entfernt.
+Unit "Windows" mit "LCLIntf, LCLType, LMessages" im uses Abschnitt ersetzt.
+* Konvertiere Datei C:\Projekte\myfindex\myf_main.pas *
+Kodierung von cp1252 zu UTF-8 geändert
+Unit "Windows" mit "LCLIntf, LCLType, LMessages" im uses Abschnitt ersetzt.
+* Konvertiere Datei C:\Projekte\myfindex\ExtSelectUnit.pas *
+Unit "Windows" mit "LCLIntf, LCLType, LMessages" im uses Abschnitt ersetzt.
+* Konvertiere Datei C:\Projekte\myfindex\WaitForDiskUnit.pas *
+Unit "Windows" mit "LCLIntf, LCLType, LMessages" im uses Abschnitt ersetzt.
+* Konvertiere Datei C:\Projekte\myfindex\SysIconCache.pas *
+Unit "Windows" mit "LCLIntf, LCLType, LMessages" im uses Abschnitt ersetzt.
+Unit "ShellApi" im uses Abschnitt entfernt.
+Replaced call FileExists(Value) with FileExistsUTF8(Value) { *Converted from FileExists* }
+Added unit FileUtil to uses section
+* Konvertiere Datei C:\Projekte\myfindex\NoRegUnit.pas *
+Unit "Windows" mit "LCLIntf, LCLType, LMessages" im uses Abschnitt ersetzt.
+* Konvertiere Datei C:\Projekte\myfindex\StringEditUnit.pas *
+Zeichenschreibweise von Unit "UseFulPrcs" auf "UsefulPrcs" korrigiert.
+Unit "ShellApi" im uses Abschnitt entfernt.
+Unit "Mask" mit "MaskEdit" im uses Abschnitt ersetzt.
+Unit "Windows" mit "LCLIntf, LCLType, LMessages" im uses Abschnitt ersetzt.
+* Konvertiere Datei C:\Projekte\myfindex\StringListEditUnit.pas *
+Unit "Windows" mit "LCLIntf, LCLType, LMessages" im uses Abschnitt ersetzt.
+* Konvertiere Datei C:\Projekte\myfindex\myf_search.pas *
+Kodierung von cp1252 zu UTF-8 geändert
+Unit "Windows" mit "LCLIntf, LCLType, LMessages" im uses Abschnitt ersetzt.
+* Konvertiere Datei C:\Projekte\myfindex\myf_plugins.pas *
+Kodierung von cp1252 zu UTF-8 geändert
+Unit "Windows" mit "LCLIntf, LCLType, LMessages" im uses Abschnitt ersetzt.
+* Konvertiere Datei C:\Projekte\myfindex\CopyToDisksUnit.pas *
+Kodierung von cp1252 zu UTF-8 geändert
+Unit "Windows" mit "LCLIntf, LCLType, LMessages" im uses Abschnitt ersetzt.
+
+*** Converting unit files found during conversion ***
+* Konvertiere Datei C:\Projekte\myfindex\mapchar.pas *
+Kodierung von cp1252 zu UTF-8 geändert
+* Konvertiere Datei C:\Projekte\myfindex\TUtil32.pas *
+
+*** Repariere Formulardateien ... ***
+* Repariere Form-Datei C:\Projekte\myfindex\Unit1.lfm *
+Konvertierung benötigte: 00:01:50
+Conversion Ready.

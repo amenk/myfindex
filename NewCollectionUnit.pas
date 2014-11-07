@@ -1,5 +1,7 @@
 unit NewCollectionUnit;
 
+{$MODE Delphi}
+
 interface
 
 uses
@@ -38,17 +40,17 @@ implementation
 
 uses Unit1;
 
-{$R *.DFM}
+{$R *.lfm}
 
 procedure TfrmSammlung.SpeedButton1Click(Sender: TObject);
 begin
 (*  Application.messagebox(
   'Geben Sie in dieses Feld die Laufwerksbuchstaben der Laufwerke ein, '+
-  'die die für diese '#13#10+
-  'Sammlung in Frage kommenden (Wechsel-)Datenträger enthalten werden.'+#13#10+
-  'In vielen Fällen wird/werden das Ihr/Ihre CD-ROM Laufwerk/Laufwerke sein.'
+  'die die fÃ¼r diese '#13#10+
+  'Sammlung in Frage kommenden (Wechsel-)DatentrÃ¤ger enthalten werden.'+#13#10+
+  'In vielen FÃ¤llen wird/werden das Ihr/Ihre CD-ROM Laufwerk/Laufwerke sein.'
   +#13#10#13#10+
-  'Beispiel: Eingabe von "DEF" um die Laufwerke D:, E: und F: zu überwachen',
+  'Beispiel: Eingabe von "DEF" um die Laufwerke D:, E: und F: zu Ã¼berwachen',
   'Information',
   mb_ok or mb_iconinformation); *)
 end;
@@ -76,7 +78,7 @@ begin
     m := Length(edtName.Text);
     if m > 6 then m := 6;
     for i := 1 to m do
-      if lowercase(edtName.Text[i])[1] in ['a'..'z', 'ä', 'ö', 'ü', 'ß', '0'..'9'] then
+      if lowercase(edtName.Text[i])[1] in ['a'..'z', 'Ã¤', 'Ã¶', 'Ã¼', 'ÃŸ', '0'..'9'] then
         s := s + lowercase(edtName.Text[i]);
     s2 := s;
     i := 1;
@@ -95,17 +97,17 @@ begin
   end;
   if col = '' then
   begin
-    if not DirectoryExists(dir_db) then
+    if not DirectoryExistsUTF8(dir_db) { *Converted from DirectoryExists* } then
       mkdir(dir_db);
-    if not directoryexists(dir_db + s2) then
+    if not DirectoryExistsUTF8(dir_db + s2) { *Converted from DirectoryExists* } then
       mkdir(dir_db + s2);
-    res := FindFirst(dir_rawdb + '*.*', $3F, SR);
+    res := FindFirstUTF8(dir_rawdb + '*.*',$3F,SR); { *Converted from FindFirst* }
     while res = 0 do
     begin
       copyfile(PChar(dir_rawdb + sr.Name), PChar(dir_db + s2 + '\' + sr.Name), true);
-      res := FindNext(SR);
+      res := FindNextUTF8(SR); { *Converted from FindNext* }
     end;
-    FindClose(SR);
+    FindCloseUTF8(SR); { *Converted from FindClose* }
   end;
   col := s2;
 end;

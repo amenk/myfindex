@@ -1,5 +1,7 @@
 unit ExtSelectUnit;
 
+{$MODE Delphi}
+
 interface
 
 uses
@@ -31,7 +33,7 @@ implementation
 
 uses Unit1;
 
-{$R *.DFM}
+{$R *.lfm}
 
 procedure TfrmExtSelect.WMNCHITTEST(Var Msg: TWMNCHITTEST);
 var

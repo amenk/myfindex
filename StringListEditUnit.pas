@@ -1,5 +1,7 @@
 unit StringListEditUnit;
 
+{$MODE Delphi}
+
 interface
 
 uses
@@ -42,7 +44,7 @@ implementation
 
 uses Unit1;
 
-{$R *.DFM}
+{$R *.lfm}
 
 procedure TfrmBegriffe.WMNCHITTEST(Var Msg: TWMNCHITTEST);
 var

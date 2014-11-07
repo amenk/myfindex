@@ -1,5 +1,7 @@
 unit SplashFUnit;
 
+{$MODE Delphi}
+
 interface
 
 uses
@@ -50,7 +52,7 @@ implementation
 
 uses Unit1, DataModule;
 
-{$R *.DFM}
+{$R *.lfm}
 
 procedure TfrmSplash.imgSplashClick(Sender: TObject);
 begin
@@ -151,7 +153,7 @@ begin
     Height := Self.Height;
     Canvas.Draw(0,0,imgSplash.Picture.Graphic);
 
-    if Pos(Decrypt(#88+#177+#187+#142+#2+#19+#97+#217+#252,3235),  // The Küken
+    if Pos(Decrypt(#88+#177+#187+#142+#2+#19+#97+#217+#252,3235),  // The KÃ¼ken
       regname) <> 0 then
       Canvas.Draw(imgHina.Left,imgHina.Top,imgHina.Picture.Graphic)
   end;

@@ -1,5 +1,7 @@
 unit SysIconCache;
 
+{$MODE Delphi}
+
 { Copyright (C) 2001 by Alexander Menk, sw@alexander-menk.de }
 { SysIconCache }
 
@@ -82,7 +84,7 @@ begin
     ext := lowercase(ExtractFileExt(Value)) else ext := icDir;
   cache := Pos('\'+ext+'\',nocache) = 0;
   if (not cache) then
-    if not FileExists(Value) then cache := True;
+    if not FileExistsUTF8(Value) { *Converted from FileExists* } then cache := True;
 
   if cache then
   begin

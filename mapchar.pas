@@ -1,23 +1,25 @@
 {
   ricardo Ticker v1.19
-  Released: 14.5.2000 (keine Änderungen)
-  Programmiert von Alexander Menk für N@tKids
+  Released: 14.5.2000 (keine Ã„nderungen)
+  Programmiert von Alexander Menk fÃ¼r N@tKids
 }
 
 { XML Sonderzeichen Verarbeitung}
 
 unit mapchar;
 
+{$MODE Delphi}
+
 interface
 
 uses SysUtils;
 
 const xml_characters : array[160..255] of char =       {?}
-  (' ','¡','¢','£','¤','¥','¦','§','¨','©','ª','«','¬','-','®','¯','°','±','²','³','´','µ',
-   '¶','·','¸','¹','º','»','¼','½','¾','¿','À','Á','Â','Ã','Ä','Å','Æ','Ç','È','É','Ê','Ë',
-   'Ì','Í','Î','Ï','Ğ','Ñ','Ò','Ó','Ô','Õ','Ö','×','Ø','Ù','Ú','Û','Ü','İ','Ş','ß','à','á',
-   'â','ã','ä','å','æ','ç','è','é','ê','ë','ì','í','î','ï','ğ','ñ','ò','ó','ô','õ','ö','÷',
-   'ø','ù','ú','û','ü','ı','ş','ÿ');
+  (' ','Â¡','Â¢','Â£','Â¤','Â¥','Â¦','Â§','Â¨','Â©','Âª','Â«','Â¬','-','Â®','Â¯','Â°','Â±','Â²','Â³','Â´','Âµ',
+   'Â¶','Â·','Â¸','Â¹','Âº','Â»','Â¼','Â½','Â¾','Â¿','Ã€','Ã','Ã‚','Ãƒ','Ã„','Ã…','Ã†','Ã‡','Ãˆ','Ã‰','ÃŠ','Ã‹',
+   'ÃŒ','Ã','Ã','Ã','Ã','Ã‘','Ã’','Ã“','Ã”','Ã•','Ã–','Ã—','Ã˜','Ã™','Ãš','Ã›','Ãœ','Ã','Ã','ÃŸ','Ã ','Ã¡',
+   'Ã¢','Ã£','Ã¤','Ã¥','Ã¦','Ã§','Ã¨','Ã©','Ãª','Ã«','Ã¬','Ã­','Ã®','Ã¯','Ã°','Ã±','Ã²','Ã³','Ã´','Ãµ','Ã¶','Ã·',
+   'Ã¸','Ã¹','Ãº','Ã»','Ã¼','Ã½','Ã¾','Ã¿');
 
 const xml_names : array[160..255] of string =
   ('nbsp','iexcl','cent','pound','curren','yen','brvbar','sect','uml','copy','ordf','laquo','not','shy','reg','macr','deg','plusmn','sup2','sup3','acute','micro',
@@ -32,7 +34,7 @@ function ansi2xml(s:string):string; forward;
 implementation
 
 
-{ &uuml; -> ü }
+{ &uuml; -> Ã¼ }
 
 function xml2ansi(s:string):string;
 var
@@ -54,7 +56,7 @@ begin
                     if length(b) > 1 then { UnicodeNr. in Hex? }
                       if upcase(b[2]) = 'X' then b[2] := '$';
                     c := strtointdef(copy(b,2,length(b)),0);
-                    if (c >= 160) and (c <= 255) then { Zeichen in Tabelle hinzufügen }
+                    if (c >= 160) and (c <= 255) then { Zeichen in Tabelle hinzufÃ¼gen }
                       result := result + xml_characters[c];
                     end else
                     if b = 'lt' then result := result + '<' else { XML eigene Zeichen }

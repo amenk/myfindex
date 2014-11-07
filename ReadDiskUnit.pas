@@ -1,5 +1,7 @@
 unit ReadDiskUnit;
 
+{$MODE Delphi}
+
 interface
 
 uses
@@ -252,7 +254,7 @@ const
 
 //  csid = 'AutoInc'; // AutoInc - ID in tblFolders
 
-{$R *.DFM}
+{$R *.lfm}
 
 
 
@@ -290,7 +292,7 @@ begin
         FslPICache.AddObject( plug.ID, FslTemp);
       end else
         FslTemp := FslPICache.Objects[idx] as TStringList;
-      { Eigenschaft übernehmen }
+      { Eigenschaft Ã¼bernehmen }
       if FslTemp.Values[ prop ] <> '' then
         FslProps.Values[ prop ] := FslTemp.Values[ prop ];
     end;
@@ -383,7 +385,7 @@ begin
 end;
 
 
-{ String zurückgeben, wenn s nicht leer }
+{ String zurÃ¼ckgeben, wenn s nicht leer }
 
 function IfStr(prefix, s: string): string;
 begin
@@ -703,26 +705,26 @@ begin
       if Assigned(fsOut) then fsOut.Free;
       {//ToBeConverted if Assigned(mph) then mph.Free;}
     end;
-    if not fileexists(fnLameIn) then raise EPreview.Create(format('File not created (%s%s)', [verzeichnis, filen]));
+    if not FileExistsUTF8(fnLameIn) { *Converted from FileExists* } then raise EPreview.Create(format('File not created (%s%s)', [verzeichnis, filen]));
 
-    deletefile(fnLameOut);
-    if fileexists(fnLameOut) then raise EPreview.Create('File readonly');
+    DeleteFileUTF8(fnLameOut); { *Converted from DeleteFile* }
+    if FileExistsUTF8(fnLameOut) { *Converted from FileExists* } then raise EPreview.Create('File readonly');
     { Lame Starten ... }
     if not ExecAndWait(file_lame,
       Format(p_param, [p_bitrate, fnLameIn, fnLameOut]),
       sw_hide) then raise EPreview.Create(Format(str_Elamemissing, [verzeichnis, filen]));
-    if not fileexists(fnLameOut) then raise EPreview.Create(format(str_Elameerror, [verzeichnis, filen]));
+    if not FileExistsUTF8(fnLameOut) { *Converted from FileExists* } then raise EPreview.Create(format(str_Elameerror, [verzeichnis, filen]));
 
     with dm, tblFiles do
     begin
         tblFilesBinPreview.LoadFromFile(fnLameOut);
-    //      if tblPreviewBinPreview.Size < 1 then raise EAbort.Create('Datei ungültig.');
+    //      if tblPreviewBinPreview.Size < 1 then raise EAbort.Create('Datei ungÃ¼ltig.');
         tblFilesBKind.Value := pk_mp3;
         Inc(stat_preview);
     end;
   finally
-    deletefile(fnLameIn);
-    deletefile(fnLameOut);
+    DeleteFileUTF8(fnLameIn); { *Converted from DeleteFile* }
+    DeleteFileUTF8(fnLameOut); { *Converted from DeleteFile* }
   end;
 end;
 
@@ -827,7 +829,7 @@ begin
 end;
 
 { CurFID speichern }
-{ entfällt }
+{ entfÃ¤llt }
 {
 procedure TfrmReadDisk.Saveautoinc;
 begin
@@ -846,13 +848,13 @@ begin
 end;
 }
 
-{ 1. nicht-ASCII Zeichen (>127, <32) bis auf 'Ä','Ö' etc. beseitigen }
+{ 1. nicht-ASCII Zeichen (>127, <32) bis auf 'Ã„','Ã–' etc. beseitigen }
 { 2. falls durch OemToAnsi weniger Zeichen beseitigt werden, dann
   OemToAnsi verwenden... }
 
 function bestcharset(s: string): string;
 const
-  valid = [#32..#127, 'Ä', 'Ü', 'Ö', 'ß', 'ä', 'ü', 'ö', #10, #13];
+  valid = [#32..#127, 'Ã„', 'Ãœ', 'Ã–', 'ÃŸ', 'Ã¤', 'Ã¼', 'Ã¶', #10, #13];
 var
   i, j,
     invalid: integer;
@@ -994,7 +996,7 @@ begin
     if True {not bool(opt_thisfolder and bit_noidx)} then
     begin
       s := Verzeichnis + 'descript.ion';
-      if fileexists(s) then
+      if FileExistsUTF8(s) { *Converted from FileExists* } then
       begin
         descriptions := TStringList.Create;
         descfiles := TStringList.Create;
@@ -1009,8 +1011,8 @@ begin
         idlist := TStringList.Create;
         idlist.sorted := True;
 //        with idlist do { List aufbauen; Zuordnung: Dateiname -> Index }
-        begin { außerdem: größte FileId suchen }
-          { und: Dateien, die nicht mehr existieren löschen }
+        begin { auÃŸerdem: grÃ¶ÃŸte FileId suchen }
+          { und: Dateien, die nicht mehr existieren lÃ¶schen }
           fileid := -1;
           delfldr := '';
           with dm, tblFiles do
@@ -1024,9 +1026,9 @@ begin
               i := tblFilesFILEID.Value;
               s := Verzeichnis + tblFilesFileName.Value;
               if tblFilesEntryKind.Value = ek_folder then
-                b := DirectoryExists(s)
+                b := DirectoryExistsUTF8(s) { *Converted from DirectoryExists* }
               else
-                b := fileexists(s);
+                b := FileExistsUTF8(s); { *Converted from FileExists* }
               if b then
               begin
                 idlist.AddObject(ansilowercase(tblFilesFileName.Value), TObject(i));
@@ -1078,7 +1080,7 @@ begin
       end;
 //      lblState.Caption := str_index;
 
-      res := FindFirst(Verzeichnis + '*.*', $3F, SR);
+      res := FindFirstUTF8(Verzeichnis + '*.*',$3F,SR); { *Converted from FindFirst* }
       try
         while res = 0 do
         begin
@@ -1131,7 +1133,7 @@ begin
                   if optFileIDDiz then
                   begin
                     s := Format('%s%s\file_id.diz', [verzeichnis, sr.Name]);
-                    if fileexists(s) then { Datei existiert + Notiz ist leer bzw. updateall }
+                    if FileExistsUTF8(s) { *Converted from FileExists* } then { Datei existiert + Notiz ist leer bzw. updateall }
                       if (tblFilesNote.IsNull) or (optUpdatePrev) then
                       begin
                         gotfileiddiz := True;
@@ -1206,7 +1208,7 @@ begin
                         dt := 0;
                       end;
                     { Entweder: Normalmodus
-                      oder: updatemode + (Änderung oder (alles Überschreiben oder garkeine Vorschau bisher)) }
+                      oder: updatemode + (Ã„nderung oder (alles Ãœberschreiben oder garkeine Vorschau bisher)) }
 //                      if (ansilowercase(extractfileext(sr.Name))) = '.m3u' then
 //                        ext_importm3u(verzeichnis, sr.Name, opt_file);
                       if (not updmode) or ((updmode) and
@@ -1240,10 +1242,10 @@ begin
                   end;
                 end;
               end;
-          res := FindNext(SR);
+          res := FindNextUTF8(SR); { *Converted from FindNext* }
         end;
       finally
-        FindClose(SR);
+        FindCloseUTF8(SR); { *Converted from FindClose* }
         if Assigned(idlist) then idlist.Free;
         if Assigned(descfiles) then descfiles.Free;
         if Assigned(descriptions) then descriptions.Free;
@@ -1266,7 +1268,7 @@ begin
 end;
 
 
-{ Sortproc: umgekehrt nach Länge sortieren }{ gehört zu slfolderopt }
+{ Sortproc: umgekehrt nach LÃ¤nge sortieren }{ gehÃ¶rt zu slfolderopt }
 
 function sortcompare_lengthD(List: TStringList; Index1, Index2: Integer): Integer; far;
 var
@@ -1278,7 +1280,7 @@ begin
     if a < b then Result := 1 else Result := 0;
 end;
 
-{ slfolderopt / slfileopt mit den aktuellen Daten aus tvOpt bestücken }
+{ slfolderopt / slfileopt mit den aktuellen Daten aus tvOpt bestÃ¼cken }
 
 (*
 procedure TfrmReadDisk.buildoptions;
@@ -1451,9 +1453,9 @@ begin
     s := MyFiles3Form.ini.ReadString(ini_colpre + MyFiles3Form.curcol, 'drives', '');
     if Pos(DriveSelct, s) = 0 then
     case
-      Application.MessageBox('Soll das gewählte Laufwerk in Zukunft überwacht werden, um'+#13#10+
-                             'Datenträger wiederzuerkennen und Dateien direkt aus MyFindex öffnen'+#13#10+
-                             'zu können?','Einlesen',mb_yesnocancel or mb_iconquestion) of
+      Application.MessageBox('Soll das gewÃ¤hlte Laufwerk in Zukunft Ã¼berwacht werden, um'+#13#10+
+                             'DatentrÃ¤ger wiederzuerkennen und Dateien direkt aus MyFindex Ã¶ffnen'+#13#10+
+                             'zu kÃ¶nnen?','Einlesen',mb_yesnocancel or mb_iconquestion) of
       idYes :
       begin
         s := s + DriveSelct;
@@ -1493,7 +1495,7 @@ begin
 
   try
     if not cbStapel.Checked  then
-    begin { Ein Datenträger }
+    begin { Ein DatentrÃ¤ger }
       tooktime := GetTickCount;
 //        buildoptions;
       LoadAutoinc;
@@ -1750,7 +1752,7 @@ begin
       end
       else ReadOnly := True; *)
     end;
-  gbLabel.Caption := ' Datenträger in '+DriveSelct+': ';
+  gbLabel.Caption := ' DatentrÃ¤ger in '+DriveSelct+': ';
 end;
 
 procedure TfrmReadDisk.DebugModus1Click(Sender: TObject);
@@ -1760,10 +1762,10 @@ begin
     Caption := Caption + ' - Debugmodus';
   Application.messagebox(
     'Der Debugmodus wurde aktiviert.'#13#10+
-    'Lies nun den verdächtigen Datenträger mit den gleichen Optionen ein,'#13#10+
-    'die du beim Absturz von MyFindex gewählt hattest.'#13#10+
-    'Falls MyFindex aufgrund von defekten Dateien auf dem Datenträger erneut'#13#10+
-    'abstürzen sollte, starte MyFindex neu, wähle die aktuelle Sammlung und'#13#10+
+    'Lies nun den verdÃ¤chtigen DatentrÃ¤ger mit den gleichen Optionen ein,'#13#10+
+    'die du beim Absturz von MyFindex gewÃ¤hlt hattest.'#13#10+
+    'Falls MyFindex aufgrund von defekten Dateien auf dem DatentrÃ¤ger erneut'#13#10+
+    'abstÃ¼rzen sollte, starte MyFindex neu, wÃ¤hle die aktuelle Sammlung und'#13#10+
     'folge den Anweisungen.','Debugmodus', mb_ICONINFORMATION or MB_OK);
 end;
 

@@ -1,5 +1,7 @@
 unit DataModule;
 
+{$MODE Delphi}
+
 interface
 
 uses
@@ -38,7 +40,7 @@ type
     tblFilesDISKID: TSmallintField;
     tblFilesEntryKind: TSmallintField;
     tblFoldersDISKID: TSmallintField;
-    database: TDatabase;
+    {//ToBeConverted database: TDatabase;}
     procedure DataModuleCreate(Sender: TObject);
   private
     { Private-Deklarationen }
@@ -59,7 +61,7 @@ procedure dbSeekDisk(diskid:Integer; thelabel : string);
 
 implementation
 
-{$R *.DFM}
+{$R *.lfm}
 
 procedure Tdm.DataModuleCreate(Sender: TObject);
 begin
@@ -141,10 +143,10 @@ begin try
     if diskid <> -1 then tblDisksDISKID.AsInteger := diskid else
       tblDisksLabel.AsString := thelabel;
     if not GotoKey then
-      raise Exception.Create('dbSeekDisk: Datenträger nicht gefunden');
+      raise Exception.Create('dbSeekDisk: DatentrÃ¤ger nicht gefunden');
   end;                                     except end;
 end;
-{ Sucht die entspr. ID in der tblFiles und füllt den Item-Datensatz }
+{ Sucht die entspr. ID in der tblFiles und fÃ¼llt den Item-Datensatz }
 
 function MyGetItem(ID: TMyID): TMyItem;
 begin
@@ -161,7 +163,7 @@ begin
           tblFilesFILEID.Value := fileid;
         end;
         if not GotoKey then
-          raise EMyIDError.Create('MyID ungültig');
+          raise EMyIDError.Create('MyID ungÃ¼ltig');
       end;
       Result := dbCurrentItem;
     end;

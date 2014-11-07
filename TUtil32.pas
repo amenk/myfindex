@@ -1,5 +1,7 @@
 unit TUtil32;
 
+{$MODE Delphi}
+
 interface
 
 uses Bde, DbiTypes;

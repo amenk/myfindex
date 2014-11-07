@@ -1,5 +1,7 @@
 unit RepairUnit;
 
+{$MODE Delphi}
+
 interface
 
 uses
@@ -112,7 +114,7 @@ begin
            sizeof(TUVerifyCallBack), @CbInfo, nil));
 end;
 
-{$R *.DFM}
+{$R *.lfm}
 
 procedure TfrmRepair.FormCreate(Sender: TObject);
 var
@@ -261,7 +263,7 @@ end;
 
 procedure TfrmRepair.lblBDE5Click(Sender: TObject);
 begin
-  ShellExecute(Self.Handle, nil, PChar('http://go.self-soft.de/?bdedpk'), nil, nil, sw_shownormal);
+  OpenURL(PChar('http://go.self-soft.de/?bdedpk')); { *Converted from ShellExecute* }
 end;
 
 end.

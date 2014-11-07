@@ -1,5 +1,7 @@
 unit StringEditUnit;
 
+{$MODE Delphi}
+
 interface
 
 uses
@@ -61,7 +63,7 @@ implementation
 
 uses StringListEditUnit, myf_search, Unit1;
 
-{$R *.DFM}
+{$R *.lfm}
 
 procedure TfrmStringEdit.WMNCHITTEST(Var Msg: TWMNCHITTEST);
 var

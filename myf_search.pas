@@ -1,13 +1,15 @@
 unit myf_search;
 
+{$MODE Delphi}
+
 interface
 
 uses myf_main, myf_lists, DataModule,
      SysUtils, Classes, UsefulPrcs, ComCtrls, CommCtrl, Windows;
 
 type
-  { Wird für jedes gef. Element aufgerufen;
-    Rückgabe: True -> weitersuchen, False -> stop
+  { Wird fÃ¼r jedes gef. Element aufgerufen;
+    RÃ¼ckgabe: True -> weitersuchen, False -> stop
   }
   TMyItemEvent = procedure(Sender: TObject; Item:TMyItem; var stop: boolean) of object;
 
@@ -41,7 +43,7 @@ type
     { Suchbegriffe: Namen }
     FNameString : TMySearchString;
     FNotes : TStringList;
-    { Datum, Größe }
+    { Datum, GrÃ¶ÃŸe }
     FMinDate, FMaxDate : TDateTime;
     FMinSize, FMaxSize : Int64;
 
@@ -101,7 +103,7 @@ begin
     1 : tresh := Length(pattern) div 4;
     2 : tresh := Length(pattern) div 3;
     3 : tresh := Length(pattern) div 2;
-    else raise Exception.Create('Toleranzlevel ungültig');
+    else raise Exception.Create('Toleranzlevel ungÃ¼ltig');
   end;
 
   Result := False;
@@ -187,13 +189,13 @@ begin
     1 : raise Exception.Create('Create benutzen');
     2 : FString := s;
     3 : begin
-          if s = '' then raise Exception.Create('Regulärer Ausdruck darf nicht leer sein.');
+          if s = '' then raise Exception.Create('RegulÃ¤rer Ausdruck darf nicht leer sein.');
           FString := s;
           {//ToBeConverted
 		  if not Assigned(FRegEx) then
           begin
             FRegEx := TRegExpr.Create;
-            FRegEx.ModifierI := True; // Groß/Kleinschreibung ignorieren
+            FRegEx.ModifierI := True; // GroÃŸ/Kleinschreibung ignorieren
           end;
           FRegEx.Expression := s;
           FRegEx.Compile;
@@ -246,7 +248,7 @@ var
 begin
   s := lowercase(s);
   case FMode of
-  1:begin { Begriffsstutzig, äh -Suche}
+  1:begin { Begriffsstutzig, Ã¤h -Suche}
       Result := False;
       with FANDs do
         for i := 0 to Count-1 do
@@ -274,7 +276,7 @@ begin
       {//ToBeConverted Result := FRegEx.Exec(s);}
     end;
   else
-    raise Exception.Create('mode ungültig');
+    raise Exception.Create('mode ungÃ¼ltig');
   end;
 end;
 
@@ -479,7 +481,7 @@ begin
           on EStringListError do;
         end;
       end else
-      if lowercase(Strings[idx]) = '/minsize' then { Größe }
+      if lowercase(Strings[idx]) = '/minsize' then { GrÃ¶ÃŸe }
       begin
         Inc(idx);
         try
@@ -488,7 +490,7 @@ begin
           on EStringListError do;
         end;
       end else
-      if lowercase(Strings[idx]) = '/maxsize' then { Größe }
+      if lowercase(Strings[idx]) = '/maxsize' then { GrÃ¶ÃŸe }
       begin
         Inc(idx);
         try
@@ -527,7 +529,7 @@ begin
         Inc(idx);
     end;
     if BOOL(FAttrUSet and FAttrSet) then
-      raise Exception.Create('Die angegebenen Attribute sind widersprüchlich.');
+      raise Exception.Create('Die angegebenen Attribute sind widersprÃ¼chlich.');
   finally
     Free;
   end;
@@ -679,7 +681,7 @@ begin
     if FMinDate <> -1 then SC := SC + 'c';
     if FMaxDate <> -1 then SC := SC + 'C';
     if (FAttrSet <> 0) or (FAttrUSet <> 0) then SC := SC + 'A';
-    SC := SC + 'N';  // (TODO) gucken ob überhaupt Stringsuche gemacht wird
+    SC := SC + 'N';  // (TODO) gucken ob Ã¼berhaupt Stringsuche gemacht wird
     if FSearchIn.Count > 0 then SC := SC + 'L';
     if FNotes.Count > 0 then SC := SC + 'T';
 

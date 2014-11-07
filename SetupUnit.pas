@@ -1,5 +1,7 @@
 unit SetupUnit;
 
+{$MODE Delphi}
+
 interface
 
 uses
@@ -111,7 +113,7 @@ implementation
 
 uses Unit1, myf_main, StringListEditUnit;
 
-{$R *.DFM}
+{$R *.lfm}
 
 const
   IID_IPersistFile: TGUID = (D1: $0000010B; D2: $0000; D3: $0000; D4: ($C0, $00, $00, $00, $00, $00, $00, $46));
@@ -219,7 +221,7 @@ begin
     Free;
   end;
   { Link }
-  ckStartMen.Checked := fileexists(SpecialDirectory(CSIDL_Startmenu) + txt_startm);
+  ckStartMen.Checked := FileExistsUTF8(SpecialDirectory(CSIDL_Startmenu) + txt_startm); { *Converted from FileExists* }
 end;
 
 procedure TfrmConfig.writeini;
@@ -293,11 +295,11 @@ begin
 //    end;
   if ckStartMen.Checked then
   begin
-    if not fileexists(SpecialDirectory(CSIDL_Startmenu) + txt_startm) then
+    if not FileExistsUTF8(SpecialDirectory(CSIDL_Startmenu) + txt_startm) { *Converted from FileExists* } then
       CreateLink(application.exename,
         SpecialDirectory(CSIDL_Startmenu) + txt_startm, 'MyFiles');
   end else
-    DeleteFile(SpecialDirectory(CSIDL_Startmenu) + txt_startm);
+    DeleteFileUTF8(SpecialDirectory(CSIDL_Startmenu) + txt_startm); { *Converted from DeleteFile* }
 end;
 
 procedure TfrmConfig.FormCreate(Sender: TObject);

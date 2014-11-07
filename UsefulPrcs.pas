@@ -1,5 +1,7 @@
 unit UsefulPrcs;
 
+{$MODE Delphi}
+
 interface
 
 uses Windows, Sysutils, ActiveX, ComObj,
@@ -210,15 +212,8 @@ begin
                          //  49 = Eject
   end;
 
-  // Handle f¸r DeviceIoControl besorgen.
-  DevIoHandle := CreateFile(
-    '\\.\vwin32',
-    Generic_Read or Generic_Write,
-    File_Share_Read or File_Share_Write,
-    nil,
-    Open_Existing,
-    File_Attribute_Normal,
-    0);
+  // Handle f√ºr DeviceIoControl besorgen.
+  DevIoHandle := FileCreate('\\.\vwin32'); { *Converted from CreateFile* }
   // Mit DeviceIoControl die Disk auswerfen.
   if DevIoHandle <> Invalid_Handle_Value then
   begin
@@ -231,7 +226,7 @@ begin
       BytesReturned,
       nil);
     // Handle wieder freigeben.
-    CloseHandle(DevIoHandle);
+    FileClose(DevIoHandle); { *Converted from CloseHandle* }
   end;
 end;
 
@@ -246,9 +241,7 @@ begin
   if not IsWindowsNT then EjectDrive98(drive) else
   begin
     s := '\\.\' + drive + ':';
-    hDevice := CreateFile(pchar(s),
-      GENERIC_READ, FILE_SHARE_READ,
-      nil, OPEN_EXISTING, 0, 0);
+    hDevice := FileCreate(pchar(s)); { *Converted from CreateFile* }
 
 //    if (hDevice = 0) then Result := False;
 
@@ -256,15 +249,15 @@ begin
       IOCTL_STORAGE_EJECT_MEDIA, nil, 0,
       nil, 0, cb, nil);
 
-    CloseHandle(hDevice);
+    FileClose(hDevice); { *Converted from CloseHandle* }
   end;
 end;
 
 
-{ Like pr¸ft die ‹bereinstimmung eines Strings mit einem Muster.
+{ Like pr√ºft die √úbereinstimmung eines Strings mit einem Muster.
   So liefert Like('Delphi', 'D*p?i') true.
-  Der Vergleich ber¸cksichtigt Klein- und Groﬂschreibung.
-  Ist das nicht gew¸nscht, muss statt dessen
+  Der Vergleich ber√ºcksichtigt Klein- und Gro√üschreibung.
+  Ist das nicht gew√ºnscht, muss statt dessen
   Like(AnsiUpperCase(AString), AnsiUpperCase(APattern)) benutzt werden: }
 
 function Like(const AString, APattern: string): Boolean;
@@ -412,7 +405,7 @@ var
   z: Extended;
   s: string;
 begin
-  if abs(fmt) > 5 then raise Exception.Create('Ung¸ltiges Dateigrˆﬂen Format');
+  if abs(fmt) > 5 then raise Exception.Create('Ung√ºltiges Dateigr√∂√üen Format');
   if (abs(fmt) = 1) or ((fmt = 0) and (Size < 1000)) then
   begin
     s := 'Byte';
@@ -460,7 +453,7 @@ var
 begin
   Handle := FindFirstFile(PChar(FileName), FindData);
   if Handle <> INVALID_HANDLE_VALUE then begin
-    Windows.FindClose(Handle);
+    Windows.FindCloseUTF8(Handle); { *Converted from FindClose* }
     if (FindData.dwFileAttributes and FILE_ATTRIBUTE_DIRECTORY) = 0 then
     begin
       Int64Rec(Result).Lo := FindData.nFileSizeLow;
