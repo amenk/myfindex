@@ -48,3 +48,4 @@
 # Delphi history and backups
 __history/
 *.~*
+MyFiles.compiled

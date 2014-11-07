@@ -1,20 +1,14 @@
-{
-  ricardo Ticker v1.19
-  Released: 14.5.2000 (keine Änderungen)
-  Programmiert von Alexander Menk für N@tKids
-}
-
 { XML Sonderzeichen Verarbeitung}
 
 unit mapchar;
 
-{$MODE Delphi}
+//{$MODE Delphi}
 
 interface
 
 uses SysUtils;
 
-const xml_characters : array[160..255] of char =       {?}
+const xml_characters : array[160..255] of char =
   (' ','¡','¢','£','¤','¥','¦','§','¨','©','ª','«','¬','-','®','¯','°','±','²','³','´','µ',
    '¶','·','¸','¹','º','»','¼','½','¾','¿','À','Á','Â','Ã','Ä','Å','Æ','Ç','È','É','Ê','Ë',
    'Ì','Í','Î','Ï','Ð','Ñ','Ò','Ó','Ô','Õ','Ö','×','Ø','Ù','Ú','Û','Ü','Ý','Þ','ß','à','á',
