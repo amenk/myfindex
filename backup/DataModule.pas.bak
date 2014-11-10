@@ -6,16 +6,19 @@ interface
 
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  Db, DBTables, Bde, myf_main, UsefulPrcs;
+  Db, myf_main, UsefulPrcs, sqlite3conn;
 
 type
+
+  { Tdm }
+
   Tdm = class(TDataModule)
-    tblDisks: TTable;
     dsDisks: TDataSource;
-    tblFolders: TTable;
     dsFiles: TDataSource;
     dsFolders: TDataSource;
-    tblFiles: TTable;
+    tblFiles: TSQLite3Connection;
+    tblFolders: TSQLite3Connection;
+    tblDisks: TSQLite3Connection;
     tblDisksDISKID: TIntegerField;
     tblDisksRead: TDateTimeField;
     tblDisksSize: TFloatField;
@@ -40,7 +43,7 @@ type
     tblFilesDISKID: TSmallintField;
     tblFilesEntryKind: TSmallintField;
     tblFoldersDISKID: TSmallintField;
-    database: TDatabase;
+    {//ToBeConverted database: TDatabase;}
     procedure DataModuleCreate(Sender: TObject);
   private
     { Private-Deklarationen }

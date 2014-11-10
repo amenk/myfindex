@@ -6,9 +6,9 @@ unit mapchar;
 
 interface
 
-uses SysUtils;
+uses SysUtils, LCLType;
 
-const xml_characters : array[160..255] of char =
+const xml_characters : array[160..255] of TUTF8Char =
   (' ','¡','¢','£','¤','¥','¦','§','¨','©','ª','«','¬','-','®','¯','°','±','²','³','´','µ',
    '¶','·','¸','¹','º','»','¼','½','¾','¿','À','Á','Â','Ã','Ä','Å','Æ','Ç','È','É','Ê','Ë',
    'Ì','Í','Î','Ï','Ð','Ñ','Ò','Ó','Ô','Õ','Ö','×','Ø','Ù','Ú','Û','Ü','Ý','Þ','ß','à','á',
@@ -22,8 +22,8 @@ const xml_names : array[160..255] of string =
    'acirc','atilde','auml','aring','aelig','ccedil','egrave','eacute','ecirc','euml','igrave','iacute','icirc','iuml','eth','ntilde','ograve','oacute','ocirc','otilde','ouml','divide',
    'oslash','ugrave','uacute','ucirc','uuml','yacute','thorn','yuml');
 
-function xml2ansi(s:string):string; forward;
-function ansi2xml(s:string):string; forward;
+function xml2ansi(s:string):string; //forward;
+function ansi2xml(s:string):string; //forward;
 
 implementation
 

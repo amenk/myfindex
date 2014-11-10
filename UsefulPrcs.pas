@@ -5,7 +5,7 @@ unit UsefulPrcs;
 interface
 
 uses Windows, Sysutils, ActiveX, ComObj,
-  ShlObj, Mapchar, classes;
+  ShlObj, Mapchar, classes, FileUtil;
 type CharSet = set of char;
 
 
@@ -448,20 +448,18 @@ end;
 
 function GetFileSize(const FileName: string): Int64;
 var
-  Handle: THandle;
+  srecResult: TSearchRec;
   FindData: TWin32FindData;
 begin
-  Handle := FindFirstFile(PChar(FileName), FindData);
-  if Handle <> INVALID_HANDLE_VALUE then begin
-    Windows.FindCloseUTF8(Handle); { *Converted from FindClose* }
-    if (FindData.dwFileAttributes and FILE_ATTRIBUTE_DIRECTORY) = 0 then
-    begin
-      Int64Rec(Result).Lo := FindData.nFileSizeLow;
-      Int64Rec(Result).Hi := FindData.nFileSizeHigh;
-      Exit;
-    end;
+  if FindFirst(FileName, faAnyFile, srecResult) = 0 then
+  begin
+    Result := srecResult.Size;
+    FindClose(srecResult);
+  end
+  else
+  begin
+    Result := -1;
   end;
-  Result := -1;
 end;
 
 function lowercase(s: string): string;
