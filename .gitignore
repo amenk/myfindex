@@ -49,3 +49,6 @@
 __history/
 *.~*
 MyFiles.compiled
+*.o
+*.ppu
+*.bak
