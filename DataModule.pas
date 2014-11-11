@@ -5,18 +5,22 @@ unit DataModule;
 interface
 
 uses
-  Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  Db, myf_main, UsefulPrcs, sqlite3conn;
+  {Windows, }Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
+  Db, myf_main, UsefulPrcs, sqlite3conn, sqldb, Variants;
 
 type
 
   { Tdm }
 
   Tdm = class(TDataModule)
-    dsDisks: TDataSource;
     dsFiles: TDataSource;
     dsFolders: TDataSource;
+    dsDisks: TDataSource;
     SQLite3Con: TSQLite3Connection;
+    sqlqDisks: TSQLQuery;
+    sqlqFiles: TSQLQuery;
+    sqlqFolders: TSQLQuery;
+    SQLTransact: TSQLTransaction;
     tblDisksDISKID: TIntegerField;
     tblDisksRead: TDateTimeField;
     tblDisksSize: TFloatField;
@@ -43,6 +47,8 @@ type
     tblFoldersDISKID: TSmallintField;
     {//ToBeConverted database: TDatabase;}
     procedure DataModuleCreate(Sender: TObject);
+    procedure DataModuleDestroy(Sender: TObject);
+    procedure SQLite3ConAfterConnect(Sender: TObject);
   private
     { Private-Deklarationen }
   public
@@ -66,16 +72,132 @@ implementation
 
 procedure Tdm.DataModuleCreate(Sender: TObject);
 begin
-  tblDisks.Active := False;
-  tblFolders.Active := False;
-  tblFiles.Active := False;
+  try
+     SQLite3Con.DatabaseName := 'media.sqlite';
+     SQLTransact.DataBase := SQLite3Con;
+     sqlqDisks.Transaction := SQLTransact;
+     sqlqFiles.Transaction := SQLTransact;
+     sqlqFolders.Transaction := SQLTransact;
+
+     sqlqDisks.SQL.Text :=
+       'CREATE TABLE IF NOT EXISTS `tblMedia` ('+
+       '`tblDisksDISKID`	INTEGER NOT NULL,'+
+       '`tblDisksLabel`	TEXT,'+
+       '`tblDisksRead`	INTEGER,'+
+       '`tblDisksSize`	REAL,'+
+       '`tblDisksNote`	TEXT,'+
+       'PRIMARY KEY(tblDisksDISKID))'+#59;
+     sqlqDisks.ExecSQL;
+     SQLTransact.Commit;
+
+     sqlqFiles.SQL.Text:=
+       'CREATE TABLE IF NOT EXISTS `tblFiles` ('+
+       '`FILEID`	INTEGER NOT NULL,'+
+       '`DISKID`	INTEGER,'+
+       '`FOLDERID`	INTEGER,'+
+       '`FileName`	TEXT,'+
+       '`EntryKind`	INTEGER,'+
+       '`Changed`	INTEGER,'+
+       '`Attr`	INTEGER,'+
+       '`Size`	REAL,'+
+       '`Note`	NUMERIC,'+
+       '`TKind`	INTEGER,'+
+       '`BKind`	INTEGER,'+
+       '`TextPreview`	TEXT,'+
+       '`BinPreview`	BLOB,'+
+       '`tblFilesFOLDERID`	INTEGER,'+
+       '`tblFilesChanged`	REAL,'+
+       '`tblFilesAttr`	INTEGER,'+
+       '`tblFilesSize`	REAL,'+
+       '`tblFilesFILEID`	INTEGER,'+
+       '`tblFilesFileName`	TEXT,'+
+       '`tblFilesNote`	TEXT,'+
+       '`tblFilesTKind`	INTEGER,'+
+       '`tblFilesBKind`	INTEGER,'+
+       '`tblFilesTextPreview`	TEXT,'+
+       '`tblFilesBinPreview`	BLOB,'+
+       '`tblFilesDISKID`	INTEGER,'+
+       '`tblFilesEntryKind`	INTEGER,'+
+       'PRIMARY KEY(FILEID))'+#59;
+     sqlqFiles.ExecSQL;
+     SQLTransact.Commit;
+
+     sqlqFolders.SQL.Text :=
+       'CREATE TABLE IF NOT EXISTS `tblFolders` ('+
+       '`tblFoldersFOLDERID`	INTEGER NOT NULL,'+
+       '`tblFoldersFolder`	TEXT,'+
+       '`tblFoldersLevel`	INTEGER,'+
+       '`tblFoldersHasSubFolders`	INTEGER,'+
+       '`tblFoldersNote`	TEXT,'+
+       '`tblFoldersDISKID`	INTEGER,'+
+       'PRIMARY KEY(tblFoldersFOLDERID))'+#59;
+     sqlqFolders.ExecSQL;
+     SQLTransact.Commit;
+
+     sqlqDisks.SQL.Text :=
+       'select if ('+
+       '  exists('+
+       '    select distinct index_name from information_schema.statistics'+
+       '    where table_schema = `schema_db_name`'+
+       '    and table_name = `tblMedia` and index_name like `IdxLabel`'+
+       ')'+
+       ',`select ``index IdxLabel exists`` _______;`'+
+       ',`create index IdxLabel on tblMedia(column_name_names)`) into @a;'+
+       'PREPARE stmt1 FROM @a;'+
+       'EXECUTE stmt1;'+
+       'DEALLOCATE PREPARE stmt1;';
+     sqlqDisks.ExecSQL;
+     SQLTransact.Commit;
+
+     sqlqDisks.close;
+     sqlqDisks.SQL.Text := 'SELECT * FROM tblDisks';
+     sqlqDisks.open;
+
+     sqlqFiles.close;
+     sqlqFiles.SQL.Text := 'SELECT * FROM tblFiles';
+     sqlqFiles.Open;
+
+     sqlqFolders.close;
+     sqlqFolders.SQL.Text := 'SELECT * FROM tblFolders';
+     sqlqFolders.Open;
+  except
+    on E: EDatabaseError do
+    begin
+      MessageDlg('Fehler', 'Ein Datenbankfehler ist aufgetreten. Technische Fehlermeldung: ' +
+        E.Message, mtError, [mbOK], 0);
+    end;
+  end;
+end;
+
+procedure Tdm.DataModuleDestroy(Sender: TObject);
+begin
+  sqlqDisks.Close;
+  sqlqFiles.Close;
+  sqlqFolders.Close;
+  SQLite3Con.Close();
+end;
+
+procedure Tdm.SQLite3ConAfterConnect(Sender: TObject);
+begin
+
 end;
 
 procedure Tdm.SaveChanges;
 begin
-  dbiSaveChanges(tblFiles.Handle);
-  dbiSaveChanges(tblFolders.Handle);
-  dbiSaveChanges(tblDisks.Handle);
+  try
+  if sqlqDisks.Active then
+     sqlqDisks.ApplyUpdates;
+  if sqlqFiles.Active then
+     sqlqFiles.ApplyUpdates;
+  if sqlqFolders.Active then
+     sqlqFolders.ApplyUpdates;
+  except
+    on E: EDatabaseError do
+    begin
+      MessageDlg('Fehler', 'Ein Datenbankfehler ist aufgetreten. Technische Fehlermeldung: ' +
+        E.Message, mtError, [mbOK], 0);
+    end;
+  end;
 end;
 
 
@@ -136,42 +258,41 @@ begin
 end;
 
 procedure dbSeekDisk(diskid:Integer; thelabel : string);
-begin try
-  with dm, tblDisks do
-  begin
-    if diskid = -1 then IndexName := 'IdxLabel' else IndexName := '';
-    SetKey;
-    if diskid <> -1 then tblDisksDISKID.AsInteger := diskid else
-      tblDisksLabel.AsString := thelabel;
-    if not GotoKey then
+begin
+  try
+    if diskid = -1 then dm.sqlqDisks.IndexName := 'IdxLabel' else dm.sqlqDisks.IndexName := '';
+    if diskid <> -1 then dm.sqlqDisks.Fields.FieldByName('tblDisksDISKID').AsInteger := diskid else //tblDisksDISKID.AsInteger := diskid else
+      dm.sqlqDisks.Fields.FieldByName('tblDisksLabel').AsString := thelabel;
+    if not dm.sqlqDisks.Locate('tblDisksDISKID;tblDisksLabel', VarArrayOf([diskid, thelabel]), []) then
       raise Exception.Create('dbSeekDisk: Datenträger nicht gefunden');
-  end;                                     except end;
+  except
+    on E: EDatabaseError do
+    begin
+      MessageDlg('Fehler', 'Ein Datenbankfehler ist aufgetreten. Technische Fehlermeldung: ' +
+        E.Message, mtError, [mbOK], 0);
+    end;
+  end;
 end;
 { Sucht die entspr. ID in der tblFiles und füllt den Item-Datensatz }
 
 function MyGetItem(ID: TMyID): TMyItem;
 begin
   try
-    with dm, tblFiles do
+    if MyIDToStr(ID) <> MyIDToStr(dbCurrentID) then
     begin
-      if MyIDToStr(ID) <> MyIDToStr(dbCurrentID) then
-      begin
-        SetKey;
-        with ID do
-        begin
-          tblFilesDISKID.Value := diskid;
-          tblFilesFOLDERID.Value := folderid;
-          tblFilesFILEID.Value := fileid;
-        end;
-        if not GotoKey then
-          raise EMyIDError.Create('MyID ungültig');
-      end;
-      Result := dbCurrentItem;
+      if not dm.sqlqFiles.Locate('tblFilesDISKID;tblFilesFOLDERID;tblFilesFILEID', VarArrayOf([ID.diskid, ID.folderid, ID.fileid]), []) then
+        raise EMyIDError.Create('MyID ungültig');
     end;
+    Result := dbCurrentItem;
   except
-    on EMyIDError do raise
-    else
-      raise Exception.Create(Format('Dateieintrag defekt. Fehler bei ID(%d,%d,%d)',[ID.diskid,ID.folderid,ID.fileid]));
+    on E: EDatabaseError do
+    begin
+      MessageDlg('Fehler', 'Ein Datenbankfehler ist aufgetreten. Technische Fehlermeldung: ' +
+        E.Message, mtError, [mbOK], 0);
+    end;
+    on E:EMyIDError do raise
+      else
+        raise Exception.Create(Format('Dateieintrag defekt. Fehler bei ID(%d,%d,%d)',[ID.diskid,ID.folderid,ID.fileid]));
   end;
 end;
 
@@ -189,7 +310,7 @@ end;
 function MyGetPath(ID : TMyID):string;
 begin
   try
-    Result := dm.tblFolders.LookUp('FOLDERID', ID.folderid, 'Folder');
+    Result := dm.sqlqFolders.Lookup('FOLDERID', ID.folderid, 'Folder'); //tblFolders.LookUp('FOLDERID', ID.folderid, 'Folder');
   except
     raise Exception.Create(Format('Datenbank inkonsistent. Fehler bei ID(%d,%d,%d)',[ID.diskid,ID.folderid,ID.fileid]));
   end;

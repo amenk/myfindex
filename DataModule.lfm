@@ -1,32 +1,69 @@
 object dm: Tdm
   OnCreate = DataModuleCreate
+  OnDestroy = DataModuleDestroy
   OldCreateOrder = False
   left = 312
   top = 178
   Height = 540
-  HorizontalOffset = 291
-  VerticalOffset = 173
+  HorizontalOffset = 525
+  VerticalOffset = 98
   Width = 783
-  object dsDisks: TDataSource
-    left = 32
-    top = 24
-  end
-  object dsFiles: TDataSource
-    left = 32
-    top = 152
-  end
-  object dsFolders: TDataSource
-    left = 32
-    top = 88
-  end
   object SQLite3Con: TSQLite3Connection
     Connected = False
     LoginPrompt = False
-    DatabaseName = 'media.sqlite'
+    AfterConnect = SQLite3ConAfterConnect
     KeepConnection = False
     LogEvents = []
     Options = []
     left = 136
+    top = 32
+  end
+  object sqlqDisks: TSQLQuery
+    FieldDefs = <>
+    SQL.Strings = (
+      ''
+    )
+    Params = <>
+    left = 136
+    top = 96
+  end
+  object sqlqFiles: TSQLQuery
+    FieldDefs = <>
+    SQL.Strings = (
+      ''
+    )
+    Params = <>
+    left = 136
+    top = 160
+  end
+  object sqlqFolders: TSQLQuery
+    FieldDefs = <>
+    SQL.Strings = (
+      ''
+    )
+    Params = <>
+    left = 200
+    top = 96
+  end
+  object dsDisks: TDataSource
+    DataSet = sqlqDisks
+    left = 51
+    top = 40
+  end
+  object dsFolders: TDataSource
+    DataSet = sqlqFolders
+    left = 51
+    top = 112
+  end
+  object dsFiles: TDataSource
+    DataSet = sqlqFiles
+    left = 55
+    top = 189
+  end
+  object SQLTransact: TSQLTransaction
+    Active = False
+    Database = SQLite3Con
+    left = 224
     top = 32
   end
 end
