@@ -697,17 +697,15 @@ begin
             else DoMatch(Items[i]);
     end else { kpl. Datenbank }
     begin
-      with dm do
-        begin
-          tblFiles.Filtered := False;
-          tblDisks.Filtered := False;
-          tblFolders.Filtered := False;
-          tblFiles.First;
-        end;
-      while (not dm.tblFiles.Eof) and (not FAbort) and (FoundCount < FLimit) do
+      dm.sqlqFiles.Filtered := False;
+      dm.sqlqDisks.Filtered := False;
+      dm.sqlqFolders.Filtered := False;
+      dm.sqlqFiles.First;
+
+      while (not dm.sqlqFiles.Eof) and (not FAbort) and (FoundCount < FLimit) do
       begin
         DoMatch(dbCurrentItem);
-        dm.tblFiles.Next;
+        dm.sqlqFiles.Next;
       end;
     end;
     Result := not FAbort;

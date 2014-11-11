@@ -21,14 +21,25 @@ unit Unit1;
 
 interface
 
+{$ifdef WINDOWS}
 uses
   myf_consts, myf_main, myf_lists, myf_search, myf_plugins,
+  SysIconCache, UsefulPrcs, db,
+  Windows, Messages, SysUtils, Forms, ShlObj, CommCtrl, ToolWin,
+  ExtCtrls, Menus, StdCtrls, Dialogs, Controls, ComCtrls, Classes, Graphics,
+  ShellAPI, Spin, Buttons, ImgList, Grids, dbtables, IniFiles,
+  Clipbrd, AppEvnts, CheckLst, jpeg, SplashFUnit, DBGrids, Registry, Mask,
+  JvMaskEdit;
+{$elseif}
+ uses
+  cmem, myf_consts, myf_main, myf_lists, myf_search, myf_plugins,
   SysIconCache, UsefulPrcs, db,
   Windows, Messages, SysUtils, Forms, ShlObj, CommCtrl, JvSpin, ToolWin,
   ExtCtrls, Menus, StdCtrls, Dialogs, Controls, ComCtrls, Classes, Graphics,
   ShellAPI, Spin, Buttons, ImgList, Grids, dbtables, IniFiles,
   Clipbrd, AppEvnts, CheckLst, jpeg, SplashFUnit, DBGrids, Registry, Mask,
   JvMaskEdit;
+{$endif}
 
 const
   lvt_file = 1;
