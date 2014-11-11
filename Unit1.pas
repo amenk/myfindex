@@ -25,20 +25,18 @@ interface
 uses
   myf_consts, myf_main, myf_lists, myf_search, myf_plugins,
   SysIconCache, UsefulPrcs, db,
-  Windows, Messages, SysUtils, Forms, ShlObj, CommCtrl, ToolWin,
+  {Windows, }Messages, SysUtils, Forms, ShlObj, CommCtrl, ToolWin,
   ExtCtrls, Menus, StdCtrls, Dialogs, Controls, ComCtrls, Classes, Graphics,
-  ShellAPI, Spin, Buttons, ImgList, Grids, dbtables, IniFiles,
-  Clipbrd, AppEvnts, CheckLst, jpeg, SplashFUnit, DBGrids, Registry, Mask,
-  JvMaskEdit;
-{$elseif}
+  ShellAPI, Spin, Buttons, ImgList, Grids, IniFiles,
+  Clipbrd, CheckLst, SplashFUnit, DBGrids, Registry, sqldb;
+{$else}
  uses
   cmem, myf_consts, myf_main, myf_lists, myf_search, myf_plugins,
   SysIconCache, UsefulPrcs, db,
-  Windows, Messages, SysUtils, Forms, ShlObj, CommCtrl, JvSpin, ToolWin,
+  Windows, Messages, SysUtils, Forms, ShlObj, CommCtrl, ToolWin,
   ExtCtrls, Menus, StdCtrls, Dialogs, Controls, ComCtrls, Classes, Graphics,
-  ShellAPI, Spin, Buttons, ImgList, Grids, dbtables, IniFiles,
-  Clipbrd, AppEvnts, CheckLst, jpeg, SplashFUnit, DBGrids, Registry, Mask,
-  JvMaskEdit;
+  ShellAPI, Spin, Buttons, ImgList, Grids, IniFiles,
+  Clipbrd, CheckLst, SplashFUnit, DBGrids, Registry, sqldb;
 {$endif}
 
 const
@@ -120,7 +118,7 @@ type
     menLAdd: TMenuItem;
     menLDel: TMenuItem;
     menSelAll: TMenuItem;
-    ApplicationEvents: TApplicationEvents;
+    ApplicationEvents: TApplicationProperties;
     sdExport: TSaveDialog;
     N3: TMenuItem;
     menCheckUpdate: TMenuItem;
@@ -129,7 +127,7 @@ type
     menBack: TMenuItem;
     menLevelUp: TMenuItem;
     tmrSumSize: TTimer;
-    aniFind: TAnimate;
+    //aniFind: TAnimate;
     menSearch: TMenuItem;
     N13: TMenuItem;
     menDiskviewFirst: TMenuItem;
@@ -258,8 +256,8 @@ type
     pHSize: TPanel;
     lblSize: TLabel;
     pSearchDate: TPanel;
-    dtpMinDate: TDateTimePicker;
-    dtpMaxDate: TDateTimePicker;
+    //dtpMinDate: TDateTimePicker;
+    //dtpMaxDate: TDateTimePicker;
     pHSearchDate: TPanel;
     lblSearchDate: TLabel;
     pSearchIn: TPanel;
@@ -291,14 +289,14 @@ type
     cbAS: TCheckBox;
     cbMinSize: TComboBox;
     cbMaxSize: TComboBox;
-    seMinSize: TJvSpinEdit;
+    seMinSize: TSpinEdit;
     chkMinSize: TCheckBox;
     chkMaxSize: TCheckBox;
-    seMaxSize: TJvSpinEdit;
+    seMaxSize: TSpinEdit;
     chkMinDate: TCheckBox;
     chkMaxDate: TCheckBox;
-    dtpMinTime: TDateTimePicker;
-    dtpMaxTime: TDateTimePicker;
+    //dtpMinTime: TDateTimePicker;
+    //dtpMaxTime: TDateTimePicker;
     pBottom: TPanel;
     btnStart: TSpeedButton;
     fbSearchReset: TSpeedButton;
@@ -672,7 +670,7 @@ type
     colAv, colCache, colGray : integer;
     idi_root, idi_disk, idi_nodisk, idi_openf, idi_closef: Integer; // ImageList ID's
     notebm: TBookmark;
-    notedb: TTable;
+    notedb: TSQLQuery;
     splash: TfrmSplash;
     verlauf: integer;
     vers: string;

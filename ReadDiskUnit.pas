@@ -7,11 +7,10 @@ interface
 uses
   myf_consts, myf_main, myf_plugins,
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  StdCtrls, ComCtrls, UsefulPrcs, ExtCtrls, Buttons, CheckLst,
-  jpeg, db,
-  dbtables, ImgList, Menus, MapChar,
-  CommCtrl, OleCtrls, SHDocVw, ShellApi, ToolWin,
-  Mask, IniFiles;
+  StdCtrls, ComCtrls, UsefulPrcs, ExtCtrls, Buttons, CheckLst, db,
+  ImgList, Menus, MapChar,
+  CommCtrl, ShellApi, ToolWin,
+  IniFiles;
 
 type
   EPreview = class(Exception);
@@ -87,7 +86,7 @@ type
     Image1: TImage;
     lblState: TLabel;
     lblErr: TLabel;
-    anim: TAnimate;
+    //anim: TAnimate;
     pbScan: TProgressBar;
     Panel2: TPanel;
     icB: TImage;

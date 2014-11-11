@@ -6,7 +6,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  StdCtrls, ExtCtrls, jpeg, ComCtrls, myf_consts, myf_main, UsefulPrcs;
+  StdCtrls, ExtCtrls, ComCtrls, myf_consts, myf_main, UsefulPrcs;
 
 type
   TSetLayeredWindowAttributes =  function (hwnd: HWND; crKey: LongInt;
