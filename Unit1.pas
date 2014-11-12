@@ -118,7 +118,7 @@ type
     menLAdd: TMenuItem;
     menLDel: TMenuItem;
     menSelAll: TMenuItem;
-    ApplicationEvents: TApplicationProperties;
+    ApplicationProperties: TApplicationProperties;
     sdExport: TSaveDialog;
     N3: TMenuItem;
     menCheckUpdate: TMenuItem;
@@ -405,13 +405,13 @@ type
     procedure menColConfigClick(Sender: TObject);
     procedure menListEditClick(Sender: TObject);
 //    procedure menListExportClick(Sender: TObject);
-    procedure ApplicationEventsActivate(Sender: TObject);
-    procedure ApplicationEventsDeactivate(Sender: TObject);
+    procedure ApplicationPropertiesActivate(Sender: TObject);
+    procedure ApplicationPropertiesDeactivate(Sender: TObject);
     procedure INFO1Click(Sender: TObject);
     procedure cbAdresseChange(Sender: TObject);
     procedure menSelAllClick(Sender: TObject);
     procedure menCheckUpdateClick(Sender: TObject);
-    function ApplicationEventsHelp(Command: Word; Data: Integer;
+    function ApplicationPropertiesHelp(Command: Word; Data: Integer;
       var CallHelp: Boolean): Boolean;
     procedure menEjectClick(Sender: TObject);
     procedure menBackClick(Sender: TObject);
@@ -437,7 +437,7 @@ type
     procedure tmrAutoPlayTimer(Sender: TObject);
     procedure tmrMP3CtrlSyncTimer(Sender: TObject);
     procedure menCommandsClick(Sender: TObject);
-    procedure ApplicationEventsHint(Sender: TObject);
+    procedure ApplicationPropertiesHint(Sender: TObject);
     procedure menOpenThisFolderClick(Sender: TObject);
     procedure btnStartSearchClick(Sender: TObject);
     procedure ListViewGetImageIndex(Sender: TObject; Item: TListItem);
@@ -1068,7 +1068,7 @@ begin
   dodefaultlayouts;
 
   sdExport.InitialDir := SpecialDirectory(CSIDL_Desktop);
-  ApplicationEventsActivate(Sender);
+  ApplicationPropertiesActivate(Sender);
   Toolbar.ShowCaptions := ini.ReadBool(ini_gui, ini_tbcaptions, True);
   if (ini.ReadBool(ini_gui, ini_splash, true)) or (not isreg) then
   begin
@@ -2093,7 +2093,7 @@ begin
   notedb := nil;
   smallimages.Free;
   savesettings;
-  ApplicationEventsDeactivate(nil);
+  ApplicationPropertiesDeactivate(nil);
   SaveAndFreeLists; // Gibt die Listen der akt. Sammlung frei / speichert sie
   clearlistview; // Listview-Daten freigeben
   cleartvs;
@@ -4329,12 +4329,12 @@ begin
   Caption := s;
 end;
 
-procedure TMyFiles3Form.ApplicationEventsActivate(Sender: TObject);
+procedure TMyFiles3Form.ApplicationPropertiesActivate(Sender: TObject);
 begin
   timestamp := GetTickCount;
 end;
 
-procedure TMyFiles3Form.ApplicationEventsDeactivate(Sender: TObject);
+procedure TMyFiles3Form.ApplicationPropertiesDeactivate(Sender: TObject);
 var
   secs: dword;
 begin
@@ -4389,7 +4389,7 @@ begin
   Result := Format('program=%s&version=%s&user=%s&secondsused=%d', ['MyFindex', UrlEncode(vers), UrlEncode(regname), ini.readinteger('Stats', 'UsageTime', 0)]);
 end;
 
-function TMyFiles3Form.ApplicationEventsHelp(Command: Word; Data: Integer;
+function TMyFiles3Form.ApplicationPropertiesHelp(Command: Word; Data: Integer;
   var CallHelp: Boolean): Boolean;
 var
   url: string;
@@ -4934,7 +4934,7 @@ begin
   end;
 end;
 
-procedure TMyFiles3Form.ApplicationEventsHint(Sender: TObject);
+procedure TMyFiles3Form.ApplicationPropertiesHint(Sender: TObject);
 var
   s: string;
 begin
@@ -4973,6 +4973,7 @@ begin
   updateLV;
 end;
 
+{//ToBeConverted
 procedure TMyFiles3Form.ListViewGetImageIndex(Sender: TObject;
   Item: TListItem);
 var
@@ -4991,7 +4992,7 @@ var
 begin
   if item.imageindex <> -1 then Exit;
   if ListView.ViewStyle = vsIcon then
-  begin { Vorschau }
+  begin // Vorschau
     if PLVData(item.data)^.item.typ in [lvt_ordner, lvt_verbund] then
       item.imageindex := 0 else
       if PLVData(item.data)^.item.typ = lvt_disk then
@@ -5032,7 +5033,7 @@ begin
               bitmap.Canvas.Brush.Color := clBtnFace;
               bitmap.Canvas.FillRect(r);
               Frame3D(bitmap.canvas, r, clBtnHighLight, clBtnShadow, 1);
-              { Max. skalieren }
+              //Max. skalieren
               h := temp.Height;
               w := temp.Width;
               ratio := h / w;
@@ -5046,7 +5047,7 @@ begin
                 r.Right := thumbmaxw;
                 r.Bottom := round(thumbmaxw * ratio);
               end;
-              { Zentrieren }
+              // Zentrieren
               ofs := (thumbmaxh + 8 - r.Bottom) div 2;
               Inc(r.Bottom, ofs);
               r.Top := ofs;
@@ -5066,29 +5067,7 @@ begin
       end;
   end
   else
-  begin { Normale Icons }
-(*    ext := lowercase(extractfileext(item.Caption));
-    if ((ext = '.exe') or (ext = '.ico') or (ext = '.lnk') or (ext = '.cur') or (ext = '.ani')) and IsAvailable(item) then // Datei verfügbar + EXE etc.
-    begin
-      fname := GetLVIFileName(item, true);
-      SHGetFileInfo(PChar(fname), 0, Info, SizeOf(TSHFileInfo), SHGFI_SYSIconIndex or SHGFI_TYPENAME);
-      if Info.szTypename = '' then
-        if not fileexists(fname) then
-          Info.szTypename := 'File not found';  {TODO : Update Triggern}
-    end
-    else // Datei nicht verfügbar
-      if PLVData(item.Data)^.item.typ in [lvt_ordner, lvt_verbund] then // Icon für Folder besorgen
-//        SHGetFileInfo(PChar(extractfilepath(application.exename)), 0, Info, SizeOf(TSHFileInfo), SHGFI_SYSIconIndex or SHGFI_TYPENAME)
-        SHGetFileInfo(nil, FILE_ATTRIBUTE_DIRECTORY, Info, SizeOf(TSHFileInfo), SHGFI_USEFILEATTRIBUTES or SHGFI_SYSIconIndex or SHGFI_TYPENAME)
-      else // Icon für Datei besorgen
-        SHGetFileInfo(PChar(ext), FILE_ATTRIBUTE_NORMAL, Info, SizeOf(TSHFileInfo), SHGFI_USEFILEATTRIBUTES or SHGFI_SYSIconIndex or SHGFI_TYPENAME);
-    item.ImageIndex := Info.iIcon;
-    if (LvColumns.IndexOf(cl_typ) <> -1) and (PLVData(Item.Data)^.item.typ <> lvt_verbund) then
-      if Info.szTypeName = '' then
-        item.subitems[LvColumns.IndexOf(cl_typ)-1] := str_file + ' ' + Copy(ansiuppercase(extractfileext(item.caption)), 2, maxInt) else
-        item.subitems[LvColumns.IndexOf(cl_typ)-1] := Info.szTypeName;
-*)
-
+  begin 
     if PLVData(item.Data)^.item.typ in [lvt_ordner, lvt_verbund] then
       ICache.FileName := icDir else
     begin
@@ -5103,6 +5082,7 @@ begin
     item.ImageIndex := ICache.IconIdx;
   end;
 end;
+}
 
 procedure TMyFiles3Form.menSaveViewToListClick(Sender: TObject);
 var
@@ -5232,7 +5212,7 @@ begin
       Application.MessageBox(PChar(str_quickinfo),
       'QuickInfo',
       MB_ICONINFORMATION or MB_YESNO) = idYes then
-      ApplicationEventsHelp(HELP_CONTEXT, hctx, flag);
+      ApplicationPropertiesHelp(HELP_CONTEXT, hctx, flag);
     ini.WriteBool('QuickInfo', IntToStr(hctx), True)
   end;
 end;
@@ -5241,7 +5221,7 @@ procedure TMyFiles3Form.menWebHelpClick(Sender: TObject);
 var
   flag: Boolean;
 begin
-  ApplicationEventsHelp(HELP_CONTEXT, 1, flag);
+  ApplicationPropertiesHelp(HELP_CONTEXT, 1, flag);
 end;
 
 procedure TMyFiles3Form.menFeedbackClick(Sender: TObject);

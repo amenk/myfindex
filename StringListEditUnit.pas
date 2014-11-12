@@ -6,7 +6,7 @@ interface
 
 uses
   {Windows,} Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  StdCtrls, ExtCtrls, Buttons,LCLType;
+  StdCtrls, ExtCtrls, Buttons,LCLType, LCLIntf;
 
 type
   TfrmBegriffe = class(TForm)

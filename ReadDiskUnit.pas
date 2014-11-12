@@ -486,14 +486,13 @@ var
   h, w: integer;
   ratio: Double;
   fx, s: string;
-//  pf: TPixelFormat;
-
 begin
 //  lblCurF.Caption := Verzeichnis + filen;
 //  lblState.Caption := str_r3;
 //  Application.ProcessMessages;
 
   s := lowercase(extractfileext(filen));
+  {//ToBeConverted
   if (s = '.jpeg') or (s = '.jpg') then
     begin
       jpg2 := TJpegImage.Create;
@@ -504,7 +503,7 @@ begin
       finally
         jpg2.Free;
       end;
-    end else
+    end else}
      image1.picture.loadfromfile(verzeichnis + filen);
   MS := TMemoryStream.Create; //BlobStream.Create(dm.tblPreviewBinPreview,bmWrite);
   bmp := TBitmap.Create;

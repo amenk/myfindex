@@ -47,12 +47,15 @@
       <Unit0>
         <Filename Value="MyFiles.lpr"/>
         <IsPartOfProject Value="True"/>
+        <UnitName Value="MyFiles"/>
       </Unit0>
       <Unit1>
         <Filename Value="Unit1.pas"/>
         <IsPartOfProject Value="True"/>
+        <ComponentName Value="MyFiles3Form"/>
         <HasResources Value="True"/>
-        <UnitName Value="unit1"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Unit1"/>
       </Unit1>
       <Unit2>
         <Filename Value="DataModule.pas"/>
@@ -65,7 +68,9 @@
       <Unit3>
         <Filename Value="ReadDiskUnit.pas"/>
         <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmReadDisk"/>
         <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
         <UnitName Value="ReadDiskUnit"/>
       </Unit3>
       <Unit4>
@@ -168,7 +173,9 @@
       <Unit21>
         <Filename Value="StringListEditUnit.pas"/>
         <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmBegriffe"/>
         <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
         <UnitName Value="StringListEditUnit"/>
       </Unit21>
       <Unit22>
