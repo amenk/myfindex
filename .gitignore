@@ -52,3 +52,5 @@ MyFiles.compiled
 *.o
 *.ppu
 *.bak
+*.or
+*.a
