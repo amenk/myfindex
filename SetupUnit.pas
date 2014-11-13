@@ -8,7 +8,7 @@ uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   StdCtrls, JvSpin, Buttons, ComCtrls, myf_consts, Registry, ActiveX, ComObj,
   ShlObj, UseFulPrcs, CheckLst,
-  myf_plugins, Mask, ExtCtrls, JvMaskEdit;
+  myf_plugins, Mask, ExtCtrls, Spin, JvMaskEdit;
 
 
 type

@@ -12,11 +12,9 @@ object frmConfig: TfrmConfig
   Font.Height = -11
   Font.Name = 'MS Sans Serif'
   Font.Style = []
-  OldCreateOrder = False
   Position = poOwnerFormCenter
   OnCreate = FormCreate
   PixelsPerInch = 96
-  TextHeight = 13
   object btnOk: TSpeedButton
     Left = 144
     Top = 176
@@ -193,7 +191,6 @@ object frmConfig: TfrmConfig
       Width = 41
       Height = 21
       HelpContext = 91111
-      ButtonKind = bkStandard
       TabOrder = 0
     end
     object cbQual: TComboBox
@@ -366,7 +363,6 @@ object frmConfig: TfrmConfig
       Width = 44
       Height = 21
       HelpContext = 9121
-      ButtonKind = bkStandard
       TabOrder = 0
     end
     object seHeight: TSpinEdit
@@ -376,7 +372,6 @@ object frmConfig: TfrmConfig
       Width = 44
       Height = 21
       HelpContext = 9122
-      ButtonKind = bkStandard
       TabOrder = 1
     end
     object tbQual: TTrackBar
@@ -389,7 +384,6 @@ object frmConfig: TfrmConfig
       PageSize = 5
       Frequency = 5
       TabOrder = 2
-      ThumbLength = 9
     end
   end
   object GroupBox3: TGroupBox
@@ -448,7 +442,6 @@ object frmConfig: TfrmConfig
       Width = 44
       Height = 21
       HelpContext = 9121
-      ButtonKind = bkStandard
       TabOrder = 0
     end
     object sePrevHeight: TSpinEdit
@@ -458,7 +451,6 @@ object frmConfig: TfrmConfig
       Width = 44
       Height = 21
       HelpContext = 9122
-      ButtonKind = bkStandard
       TabOrder = 1
     end
   end
@@ -641,7 +633,6 @@ object frmConfig: TfrmConfig
       Width = 38
       Height = 21
       HelpContext = 9121
-      ButtonKind = bkStandard
       TabOrder = 1
     end
     object cbDefCol: TComboBox
@@ -671,9 +662,6 @@ object frmConfig: TfrmConfig
     Height = 161
     Caption = ' MyFiles Cache '
     TabOrder = 10
-    DesignSize = (
-      265
-      161)
     object Label16: TLabel
       Left = 16
       Top = 64
@@ -720,9 +708,6 @@ object frmConfig: TfrmConfig
     Caption = ' Eintrags-Infos'
     TabOrder = 9
     Visible = False
-    DesignSize = (
-      265
-      161)
     object Label25: TLabel
       Left = 16
       Top = 24
@@ -796,19 +781,6 @@ object frmConfig: TfrmConfig
     ReadOnly = True
     TabOrder = 1
     OnChange = tvChange
-    Items.Data = {
-      0200000026000000000000000000000001000000FFFFFFFF0000000003000000
-      0D45696E7374656C6C756E67656E2300000000000000000000000B000000FFFF
-      FFFF00000000010000000A4F626572666CE46368652100000000000000000000
-      006F000000FFFFFFFF000000000000000008566F7273636861751E0000000000
-      0000000000000C000000FFFFFFFF0000000000000000055368656C6C1F000000
-      000000000000000083000000FFFFFFFF00000000000000000646617262656E27
-      000000000000000000000015000000FFFFFFFF00000000020000000E45696E74
-      726167732D496E666F7320000000000000000000000016000000FFFFFFFF0000
-      00000000000007506C7567496E73210000000000000000000000FFFFFFFFFFFF
-      FFFF000000000200000008566F7273636861751F0000000000000000000000D3
-      000000FFFFFFFF00000000000000000642696C64657221000000000000000000
-      0000D4000000FFFFFFFF00000000000000000848F67270726F6265}
   end
   object ColorDialog: TColorDialog
     Left = 376
