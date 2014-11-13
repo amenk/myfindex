@@ -523,8 +523,8 @@ begin
     blobField := dm.sqlqFiles.FieldByName('tblFilesBinPreview');
     BS := dm.sqlqFiles.CreateBlobStream(BlobField,bmWrite);
     jpegImage.SaveToStream(BS);
-    dm.sqlqFiles.Post;
     dm.sqlqFiles.Fields.FieldByName('tblFilesBKind').AsInteger := pk_img; //tblFilesBKind.Value := pk_img;
+    dm.sqlqFiles.Post;
     Inc(stat_preview);
   finally
     BS.Free;
@@ -614,6 +614,8 @@ var
   fnLameIn, fnLameOut: string;
 
 var
+  previewBlobField : TField;
+  previewStream : TMemoryStream;
   fsIn, fsOut: TFileStream;
   header: dword;
   {//ToBeConverted mph: TselfMPEGHeader;}
@@ -676,26 +678,28 @@ begin
       if Assigned(fsOut) then fsOut.Free;
       {//ToBeConverted if Assigned(mph) then mph.Free;}
     end;
-    if not FileExistsUTF8(fnLameIn) { *Converted from FileExists* } then raise EPreview.Create(format('File not created (%s%s)', [verzeichnis, filen]));
+    if not FileExists(fnLameIn) then raise EPreview.Create(format('File not created (%s%s)', [verzeichnis, filen]));
 
-    DeleteFileUTF8(fnLameOut); { *Converted from DeleteFile* }
-    if FileExistsUTF8(fnLameOut) { *Converted from FileExists* } then raise EPreview.Create('File readonly');
+    DeleteFile(fnLameOut);
+    if FileExists(fnLameOut) then raise EPreview.Create('File readonly');
     { Lame Starten ... }
     if not ExecAndWait(file_lame,
       Format(p_param, [p_bitrate, fnLameIn, fnLameOut]),
       sw_hide) then raise EPreview.Create(Format(str_Elamemissing, [verzeichnis, filen]));
-    if not FileExistsUTF8(fnLameOut) { *Converted from FileExists* } then raise EPreview.Create(format(str_Elameerror, [verzeichnis, filen]));
+    if not FileExists(fnLameOut) then raise EPreview.Create(format(str_Elameerror, [verzeichnis, filen]));
 
-    with dm, tblFiles do
-    begin
-        tblFilesBinPreview.LoadFromFile(fnLameOut);
-    //      if tblPreviewBinPreview.Size < 1 then raise EAbort.Create('Datei ungültig.');
-        tblFilesBKind.Value := pk_mp3;
-        Inc(stat_preview);
-    end;
+    //previewBlobField := dm.sqlqFiles.FieldByName('tblFilesBinPreview');
+    TBlobField(dm.sqlqFiles.FieldByName('tblFilesBinPreview')).LoadFromFile(fnLameOut);
+    //previewStream := dm.sqlqFiles.CreateBlobStream(previewBlobField, bmWrite);
+    //previewStream.LoadFromFile(fnLameOut);
+    dm.sqlqFiles.Fields.FieldByName('tblFilesBKind').AsInteger := pk_mp3;
+    dm.sqlqFiles.Post;
+    //tblFilesBinPreview.LoadFromFile(fnLameOut);
+    //tblFilesBKind.Value := pk_mp3;
+    Inc(stat_preview);
   finally
-    DeleteFileUTF8(fnLameIn); { *Converted from DeleteFile* }
-    DeleteFileUTF8(fnLameOut); { *Converted from DeleteFile* }
+    DeleteFile(fnLameIn);
+    DeleteFile(fnLameOut);
   end;
 end;
 

@@ -30,7 +30,7 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure tmrFadeTimer(Sender: TObject);
-    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormClose(Sender: TObject; var caAction: TCloseAction);
     procedure tmrCloseTimer(Sender: TObject);
   private
     SetLayeredWindowAttributes : TSetLayeredWindowAttributes;
@@ -40,7 +40,7 @@ type
   public
     CloseReq : Boolean;
     procedure step;
-    procedure Alpha(blend:Integer);
+    procedure Alpha(intBlend:Integer);
     { Public-Deklarationen }
   end;
 
@@ -65,7 +65,7 @@ begin
   Application.ProcessMessages;
 end;
 
-procedure TfrmSplash.Alpha(blend:Integer);
+procedure TfrmSplash.Alpha(intBlend:Integer);
 const
   WS_EX_LAYERED = $80000;
   LWA_ALPHA     = $2;
@@ -79,7 +79,7 @@ begin
           l := GetWindowLong(Handle, GWL_EXSTYLE);
           l := l or WS_EX_LAYERED;
           SetWindowLong(Handle, GWL_EXSTYLE, l);
-          SetLayeredWindowAttributes(Handle, 0, blend, LWA_ALPHA);
+          SetLayeredWindowAttributes(Handle, 0, intBlend, LWA_ALPHA);
         end;
 end;
 
@@ -178,9 +178,9 @@ begin
   end;
 end;
 
-procedure TfrmSplash.FormClose(Sender: TObject; var Action: TCloseAction);
+procedure TfrmSplash.FormClose(Sender: TObject; var caAction: TCloseAction);
 begin
-  Action := caFree;
+  caAction := caFree;
   MyFiles3Form.splash := nil;
 end;
 

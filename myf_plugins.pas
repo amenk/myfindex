@@ -81,29 +81,36 @@ uses UsefulPrcs;
 
 constructor TMyPlugins.Create;
 begin
+  {//ToBeConverted
   FPlugIns := TStringList.Create;
   FAllProps := TStringList.Create;
   FAllProps.Sorted := True;
   FAllProps.Duplicates := dupIgnore;
+  }
 end;
 
 destructor TMyPlugins.Destroy;
 begin
+  {//ToBeConverted
   Clear;
   FPlugIns.Free;
   FAllProps.Free;
+  }
 end;
 
 procedure TMyPlugins.Add(PlugIn: TMyPlugIn);
 begin
+  {//ToBeConverted
   FPlugIns.AddObject(PlugIn.ID, PlugIn);
   PlugIn.AddAllFieldsTo(FAllProps);
+  }
 end;
 
 procedure TMyPlugins.Clear;
 var
   i : integer;
 begin
+  {//ToBeConverted
   for i := 0 to FPlugIns.Count-1 do
     try
       TObject(FPlugIns[i]).Free;
@@ -111,31 +118,40 @@ begin
     end;
   FPlugIns.Clear;
   FAllProps.Clear;
+  }
 end;
 
 function TMyPlugins.GetCount:integer;
 begin
+  {//ToBeConverted
   Result := FPlugIns.Count;
+  }
+  result := 0;
 end;
 
 function TMyPlugins.GetItem(Index: Integer):TMyPlugin;
 begin
+  {//ToBeConverted
   Result := TMyPlugin(FPlugIns.Objects[Index]);
+  }
 end;
 
 function TMyPlugins.GetItemByID(PlugInName : string):TMyPlugin;
 var
   Index : Integer;
 begin
+  {//ToBeConverted
   Index := FPlugIns.IndexOf(PlugInName);
   if Index = -1 then
     raise EMyPluginError.Create(Format('PlugIn-ID ''%s'' ist ungültig',[PlugInName]));
   Result := GetItem(Index);
+  }
 end;
 
 // Läd die PlugIn-DLL
 constructor TMyPlugin.Create(const dll,inifn:string);
 begin
+  {//ToBeConverted
   FFileName := dll;
   FDLLHandle := LoadLibrary(PChar(dll));
   if FDLLHandle < 32 then
@@ -150,12 +166,14 @@ begin
   FfExecute := GetProcAddress(FDLLHandle, 'MyPlugin_Execute');
   FTypes := TStringList.Create;
   Init(inifn);
+  }
 end;
 
 destructor TMyPlugin.Destroy;
 var
   i : integer;
 begin
+  {//ToBeConverted
   if Assigned(FTypes) then
   begin
     with FTypes do
@@ -167,6 +185,7 @@ begin
     FfUnLoad;
   if FDLLHandle > 31 then
     FreeLibrary(FDLLHandle);
+  }
 end;
 
 procedure TMyPlugin.Init(const inifn:string);
@@ -174,6 +193,7 @@ var
   infostr : string;
   i       : integer;
 begin
+  {//ToBeConverted
   if not (Assigned(FfExecute) and Assigned(FfgetSupportedTypes) and Assigned(FfgetFields)) then
     EMyPluginError.Create('Execute, getSupportedTypes oder getFields nicht gefunden. Kein gültiges PlugIn.');
   if Assigned(FfLoad) then
@@ -192,20 +212,25 @@ begin
       Objects[i] := TStringList.Create;
       PCharToList(FfgetFields(PChar(Strings[i])),Objects[i] as TStringList);
     end;
+  }
 end;
 
 procedure TMyPlugin.About;
 begin
+  {//ToBeConverted
   if FCanAbout and Assigned(FfAbout) then
     FfAbout
   else raise EMyPluginError.Create('About nicht verfügbar.');
+  }
 end;
 
 procedure TMyPlugin.Config;
 begin
+  {//ToBeConverted
   if FCanConfig and Assigned(FfConfig) then
     FfConfig
   else raise EMyPluginError.Create('Config nicht verfügbar.');
+  }
 end;
 
 // Gibt die vom Plugin gelieferten Felder für den Dateityp "ByType" bzw.
@@ -213,21 +238,25 @@ function TMyPlugin.GetFields(ByType : string): TStringList;
 var
   idx : Integer;
 begin
+  {//ToBeConverted
   Idx := FTypes.IndexOf(ByType);
   if Idx = -1 then Result := nil else
     Result := FTypes.Objects[Idx] as TStringList;
 //  raise EMyPluginError.Create(
 //    Format('Dateityp ''%s'' wird von ''%s'' nicht unterstützt.',[ByType, FID]));
+}
 end;
 
 procedure TMyPlugin.AddAllFieldsTo(sl:TStringList);
 var
   i : Integer;
 begin
+  {//ToBeConverted
   sl.Sorted := True;
   sl.Duplicates := dupIgnore;
   for i := 0 to FTypes.Count-1 do
     sl.AddStrings(TStringList(FTypes.Objects[i]));
+  }
 end;
 
 function TMyPlugin.Execute(const fn:string):string;
@@ -235,19 +264,20 @@ var
   sl : TStringList;
   ext : string;
   i : integer;
-  Fields : TStringList;
+  slFields : TStringList;
   Buffer : array[0..1024] of char;
 begin
+  {//ToBeConverted
   ext := lowercase(extractfileext(fn));
   sl := TStringList.Create;
   with sl do
   try
-    Fields := GetFields(ext);
-    if Assigned(Fields) then
+    slFields := GetFields(ext);
+    if Assigned(slFields) then
     begin
       FfExecute(PChar(ext),PChar(fn),PChar(@Buffer[0]),SizeOf(Buffer));
       PCharToList(PChar(@Buffer),sl);
-      with Fields do
+      with slFields do
         for i := 0 to Count - 1 do
           if i < sl.Count then sl[i] := Strings[i]+'='+sl[i] else break;
     end;
@@ -255,6 +285,8 @@ begin
   finally
     sl.Free;
   end;
+  }
+  result := '';
 end;
 
 end.

@@ -232,10 +232,10 @@ end;
 procedure TMyListIdx.CalcIndex(IdxSpecs:string);
 begin
   FIdxSpcs.CommaText := IdxSpecs;
-  QuickSort(0, Count - 1, CompareFunc);
+  QuickSort(0, Count - 1, @CompareFunc);
 end;
 
-function TMyListIdx.GetSpecs;
+function TMyListIdx.GetSpecs : string;
 begin
   Result := FIdxSpcs.CommaText;
 end;
@@ -311,13 +311,13 @@ end;
 
 function TMyList.Add(const ID: TMyID; const Item:TMyItem): Boolean;
 var
-  ItemP : PMyItem;
+  pItem : PMyItem;
 begin
   Result := True;
   try
-    new(ItemP);
-    ItemP^ := Item;
-    FList.AddObject(MyIDToStr(ID), TObject(ItemP));
+    new(pItem);
+    pItem^ := Item;
+    FList.AddObject(MyIDToStr(ID), TObject(pItem));
   except { Duplikat? }
     on EStringListError do Result := False;
   end;
@@ -793,7 +793,7 @@ begin
   end;
 end;
 
-function TMyListExport.GetColFormat;
+function TMyListExport.GetColFormat : string;
 begin
   Result := FColumns.AsString;
 end;
