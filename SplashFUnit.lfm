@@ -3113,10 +3113,7 @@ object frmSplash: TfrmSplash
     Top = 276
     Width = 90
     Height = 56
-    Caption = 'Alexander Menk
-"self soft"
-Alle Rechte
-vorbehalten.'
+    Caption = 'Alexander Menk "self soft" Alle Rechte vorbehalten.'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWhite
     Font.Height = -11

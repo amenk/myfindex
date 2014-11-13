@@ -23,10 +23,7 @@ object frmRepair: TfrmRepair
     Top = 96
     Width = 186
     Height = 26
-    Caption = 
-      'Sollte die Reparatur nicht funktionieren,
-bitte BDE-DPK-50.EXE ' +
-      'installieren.'
+    Caption = 'Sollte die Reparatur nicht funktionieren, bitte BDE-DPK-50.EXE installieren.'
   end
   object lblBDE5: TLabel
     Left = 31
