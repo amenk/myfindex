@@ -480,82 +480,55 @@ end;
 }
 procedure TfrmReadDisk.ext_picprev(verzeichnis, filen: string);
 var
-  jpg, jpg2: TJPEGImage;
-  bmp: TBitmap;
-  MS: TMemoryStream;
-  h, w: integer;
+  jpegImage : TJPEGImage;
+  blobField : TField;
+  BS : TStream;
+  h, w, newHeight, newWidth: integer;
   ratio: Double;
   fx, s: string;
 begin
-//  lblCurF.Caption := Verzeichnis + filen;
-//  lblState.Caption := str_r3;
-//  Application.ProcessMessages;
-
   s := lowercase(extractfileext(filen));
-  {//ToBeConverted
-  if (s = '.jpeg') or (s = '.jpg') then
-    begin
-      jpg2 := TJpegImage.Create;
-      try
-        jpg2.Scale := jsEighth;
-        jpg2.loadfromfile(verzeichnis + filen);
-        image1.picture.assign(jpg2);
-      finally
-        jpg2.Free;
-      end;
-    end else}
-     image1.picture.loadfromfile(verzeichnis + filen);
-  MS := TMemoryStream.Create; //BlobStream.Create(dm.tblPreviewBinPreview,bmWrite);
-  bmp := TBitmap.Create;
-  jpg := TJPEGImage.Create;
+  image1.picture.loadfromfile(verzeichnis + filen);
+
+  jpegImage := TJPEGImage.Create;
 
   try
-
-//    pf := pfCustom;
     h := image1.picture.graphic.Height;
     w := image1.picture.graphic.Width;
-    fx := '*' + ansilowercase(extractfileext(filen));
+    fx := '*' + lowercase(extractfileext(filen));
     if (h <= p_maxh) and (w <= p_maxw) then
     begin
-      bmp.Height := h;
-      bmp.Width := w;
+      newHeight := h;
+      newWidth := w;
     end else
     begin
       ratio := h / w;
       if h < w then
       begin
-        bmp.Width := p_maxw;
-        bmp.Height := round(p_maxw * ratio);
+        newWidth := p_maxw;
+        newHeight := round(p_maxw * ratio);
       end else
       begin
-        bmp.Height := p_maxh;
-        bmp.Width := round(p_maxh / ratio);
+        newHeight := p_maxh;
+        newWidth := round(p_maxh / ratio);
       end;
     end;
     if h * w = 0 then begin
       lblErr.Caption := Format(str_Epicempty, [verzeichnis, filen]);
       raise EAbort.Create('');
     end;
-    bmp.Canvas.stretchdraw(bmp.Canvas.cliprect, image1.picture.graphic);
-    with jpg do
-    begin
-      Assign(bmp);
-      CompressionQuality := p_qual;
-      SaveToStream(MS);
-      Performance := jpBestSpeed;
-    end;
-    MS.Seek(soFromBeginning, 0);
+    image1.picture.Bitmap.SetSize(newWidth, newHeight);//bmp.Canvas.stretchdraw(bmp.Canvas.cliprect, image1.picture.graphic);
+    jpegImage.Assign(image1);
 
-    with dm, tblFiles do
-    begin
-      tblFilesBinPreview.LoadFromStream(MS);
-      tblFilesBKind.Value := pk_img;
-      Inc(stat_preview);
-    end;
+    blobField := dm.sqlqFiles.FieldByName('tblFilesBinPreview');
+    BS := dm.sqlqFiles.CreateBlobStream(BlobField,bmWrite);
+    jpegImage.SaveToStream(BS);
+    dm.sqlqFiles.Post;
+    dm.sqlqFiles.Fields.FieldByName('tblFilesBKind').AsInteger := pk_img; //tblFilesBKind.Value := pk_img;
+    Inc(stat_preview);
   finally
-    MS.Free;
-    bmp.Free;
-    jpg.Free;
+    BS.Free;
+    jpegImage.Free;
   end;
 end;
 
