@@ -3,7 +3,7 @@ unit UsefulPrcs;
 
 interface
 
-uses Sysutils, {ActiveX, ComObj,}
+uses Windows, Sysutils, {ActiveX, ComObj,}
   {ShlObj, }Mapchar, classes, FileUtil, LCLType, LCLProc;
 type CharSet = set of char;
 
@@ -21,7 +21,6 @@ function Filter(s:string;Forbidden:CharSet):string;
 function VolumeSN(DriveChar: char): string; { Seriennummer (HEX) }
 function VolumeID(DriveChar: char): string; { Label oder Seriennummer, falls ungelabelt }
 function GetTempDir: string;
-function IntPower(Base: Extended; Exponent: Integer): Extended;
 function lowercase(s: string): string;
 function GetFileSize(const FileName: string): Int64;
 function SizeToStr(Size: Int64; fmt : ShortInt; explorerlike:Boolean): string;
@@ -187,15 +186,16 @@ type
   end;
 
 function IsWindowsNT: boolean;
-var
-  OsVinfo: TOSVERSIONINFO;
 begin
-  ZeroMemory(@OsVinfo, sizeOf(OsVinfo));
-  OsVinfo.dwOSVersionInfoSize := sizeof(TOSVERSIONINFO);
-  if GetVersionEx(OsVinfo) then
-    Result := OsVinfo.dwPlatformId = VER_PLATFORM_WIN32_NT
+  {$ifdef windows}
+  if (Win32MajorVersion = 4) then
+     if (Win32MinorVersion = 0) OR (Win32MinorVersion = 10) OR (Win32MinorVersion= 90) then
+     result := false
   else
-    Result := false;
+      result := true;
+  {$else}
+  result := false;
+  {$endif}
 end; {IsWindowsNT}
 
 procedure EjectDrive98(drive: char);
@@ -472,30 +472,6 @@ begin
   StrPCopy(buf, s);
   result := StrPas(charlower(buf));
   FreeMem(buf);
-end;
-
-function IntPower(Base: Extended; Exponent: Integer): Extended;
-asm
-        mov     ecx, eax
-        cdq
-        fld1                      { Result := 1 }
-        xor     eax, edx
-        sub     eax, edx          { eax := Abs(Exponent) }
-        jz      @@3
-        fld     Base
-        jmp     @@2
-@@1:    fmul    ST, ST            { X := Base * Base }
-@@2:    shr     eax,1
-        jnc     @@1
-        fmul    ST(1),ST          { Result := Result * X }
-        jnz     @@1
-        fstp    st                { pop X from FPU stack }
-        cmp     ecx, 0
-        jge     @@3
-        fld1
-        fdivrp                    { Result := 1 / Result }
-@@3:
-        fwait
 end;
 
 function VolumeSN(DriveChar: char): string;

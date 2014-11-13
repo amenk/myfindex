@@ -69,20 +69,20 @@ type
     procedure ReorderAndSizeListview(lv: TListView); { Ordnet die Spalten eines Listview entsprechend der Col-Reihenfolge an }
     procedure GetOrderAndWidthFromListview(lv: TListView);
     procedure ReorderStringList(sl: TStringList); { Sortiert Elemente einer Stringlist entsprechend um }
-    procedure Add(DID:string);
+    procedure Add(theString:string);
     procedure Delete(Index : Integer);
-    function IndexOf(DID:string): Integer;
+    function IndexOf(ofDID:string): Integer;
   end;
 
 { Functions }
 
 function MyID(fDiskID,fFolderID,fFileID: Integer): TMyID;
 function MyIDToStr(ID: TMyID):string;
-function MyCompareItems(DID:string;i1,i2 : TMyItem):integer;
-function MyCompareItemsEx(DID:string;i1,i2 : TMyItem;ansi:boolean):integer;
+function MyCompareItems(strDID:string;i1,i2 : TMyItem):integer;
+function MyCompareItemsEx(strDIDex:string;i1,i2 : TMyItem;ansi:boolean):integer;
 procedure RegMe(s:string);
 procedure checkreg;
-function MyItemToStr(Item:TMyItem; DID:string; SF:ShortInt):string;
+function MyItemToStr(Item:TMyItem; myDID:string; SF:ShortInt):string;
 function ExtractProp(tx,prop:string):string;
 function GetLineProp(tx:string):string;
 
@@ -144,16 +144,16 @@ begin
   Result := copy(tx, 1, pos(':',tx)-1);
 end;
 
-function MyItemToStr(Item:TMyItem; DID:string; SF:ShortInt):string;
+function MyItemToStr(Item:TMyItem; myDID:string; SF:ShortInt):string;
 var
   prop : string;
 begin
   Result := '';
-  if (DID = cl_filename) or ((DID = cl_label) and (item.typ = ek_disk)) then
+  if (myDID = cl_filename) or ((myDID = cl_label) and (item.typ = ek_disk)) then
     Result := Item.Name
-  else if DID = cl_size then
+  else if myDID = cl_size then
     Result := SizeToStr(Item.Size, SF, true)
-  else if DID = cl_typ then
+  else if myDID = cl_typ then
   begin
     if Item.Typ = ek_disk then
       Result := 'Datenträger' else
@@ -161,36 +161,36 @@ begin
         Result := GetTypName(icDir) else
           Result := GetTypName(Item.Name)
   end
-  else if (DID = cl_changed) or (DID = cl_read) then
+  else if (myDID = cl_changed) or (myDID = cl_read) then
   begin
     if Item.Changed = 0 then Result := '' else
       Result := FormatDateTime(ShortDateFormat+ ' ' + ShortTimeFormat,Item.Changed) //DateTimeToStr(Item.Changed)
   end
-  else if DID = cl_note then
+  else if myDID = cl_note then
     Result := Item.Note
-  else if DID = cl_attr then
+  else if myDID = cl_attr then
     Result := AttrToString(Item.Attr)
-  else if (DID = cl_disk) and (item.typ <> ek_disk) then
+  else if (myDID = cl_disk) and (item.typ <> ek_disk) then
     Result := MyGetDisk(Item.ID)
-  else if (DID = cl_pfad) and (item.typ <> ek_disk) then
+  else if (myDID = cl_pfad) and (item.typ <> ek_disk) then
     Result := MyGetPath(Item.ID)
-  else if (DID = cl_dskpfad) and (item.typ <> ek_disk) then
+  else if (myDID = cl_dskpfad) and (item.typ <> ek_disk) then
     Result := Format('<%s>%s',[MyGetDisk(Item.ID), MyGetPath(Item.ID)])
-  else if DID = cl_prev then
+  else if myDID = cl_prev then
     Result := Item.TextPreview
-  else if DID = cl_text then  // Notiz oder Text
+  else if myDID = cl_text then  // Notiz oder Text
   begin
     if Item.Note = '' then Result := Item.TextPreview else Result := Item.Note;
   end else
   begin
-    if Pos(cl_pnote,DID) = 1 then  { Notiz - Eigenschaft }
-      Result := ExtractProp(Item.Note,Copy(DID,Length(cl_pnote)+1,maxInt))
+    if Pos(cl_pnote,myDID) = 1 then  { Notiz - Eigenschaft }
+      Result := ExtractProp(Item.Note,Copy(myDID,Length(cl_pnote)+1,maxInt))
     else
-    if Pos(cl_pprev,DID) = 1 then { Vorschau - Eigenschaft }
-      Result := ExtractProp(Item.TextPreview,Copy(DID,Length(cl_pprev)+1,maxInt)) else
-    if Pos(cl_ptext,DID) = 1 then { Text - Eigenschaft }
+    if Pos(cl_pprev,myDID) = 1 then { Vorschau - Eigenschaft }
+      Result := ExtractProp(Item.TextPreview,Copy(myDID,Length(cl_pprev)+1,maxInt)) else
+    if Pos(cl_ptext,myDID) = 1 then { Text - Eigenschaft }
     begin
-      prop := Copy(DID,Length(cl_ptext)+1,maxInt);
+      prop := Copy(myDID,Length(cl_ptext)+1,maxInt);
       if Pos(prop+': ',Item.Note) = 0 then
         Result := ExtractProp(Item.TextPreview,prop)
       else
@@ -211,16 +211,16 @@ begin
   end;
 end;
 
-function MyCompareItemsEx(DID:string;i1,i2 : TMyItem;ansi:boolean):integer;
+function MyCompareItemsEx(strDIDEx:string;i1,i2 : TMyItem;ansi:boolean):integer;
 begin
   if i1.typ = 4 then i1.typ := ek_folder;
   if i2.typ = 4 then i2.typ := ek_folder;
-  if DID = cl_size then
+  if strDIDEx = cl_size then
   begin
     if I1.Size = I2.Size then Result := 0 else
       if I1.Size < I2.Size then Result := -1 else Result := 1;
   end
-  else if DID = cl_typ then
+  else if strDIDEx = cl_typ then
   begin
     if I1.Typ = I2.Typ then
     begin
@@ -235,18 +235,18 @@ begin
     end else
       if I1.Typ < I2.Typ then Result := 1 else Result := -1;
   end
-  else if (DID = cl_changed) or (DID = cl_read) then
+  else if (strDIDEx = cl_changed) or (strDIDEx = cl_read) then
   begin
     if I1.Changed = I2.Changed then Result := 0 else
       if I1.Changed < I2.Changed then Result := -1 else Result := 1;
   end
   else
-    Result := MyCompareText(MyItemToStr(I1,DID,0),MyItemToStr(I2,DID,0),ansi);
+    Result := MyCompareText(MyItemToStr(I1,strDIDEx,0),MyItemToStr(I2,strDIDEx,0),ansi);
 end;
 
-function MyCompareItems(DID:string;i1,i2 : TMyItem):integer;
+function MyCompareItems(strDID:string;i1,i2 : TMyItem):integer;
 begin
-  Result := MyCompareItemsEx(DID,i1,i2,True);
+  Result := MyCompareItemsEx(strDID,i1,i2,True);
 end;
 
 
@@ -438,14 +438,14 @@ begin
   SetLength(TempOrder, 0);
 end;
 
-procedure TMyColumns.Add(DID:string);
+procedure TMyColumns.Add(theString:string);
 begin
-  FColumns.AddObject(DID, TObject(100));
+  FColumns.AddObject(theString, TObject(100));
 end;
 
-function TMyColumns.IndexOf(DID:string):integer;
+function TMyColumns.IndexOf(ofDID:string):integer;
 begin
-  Result := FColumns.IndexOf(DID);
+  Result := FColumns.IndexOf(ofDID);
 end;
 
 function TMyColumns.GetCount:Integer;

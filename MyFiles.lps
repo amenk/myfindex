@@ -12,7 +12,7 @@
         <WindowIndex Value="0"/>
         <TopLine Value="1"/>
         <CursorPos X="1" Y="1"/>
-        <UsageCount Value="44"/>
+        <UsageCount Value="46"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit0>
       <Unit1>
@@ -22,11 +22,11 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="Unit1"/>
-        <EditorIndex Value="2"/>
+        <EditorIndex Value="5"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="1"/>
-        <CursorPos X="1" Y="1"/>
-        <UsageCount Value="44"/>
+        <TopLine Value="5768"/>
+        <CursorPos X="8" Y="5788"/>
+        <UsageCount Value="46"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
@@ -38,11 +38,11 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="DataModule"/>
         <UnitName Value="DataModule"/>
-        <EditorIndex Value="1"/>
+        <EditorIndex Value="4"/>
         <WindowIndex Value="0"/>
         <TopLine Value="254"/>
         <CursorPos X="2" Y="269"/>
-        <UsageCount Value="44"/>
+        <UsageCount Value="46"/>
         <Loaded Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit2>
@@ -53,12 +53,11 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="ReadDiskUnit"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="0"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="480"/>
+        <TopLine Value="479"/>
         <CursorPos X="12" Y="507"/>
-        <UsageCount Value="44"/>
+        <UsageCount Value="46"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
@@ -67,10 +66,12 @@
         <Filename Value="UsefulPrcs.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="UsefulPrcs"/>
+        <EditorIndex Value="1"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="1"/>
-        <CursorPos X="35" Y="454"/>
-        <UsageCount Value="44"/>
+        <TopLine Value="4"/>
+        <CursorPos X="1" Y="24"/>
+        <UsageCount Value="46"/>
+        <Loaded Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit4>
       <Unit5>
@@ -81,7 +82,7 @@
         <WindowIndex Value="0"/>
         <TopLine Value="1"/>
         <CursorPos X="1" Y="1"/>
-        <UsageCount Value="44"/>
+        <UsageCount Value="46"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit5>
       <Unit6>
@@ -92,7 +93,7 @@
         <WindowIndex Value="0"/>
         <TopLine Value="1"/>
         <CursorPos X="1" Y="1"/>
-        <UsageCount Value="44"/>
+        <UsageCount Value="46"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit6>
       <Unit7>
@@ -103,7 +104,7 @@
         <WindowIndex Value="0"/>
         <TopLine Value="1"/>
         <CursorPos X="1" Y="1"/>
-        <UsageCount Value="44"/>
+        <UsageCount Value="46"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit7>
       <Unit8>
@@ -114,7 +115,7 @@
         <WindowIndex Value="0"/>
         <TopLine Value="1"/>
         <CursorPos X="1" Y="1"/>
-        <UsageCount Value="44"/>
+        <UsageCount Value="46"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit8>
       <Unit9>
@@ -124,7 +125,7 @@
         <WindowIndex Value="0"/>
         <TopLine Value="1"/>
         <CursorPos X="1" Y="1"/>
-        <UsageCount Value="44"/>
+        <UsageCount Value="46"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit9>
       <Unit10>
@@ -135,7 +136,7 @@
         <WindowIndex Value="0"/>
         <TopLine Value="1"/>
         <CursorPos X="1" Y="1"/>
-        <UsageCount Value="44"/>
+        <UsageCount Value="46"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit10>
       <Unit11>
@@ -146,7 +147,7 @@
         <WindowIndex Value="0"/>
         <TopLine Value="1"/>
         <CursorPos X="1" Y="1"/>
-        <UsageCount Value="44"/>
+        <UsageCount Value="46"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit11>
       <Unit12>
@@ -157,17 +158,20 @@
         <WindowIndex Value="0"/>
         <TopLine Value="1"/>
         <CursorPos X="1" Y="1"/>
-        <UsageCount Value="44"/>
+        <UsageCount Value="46"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit12>
       <Unit13>
         <Filename Value="myf_lists.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="myf_lists"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="3"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="1"/>
-        <CursorPos X="1" Y="1"/>
-        <UsageCount Value="44"/>
+        <TopLine Value="19"/>
+        <CursorPos X="104" Y="31"/>
+        <UsageCount Value="46"/>
+        <Loaded Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit13>
       <Unit14>
@@ -178,17 +182,19 @@
         <WindowIndex Value="0"/>
         <TopLine Value="10"/>
         <CursorPos X="21" Y="9"/>
-        <UsageCount Value="44"/>
+        <UsageCount Value="46"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit14>
       <Unit15>
         <Filename Value="myf_main.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="myf_main"/>
+        <EditorIndex Value="2"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="1"/>
-        <CursorPos X="53" Y="13"/>
-        <UsageCount Value="44"/>
+        <TopLine Value="432"/>
+        <CursorPos X="31" Y="443"/>
+        <UsageCount Value="46"/>
+        <Loaded Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit15>
       <Unit16>
@@ -199,7 +205,7 @@
         <WindowIndex Value="0"/>
         <TopLine Value="1"/>
         <CursorPos X="1" Y="1"/>
-        <UsageCount Value="44"/>
+        <UsageCount Value="46"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit16>
       <Unit17>
@@ -210,7 +216,7 @@
         <WindowIndex Value="0"/>
         <TopLine Value="1"/>
         <CursorPos X="1" Y="1"/>
-        <UsageCount Value="44"/>
+        <UsageCount Value="46"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit17>
       <Unit18>
@@ -220,7 +226,7 @@
         <WindowIndex Value="0"/>
         <TopLine Value="76"/>
         <CursorPos X="1" Y="81"/>
-        <UsageCount Value="44"/>
+        <UsageCount Value="46"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit18>
       <Unit19>
@@ -231,7 +237,7 @@
         <WindowIndex Value="0"/>
         <TopLine Value="1"/>
         <CursorPos X="1" Y="1"/>
-        <UsageCount Value="44"/>
+        <UsageCount Value="46"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit19>
       <Unit20>
@@ -242,7 +248,7 @@
         <WindowIndex Value="0"/>
         <TopLine Value="1"/>
         <CursorPos X="1" Y="1"/>
-        <UsageCount Value="44"/>
+        <UsageCount Value="46"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit20>
       <Unit21>
@@ -255,7 +261,7 @@
         <WindowIndex Value="0"/>
         <TopLine Value="7"/>
         <CursorPos X="47" Y="9"/>
-        <UsageCount Value="44"/>
+        <UsageCount Value="46"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit21>
       <Unit22>
@@ -265,7 +271,7 @@
         <WindowIndex Value="0"/>
         <TopLine Value="695"/>
         <CursorPos X="16" Y="708"/>
-        <UsageCount Value="44"/>
+        <UsageCount Value="46"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit22>
       <Unit23>
@@ -275,7 +281,7 @@
         <WindowIndex Value="0"/>
         <TopLine Value="1"/>
         <CursorPos X="1" Y="1"/>
-        <UsageCount Value="44"/>
+        <UsageCount Value="46"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit23>
       <Unit24>
@@ -286,18 +292,18 @@
         <WindowIndex Value="0"/>
         <TopLine Value="1"/>
         <CursorPos X="1" Y="1"/>
-        <UsageCount Value="44"/>
+        <UsageCount Value="46"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit24>
       <Unit25>
         <Filename Value="mapchar.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="mapchar"/>
-        <EditorIndex Value="3"/>
+        <EditorIndex Value="6"/>
         <WindowIndex Value="0"/>
         <TopLine Value="5"/>
         <CursorPos X="18" Y="18"/>
-        <UsageCount Value="44"/>
+        <UsageCount Value="46"/>
         <Loaded Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit25>
@@ -308,7 +314,7 @@
         <WindowIndex Value="0"/>
         <TopLine Value="1"/>
         <CursorPos X="1" Y="1"/>
-        <UsageCount Value="44"/>
+        <UsageCount Value="46"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit26>
     </Units>
@@ -317,124 +323,124 @@
     </General>
     <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
-        <Filename Value="ReadDiskUnit.pas"/>
-        <Caret Line="547" Column="33" TopLine="534"/>
+        <Filename Value="myf_main.pas"/>
+        <Caret Line="214" Column="24" TopLine="194"/>
       </Position1>
       <Position2>
-        <Filename Value="ReadDiskUnit.pas"/>
-        <Caret Line="483" Column="12" TopLine="473"/>
+        <Filename Value="myf_main.pas"/>
+        <Caret Line="247" Column="28" TopLine="230"/>
       </Position2>
       <Position3>
-        <Filename Value="ReadDiskUnit.pas"/>
-        <Caret Line="482" Column="12" TopLine="473"/>
+        <Filename Value="myf_main.pas"/>
+        <Caret Line="81" Column="28" TopLine="61"/>
       </Position3>
       <Position4>
-        <Filename Value="ReadDiskUnit.pas"/>
-        <Caret Line="520" Column="20" TopLine="513"/>
+        <Filename Value="myf_main.pas"/>
+        <Caret Line="82" Column="35" TopLine="60"/>
       </Position4>
       <Position5>
-        <Filename Value="ReadDiskUnit.pas"/>
-        <Caret Line="162" Column="11" TopLine="152"/>
+        <Filename Value="myf_main.pas"/>
+        <Caret Line="214" Column="35" TopLine="194"/>
       </Position5>
       <Position6>
-        <Filename Value="ReadDiskUnit.pas"/>
-        <Caret Line="520" Column="20" TopLine="503"/>
+        <Filename Value="myf_main.pas"/>
+        <Caret Line="85" Column="38" TopLine="64"/>
       </Position6>
       <Position7>
-        <Filename Value="ReadDiskUnit.pas"/>
-        <Caret Line="533" Column="29" TopLine="516"/>
+        <Filename Value="myf_main.pas"/>
+        <Caret Line="147" Column="38" TopLine="127"/>
       </Position7>
       <Position8>
-        <Filename Value="ReadDiskUnit.pas"/>
-        <Caret Line="534" Column="34" TopLine="517"/>
+        <Filename Value="myf_main.pas"/>
+        <Caret Line="75" Column="22" TopLine="63"/>
       </Position8>
       <Position9>
-        <Filename Value="ReadDiskUnit.pas"/>
-        <Caret Line="1396" Column="60" TopLine="1382"/>
+        <Filename Value="myf_main.pas"/>
+        <Caret Line="81" Column="31" TopLine="62"/>
       </Position9>
       <Position10>
-        <Filename Value="Unit1.pas"/>
-        <Caret Line="166" Column="30" TopLine="159"/>
+        <Filename Value="myf_main.pas"/>
+        <Caret Line="82" Column="33" TopLine="62"/>
       </Position10>
       <Position11>
-        <Filename Value="Unit1.pas"/>
-        <Caret Line="259" Column="24" TopLine="242"/>
+        <Filename Value="myf_main.pas"/>
+        <Caret Line="85" Column="41" TopLine="65"/>
       </Position11>
       <Position12>
-        <Filename Value="Unit1.pas"/>
-        <Caret Line="260" Column="24" TopLine="243"/>
+        <Filename Value="myf_main.pas"/>
+        <Caret Line="147" Column="41" TopLine="127"/>
       </Position12>
       <Position13>
-        <Filename Value="Unit1.pas"/>
-        <Caret Line="298" Column="24" TopLine="281"/>
+        <Filename Value="myf_main.pas"/>
+        <Caret Line="152" Column="34" TopLine="132"/>
       </Position13>
       <Position14>
-        <Filename Value="Unit1.pas"/>
-        <Caret Line="299" Column="24" TopLine="282"/>
+        <Filename Value="myf_main.pas"/>
+        <Caret Line="154" Column="14" TopLine="134"/>
       </Position14>
       <Position15>
-        <Filename Value="Unit1.pas"/>
-        <Caret Line="719" Column="28" TopLine="701"/>
+        <Filename Value="myf_main.pas"/>
+        <Caret Line="207" Column="22" TopLine="184"/>
       </Position15>
       <Position16>
-        <Filename Value="Unit1.pas"/>
-        <Caret Line="720" Column="33" TopLine="702"/>
+        <Filename Value="myf_main.pas"/>
+        <Caret Line="1" Column="1" TopLine="1"/>
       </Position16>
       <Position17>
-        <Filename Value="Unit1.pas"/>
-        <Caret Line="2972" Column="35" TopLine="2954"/>
+        <Filename Value="myf_main.pas"/>
+        <Caret Line="54" Column="20" TopLine="34"/>
       </Position17>
       <Position18>
-        <Filename Value="Unit1.pas"/>
-        <Caret Line="2973" Column="35" TopLine="2955"/>
+        <Filename Value="myf_main.pas"/>
+        <Caret Line="55" Column="21" TopLine="35"/>
       </Position18>
       <Position19>
-        <Filename Value="Unit1.pas"/>
-        <Caret Line="2974" Column="33" TopLine="2956"/>
+        <Filename Value="myf_main.pas"/>
+        <Caret Line="62" Column="66" TopLine="42"/>
       </Position19>
       <Position20>
-        <Filename Value="Unit1.pas"/>
-        <Caret Line="2975" Column="33" TopLine="2957"/>
+        <Filename Value="myf_main.pas"/>
+        <Caret Line="74" Column="24" TopLine="55"/>
       </Position20>
       <Position21>
-        <Filename Value="Unit1.pas"/>
-        <Caret Line="3012" Column="29" TopLine="2994"/>
+        <Filename Value="myf_main.pas"/>
+        <Caret Line="448" Column="32" TopLine="426"/>
       </Position21>
       <Position22>
-        <Filename Value="Unit1.pas"/>
-        <Caret Line="3013" Column="54" TopLine="2995"/>
+        <Filename Value="myf_main.pas"/>
+        <Caret Line="249" Column="33" TopLine="230"/>
       </Position22>
       <Position23>
-        <Filename Value="Unit1.pas"/>
-        <Caret Line="3015" Column="28" TopLine="2997"/>
+        <Filename Value="myf_main.pas"/>
+        <Caret Line="238" Column="47" TopLine="224"/>
       </Position23>
       <Position24>
-        <Filename Value="Unit1.pas"/>
-        <Caret Line="3016" Column="53" TopLine="2998"/>
+        <Filename Value="myf_main.pas"/>
+        <Caret Line="244" Column="79" TopLine="233"/>
       </Position24>
       <Position25>
-        <Filename Value="Unit1.pas"/>
-        <Caret Line="7652" Column="39" TopLine="7634"/>
+        <Filename Value="myf_lists.pas"/>
+        <Caret Line="1" Column="1" TopLine="1"/>
       </Position25>
       <Position26>
-        <Filename Value="ReadDiskUnit.pas"/>
-        <Caret Line="489" Column="1" TopLine="367"/>
+        <Filename Value="myf_lists.pas"/>
+        <Caret Line="235" Column="38" TopLine="223"/>
       </Position26>
       <Position27>
-        <Filename Value="ReadDiskUnit.pas"/>
-        <Caret Line="536" Column="1" TopLine="515"/>
+        <Filename Value="myf_lists.pas"/>
+        <Caret Line="1" Column="1" TopLine="1"/>
       </Position27>
       <Position28>
-        <Filename Value="ReadDiskUnit.pas"/>
-        <Caret Line="522" Column="1" TopLine="511"/>
+        <Filename Value="myf_lists.pas"/>
+        <Caret Line="163" Column="21" TopLine="148"/>
       </Position28>
       <Position29>
-        <Filename Value="ReadDiskUnit.pas"/>
-        <Caret Line="525" Column="27" TopLine="515"/>
+        <Filename Value="myf_lists.pas"/>
+        <Caret Line="235" Column="38" TopLine="215"/>
       </Position29>
       <Position30>
-        <Filename Value="ReadDiskUnit.pas"/>
-        <Caret Line="527" Column="63" TopLine="517"/>
+        <Filename Value="myf_lists.pas"/>
+        <Caret Line="484" Column="21" TopLine="464"/>
       </Position30>
     </JumpHistory>
   </ProjectSession>
