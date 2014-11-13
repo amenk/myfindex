@@ -1,4 +1,4 @@
-{$MODE OBJFPC}
+{$MODE OBJFPC}{$H+}
 unit ReadDiskUnit;
 
 interface
