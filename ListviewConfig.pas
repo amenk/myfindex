@@ -1,7 +1,5 @@
 unit ListviewConfig;
 
-{$MODE Delphi}
-
 interface
 
 uses

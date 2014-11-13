@@ -1,7 +1,5 @@
 unit myf_lists;
 
-{$MODE Delphi}
-
 interface
 
 uses Classes, SysUtils, DataModule, myf_main, Graphics, IniFiles, usefulprcs, myf_consts;

@@ -1,7 +1,5 @@
 unit NoRegUnit;
 
-{$MODE Delphi}
-
 interface
 
 uses

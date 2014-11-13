@@ -1,7 +1,5 @@
 unit RepairUnit;
 
-{$MODE Delphi}
-
 interface
 
 uses

@@ -1,7 +1,5 @@
 unit myf_consts;
 
-{$MODE Delphi}
-
 interface
 
 const

@@ -2,8 +2,6 @@
 
 unit mapchar;
 
-//{$MODE Delphi}
-
 interface
 
 uses SysUtils, LCLType;

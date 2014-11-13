@@ -1,7 +1,5 @@
 unit ExportOptUnit;
 
-{$MODE Delphi}
-
 interface
 
 uses

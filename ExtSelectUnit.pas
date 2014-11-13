@@ -1,7 +1,5 @@
 unit ExtSelectUnit;
 
-{$MODE Delphi}
-
 interface
 
 uses

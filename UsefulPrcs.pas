@@ -1,7 +1,5 @@
 unit UsefulPrcs;
 
-{$MODE Delphi}
-
 interface
 
 uses Windows, Sysutils, ActiveX, ComObj,

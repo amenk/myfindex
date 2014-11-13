@@ -1,7 +1,5 @@
 unit StringEditUnit;
 
-{$MODE Delphi}
-
 interface
 
 uses

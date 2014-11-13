@@ -1,7 +1,5 @@
 unit myf_plugins;
 
-{$MODE Delphi}
-
 interface
 
 uses Classes, Dialogs, SysUtils, Windows;

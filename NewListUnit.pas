@@ -1,7 +1,5 @@
 unit NewListUnit;
 
-{$MODE Delphi}
-
 interface
 
 uses

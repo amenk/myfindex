@@ -1,7 +1,5 @@
 unit SetupUnit;
 
-{$MODE Delphi}
-
 interface
 
 uses

@@ -1,7 +1,5 @@
 unit myf_main;
 
-{$MODE Delphi}
-
 interface
 
 uses SysUtils, Classes,

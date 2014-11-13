@@ -1,7 +1,5 @@
 unit SplashFUnit;
 
-{$MODE Delphi}
-
 interface
 
 uses

@@ -1,7 +1,5 @@
 unit NewCollectionUnit;
 
-{$MODE Delphi}
-
 interface
 
 uses

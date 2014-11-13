@@ -1,7 +1,5 @@
 unit ReadDiskUnit;
 
-{$MODE Delphi}
-
 interface
 
 uses

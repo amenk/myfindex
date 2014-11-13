@@ -1,7 +1,5 @@
 unit CopyToDisksUnit;
 
-{$MODE Delphi}
-
 interface
 
 uses

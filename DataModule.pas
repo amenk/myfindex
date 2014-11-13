@@ -1,7 +1,5 @@
 unit DataModule;
 
-{$MODE Delphi}
-
 interface
 
 uses

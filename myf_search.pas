@@ -1,7 +1,5 @@
 unit myf_search;
 
-{$MODE Delphi}
-
 interface
 
 uses myf_main, myf_lists, DataModule,

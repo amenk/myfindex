@@ -1,8 +1,6 @@
 {$R+}
 unit ListCompareOptUnit;
 
-{$MODE Delphi}
-
 interface
 
 uses
