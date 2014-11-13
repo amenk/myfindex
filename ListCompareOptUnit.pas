@@ -1,4 +1,5 @@
 {$R+}
+{$MODE OBJFPC}
 unit ListCompareOptUnit;
 
 interface

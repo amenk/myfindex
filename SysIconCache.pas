@@ -1,3 +1,4 @@
+{$MODE OBJFPC}
 unit SysIconCache;
 
 { Copyright (C) 2001 by Alexander Menk, sw@alexander-menk.de }

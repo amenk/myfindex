@@ -17,8 +17,6 @@ misc(str_...,'name')  -> str_....
 
 unit Unit1;
 
-{$MODE Delphi}
-
 interface
 
 {$ifdef WINDOWS}

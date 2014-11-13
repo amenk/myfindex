@@ -1,3 +1,4 @@
+{$MODE OBJFPC}
 unit ReadDiskUnit;
 
 interface
@@ -476,9 +477,11 @@ begin
   end;
 end;
 }
+
+
 procedure TfrmReadDisk.ext_picprev(verzeichnis, filen: string);
 var
-  jpg, jpg2: TJPEGImage;
+  image: TImage;
   bmp: TBitmap;
   MS: TMemoryStream;
   h, w: integer;

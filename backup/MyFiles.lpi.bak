@@ -81,19 +81,25 @@
       <Unit5>
         <Filename Value="NewCollectionUnit.pas"/>
         <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmSammlung"/>
         <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
         <UnitName Value="NewCollectionUnit"/>
       </Unit5>
       <Unit6>
         <Filename Value="NewListUnit.pas"/>
         <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmNewList"/>
         <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
         <UnitName Value="NewListUnit"/>
       </Unit6>
       <Unit7>
         <Filename Value="ExportOptUnit.pas"/>
         <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmListExport"/>
         <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
         <UnitName Value="ExportOptUnit"/>
       </Unit7>
       <Unit8>

@@ -1,3 +1,4 @@
+{$MODE OBJFPC}
 { XML Sonderzeichen Verarbeitung}
 
 unit mapchar;

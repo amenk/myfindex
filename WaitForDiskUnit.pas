@@ -1,3 +1,4 @@
+{$MODE OBJFPC}
 unit WaitForDiskUnit;
 
 interface
