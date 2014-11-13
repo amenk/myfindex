@@ -239,10 +239,7 @@ object frmConfig: TfrmConfig
       Top = 130
       Width = 250
       Height = 26
-      Caption = 
-        'Dieses PlugIn ist momentan nicht geladen.
-Es wird ggf. nach sch' +
-        'ließen dieses Fensters geladen.'
+      Caption = 'Dieses PlugIn ist momentan nicht geladen. Es wird ggf. nach schließen dieses Fensters geladen.'
       Visible = False
     end
     object fbAboutPlugin: TSpeedButton
@@ -340,8 +337,7 @@ Es wird ggf. nach sch' +
       Top = 127
       Width = 73
       Height = 24
-      Caption = 'niedrige Qualität
-viel Speicherplatz'
+      Caption = 'niedrige Qualität viel Speicherplatz'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -9
@@ -355,8 +351,7 @@ viel Speicherplatz'
       Width = 81
       Height = 24
       Alignment = taRightJustify
-      Caption = 'hohe Qualität
-wenig Speicherplatz'
+      Caption = 'hohe Qualität wenig Speicherplatz'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -9
@@ -480,11 +475,7 @@ wenig Speicherplatz'
       Top = 24
       Width = 140
       Height = 36
-      Caption = 
-        'Die Deaktivierung des Splash-
-screens ist nur in der registrier' +
-        'ten
-Version möglich.'
+      Caption = 'Die Deaktivierung des Splashscreens ist nur in der registrierten Version möglich.'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -9
@@ -696,11 +687,7 @@ Version möglich.'
       Width = 204
       Height = 36
       Anchors = [akTop]
-      Caption = 
-        '$myfiles	der MyFiles-Ordner
-$col		der Name der Quell-Sammlung
-' +
-        '$disk		der Name des Quell-Datenträgers'
+      Caption = '$myfiles der MyFiles-Ordner $col der Name der Quell-Sammlung $disk	der Name des Quell-Datenträgers'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -9
@@ -713,10 +700,7 @@ $col		der Name der Quell-Sammlung
       Top = 24
       Width = 213
       Height = 26
-      Caption = 
-        'Gib hier den Ordner an, in dem Dateien auf
-Wunsch zwischengespe' +
-        'ichert werden sollen.'
+      Caption = 'Gib hier den Ordner an, in dem Dateien auf Wunsch zwischengespeichert werden sollen.'
     end
     object Edit1: TEdit
       Left = 16
