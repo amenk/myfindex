@@ -3,8 +3,8 @@ unit UsefulPrcs;
 
 interface
 
-uses Windows, Sysutils, ActiveX, ComObj,
-  ShlObj, Mapchar, classes, FileUtil;
+uses Sysutils, {ActiveX, ComObj,}
+  {ShlObj, }Mapchar, classes, FileUtil, LCLType, LCLProc;
 type CharSet = set of char;
 
 
@@ -72,8 +72,9 @@ end;
 
 function GetSpaceText(sl:TStrings): string;
 var
-  S: string;
-  P: PChar;
+  u8string: String;
+  u8char : char;
+  needsQuotes : boolean;
   I, Count: Integer;
 begin
   Count := sl.Count;
@@ -84,13 +85,15 @@ begin
     Result := '';
     for I := 0 to Count - 1 do
     begin
-      S := sl[I];
-      P := PChar(S);
-      while not (P^ in [#0..' ','"',',']) do P := CharNext(P);
-      if (P^ <> #0) then S := AnsiQuotedStr(S, '"');
-      Result := Result + S + ' ';
+      u8string := sl[I];
+      needsQuotes := false;
+      for u8char in [#0..' ','"',','] do
+      begin
+        if (Pos(u8char, u8string) > 0) then needsQuotes := true;
+      end;
+      u8String := AnsiQuotedStr(u8String, '"');
+      Result := Result + u8String + ' ';
     end;
-    System.Delete(Result, Length(Result), 1);
   end;
 end;
 
