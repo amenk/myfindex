@@ -1,6 +1,5 @@
+{$MODE OBJFPC}{$H+}
 unit myf_lists;
-
-{$MODE Delphi}
 
 interface
 

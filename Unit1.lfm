@@ -1,7 +1,7 @@
 object MyFiles3Form: TMyFiles3Form
-  Left = 276
+  Left = 838
   Height = 625
-  Top = 33
+  Top = 90
   Width = 809
   HelpContext = 10000
   Caption = 'MyFindex - keine Sammlung geöffnet'
@@ -1323,7 +1323,7 @@ object MyFiles3Form: TMyFiles3Form
         Left = 8
         Height = 42
         Top = 17
-        Width = 568
+        Width = 932
         Alignment = taCenter
         Anchors = [akTop, akLeft, akRight]
         AutoSize = False

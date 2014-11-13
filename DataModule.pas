@@ -1,6 +1,5 @@
+{$MODE OBJFPC}{$H+}
 unit DataModule;
-
-{$MODE Delphi}
 
 interface
 

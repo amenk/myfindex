@@ -12,11 +12,9 @@ object frmConfig: TfrmConfig
   Font.Height = -11
   Font.Name = 'MS Sans Serif'
   Font.Style = []
-  OldCreateOrder = False
   Position = poOwnerFormCenter
   OnCreate = FormCreate
   PixelsPerInch = 96
-  TextHeight = 13
   object btnOk: TSpeedButton
     Left = 144
     Top = 176
@@ -186,14 +184,13 @@ object frmConfig: TfrmConfig
       Font.Style = [fsBold]
       ParentFont = False
     end
-    object seDur: TJvSpinEdit
+    object seDur: TSpinEdit
       Tag = 1
       Left = 16
       Top = 40
       Width = 41
       Height = 21
       HelpContext = 91111
-      ButtonKind = bkStandard
       TabOrder = 0
     end
     object cbQual: TComboBox
@@ -239,10 +236,7 @@ object frmConfig: TfrmConfig
       Top = 130
       Width = 250
       Height = 26
-      Caption = 
-        'Dieses PlugIn ist momentan nicht geladen.
-Es wird ggf. nach sch' +
-        'ließen dieses Fensters geladen.'
+      Caption = 'Dieses PlugIn ist momentan nicht geladen. Es wird ggf. nach schließen dieses Fensters geladen.'
       Visible = False
     end
     object fbAboutPlugin: TSpeedButton
@@ -340,8 +334,7 @@ Es wird ggf. nach sch' +
       Top = 127
       Width = 73
       Height = 24
-      Caption = 'niedrige Qualität
-viel Speicherplatz'
+      Caption = 'niedrige Qualität viel Speicherplatz'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -9
@@ -355,8 +348,7 @@ viel Speicherplatz'
       Width = 81
       Height = 24
       Alignment = taRightJustify
-      Caption = 'hohe Qualität
-wenig Speicherplatz'
+      Caption = 'hohe Qualität wenig Speicherplatz'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -9
@@ -364,24 +356,22 @@ wenig Speicherplatz'
       Font.Style = []
       ParentFont = False
     end
-    object seWidth: TJvSpinEdit
+    object seWidth: TSpinEdit
       Tag = 1
       Left = 53
       Top = 50
       Width = 44
       Height = 21
       HelpContext = 9121
-      ButtonKind = bkStandard
       TabOrder = 0
     end
-    object seHeight: TJvSpinEdit
+    object seHeight: TSpinEdit
       Tag = 1
       Left = 157
       Top = 50
       Width = 44
       Height = 21
       HelpContext = 9122
-      ButtonKind = bkStandard
       TabOrder = 1
     end
     object tbQual: TTrackBar
@@ -394,7 +384,6 @@ wenig Speicherplatz'
       PageSize = 5
       Frequency = 5
       TabOrder = 2
-      ThumbLength = 9
     end
   end
   object GroupBox3: TGroupBox
@@ -446,24 +435,22 @@ wenig Speicherplatz'
       Height = 13
       Caption = '(MyFiles Neustart nötig)'
     end
-    object sePrevWidth: TJvSpinEdit
+    object sePrevWidth: TSpinEdit
       Tag = 1
       Left = 53
       Top = 66
       Width = 44
       Height = 21
       HelpContext = 9121
-      ButtonKind = bkStandard
       TabOrder = 0
     end
-    object sePrevHeight: TJvSpinEdit
+    object sePrevHeight: TSpinEdit
       Tag = 1
       Left = 157
       Top = 66
       Width = 44
       Height = 21
       HelpContext = 9122
-      ButtonKind = bkStandard
       TabOrder = 1
     end
   end
@@ -480,11 +467,7 @@ wenig Speicherplatz'
       Top = 24
       Width = 140
       Height = 36
-      Caption = 
-        'Die Deaktivierung des Splash-
-screens ist nur in der registrier' +
-        'ten
-Version möglich.'
+      Caption = 'Die Deaktivierung des Splashscreens ist nur in der registrierten Version möglich.'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -9
@@ -643,14 +626,13 @@ Version möglich.'
       Caption = 'Verlauf speichern'
       TabOrder = 0
     end
-    object seHist: TJvSpinEdit
+    object seHist: TSpinEdit
       Tag = 1
       Left = 195
       Top = 37
       Width = 38
       Height = 21
       HelpContext = 9121
-      ButtonKind = bkStandard
       TabOrder = 1
     end
     object cbDefCol: TComboBox
@@ -680,9 +662,6 @@ Version möglich.'
     Height = 161
     Caption = ' MyFiles Cache '
     TabOrder = 10
-    DesignSize = (
-      265
-      161)
     object Label16: TLabel
       Left = 16
       Top = 64
@@ -696,11 +675,7 @@ Version möglich.'
       Width = 204
       Height = 36
       Anchors = [akTop]
-      Caption = 
-        '$myfiles	der MyFiles-Ordner
-$col		der Name der Quell-Sammlung
-' +
-        '$disk		der Name des Quell-Datenträgers'
+      Caption = '$myfiles der MyFiles-Ordner $col der Name der Quell-Sammlung $disk	der Name des Quell-Datenträgers'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -9
@@ -713,10 +688,7 @@ $col		der Name der Quell-Sammlung
       Top = 24
       Width = 213
       Height = 26
-      Caption = 
-        'Gib hier den Ordner an, in dem Dateien auf
-Wunsch zwischengespe' +
-        'ichert werden sollen.'
+      Caption = 'Gib hier den Ordner an, in dem Dateien auf Wunsch zwischengespeichert werden sollen.'
     end
     object Edit1: TEdit
       Left = 16
@@ -736,9 +708,6 @@ Wunsch zwischengespe' +
     Caption = ' Eintrags-Infos'
     TabOrder = 9
     Visible = False
-    DesignSize = (
-      265
-      161)
     object Label25: TLabel
       Left = 16
       Top = 24
@@ -812,19 +781,6 @@ Wunsch zwischengespe' +
     ReadOnly = True
     TabOrder = 1
     OnChange = tvChange
-    Items.Data = {
-      0200000026000000000000000000000001000000FFFFFFFF0000000003000000
-      0D45696E7374656C6C756E67656E2300000000000000000000000B000000FFFF
-      FFFF00000000010000000A4F626572666CE46368652100000000000000000000
-      006F000000FFFFFFFF000000000000000008566F7273636861751E0000000000
-      0000000000000C000000FFFFFFFF0000000000000000055368656C6C1F000000
-      000000000000000083000000FFFFFFFF00000000000000000646617262656E27
-      000000000000000000000015000000FFFFFFFF00000000020000000E45696E74
-      726167732D496E666F7320000000000000000000000016000000FFFFFFFF0000
-      00000000000007506C7567496E73210000000000000000000000FFFFFFFFFFFF
-      FFFF000000000200000008566F7273636861751F0000000000000000000000D3
-      000000FFFFFFFF00000000000000000642696C64657221000000000000000000
-      0000D4000000FFFFFFFF00000000000000000848F67270726F6265}
   end
   object ColorDialog: TColorDialog
     Left = 376

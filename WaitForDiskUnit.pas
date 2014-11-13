@@ -1,6 +1,5 @@
+{$MODE OBJFPC}{$H+}
 unit WaitForDiskUnit;
-
-{$MODE Delphi}
 
 interface
 

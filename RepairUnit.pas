@@ -1,6 +1,5 @@
+{$MODE OBJFPC}{$H+}
 unit RepairUnit;
-
-{$MODE Delphi}
 
 interface
 

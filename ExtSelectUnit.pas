@@ -1,6 +1,5 @@
+{$MODE OBJFPC}{$H+}
 unit ExtSelectUnit;
-
-{$MODE Delphi}
 
 interface
 

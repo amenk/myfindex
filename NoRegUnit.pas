@@ -1,6 +1,5 @@
+{$MODE OBJFPC}{$H+}
 unit NoRegUnit;
-
-{$MODE Delphi}
 
 interface
 

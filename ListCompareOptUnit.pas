@@ -1,7 +1,6 @@
 {$R+}
+{$MODE OBJFPC}{$H+}
 unit ListCompareOptUnit;
-
-{$MODE Delphi}
 
 interface
 

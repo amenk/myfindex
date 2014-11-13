@@ -1,6 +1,5 @@
+{$MODE OBJFPC}{$H+}
 unit ExportOptUnit;
-
-{$MODE Delphi}
 
 interface
 

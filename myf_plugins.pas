@@ -1,6 +1,5 @@
+{$MODE OBJFPC}{$H+}
 unit myf_plugins;
-
-{$MODE Delphi}
 
 interface
 

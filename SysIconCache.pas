@@ -1,6 +1,5 @@
+{$MODE OBJFPC}{$H+}
 unit SysIconCache;
-
-{$MODE Delphi}
 
 { Copyright (C) 2001 by Alexander Menk, sw@alexander-menk.de }
 { SysIconCache }

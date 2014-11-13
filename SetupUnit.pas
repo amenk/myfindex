@@ -1,6 +1,5 @@
+{$MODE OBJFPC}{$H+}
 unit SetupUnit;
-
-{$MODE Delphi}
 
 interface
 
@@ -8,7 +7,7 @@ uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   StdCtrls, JvSpin, Buttons, ComCtrls, myf_consts, Registry, ActiveX, ComObj,
   ShlObj, UseFulPrcs, CheckLst,
-  myf_plugins, Mask, ExtCtrls, JvMaskEdit;
+  myf_plugins, Mask, ExtCtrls, Spin, JvMaskEdit;
 
 
 type
@@ -22,7 +21,7 @@ type
     ckStartMen: TCheckBox;
     gb1: TGroupBox;
     ckHist: TCheckBox;
-    seHist: TJvSpinEdit;
+    seHist: TSpinEdit;
     Label7: TLabel;
     Label11: TLabel;
     Label14: TLabel;
@@ -35,9 +34,9 @@ type
     gb211: TGroupBox;
     Label13: TLabel;
     Label2: TLabel;
-    seWidth: TJvSpinEdit;
+    seWidth: TSpinEdit;
     Label1: TLabel;
-    seHeight: TJvSpinEdit;
+    seHeight: TSpinEdit;
     tbQual: TTrackBar;
     Label9: TLabel;
     Label3: TLabel;
@@ -47,7 +46,7 @@ type
     Label6: TLabel;
     Label4: TLabel;
     Label12: TLabel;
-    seDur: TJvSpinEdit;
+    seDur: TSpinEdit;
     cbQual: TComboBox;
     edtParam: TEdit;
     Label10: TLabel;
@@ -74,8 +73,8 @@ type
     Label20: TLabel;
     Label21: TLabel;
     Label22: TLabel;
-    sePrevWidth: TJvSpinEdit;
-    sePrevHeight: TJvSpinEdit;
+    sePrevWidth: TSpinEdit;
+    sePrevHeight: TSpinEdit;
     Label23: TLabel;
     Label24: TLabel;
     GroupBox4: TGroupBox;

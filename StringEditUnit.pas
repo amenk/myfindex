@@ -1,6 +1,5 @@
+{$MODE OBJFPC}{$H+}
 unit StringEditUnit;
-
-{$MODE Delphi}
 
 interface
 

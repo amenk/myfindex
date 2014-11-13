@@ -1,6 +1,5 @@
+{$MODE OBJFPC}{$H+}
 unit SplashFUnit;
-
-{$MODE Delphi}
 
 interface
 

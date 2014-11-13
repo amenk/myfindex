@@ -1,6 +1,5 @@
+{$MODE OBJFPC}{$H+}
 unit NewCollectionUnit;
-
-{$MODE Delphi}
 
 interface
 

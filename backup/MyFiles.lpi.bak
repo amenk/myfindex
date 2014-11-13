@@ -52,7 +52,9 @@
       <Unit1>
         <Filename Value="Unit1.pas"/>
         <IsPartOfProject Value="True"/>
+        <ComponentName Value="MyFiles3Form"/>
         <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
         <UnitName Value="Unit1"/>
       </Unit1>
       <Unit2>
@@ -66,6 +68,7 @@
       <Unit3>
         <Filename Value="ReadDiskUnit.pas"/>
         <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmReadDisk"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="ReadDiskUnit"/>
@@ -78,25 +81,33 @@
       <Unit5>
         <Filename Value="NewCollectionUnit.pas"/>
         <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmSammlung"/>
         <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
         <UnitName Value="NewCollectionUnit"/>
       </Unit5>
       <Unit6>
         <Filename Value="NewListUnit.pas"/>
         <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmNewList"/>
         <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
         <UnitName Value="NewListUnit"/>
       </Unit6>
       <Unit7>
         <Filename Value="ExportOptUnit.pas"/>
         <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmListExport"/>
         <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
         <UnitName Value="ExportOptUnit"/>
       </Unit7>
       <Unit8>
         <Filename Value="ListCompareOptUnit.pas"/>
         <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmListCompareOpt"/>
         <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
         <UnitName Value="ListCompareOptUnit"/>
       </Unit8>
       <Unit9>
@@ -107,19 +118,25 @@
       <Unit10>
         <Filename Value="SetupUnit.pas"/>
         <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmConfig"/>
         <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
         <UnitName Value="SetupUnit"/>
       </Unit10>
       <Unit11>
         <Filename Value="ListviewConfig.pas"/>
         <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmListViewConfig"/>
         <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
         <UnitName Value="ListviewConfig"/>
       </Unit11>
       <Unit12>
         <Filename Value="RepairUnit.pas"/>
         <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmRepair"/>
         <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
         <UnitName Value="RepairUnit"/>
       </Unit12>
       <Unit13>
@@ -130,7 +147,9 @@
       <Unit14>
         <Filename Value="SplashFUnit.pas"/>
         <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmSplash"/>
         <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
         <UnitName Value="SplashFUnit"/>
       </Unit14>
       <Unit15>
@@ -141,13 +160,17 @@
       <Unit16>
         <Filename Value="ExtSelectUnit.pas"/>
         <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmExtSelect"/>
         <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
         <UnitName Value="ExtSelectUnit"/>
       </Unit16>
       <Unit17>
         <Filename Value="WaitForDiskUnit.pas"/>
         <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmWaitForDisk"/>
         <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
         <UnitName Value="WaitForDiskUnit"/>
       </Unit17>
       <Unit18>
@@ -158,13 +181,17 @@
       <Unit19>
         <Filename Value="NoRegUnit.pas"/>
         <IsPartOfProject Value="True"/>
+        <ComponentName Value="NoRegForm"/>
         <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
         <UnitName Value="NoRegUnit"/>
       </Unit19>
       <Unit20>
         <Filename Value="StringEditUnit.pas"/>
         <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmStringEdit"/>
         <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
         <UnitName Value="StringEditUnit"/>
       </Unit20>
       <Unit21>
@@ -188,7 +215,9 @@
       <Unit24>
         <Filename Value="CopyToDisksUnit.pas"/>
         <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmCopyDisksUsed"/>
         <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
         <UnitName Value="CopyToDisksUnit"/>
       </Unit24>
       <Unit25>

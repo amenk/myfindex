@@ -1,6 +1,5 @@
+{$MODE OBJFPC}{$H+}
 unit ListviewConfig;
-
-{$MODE Delphi}
 
 interface
 

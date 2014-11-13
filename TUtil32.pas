@@ -1,10 +1,9 @@
+{$MODE OBJFPC}{$H+}
 unit TUtil32;
-
-{$MODE Delphi}
 
 interface
 
-uses Bde, DbiTypes;
+uses {Bde, }DbiTypes;
 
 { TUtility (TUVerifyTable) Session Options }
 const

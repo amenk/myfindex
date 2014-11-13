@@ -1,6 +1,5 @@
+{$MODE OBJFPC}{$H+}
 unit NewListUnit;
-
-{$MODE Delphi}
 
 interface
 

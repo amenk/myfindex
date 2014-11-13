@@ -1,6 +1,5 @@
+{$MODE OBJFPC}{$H+}
 unit CopyToDisksUnit;
-
-{$MODE Delphi}
 
 interface
 

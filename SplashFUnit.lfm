@@ -12,13 +12,11 @@ object frmSplash: TfrmSplash
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   FormStyle = fsStayOnTop
-  OldCreateOrder = False
   Position = poScreenCenter
   OnClose = FormClose
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   PixelsPerInch = 96
-  TextHeight = 13
   object img: TImage
     Left = 0
     Top = 0
@@ -33,7 +31,6 @@ object frmSplash: TfrmSplash
     Width = 530
     Height = 359
     AutoSize = True
-    IncrementalDisplay = True
     Picture.Data = {
       0A544A504547496D616765097E0100FFD8FFE000104A46494600010101004800
       480000FFDB004300020101010101020101010202020202040302020202050404
@@ -3113,10 +3110,7 @@ object frmSplash: TfrmSplash
     Top = 276
     Width = 90
     Height = 56
-    Caption = 'Alexander Menk
-"self soft"
-Alle Rechte
-vorbehalten.'
+    Caption = 'Alexander Menk "self soft" Alle Rechte vorbehalten.'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWhite
     Font.Height = -11

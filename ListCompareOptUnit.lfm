@@ -146,8 +146,7 @@ object frmListCompareOpt: TfrmListCompareOpt
       Top = 52
       Width = 177
       Height = 26
-      Caption = 'Dateien sind auch gleich, wenn diese
-&Kriterien übereinstimmen:'
+      Caption = 'Dateien sind auch gleich, wenn diese &Kriterien übereinstimmen:'
     end
     object clbOptions: TCheckListBox
       Left = 16
