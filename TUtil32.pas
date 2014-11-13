@@ -4,7 +4,7 @@ unit TUtil32;
 
 interface
 
-uses Bde, DbiTypes;
+uses {Bde, }DbiTypes;
 
 { TUtility (TUVerifyTable) Session Options }
 const
