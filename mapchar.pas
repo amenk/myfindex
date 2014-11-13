@@ -1,7 +1,8 @@
-{$MODE OBJFPC}{$H+}
 { XML Sonderzeichen Verarbeitung}
 
 unit mapchar;
+
+//{$MODE Delphi}
 
 interface
 

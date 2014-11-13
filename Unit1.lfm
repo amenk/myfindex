@@ -1,7 +1,7 @@
 object MyFiles3Form: TMyFiles3Form
-  Left = 838
+  Left = 276
   Height = 625
-  Top = 90
+  Top = 33
   Width = 809
   HelpContext = 10000
   Caption = 'MyFindex - keine Sammlung geöffnet'

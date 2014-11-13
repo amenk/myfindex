@@ -1,5 +1,4 @@
 {$R+}
-{$MODE OBJFPC}{$H+}
 (*
 
 - Toolbars
@@ -17,6 +16,8 @@ misc(str_...,'name')  -> str_....
 
 
 unit Unit1;
+
+{$MODE Delphi}
 
 interface
 

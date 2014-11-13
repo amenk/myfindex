@@ -1,5 +1,6 @@
-{$MODE OBJFPC}{$H+}
 unit ReadDiskUnit;
+
+{$MODE Delphi}
 
 interface
 
@@ -477,18 +478,12 @@ begin
   end;
 end;
 }
-
-
 procedure TfrmReadDisk.ext_picprev(verzeichnis, filen: string);
 var
   jpegImage : TJPEGImage;
   blobField : TField;
   BS : TStream;
   h, w, newHeight, newWidth: integer;
-  image: TImage;
-  bmp: TBitmap;
-  MS: TMemoryStream;
-  h, w: integer;
   ratio: Double;
   fx, s: string;
 begin
@@ -617,7 +612,6 @@ procedure TfrmReadDisk.ext_mp3preview(verzeichnis, filen: string);
 
 var
   fnLameIn, fnLameOut: string;
-
 
 var
   fsIn, fsOut: TFileStream;
