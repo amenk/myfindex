@@ -319,7 +319,7 @@ begin
          closeFile(F);
          fileClose(sr.findHandle);
       until findNextUTF8(sr)<>0;
-   findClose(sr);
+   findCloseUTF8(sr);
 
    //copy multiline messages on a unique key value
    for x:=strList.count-1 downto 0 do
