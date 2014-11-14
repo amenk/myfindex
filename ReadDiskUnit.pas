@@ -837,37 +837,6 @@ begin
 end;
 }
 
-{ 1. nicht-ASCII Zeichen (>127, <32) bis auf 'Ä','Ö' etc. beseitigen }
-{ 2. falls durch OemToAnsi weniger Zeichen beseitigt werden, dann
-  OemToAnsi verwenden... }
-
-function bestcharset(s: string): string;
-const
-  //valid = [#32..#127, 'Ä', 'Ü', 'Ö', 'ß', 'ä', 'ü', 'ö', #10, #13];
-  valid : array[0..94] of TUTF8Char = (#32..#127, 'Ä', 'Ü', 'Ö', 'ß', 'ä', 'ü', 'ö', #10, #13);
-var
-  i, j,
-    invalid: integer;
-  temp: string;
-begin
-  invalid := 0;
-  for i := 1 to Length(s) do
-    if not (s[i] in valid) then Inc(invalid);
-  for i := 1 to Length(temp) do
-    if not (temp[i] in valid) then dec(invalid);
-  if invalid > 0 then { OemToAnsiStr war erfolgreich ... }
-  else temp := s;
-  j := 0;
-  SetLength(Result, Length(temp));
-  for i := 1 to Length(temp) do
-    if s[i] in valid then
-    begin
-      Inc(j);
-      Result[j] := s[i];
-    end;
-  SetLength(Result, j);
-end;
-
 { descript.ion Datei in StringListen laden }
 
 procedure loaddesc(fname: string; descfiles, descriptions: TStringList);
@@ -1128,7 +1097,7 @@ begin
                       begin
                         gotfileiddiz := True;
                         tblFilesNote.LoadFromFile(s);
-                        tblFilesNote.AsString := bestcharset(tblFilesNote.AsString);
+                        tblFilesNote.AsString := tblFilesNote.AsString //:= bestcharset(tblFilesNote.AsString);
                       end;
                   end;
                 { DESCRIPT.ION auslesen }
