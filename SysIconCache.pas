@@ -83,7 +83,7 @@ begin
     ext := lowercase(ExtractFileExt(Value)) else ext := icDir;
   cache := Pos('\'+ext+'\',nocache) = 0;
   if (not cache) then
-    if not FileExists(Value) then cache := True;
+    if not FileExistsUTF8(Value) then cache := True;
 
   if cache then
   begin
@@ -113,7 +113,7 @@ begin
   else
   begin
     if fname = icDir then
-      SHGetFileInfo(PChar(ParamStr(0)), FILE_ATTRIBUTE_DIRECTORY, Info, SizeOf(TSHFileInfo), SHGFI_USEFILEATTRIBUTES or SHGFI_SYSIconIndex or SHGFI_TYPENAME)
+      SHGetFileInfo(PChar(ParamStrUTF8(0)), FILE_ATTRIBUTE_DIRECTORY, Info, SizeOf(TSHFileInfo), SHGFI_USEFILEATTRIBUTES or SHGFI_SYSIconIndex or SHGFI_TYPENAME)
     else
       SHGetFileInfo(PChar('file'+fname), FILE_ATTRIBUTE_NORMAL, Info, SizeOf(TSHFileInfo), SHGFI_USEFILEATTRIBUTES or SHGFI_SYSIconIndex or SHGFI_TYPENAME);
     if Info.szTypeName = '' then

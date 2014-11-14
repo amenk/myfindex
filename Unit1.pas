@@ -1121,7 +1121,7 @@ begin
     splash.lblColStat.Caption := 'Ladevorgang:'#13#10+str_s1+#13#10+str_s2;
   { welche Sammlung? }
   for i := 1 to paramcount do // Parameter zusammenfügen
-    s := s + ParamStr(i) + ' ';
+    s := s + ParamStrUTF8(i) + ' ';
   callbyparam := paramcount <> 0;
   if Pos('myfiles:', lowercase(s)) = 1 then Delete(s, 1, 8);
   s := trim(s);
@@ -2109,7 +2109,7 @@ begin
   {//ToBeConverted
   with elpMan.players[0] do // sch*** MP3-Player freigeben :)
     if Initialized then Deinit;
-  deletefile(elpMan.players[0].InputName);
+  DeleteFileUTF8(elpMan.players[0].InputName);
   }
   FPlugIns.Free;
   ClearSearchCache;
@@ -4854,7 +4854,7 @@ begin
     begin
       Stop;
       InitStream;
-      deletefile(elpMan.Players[0].InputName);
+      DeleteFileUTF8(elpMan.Players[0].InputName);
     end;
   except
   end;
@@ -7628,8 +7628,6 @@ begin
   menLCopyToFolderClick(menQuickCopy);
   tbLDelClick(nil);
 end;
-
-//  FileSetDate( T.Handle, FileGetDate( S.Handle ) )
 
 procedure TMyFiles3Form.menColEditorClick(Sender: TObject);
 begin

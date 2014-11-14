@@ -296,9 +296,9 @@ begin
    strList:=TStringList.create;
 
    {Search string resources in pas files}
-	if findFirst(rep+'*.pas',faAnyFile,sr)=0 then
+	if FindFirstUTF8(rep+'*.pas',faAnyFile,sr)=0 then
    	repeat
-      	if (sr.name='IniLang.pas') then findNext(sr);
+      	if (sr.name='IniLang.pas') then FindNextUTF8(sr);
       	assignFile(F,sr.name);
          reset(F);
 	while not eof(F) do
@@ -318,7 +318,7 @@ begin
          end;                           //multiline strings
          closeFile(F);
          fileClose(sr.findHandle);
-      until findNext(sr)<>0;
+      until findNextUTF8(sr)<>0;
    findClose(sr);
 
    //copy multiline messages on a unique key value

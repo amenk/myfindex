@@ -27,7 +27,7 @@ function SizeToStr(Size: Int64; fmt : ShortInt; explorerlike:Boolean): string;
 function AttrToString(a: integer): string;
 function StrToOem(const AnsiStr: string): string;
 function OemToAnsiStr(const OemStr: string): string;
-function DirectoryExists(const Name: string): Boolean;
+function DirectoryExistsUTF8(const Name: string): Boolean;
 function SpecialDirectory(ID: integer): string;
 function Decrypt(const S: string; Key: Word): string;
 function Like(const AString, APattern: string): Boolean;
@@ -359,7 +359,7 @@ begin
   end;
 end; {SpecialDirectory}
 
-function DirectoryExists(const Name: string): Boolean;
+function DirectoryExistsUTF8(const Name: string): Boolean;
 var
   Code: Dword;
 begin
@@ -453,10 +453,10 @@ var
   srecResult: TSearchRec;
   FindData: TWin32FindData;
 begin
-  if FindFirst(FileName, faAnyFile, srecResult) = 0 then
+  if FindFirstUTF8(FileName, faAnyFile, srecResult) = 0 then
   begin
     Result := srecResult.Size;
-    FindClose(srecResult);
+    FindCloseUTF8(srecResult);
   end
   else
   begin

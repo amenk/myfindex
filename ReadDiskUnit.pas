@@ -8,9 +8,8 @@ uses
   myf_consts, myf_main, myf_plugins,
   {Windows, }Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   StdCtrls, ComCtrls, UsefulPrcs, ExtCtrls, Buttons, CheckLst, db,
-  ImgList, Menus, MapChar,
-  CommCtrl, ShellApi, ToolWin,
-  IniFiles, LCLType, Process;
+  ImgList, Menus, MapChar, CommCtrl, ShellApi, ToolWin, IniFiles, LCLType, Process,
+  FileUtil;
 
 type
   EPreview = class(Exception);
@@ -690,15 +689,15 @@ begin
       if Assigned(fsOut) then fsOut.Free;
       {//ToBeConverted if Assigned(mph) then mph.Free;}
     end;
-    if not FileExists(fnLameIn) then raise EPreview.Create(format('File not created (%s%s)', [verzeichnis, filen]));
+    if not FileExistsUTF8(fnLameIn) then raise EPreview.Create(format('File not created (%s%s)', [verzeichnis, filen]));
 
-    DeleteFile(fnLameOut);
-    if FileExists(fnLameOut) then raise EPreview.Create('File readonly');
+    DeleteFileUTF8(fnLameOut);
+    if FileExistsUTF8(fnLameOut) then raise EPreview.Create('File readonly');
     { Lame Starten ... }
     if not ExecAndWait(file_lame,
       Format(p_param, [p_bitrate, fnLameIn, fnLameOut]),
       sw_hide) then raise EPreview.Create(Format(str_Elamemissing, [verzeichnis, filen]));
-    if not FileExists(fnLameOut) then raise EPreview.Create(format(str_Elameerror, [verzeichnis, filen]));
+    if not FileExistsUTF8(fnLameOut) then raise EPreview.Create(format(str_Elameerror, [verzeichnis, filen]));
 
     //previewBlobField := dm.sqlqFiles.FieldByName('tblFilesBinPreview');
     TBlobField(dm.sqlqFiles.FieldByName('tblFilesBinPreview')).LoadFromFile(fnLameOut);
@@ -710,8 +709,8 @@ begin
     //tblFilesBKind.Value := pk_mp3;
     Inc(stat_preview);
   finally
-    DeleteFile(fnLameIn);
-    DeleteFile(fnLameOut);
+    DeleteFileUTF8(fnLameIn);
+    DeleteFileUTF8(fnLameOut);
   end;
 end;
 
@@ -725,7 +724,7 @@ begin
 (*
 
   if not WordBool(Options and bit_playlists) then Exit;
-  if fileexists(dm.tblFiles.DatabaseName + filen + '.lst') then
+  if FileExistsUTF8(dm.tblFiles.DatabaseName + filen + '.lst') then
     if not WordBool(Options and bit__updateall) then Exit;
 
   sl := TStringList.Create;
