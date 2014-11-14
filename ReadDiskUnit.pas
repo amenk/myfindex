@@ -6,11 +6,11 @@ interface
 
 uses
   myf_consts, myf_main, myf_plugins,
-  Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
+  {Windows, }Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   StdCtrls, ComCtrls, UsefulPrcs, ExtCtrls, Buttons, CheckLst, db,
   ImgList, Menus, MapChar,
   CommCtrl, ShellApi, ToolWin,
-  IniFiles;
+  IniFiles, LCLType, Process;
 
 type
   EPreview = class(Exception);
@@ -586,7 +586,7 @@ begin
 end;
 }
 procedure TfrmReadDisk.ext_mp3preview(verzeichnis, filen: string);
-
+  {
   function ExecAndWait(const Filename, Params: string; WindowState: word): boolean;
   var
     SUInfo: TStartupInfo;
@@ -608,6 +608,18 @@ procedure TfrmReadDisk.ext_mp3preview(verzeichnis, filen: string);
     if Result then
       if WaitForSingleObject(ProcInfo.hProcess, lame_timeout) = WAIT_TIMEOUT then
         lblErr.Caption := Format(str_Elame, [verzeichnis, filen]);
+  end;
+  }
+  function ExecAndWait(const Filename, Params: string; WindowState: word): boolean;
+  var
+    proc : TProcess;
+  begin
+    proc := TProcess.Create(nil);
+    proc.Executable :=  Filename;
+    proc.Parameters.SetText(Pchar(Params));// := Params;
+    proc.Options := proc.Options + [poWaitOnExit];
+    proc.execute;
+    proc.free;
   end;
 
 var
@@ -745,15 +757,16 @@ var
 
 begin
   Result := True;
-  with dm, tblFiles do
-  begin
+  //with dm, tblFiles do
+  //begin
     info := InfExtr.ExtractInfo(verzeichnis+filen);
-    tblFilesTextPreview.Value := info;
-    tblFilesTKind.Value := pk_std;
-//    tblFilesTKind.Value := pk_txt;
+    dm.sqlqFiles.FieldByName('tblFilesTextPreview').AsString := info;
+    dm.sqlqFiles.FieldByName('tblFilesTKind').AsInteger := pk_std;
+    //tblFilesTextPreview.Value := info;
+    //tblFilesTKind.Value := pk_std;
      if info <> '' then
         Inc(stat_info);
-  end;
+  //end;
 
   ext := ansilowercase(extractfileext(filen));
   if (doimg) and ((ext = '.bmp') or (ext = '.ico') or (ext = '.jpg') or (ext = '.jpeg') or (ext = '.jpg') or (ext = '.jpe') or (ext = '.gif') or (ext = '.tif') or (ext = '.tiff')) then
@@ -783,24 +796,25 @@ procedure TfrmReadDisk.Loadautoinc;
 var
   i, step : integer;
 begin
-  with dm.tblFolders do
-  begin
-    Filtered := False;
+  //with dm.tblFolders do
+  //begin
+    dm.sqlqFolders.Filtered:=False;
+    //Filtered := False;
     step := 10000;
     i := 0;
     while step > 0 do
     begin
       repeat
         Inc(i,step);
-        Filter := 'FOLDERID > ' + IntToStr(i);
-        Filtered := True;
-      until RecordCount = 0;
+        dm.sqlqFolders.Filter := 'FOLDERID > ' + IntToStr(i);
+        dm.sqlqFolders.Filtered := True;
+      until dm.sqlqFolders.RecordCount = 0;
       Dec(i,step);
       step := step div 2;
     end;
-    Filtered := False;
+    dm.sqlqFolders.Filtered := False;
     CurFID := i + 1;
-  end;
+  //end;
 end;
 
 { CurFID speichern }
@@ -829,7 +843,8 @@ end;
 
 function bestcharset(s: string): string;
 const
-  valid = [#32..#127, 'Ä', 'Ü', 'Ö', 'ß', 'ä', 'ü', 'ö', #10, #13];
+  //valid = [#32..#127, 'Ä', 'Ü', 'Ö', 'ß', 'ä', 'ü', 'ö', #10, #13];
+  valid : array[0..94] of TUTF8Char = (#32..#127, 'Ä', 'Ü', 'Ö', 'ß', 'ä', 'ü', 'ö', #10, #13);
 var
   i, j,
     invalid: integer;
