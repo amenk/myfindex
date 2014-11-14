@@ -8,9 +8,8 @@ uses
   myf_consts, myf_main, myf_plugins,
   {Windows, }Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   StdCtrls, ComCtrls, UsefulPrcs, ExtCtrls, Buttons, CheckLst, db,
-  ImgList, Menus, MapChar,
-  CommCtrl, ShellApi, ToolWin,
-  IniFiles, LCLType, Process;
+  ImgList, Menus, MapChar, CommCtrl, ShellApi, ToolWin, IniFiles, LCLType, Process,
+  FileUtil, lconvencoding;
 
 type
   EPreview = class(Exception);
@@ -690,15 +689,15 @@ begin
       if Assigned(fsOut) then fsOut.Free;
       {//ToBeConverted if Assigned(mph) then mph.Free;}
     end;
-    if not FileExists(fnLameIn) then raise EPreview.Create(format('File not created (%s%s)', [verzeichnis, filen]));
+    if not FileExistsUTF8(fnLameIn) then raise EPreview.Create(format('File not created (%s%s)', [verzeichnis, filen]));
 
-    DeleteFile(fnLameOut);
-    if FileExists(fnLameOut) then raise EPreview.Create('File readonly');
+    DeleteFileUTF8(fnLameOut);
+    if FileExistsUTF8(fnLameOut) then raise EPreview.Create('File readonly');
     { Lame Starten ... }
     if not ExecAndWait(file_lame,
       Format(p_param, [p_bitrate, fnLameIn, fnLameOut]),
       sw_hide) then raise EPreview.Create(Format(str_Elamemissing, [verzeichnis, filen]));
-    if not FileExists(fnLameOut) then raise EPreview.Create(format(str_Elameerror, [verzeichnis, filen]));
+    if not FileExistsUTF8(fnLameOut) then raise EPreview.Create(format(str_Elameerror, [verzeichnis, filen]));
 
     //previewBlobField := dm.sqlqFiles.FieldByName('tblFilesBinPreview');
     TBlobField(dm.sqlqFiles.FieldByName('tblFilesBinPreview')).LoadFromFile(fnLameOut);
@@ -710,8 +709,8 @@ begin
     //tblFilesBKind.Value := pk_mp3;
     Inc(stat_preview);
   finally
-    DeleteFile(fnLameIn);
-    DeleteFile(fnLameOut);
+    DeleteFileUTF8(fnLameIn);
+    DeleteFileUTF8(fnLameOut);
   end;
 end;
 
@@ -725,7 +724,7 @@ begin
 (*
 
   if not WordBool(Options and bit_playlists) then Exit;
-  if fileexists(dm.tblFiles.DatabaseName + filen + '.lst') then
+  if FileExistsUTF8(dm.tblFiles.DatabaseName + filen + '.lst') then
     if not WordBool(Options and bit__updateall) then Exit;
 
   sl := TStringList.Create;
@@ -837,37 +836,6 @@ begin
 end;
 }
 
-{ 1. nicht-ASCII Zeichen (>127, <32) bis auf 'Ä','Ö' etc. beseitigen }
-{ 2. falls durch OemToAnsi weniger Zeichen beseitigt werden, dann
-  OemToAnsi verwenden... }
-
-function bestcharset(s: string): string;
-const
-  //valid = [#32..#127, 'Ä', 'Ü', 'Ö', 'ß', 'ä', 'ü', 'ö', #10, #13];
-  valid : array[0..94] of char = (#32..#127, 'Ä', 'Ü', 'Ö', 'ß', 'ä', 'ü', 'ö', #10, #13);
-var
-  i, j,
-    invalid: integer;
-  temp: string;
-begin
-  invalid := 0;
-  for i := 1 to Length(s) do
-    if not (s[i] in valid) then Inc(invalid);
-  for i := 1 to Length(temp) do
-    if not (temp[i] in valid) then dec(invalid);
-  if invalid > 0 then { OemToAnsiStr war erfolgreich ... }
-  else temp := s;
-  j := 0;
-  SetLength(Result, Length(temp));
-  for i := 1 to Length(temp) do
-    if s[i] in valid then
-    begin
-      Inc(j);
-      Result[j] := s[i];
-    end;
-  SetLength(Result, j);
-end;
-
 { descript.ion Datei in StringListen laden }
 
 procedure loaddesc(fname: string; descfiles, descriptions: TStringList);
@@ -921,7 +889,10 @@ begin
 end;
 
 function TfrmReadDisk.ReadDir(Verzeichnis: string; DiskId: Longint): Int64;
-var SR: TSearchRec;
+var
+  slUnknownEncoding : TStringList;
+  sUnknownEncoding, sUTF8Encoding : String;
+  SR: TSearchRec;
   FolderId: integer;
   Groesse, ThisSize: Int64;
   res: integer;
@@ -950,12 +921,9 @@ begin
 
   pbScan.Position := Pg div 1024;
   updprogresscaption;
-//  if Verzeichnis[length(Verzeichnis)]<>'\' then
-  with dm, tblFolders do
-  begin
-    if updmode then SetKey else Append;
-    tblFoldersDISKID.AsInteger := DiskId;
-    tblFoldersFolder.AsString := Copy(Verzeichnis, 3, Length(Verzeichnis));
+
+    dm.sqlqFolders.FieldByName('tblFoldersDISKID').AsInteger:=DiskId;;
+    dm.sqlqFolders.FieldByName('tblFoldersFolder').AsString:=Copy(Verzeichnis, 3, Length(Verzeichnis));
     if updmode then
     begin
       if GotoKey then begin
@@ -978,7 +946,7 @@ begin
     tblFoldersFolderId.AsInteger := FolderId;
     Post;
     bookmark2 := getbookmark;
-  end;
+  //end;
   try
     lblCurF.Caption := Verzeichnis;
 //    Application.ProcessMessages;
@@ -1127,8 +1095,12 @@ begin
                       if (tblFilesNote.IsNull) or (optUpdatePrev) then
                       begin
                         gotfileiddiz := True;
-                        tblFilesNote.LoadFromFile(s);
-                        tblFilesNote.AsString := bestcharset(tblFilesNote.AsString);
+                        slUnknownEncoding := TStringList.Create;
+                        slUnknownEncoding.LoadFromFile(s)
+                        sUnknownEncoding := slUnknownEncoding.Text;
+                        sUTF8Encoding := ConvertEncoding(sUnknownEncoding, GuessEncoding(sUnknownEncoding), EncodingUTF8);
+                        dm.sqlqFiles.FieldByName('tblFilesNote').AsString := sUTF8Encoding;
+                        slUnknownEncoding.Free;
                       end;
                   end;
                 { DESCRIPT.ION auslesen }
@@ -1136,6 +1108,7 @@ begin
                     if (optDESCRIPTION) and Assigned(descfiles) then
                       if (tblFilesNote.IsNull) or (optUpdatePrev) then
                       begin
+
                         idx := descfiles.indexof(ansilowercase(sr.Name));
                         if idx <> -1 then tblFilesNote.AsString := descriptions[integer(descfiles.Objects[idx])];
                       end;

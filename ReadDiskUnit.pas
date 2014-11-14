@@ -9,7 +9,7 @@ uses
   {Windows, }Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   StdCtrls, ComCtrls, UsefulPrcs, ExtCtrls, Buttons, CheckLst, db,
   ImgList, Menus, MapChar, CommCtrl, ShellApi, ToolWin, IniFiles, LCLType, Process,
-  FileUtil;
+  FileUtil, lconvencoding;
 
 type
   EPreview = class(Exception);
@@ -889,7 +889,10 @@ begin
 end;
 
 function TfrmReadDisk.ReadDir(Verzeichnis: string; DiskId: Longint): Int64;
-var SR: TSearchRec;
+var
+  slUnknownEncoding : TStringList;
+  sUnknownEncoding, sUTF8Encoding : String;
+  SR: TSearchRec;
   FolderId: integer;
   Groesse, ThisSize: Int64;
   res: integer;
@@ -918,12 +921,9 @@ begin
 
   pbScan.Position := Pg div 1024;
   updprogresscaption;
-//  if Verzeichnis[length(Verzeichnis)]<>'\' then
-  with dm, tblFolders do
-  begin
-    if updmode then SetKey else Append;
-    tblFoldersDISKID.AsInteger := DiskId;
-    tblFoldersFolder.AsString := Copy(Verzeichnis, 3, Length(Verzeichnis));
+    if updmode then dm.sqlqFolders.Edit else dm.sqlqFolders.Append;
+    dm.sqlqFolders.FieldByName('tblFoldersDISKID').AsInteger:=DiskId;;
+    dm.sqlqFolders.FieldByName('tblFoldersFolder').AsString:=Copy(Verzeichnis, 3, Length(Verzeichnis));
     if updmode then
     begin
       if GotoKey then begin
@@ -946,7 +946,7 @@ begin
     tblFoldersFolderId.AsInteger := FolderId;
     Post;
     bookmark2 := getbookmark;
-  end;
+  //end;
   try
     lblCurF.Caption := Verzeichnis;
 //    Application.ProcessMessages;
@@ -1095,8 +1095,12 @@ begin
                       if (tblFilesNote.IsNull) or (optUpdatePrev) then
                       begin
                         gotfileiddiz := True;
-                        tblFilesNote.LoadFromFile(s);
-                        tblFilesNote.AsString := tblFilesNote.AsString //:= bestcharset(tblFilesNote.AsString);
+                        slUnknownEncoding := TStringList.Create;
+                        slUnknownEncoding.LoadFromFile(s)
+                        sUnknownEncoding := slUnknownEncoding.Text;
+                        sUTF8Encoding := ConvertEncoding(sUnknownEncoding, GuessEncoding(sUnknownEncoding), EncodingUTF8);
+                        dm.sqlqFiles.FieldByName('tblFilesNote').AsString := sUTF8Encoding;
+                        slUnknownEncoding.Free;
                       end;
                   end;
                 { DESCRIPT.ION auslesen }
@@ -1104,6 +1108,7 @@ begin
                     if (optDESCRIPTION) and Assigned(descfiles) then
                       if (tblFilesNote.IsNull) or (optUpdatePrev) then
                       begin
+
                         idx := descfiles.indexof(ansilowercase(sr.Name));
                         if idx <> -1 then tblFilesNote.AsString := descriptions[integer(descfiles.Objects[idx])];
                       end;
