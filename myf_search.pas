@@ -697,7 +697,7 @@ begin
     end else { kpl. Datenbank }
     begin
       dm.sqlqFiles.Filtered := False;
-      dm.sqlqDisks.Filtered := False;
+      dm.sqlqMedia.Filtered := False;
       dm.sqlqFolders.Filtered := False;
       dm.sqlqFiles.First;
 

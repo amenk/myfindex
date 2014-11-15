@@ -17,7 +17,7 @@ type
     dsFolders: TDataSource;
     dsDisks: TDataSource;
     SQLite3Con: TSQLite3Connection;
-    sqlqDisks: TSQLQuery;
+    sqlqMedia: TSQLQuery;
     sqlqFiles: TSQLQuery;
     sqlqFolders: TSQLQuery;
     SQLTransact: TSQLTransaction;
@@ -75,26 +75,25 @@ begin
   try
      SQLite3Con.DatabaseName := 'media.sqlite';
      SQLTransact.DataBase := SQLite3Con;
-     sqlqDisks.Transaction := SQLTransact;
+     sqlqMedia.Transaction := SQLTransact;
      sqlqFiles.Transaction := SQLTransact;
      sqlqFolders.Transaction := SQLTransact;
 
-     sqlqDisks.SQL.Text :=
+     sqlqMedia.SQL.Text :=
        'CREATE TABLE IF NOT EXISTS `tblMedia` ('+
-       '`tblDisksDISKID`	INTEGER NOT NULL,'+
-       '`tblDisksLabel`	TEXT,'+
-       '`tblDisksRead`	INTEGER,'+
-       '`tblDisksSize`	REAL,'+
-       '`tblDisksNote`	TEXT,'+
-       'PRIMARY KEY(tblDisksDISKID))'+#59;
-     sqlqDisks.ExecSQL;
+       '`MediaID`	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,'+
+       '`Label`	TEXT,'+
+       '`Read`	INTEGER,'+
+       '`Size`	REAL,'+
+       '`Note`	TEXT'+#59;
+     sqlqMedia.ExecSQL;
      SQLTransact.Commit;
 
      sqlqFiles.SQL.Text:=
        'CREATE TABLE IF NOT EXISTS `tblFiles` ('+
-       '`FILEID`	INTEGER NOT NULL,'+
-       '`DISKID`	INTEGER,'+
-       '`FOLDERID`	INTEGER,'+
+       '`FileID`	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,'+
+       '`DiskID`	INTEGER,'+
+       '`FolderID`	INTEGER,'+
        '`FileName`	TEXT,'+
        '`EntryKind`	INTEGER,'+
        '`Changed`	INTEGER,'+
@@ -104,37 +103,22 @@ begin
        '`TKind`	INTEGER,'+
        '`BKind`	INTEGER,'+
        '`TextPreview`	TEXT,'+
-       '`BinPreview`	BLOB,'+
-       '`tblFilesFOLDERID`	INTEGER,'+
-       '`tblFilesChanged`	REAL,'+
-       '`tblFilesAttr`	INTEGER,'+
-       '`tblFilesSize`	REAL,'+
-       '`tblFilesFILEID`	INTEGER,'+
-       '`tblFilesFileName`	TEXT,'+
-       '`tblFilesNote`	TEXT,'+
-       '`tblFilesTKind`	INTEGER,'+
-       '`tblFilesBKind`	INTEGER,'+
-       '`tblFilesTextPreview`	TEXT,'+
-       '`tblFilesBinPreview`	BLOB,'+
-       '`tblFilesDISKID`	INTEGER,'+
-       '`tblFilesEntryKind`	INTEGER,'+
-       'PRIMARY KEY(FILEID))'+#59;
+       '`BinPreview`	BLOB'+#59;
      sqlqFiles.ExecSQL;
      SQLTransact.Commit;
 
      sqlqFolders.SQL.Text :=
        'CREATE TABLE IF NOT EXISTS `tblFolders` ('+
-       '`tblFoldersFOLDERID`	INTEGER NOT NULL,'+
-       '`tblFoldersFolder`	TEXT,'+
-       '`tblFoldersLevel`	INTEGER,'+
-       '`tblFoldersHasSubFolders`	INTEGER,'+
-       '`tblFoldersNote`	TEXT,'+
-       '`tblFoldersDISKID`	INTEGER,'+
-       'PRIMARY KEY(tblFoldersFOLDERID))'+#59;
+       '`FolderID`	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,'+
+       '`Folder`	TEXT,'+
+       '`Level`	INTEGER,'+
+       '`HasSubFolders`	INTEGER,'+
+       '`Note` TEXT,'+
+       '`MediaID` INTEGER'+#59;
      sqlqFolders.ExecSQL;
      SQLTransact.Commit;
 
-     sqlqDisks.SQL.Text :=
+     sqlqMedia.SQL.Text :=
        'select if ('+
        '  exists('+
        '    select distinct index_name from information_schema.statistics'+
@@ -146,12 +130,12 @@ begin
        'PREPARE stmt1 FROM @a;'+
        'EXECUTE stmt1;'+
        'DEALLOCATE PREPARE stmt1;';
-     sqlqDisks.ExecSQL;
+     sqlqMedia.ExecSQL;
      SQLTransact.Commit;
 
-     sqlqDisks.close;
-     sqlqDisks.SQL.Text := 'SELECT * FROM tblDisks';
-     sqlqDisks.open;
+     sqlqMedia.close;
+     sqlqMedia.SQL.Text := 'SELECT * FROM tblMedia';
+     sqlqMedia.open;
 
      sqlqFiles.close;
      sqlqFiles.SQL.Text := 'SELECT * FROM tblFiles';
@@ -171,7 +155,7 @@ end;
 
 procedure Tdm.DataModuleDestroy(Sender: TObject);
 begin
-  sqlqDisks.Close;
+  sqlqMedia.Close;
   sqlqFiles.Close;
   sqlqFolders.Close;
   SQLite3Con.Close();
@@ -185,8 +169,8 @@ end;
 procedure Tdm.SaveChanges;
 begin
   try
-  if sqlqDisks.Active then
-     sqlqDisks.ApplyUpdates;
+  if sqlqMedia.Active then
+     sqlqMedia.ApplyUpdates;
   if sqlqFiles.Active then
      sqlqFiles.ApplyUpdates;
   if sqlqFolders.Active then
@@ -260,10 +244,10 @@ end;
 procedure dbSeekDisk(diskid:Integer; thelabel : string);
 begin
   try
-    if diskid = -1 then dm.sqlqDisks.IndexName := 'IdxLabel' else dm.sqlqDisks.IndexName := '';
-    if diskid <> -1 then dm.sqlqDisks.Fields.FieldByName('tblDisksDISKID').AsInteger := diskid else //tblDisksDISKID.AsInteger := diskid else
-      dm.sqlqDisks.Fields.FieldByName('tblDisksLabel').AsString := thelabel;
-    if not dm.sqlqDisks.Locate('tblDisksDISKID;tblDisksLabel', VarArrayOf([diskid, thelabel]), []) then
+    if diskid = -1 then dm.sqlqMedia.IndexName := 'IdxLabel' else dm.sqlqMedia.IndexName := '';
+    if diskid <> -1 then dm.sqlqMedia.Fields.FieldByName('tblDisksDISKID').AsInteger := diskid else //tblDisksDISKID.AsInteger := diskid else
+      dm.sqlqMedia.Fields.FieldByName('tblDisksLabel').AsString := thelabel;
+    if not dm.sqlqMedia.Locate('tblDisksDISKID;tblDisksLabel', VarArrayOf([diskid, thelabel]), []) then
       raise Exception.Create('dbSeekDisk: Datenträger nicht gefunden');
   except
     on E: EDatabaseError do

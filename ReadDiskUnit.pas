@@ -184,7 +184,7 @@ type
     { --------- }
 
     procedure InitDriveListView;
-    function ReadDir(Verzeichnis: string; DiskId: longint): Int64;
+    function ReadDir(Verzeichnis: string; MediaId: longint): Int64;
     procedure ReadThis(drive: char);
     procedure loadautoinc;
     { Preview Procedures }
@@ -221,7 +221,7 @@ type
     preset: string;
     tooktime: dword;
     disksread: integer;
-    ReadDiskId : Smallint;
+    ReadMediaId : Smallint;
     updmode, dbug: Boolean;
 //    procedure OpenOpts(s: string);
     destructor Destroy; override;
@@ -888,7 +888,7 @@ begin
       end;
 end;
 
-function TfrmReadDisk.ReadDir(Verzeichnis: string; DiskId: Longint): Int64;
+function TfrmReadDisk.ReadDir(Verzeichnis: string; MediaId: Longint): Int64;
 var
   slUnknownEncoding : TStringList;
   sUnknownEncoding, sUTF8Encoding : String;
@@ -896,7 +896,7 @@ var
   FolderId: integer;
   Groesse, ThisSize: Int64;
   res: integer;
-  bookmark1, bookmark2: Pointer;
+  bookmarkedFolderID: integer;
   hsf: Boolean; // hassubfolders
   i, idx, fileid: integer;
 
@@ -922,30 +922,24 @@ begin
   pbScan.Position := Pg div 1024;
   updprogresscaption;
     if updmode then dm.sqlqFolders.Edit else dm.sqlqFolders.Append;
-    dm.sqlqFolders.FieldByName('tblFoldersDISKID').AsInteger:=DiskId;;
-    dm.sqlqFolders.FieldByName('tblFoldersFolder').AsString:=Copy(Verzeichnis, 3, Length(Verzeichnis));
+    dm.sqlqFolders.FieldByName('Media').AsInteger:=DiskId;;
+    dm.sqlqFolders.FieldByName('Folder').AsString:=Copy(Verzeichnis, 3, Length(Verzeichnis));
     if updmode then
     begin
-      if GotoKey then begin
         FolderId := tblFoldersFolderId.AsInteger;
         Edit;
-      end else
-      begin
-        Append;
-        Inc(curfid);
-        FolderId := CurFID;
-        tblFoldersDISKID.AsInteger := DiskId;
-        tblFoldersFolder.AsString := Copy(Verzeichnis, 3, Length(Verzeichnis));
-      end;
     end else  // no Updatemode
     begin
+      Append;
       Inc(curfid);
       FolderId := CurFID;
+      dm.sqlqFolders.FieldByName('MediaID').AsInteger:=DiskId; //tblFoldersDISKID.AsInteger := DiskId;
+      dm.sqlqFolders.FieldByName('Folder').AsString := Copy(Verzeichnis, 3, Length(Verzeichnis));
     end;
-    tblFoldersLevel.AsInteger := Level;
-    tblFoldersFolderId.AsInteger := FolderId;
-    Post;
-    bookmark2 := getbookmark;
+    dm.sqlqFolders.FieldByName('Level').AsInteger := Level;
+    dm.sqlqFolders.FieldByName('FolderId').AsInteger := FolderId;
+    dm.sqlqFolders.Post;
+    bookmarkedFolderID := sqlqFolders.FieldByName('FolderID').AsInteger;
   //end;
   try
     lblCurF.Caption := Verzeichnis;
@@ -973,36 +967,35 @@ begin
           { und: Dateien, die nicht mehr existieren löschen }
           fileid := -1;
           delfldr := '';
-          with dm, tblFiles do
-          begin
-            Filter :=
-              Format('DISKID = %d and FOLDERID = %d', [DiskId, FolderId]);
-            Filtered := True;
-            First;
-            while not eof do
+          //with dm, tblFiles do
+          //begin
+            dm.sqlqFiles.Filter := Format('MediaID = %d and FolderID = %d', [MediaId, FolderId]);
+            dm.sqlqFiles.Filtered := True;
+            dm.sqlqFiles.First;
+            while not dm.sqlqFiles.EOF do
             begin
-              i := tblFilesFILEID.Value;
-              s := Verzeichnis + tblFilesFileName.Value;
-              if tblFilesEntryKind.Value = ek_folder then
+              i := dm.sqlqFiles.FieldByName('FileID').AsInteger; //tblFilesFILEID.Value;
+              s := Verzeichnis + dm.sqlqFiles.FieldByName('Filename').AsString;
+              if dm.sqlqFiles.FieldByName('EntryKind').AsString = ek_folder then
                 b := DirectoryExistsUTF8(s) { *Converted from DirectoryExists* }
               else
                 b := FileExistsUTF8(s); { *Converted from FileExists* }
               if b then
               begin
-                idlist.AddObject(ansilowercase(tblFilesFileName.Value), TObject(i));
+                idlist.AddObject(ansilowercase(dm.sqlqFiles.FieldByName('FileName').AsString), TObject(i));
                 if i > fileid then fileid := i;
                 Next;
               end else
               begin
-                if tblFilesEntryKind.Value = ek_folder then
+                if dm.sqlqFiles.FieldByName('EntryKind').AsString = ek_folder then
                 begin
-                  with dm, tblFolders do
-                  begin
-                    s := LookUp('FOLDERID', FolderId, 'Folder') + tblFilesFileName.Value + '\';
+                  //with dm, tblFolders do
+                  //begin
+                    s := dm.sqlqFolders.LookUp('FOLDERID', FolderId, 'Folder') + dm.sqlqFiles.FieldByName('FileName').AsString + '\';
                     SetKey;
-                    tblFoldersDISKID.Value := diskid;
-                    tblFoldersFolder.Value := s;
-                    if GotoKey then
+                    //tblFoldersDISKID.Value := diskid;
+                    //tblFoldersFolder.Value := s;
+                    if dm.sqlqFolders.Locate('MediaID;Folder', VarArrayOf(diskid, s), []) then
                     begin
                       delfldr := delfldr + tblFoldersFolderId.AsString + ',';
                     end else raise Exception.Create('Datenbankfehler, Databaseerror (ReadDisk/Delfldr)');
@@ -1013,7 +1006,7 @@ begin
                     while not eof do
                       Delete;
                     Filtered := False;
-                  end;
+                  //end;
                 end;
                 Delete;
               end;
@@ -1029,7 +1022,8 @@ begin
               end;
             end;
             Inc(fileid);
-          end;
+          //end;
+        end;
         end;
       end else { kein Updateing }
       begin
@@ -1266,7 +1260,7 @@ end;
 
 procedure TfrmReadDisk.ReadThis(drive: char);
 var
-  bookmark: Pointer;
+  bookmarkedtblMediaID : integer;
   Size: Int64;
   i : integer;
 var
@@ -1291,30 +1285,29 @@ begin
     IncludeMasks[i] := ansilowercase(IncludeMasks[i]);
 
   Msg := ' ' + str_readgen + ' ';
-  with dm do
-  begin
+  //with dm do
+  //begin
     if cbStapel.Checked then
       disklabel := MyFiles3Form.MyVolumeID(drive)
     else disklabel := edtLabel.Text;
     if disklabel = '' then
       raise Exception.Create('Fehler: ReadThis, DiskLabel Empty');
-    tblDisks.DisableControls;
-    tblFolders.DisableControls;
-    tblFiles.DisableControls;
-    tblFiles.Filtered := False;
-    tblFolders.Filtered := False;
-    tblDisks.Filtered := False;
+    dm.sqlqDisks.DisableControls; //tblDisks.DisableControls;
+    dm.sqlqFolders.DisableControls;
+    dm.sqlqFiles.DisableControls;
+    dm.sqlqFiles.Filtered := False;
+    dm.sqlqFolders.Filtered := False;
+    dm.sqlqDisks.Filtered := False;
 
-    with tblDisks do
-    begin
-      IndexName := 'IdxLabel';
-      SetKey;
-      tblDisksLabel.Value := disklabel;
-      if gotokey <> updmode then
+    //with tblDisks do
+    //begin
+      dm.sqlqDisks.IndexName:='IdxLabel'; //IndexName := 'IdxLabel';
+      //SetKey;
+      if dm.sqlqDisks.Locate('tblDisksLabel', disklabel, []) <> updmode //tblDisksLabel.Value := disklabel;
         if not updmode then
           raise EPreReadDisk.Create(str_diskexists) else
           raise EPreReadDisk.Create(str_diskmis);
-    end;
+    //end;
 
     disablefrm;
     if not MyFiles3Form.ColIni.ReadBool('Options','UseLabel',False) then
@@ -1329,54 +1322,53 @@ begin
     isabort := False;
     if not updmode then
     begin
-      tblDisks.Append;
-      tblDisksLABEL.AsString := disklabel;
-      tblDisks.Post;
+      dm.sqlqMedia.Append;
+      dm.sqlqMedia.FieldByName('tblDisksLABEL').AsString:=disklabel;
+      dm.sqlqMedia.Post;
+      dm.sqlqMedia.ApplyUpdates;
     end;
-    bookmark := tblDisks.GetBookMark;
+    bookmarkedMediaID := dm.sqlqMedia.FieldByName('MediaID');//:= tblDisks.GetBookMark;
     level := 0;
     lblCurF.Caption := '';
     if updmode then
     begin
-      gbStat.Caption := Format(Msg, [tblDisksLABEL.AsString, str_readupd1]);
-//      lblState.Caption := str_readupd0;
+      gbStat.Caption := Format(Msg, [dm.sqlqMedia.FieldByName('Label').AsString, str_readupd1]);
     end else
     begin
-      gbStat.Caption := Format(Msg, [tblDisksLABEL.AsString, str_readnew1]);
-//      lblState.Caption := str_readnew0;
+      gbStat.Caption := Format(Msg, [dm.sqlqMedia.FieldByName('Label').AsString, str_readnew1]);
     end;
 
     pbScan.Max := DiskSize(Ord(drive) - ord('A') + 1) div 1024;
     if pbScan.Max = 0 then pbScan.Max := 1;
     pg := 0;
 
-    with MyFiles3Form.ini do
-    begin
-      p_dur := ReadInteger(ini_config, ini_ph_duration, 3);
-      p_bitrate := ReadString(ini_config, ini_ph_qual, '16kbps');
-      p_param := ReadString(ini_config, ini_ph_param, '--mp3input -m mono -a -b %0:s -o %1:s %2:s');
-      p_maxw := ReadInteger(ini_config, ini_pb_width, 63);
-      p_maxh := ReadInteger(ini_config, ini_pb_height, 63);
-      p_qual := ReadInteger(ini_config, ini_pb_qual, 39);
-    end;
-    ReadDiskid := tblDisksDISKID.AsInteger;
+    p_dur := MyFiles3Form.ReadInteger(ini_config, ini_ph_duration, 3);
+    p_bitrate := MyFiles3Form.ReadString(ini_config, ini_ph_qual, '16kbps');
+    p_param := MyFiles3Form.ReadString(ini_config, ini_ph_param, '--mp3input -m mono -a -b %0:s -o %1:s %2:s');
+    p_maxw := MyFiles3Form.ReadInteger(ini_config, ini_pb_width, 63);
+    p_maxh := MyFiles3Form.ReadInteger(ini_config, ini_pb_height, 63);
+    p_qual := MyFiles3Form.ReadInteger(ini_config, ini_pb_qual, 39);
+
+    ReadDiskid := dm.sqlqMedia.FieldByName('MediaID').AsInteger;
     MyFiles3Form.ColIni.WriteString(ini_colcleanup,IntToStr(ReadDiskid),DiskLabel);
     MyFiles3Form.ColIni.UpdateFile;
-    Size := ReadDir( drive + ':', tblDisksDISKID.AsInteger);
-    tblDisks.GotoBookMark(bookmark);
-    tblDisks.FreeBookMark(bookmark);
-    tblDisks.Edit;
-    tblDisksSIZE.Value := Size;
-    tblDisksREAD.Value := now;
-    tblDisks.Post;
+    Size := ReadDir( drive + ':', dm.sqlqMedia.FieldByName('MediaID').AsInteger);
+    dm.sqlqMedia.Locate('MediaID', bookmarkedMediaID);
+    //tblDisks.GotoBookMark(bookmark);
+    //tblDisks.FreeBookMark(bookmark);
+
+    dm.sqlqMedia.Edit; //tblDisks.Edit;
+    dm.sqlqMedia.FieldByName('Size').AsInteger := Size ;//tblDisksSIZE.Value := Size;
+    dm.sqlqMedia.FieldByName('Read').AsInteger := now;//tblDisksREAD.Value := now;
+    dm.sqlqMedia.Post;//tblDisks.Post;
 
     dm.SaveChanges;
-    tblDisks.EnableControls;
-    tblFolders.EnableControls;
-    tblFiles.EnableControls;
+    dm.sqlqMedia.EnableControls;//tblDisks.EnableControls;
+    dm.sqlqFolders.EnableControls;//tblFolders.EnableControls;
+    dm.sqlqFiles.EnableControls;
     running := False;
     MyFiles3Form.ColIni.EraseSection(ini_colcleanup);
-  end;
+  //end;
 end;
 
 procedure TfrmReadDisk.disablefrm;

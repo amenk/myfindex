@@ -18,7 +18,7 @@ object dm: Tdm
     left = 136
     top = 32
   end
-  object sqlqDisks: TSQLQuery
+  object sqlqMedia: TSQLQuery
     FieldDefs = <>
     SQL.Strings = (
       ''
@@ -46,7 +46,7 @@ object dm: Tdm
     top = 96
   end
   object dsDisks: TDataSource
-    DataSet = sqlqDisks
+    DataSet = sqlqMedia
     left = 51
     top = 40
   end
