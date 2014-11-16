@@ -9,7 +9,7 @@ uses
   {Windows, }Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   StdCtrls, ComCtrls, UsefulPrcs, ExtCtrls, Buttons, CheckLst, db,
   ImgList, Menus, MapChar, CommCtrl, ShellApi, ToolWin, IniFiles, LCLType, Process,
-  FileUtil, lconvencoding, LCLProc, Variants;
+  FileUtil, lconvencoding, LCLProc, Variants, LCLIntf;
 
 type
   EPreview = class(Exception);
@@ -1380,12 +1380,11 @@ begin
   if not cbStapel.Checked then
   begin
     if not updmode then
-      with dm, tblDisks do
       begin
-        IndexName := 'IdxLabel';
-        SetKey;
-        tblDisksLabel.Value := edtLabel.Text;
-        if GotoKey then
+      //with dm, tblDisks do
+      //begin
+        dm.sqlqMedia.IndexName := 'IdxLabel';
+        if dm.sqlqMedia.Locate('Label', edtLabel.Text, []) then
         begin
           Application.messagebox(PChar(str_cantrename),
             PChar(str_error), mb_ICONERROR or MB_OK);
@@ -1479,18 +1478,16 @@ begin
         begin
           s := MyFiles3Form.MyVolumeID(drives[i]);
           if s <> '*' then
-            with dm, tblDisks do
-            begin
-              IndexName := 'IdxLabel';
-              SetKey;
-              tblDisksLabel.Value := s;
-              if not gotokey then
+            //with dm, tblDisks do
+            //begin
+              dm.sqlqMedia.IndexName := 'IdxLabel';
+              if dm.sqlqMedia.Locate('Label', s, []) then
               begin
                 drv := drives[i];
                 break;
               end;
 //                  log := log + Format(str_autor1 + #13#10, [drives[i], s]);
-            end// else log := log + Format(str_autor2 + #13#10, [drives[i]]);
+            //end// else log := log + Format(str_autor2 + #13#10, [drives[i]]);
         end;
         if (drv = '*') or (isabort) then
         begin
