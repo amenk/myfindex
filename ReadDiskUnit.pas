@@ -9,7 +9,7 @@ uses
   {Windows, }Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   StdCtrls, ComCtrls, UsefulPrcs, ExtCtrls, Buttons, CheckLst, db,
   ImgList, Menus, MapChar, CommCtrl, ShellApi, ToolWin, IniFiles, LCLType, Process,
-  FileUtil, lconvencoding;
+  FileUtil, lconvencoding, LCLProc, Variants;
 
 type
   EPreview = class(Exception);
@@ -897,6 +897,7 @@ var
   Groesse, ThisSize: Int64;
   res: integer;
   bookmarkedFolderID: integer;
+  bookmarkedFileID : integer;
   hsf: Boolean; // hassubfolders
   i, idx, fileid: integer;
 
@@ -922,24 +923,24 @@ begin
   pbScan.Position := Pg div 1024;
   updprogresscaption;
     if updmode then dm.sqlqFolders.Edit else dm.sqlqFolders.Append;
-    dm.sqlqFolders.FieldByName('Media').AsInteger:=DiskId;;
+    dm.sqlqFolders.FieldByName('Media').AsInteger:=MediaId;;
     dm.sqlqFolders.FieldByName('Folder').AsString:=Copy(Verzeichnis, 3, Length(Verzeichnis));
     if updmode then
     begin
-        FolderId := tblFoldersFolderId.AsInteger;
-        Edit;
+        FolderId := dm.sqlqFolders.FieldByName('FolderID').AsInteger;
+        dm.sqlqFolders.Edit;
     end else  // no Updatemode
     begin
-      Append;
+      dm.sqlqFolders.Append;
       Inc(curfid);
       FolderId := CurFID;
-      dm.sqlqFolders.FieldByName('MediaID').AsInteger:=DiskId; //tblFoldersDISKID.AsInteger := DiskId;
+      dm.sqlqFolders.FieldByName('MediaID').AsInteger:=MediaId; //tblFoldersDISKID.AsInteger := DiskId;
       dm.sqlqFolders.FieldByName('Folder').AsString := Copy(Verzeichnis, 3, Length(Verzeichnis));
     end;
     dm.sqlqFolders.FieldByName('Level').AsInteger := Level;
     dm.sqlqFolders.FieldByName('FolderId').AsInteger := FolderId;
     dm.sqlqFolders.Post;
-    bookmarkedFolderID := sqlqFolders.FieldByName('FolderID').AsInteger;
+    bookmarkedFolderID := dm.sqlqFolders.FieldByName('FolderID').AsInteger;
   //end;
   try
     lblCurF.Caption := Verzeichnis;
@@ -976,7 +977,7 @@ begin
             begin
               i := dm.sqlqFiles.FieldByName('FileID').AsInteger; //tblFilesFILEID.Value;
               s := Verzeichnis + dm.sqlqFiles.FieldByName('Filename').AsString;
-              if dm.sqlqFiles.FieldByName('EntryKind').AsString = ek_folder then
+              if dm.sqlqFiles.FieldByName('EntryKind').Value = ek_folder then
                 b := DirectoryExistsUTF8(s) { *Converted from DirectoryExists* }
               else
                 b := FileExistsUTF8(s); { *Converted from FileExists* }
@@ -987,43 +988,43 @@ begin
                 Next;
               end else
               begin
-                if dm.sqlqFiles.FieldByName('EntryKind').AsString = ek_folder then
+                if dm.sqlqFiles.FieldByName('EntryKind').AsInteger = ek_folder then
                 begin
                   //with dm, tblFolders do
                   //begin
                     s := dm.sqlqFolders.LookUp('FOLDERID', FolderId, 'Folder') + dm.sqlqFiles.FieldByName('FileName').AsString + '\';
-                    SetKey;
+                    //SetKey;
                     //tblFoldersDISKID.Value := diskid;
                     //tblFoldersFolder.Value := s;
-                    if dm.sqlqFolders.Locate('MediaID;Folder', VarArrayOf(diskid, s), []) then
+                    if dm.sqlqFolders.Locate('MediaID;Folder', VarArrayOf([MediaId, s]), []) then
                     begin
-                      delfldr := delfldr + tblFoldersFolderId.AsString + ',';
+                      delfldr := delfldr + dm.sqlqFolders.FieldByName('FolderID').AsString + ',';
                     end else raise Exception.Create('Datenbankfehler, Databaseerror (ReadDisk/Delfldr)');
-                    IndexName := '';
-                    Filter := Format('FOLDER = ''%s'' and DISKID = %d', [s + '*', diskid]);
-                    Filtered := True;
-                    First;
-                    while not eof do
-                      Delete;
-                    Filtered := False;
+                    dm.sqlqFolders.IndexName := '';
+                    dm.sqlqFolders.Filter := Format('Folder = ''%s'' and MediaID = %d', [s + '*', mediaid]);
+                    dm.sqlqFolders.Filtered := True;
+                    dm.sqlqFolders.First;
+                    while not dm.sqlqFolders.eof do
+                      dm.sqlqFolders.Delete;
+                    dm.sqlqFolders.Filtered := False;
                   //end;
                 end;
-                Delete;
+                dm.sqlqFolders.Delete;
               end;
             end;
-            Filtered := False;
+            dm.sqlqFolders.Filtered := False;
             if delfldr <> '' then { Markierte Ordner incl. Dateien entfernen }
             begin
-              with dm, tblFiles do
-              begin
-                First;
-                while not eof do
-                  if Pos(tblFilesFolderId.AsString + ',', delfldr) <> 0 then Delete else Next;
-              end;
+              //with dm, tblFiles do
+              //begin
+                dm.sqlqFiles.First;
+                while not dm.sqlqFiles.eof do
+                  if Pos(dm.sqlqFiles.FieldByName('FolderID').AsString + ',', delfldr) <> 0 then dm.sqlqFiles.Delete else dm.sqlqFiles.Next;
+              //end;
             end;
             Inc(fileid);
           //end;
-        end;
+        //end;
         end;
       end else { kein Updateing }
       begin
@@ -1037,11 +1038,11 @@ begin
         while res = 0 do
         begin
           if dbug then
-            with MyFiles3Form.ColIni do
-            begin
-              WriteString(ini_colcleanup,ini_lastfile,Verzeichnis+sr.Name);
-              UpdateFile;
-            end;
+            //with MyFiles3Form.ColIni do
+            //begin
+              MyFiles3Form.ColIni.WriteString(ini_colcleanup,ini_lastfile,Verzeichnis+sr.Name);
+              MyFiles3Form.ColIni.UpdateFile;
+            //end;
 
           if (SR.Name <> '.') and (SR.Name <> '..') and (Bool(SR.Attr and faDirectory) or FileMatchesMasks(Verzeichnis+SR.Name,IncludeMasks)) then
 //            if not bool(opt_file and bit_noidx) then { nur, wenn Datei auch indiziert werden soll }
@@ -1052,111 +1053,99 @@ begin
               if Bool(SR.Attr and faDirectory) then
               begin { Folder }
                 hsf := True;
-                with dm, tblFiles do
-                begin
-                  if updmode then idx := idlist.indexof(ansilowercase(SR.Name)) else idx := -1;
+                //with dm, tblFiles do
+                //begin
+                  if updmode then idx := idlist.indexof(UTF8LowerCase(SR.Name)) else idx := -1;
                   if idx <> -1 then
                   begin
-                    SetKey;
-                    tblFilesDISKID.AsInteger := DiskId;
-                    tblFilesFOLDERID.AsInteger := FolderId;
-                    tblFilesFILEID.Value := integer(idlist.Objects[idx]);
-                    GotoKey;
-                    Edit;
+                    dm.sqlqFiles.Locate('MediaID;FolderID;FileID', VarArrayOf([MediaId, FolderId, StrToInt(idlist[idx])]), []);
+                    dm.sqlqFiles.Edit;
                   end else
                   begin
-                    Append;
+                    dm.sqlqFiles.Append;
                     Inc(fileid);
-                    tblFilesDISKID.AsInteger := DiskId;
-                    tblFilesFOLDERID.AsInteger := FolderId;
-                    tblFilesFILEID.Value := FileId;
+                    dm.sqlqFiles.FieldByName('MediaID').AsInteger := MediaId;
+                    dm.sqlqFiles.FieldByName('FolderID').AsInteger := FolderId;
+                    dm.sqlqFiles.FieldByName('FileID').AsInteger := FileId;
                   end;
-                  tblFilesEntryKind.Value := ek_folder;
-                  tblFilesFileName.AsString := SR.Name;
+                  dm.sqlqFiles.FieldByName('EntryKind').Value := ek_folder;
+                  dm.sqlqFiles.FieldByName('FileName').AsString := SR.Name;
                   try
-                    tblFilesChanged.AsDateTime := FileDateToDateTime(SR.Time);
+                    dm.sqlqFiles.FieldByName('Changed').AsDateTime := FileDateToDateTime(SR.Time);
                   except
-                    tblFilesChanged.Clear;
+                    dm.sqlqFiles.FieldByName('Changed').Clear;
                   end;
-                  tblFilesAttr.Value := SR.Attr;
-                  tblFilesSize.Value := -1;
+                  dm.sqlqFiles.FieldByName('Attr').Value := SR.Attr;
+                  dm.sqlqFiles.FieldByName('Size').Value := -1;
                 { FILE_ID.DIZ auslesen }
                   gotfileiddiz := False;
                   if optFileIDDiz then
                   begin
                     s := Format('%s%s\file_id.diz', [verzeichnis, sr.Name]);
                     if FileExistsUTF8(s) { *Converted from FileExists* } then { Datei existiert + Notiz ist leer bzw. updateall }
-                      if (tblFilesNote.IsNull) or (optUpdatePrev) then
+                      if (dm.sqlqFiles.FieldByName('Note').IsNull) or (optUpdatePrev) then
                       begin
                         gotfileiddiz := True;
                         slUnknownEncoding := TStringList.Create;
-                        slUnknownEncoding.LoadFromFile(s)
+                        slUnknownEncoding.LoadFromFile(s);
                         sUnknownEncoding := slUnknownEncoding.Text;
                         sUTF8Encoding := ConvertEncoding(sUnknownEncoding, GuessEncoding(sUnknownEncoding), EncodingUTF8);
-                        dm.sqlqFiles.FieldByName('tblFilesNote').AsString := sUTF8Encoding;
+                        dm.sqlqFiles.FieldByName('Note').AsString := sUTF8Encoding;
                         slUnknownEncoding.Free;
                       end;
                   end;
                 { DESCRIPT.ION auslesen }
                   if not gotfileiddiz then
                     if (optDESCRIPTION) and Assigned(descfiles) then
-                      if (tblFilesNote.IsNull) or (optUpdatePrev) then
+                      if (dm.sqlqFiles.FieldByName('Note').IsNull) or (optUpdatePrev) then
                       begin
-
-                        idx := descfiles.indexof(ansilowercase(sr.Name));
-                        if idx <> -1 then tblFilesNote.AsString := descriptions[integer(descfiles.Objects[idx])];
+                        idx := descfiles.indexof(UTF8LowerCase(sr.Name));
+                        if idx <> -1 then dm.sqlqFiles.FieldByName('Notes').AsString := descriptions[integer(descfiles.Objects[idx])];
                       end;
-                  Post;
-                  bookmark1 := GetBookmark;
+                  dm.sqlqFiles.Post;
+                  bookmarkedFileID := dm.sqlqFiles.FieldByName('FileID').AsInteger;
                   try
                   { Recurse Folder }
                     i := stat_files;
-                    ThisSize := ReadDir(Verzeichnis + SR.Name, DiskId);
+                    ThisSize := ReadDir(Verzeichnis + SR.Name, MediaId);
                     Groesse := Groesse + ThisSize;
-                    gotobookmark(bookmark1);
+                    dm.sqlqFiles.Locate('FileID', bookmarkedFileID, []);
+                    //gotobookmark(bookmark1);
                   finally
-                    freebookmark(bookmark1);
+                    //freebookmark(bookmark1);
                   end;
-                  if (norEmptyFolders) and (i = stat_files) then Delete else
+                  if (norEmptyFolders) and (i = stat_files) then dm.sqlqFiles.Delete else
                   begin
-                    Edit;
-                    tblFilesSize.Value := ThisSize;
-                    Post;
+                    dm.sqlqFiles.Edit;
+                    dm.sqlqFiles.FieldByName('Size').Value := ThisSize;
+                    dm.sqlqFiles.Post;
                   end;
-                end;
+                //end;
               end
               else
                 begin { File }
                   Inc(pg, sr.Size);
                   Groesse := Groesse + SR.Size;
-                  with dm, tblFiles do
-                  begin
+                  //with dm, tblFiles do
+                  //begin
                     if updmode then idx := idlist.indexof(SR.Name) else idx := -1;
                     if idx <> -1 then
                     begin
-                      SetKey;
-                      tblFilesDISKID.AsInteger := DiskId;
-                      tblFilesFOLDERID.AsInteger := FolderId;
-                      tblFilesFILEID.Value := integer(idlist.Objects[idx]);
-                      GotoKey;
-                      Edit;
+                      dm.sqlqFiles.Locate('MediaID;FolderID;FileID', VarArrayOf([MediaId, FolderId, StrToInt(idlist[idx])]), []);
+                      dm.sqlqFiles.Edit;
                     end else
                     begin
-                      Append;
+                      dm.sqlqFiles.Append;
                       Inc(fileid);
-                      tblFilesDISKID.AsInteger := DiskId;
-                      tblFilesFOLDERID.AsInteger := FolderId;
-                      tblFilesFILEID.Value := FileId;
+                      dm.sqlqFiles.FieldByName('MediaID').AsInteger := MediaId;
+                      dm.sqlqFiles.FieldByName('FolderID').AsInteger := FolderId;
+                      dm.sqlqFiles.FieldByName('FileID').Value := FileId;
                     end;
-                    tblFilesEntryKind.Value := ek_file;
-                    tblFilesFileName.AsString := SR.Name;
-                    tblFilesAttr.Value := SR.Attr;
-                    tblFilesSize.Value := SR.Size;
-      (*          assignfile(f,'c:\win98\desktop\log.txt');
-                  append(f);
-                  writeln(f,verzeichnis+sr.Name);
-                  closefile(f);
-      *)
+                    dm.sqlqFiles.FieldByName('EntryKind').Value := ek_file;
+                    dm.sqlqFiles.FieldByName('FileName').AsString := SR.Name;
+                    dm.sqlqFiles.FieldByName('Attr').Value := SR.Attr;
+                    dm.sqlqFiles.FieldByName('Size').Value := SR.Size;
+
                     if isabort then Exit;
                     try
                       try
@@ -1169,8 +1158,8 @@ begin
 //                      if (ansilowercase(extractfileext(sr.Name))) = '.m3u' then
 //                        ext_importm3u(verzeichnis, sr.Name, opt_file);
                       if (not updmode) or ((updmode) and
-                        ((tblFilesChanged.AsDateTime <> dt)
-                        or (optUpdatePrev) or ((tblFilesTKind.Value = 0) and (tblFilesBKind.Value = 0)))) then
+                        ((dm.sqlqFiles.FieldByName('Changed').AsDateTime <> dt)
+                        or (optUpdatePrev) or ((dm.sqlqFiles.FieldByName('TKind').Value = 0) and (dm.sqlqFiles.FieldByName('BKind').Value = 0)))) then
                         if doprevwork(verzeichnis, sr.Name) then
                         begin
                           pbScan.Position := Pg div 1024;
@@ -1178,25 +1167,25 @@ begin
                         end;
                     except
                       on E: EPreview do lblErr.Caption := E.Message;
-                    else ;
+                    //else ;
                     end;
                     try
-                      tblFilesChanged.AsDateTime := FileDateToDateTime(SR.Time);
+                      dm.sqlqFiles.FieldByName('Changed').AsDateTime := FileDateToDateTime(SR.Time);
                     except
-                      tblFilesChanged.Clear;
+                      dm.sqlqFiles.FieldByName('Changed').Clear;
                     end;
 
                     if optDESCRIPTION and Assigned(descfiles) then
-                      if (tblFilesNote.IsNull) or (optUpdatePrev) then
+                      if (dm.sqlqFiles.FieldByName('Note').IsNull) or (optUpdatePrev) then
                       begin
-                        idx := descfiles.indexof(ansilowercase(sr.Name));
-                        if idx <> -1 then tblFilesNote.AsString := descriptions[integer(descfiles.Objects[idx])];
+                        idx := descfiles.indexof(UTF8LowerCase(sr.Name));
+                        if idx <> -1 then dm.sqlqFiles.FieldByName('Note').AsString := descriptions[integer(descfiles.Objects[idx])];
                       end;
 
-                    Post;
+                    dm.sqlqFiles.Post;
                     Inc(stat_files);
                     doStats;
-                  end;
+                  //end;
                 end;
               end;
           res := FindNextUTF8(SR); { *Converted from FindNext* }
@@ -1209,15 +1198,15 @@ begin
       end;
     end else
       lblState.Caption := str_rignore;
-    with dm, tblFolders do
-    begin
-      GotoBookmark(bookmark2);
-      Edit;
-      tblFoldersHasSubFolders.Value := hsf;
-      Post;
-    end;
+    //with dm, tblFolders do
+    //begin
+      dm.sqlqFolders.Locate('FolderID', bookmarkedFolderID, []); //GotoBookmark(bookmark2);
+      dm.sqlqFolders.Edit;
+      dm.sqlqFolders.FieldByName('HasSubFolders').Value := hsf;
+      dm.sqlqFolders.Post;
+    //end;
   finally
-    dm.tblFolders.FreeBookmark(bookmark2);
+    //dm.tblFolders.FreeBookmark(bookmark2);
   end;
 
   Dec(Level);
@@ -1292,18 +1281,18 @@ begin
     else disklabel := edtLabel.Text;
     if disklabel = '' then
       raise Exception.Create('Fehler: ReadThis, DiskLabel Empty');
-    dm.sqlqDisks.DisableControls; //tblDisks.DisableControls;
+    dm.sqlqMedia.DisableControls; //tblDisks.DisableControls;
     dm.sqlqFolders.DisableControls;
     dm.sqlqFiles.DisableControls;
     dm.sqlqFiles.Filtered := False;
     dm.sqlqFolders.Filtered := False;
-    dm.sqlqDisks.Filtered := False;
+    dm.sqlqMedia.Filtered := False;
 
     //with tblDisks do
     //begin
-      dm.sqlqDisks.IndexName:='IdxLabel'; //IndexName := 'IdxLabel';
+      dm.sqlqMedia.IndexName:='IdxLabel'; //IndexName := 'IdxLabel';
       //SetKey;
-      if dm.sqlqDisks.Locate('tblDisksLabel', disklabel, []) <> updmode //tblDisksLabel.Value := disklabel;
+      if dm.sqlqMedia.Locate('tblDisksLabel', disklabel, []) <> updmode then //tblDisksLabel.Value := disklabel;
         if not updmode then
           raise EPreReadDisk.Create(str_diskexists) else
           raise EPreReadDisk.Create(str_diskmis);
@@ -1318,14 +1307,13 @@ begin
         MyFiles3Form.ColIni.WriteString(ini_labels, VolumeSN(Drive), edtLabel.Text);
     end;
     running := True;
-    anim.Active := True;
+    {//ToBeConverted anim.Active := True;}
     isabort := False;
     if not updmode then
     begin
       dm.sqlqMedia.Append;
       dm.sqlqMedia.FieldByName('tblDisksLABEL').AsString:=disklabel;
       dm.sqlqMedia.Post;
-      dm.sqlqMedia.ApplyUpdates;
     end;
     bookmarkedMediaID := dm.sqlqMedia.FieldByName('MediaID');//:= tblDisks.GetBookMark;
     level := 0;
