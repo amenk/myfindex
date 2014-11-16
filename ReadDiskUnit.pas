@@ -1249,7 +1249,7 @@ end;
 
 procedure TfrmReadDisk.ReadThis(drive: char);
 var
-  bookmarkedtblMediaID : integer;
+  bookmarkedMediaID : integer;
   Size: Int64;
   i : integer;
 var
@@ -1315,7 +1315,7 @@ begin
       dm.sqlqMedia.FieldByName('tblDisksLABEL').AsString:=disklabel;
       dm.sqlqMedia.Post;
     end;
-    bookmarkedMediaID := dm.sqlqMedia.FieldByName('MediaID');//:= tblDisks.GetBookMark;
+    bookmarkedMediaID := dm.sqlqMedia.FieldByName('MediaID').AsInteger; //:= tblDisks.GetBookMark;
     level := 0;
     lblCurF.Caption := '';
     if updmode then
@@ -1330,24 +1330,24 @@ begin
     if pbScan.Max = 0 then pbScan.Max := 1;
     pg := 0;
 
-    p_dur := MyFiles3Form.ReadInteger(ini_config, ini_ph_duration, 3);
-    p_bitrate := MyFiles3Form.ReadString(ini_config, ini_ph_qual, '16kbps');
-    p_param := MyFiles3Form.ReadString(ini_config, ini_ph_param, '--mp3input -m mono -a -b %0:s -o %1:s %2:s');
-    p_maxw := MyFiles3Form.ReadInteger(ini_config, ini_pb_width, 63);
-    p_maxh := MyFiles3Form.ReadInteger(ini_config, ini_pb_height, 63);
-    p_qual := MyFiles3Form.ReadInteger(ini_config, ini_pb_qual, 39);
+    p_dur := MyFiles3Form.ini.ReadInteger(ini_config, ini_ph_duration, 3);
+    p_bitrate := MyFiles3Form.ini.ReadString(ini_config, ini_ph_qual, '16kbps');
+    p_param := MyFiles3Form.ini.ReadString(ini_config, ini_ph_param, '--mp3input -m mono -a -b %0:s -o %1:s %2:s');
+    p_maxw := MyFiles3Form.ini.ReadInteger(ini_config, ini_pb_width, 63);
+    p_maxh := MyFiles3Form.ini.ReadInteger(ini_config, ini_pb_height, 63);
+    p_qual := MyFiles3Form.ini.ReadInteger(ini_config, ini_pb_qual, 39);
 
-    ReadDiskid := dm.sqlqMedia.FieldByName('MediaID').AsInteger;
-    MyFiles3Form.ColIni.WriteString(ini_colcleanup,IntToStr(ReadDiskid),DiskLabel);
+    ReadMediaId := dm.sqlqMedia.FieldByName('MediaID').AsInteger;
+    MyFiles3Form.ColIni.WriteString(ini_colcleanup,IntToStr(ReadMediaid),DiskLabel);
     MyFiles3Form.ColIni.UpdateFile;
     Size := ReadDir( drive + ':', dm.sqlqMedia.FieldByName('MediaID').AsInteger);
-    dm.sqlqMedia.Locate('MediaID', bookmarkedMediaID);
+    dm.sqlqMedia.Locate('MediaID', bookmarkedMediaID, []);
     //tblDisks.GotoBookMark(bookmark);
     //tblDisks.FreeBookMark(bookmark);
 
     dm.sqlqMedia.Edit; //tblDisks.Edit;
     dm.sqlqMedia.FieldByName('Size').AsInteger := Size ;//tblDisksSIZE.Value := Size;
-    dm.sqlqMedia.FieldByName('Read').AsInteger := now;//tblDisksREAD.Value := now;
+    dm.sqlqMedia.FieldByName('Read').AsDateTime := now;//tblDisksREAD.Value := now;
     dm.sqlqMedia.Post;//tblDisks.Post;
 
     dm.SaveChanges;
