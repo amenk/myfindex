@@ -5,7 +5,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  Buttons, StdCtrls, UseFulPrcs, myf_consts;
+  Buttons, StdCtrls, UseFulPrcs, myf_consts, LCLProc;
 
 type
   TfrmSammlung = class(TForm)
@@ -77,7 +77,7 @@ begin
     m := Length(edtName.Text);
     if m > 6 then m := 6;
     for i := 1 to m do
-      if lowercase(edtName.Text[i])[1] in ['a'..'z', 'ä', 'ö', 'ü', 'ß', '0'..'9'] then
+      if UTF8LowerCase(edtName.Text[i])[1] in ['a'..'z', 'ä', 'ö', 'ü', 'ß', '0'..'9'] then
         s := s + lowercase(edtName.Text[i]);
     s2 := s;
     i := 1;

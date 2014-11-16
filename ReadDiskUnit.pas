@@ -12,7 +12,7 @@ uses
   Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   StdCtrls, ComCtrls, UsefulPrcs, ExtCtrls, Buttons, CheckLst, db,
   ImgList, Menus, MapChar, CommCtrl, ShellApi, ToolWin, IniFiles, LCLType, Process,
-  FileUtil, lconvencoding, LCLProc, Variants, LCLIntf;
+  FileUtil, lconvencoding, LCLProc, Variants, LCLIntf, Math;
 
 type
   EPreview = class(Exception);
@@ -1740,19 +1740,19 @@ var
   i,j : integer;
 begin
   lvUsedPlugins.Selected := nil;
-  with tvInstalled do
+  //with tvInstalled do
     if Sender = menAddAll then
     begin
-      for i := 0 to Items.Count-1 do
-        with Items[i] do
-          for j := 0 to Count-1 do
-            AddMe(Item[j]);
+      for i := 0 to tvInstalled.Items.Count-1 do
+        with tvInstalled.Items[i] do
+          for j := 0 to tvInstalled.Items[i].Count-1 do
+            AddMe(tvInstalled.Items[i].Items[j]);
     end else
-      if Assigned(Selected) then
-        with Selected do
-          case level of
-            0 : for i := 0 to Count-1 do
-                  AddMe(Item[i]);
+      if Assigned(tvInstalled.Selected) then
+        //with Selected do
+          case tvInstalled.Selected.Level of
+            0 : for i := 0 to tvInstalled.Selected.Count-1 do
+                  AddMe(tvInstalled.Selected.Items[i]);
             1 : AddMe(tvInstalled.Selected);
           end;
   lvUsedPluginsSelectItem(nil,nil,True);
