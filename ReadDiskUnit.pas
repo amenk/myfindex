@@ -6,7 +6,10 @@ interface
 
 uses
   myf_consts, myf_main, myf_plugins,
-  {Windows, }Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
+  {$ifdef WINDOWS}
+  Windows,
+  {$endif}
+  Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   StdCtrls, ComCtrls, UsefulPrcs, ExtCtrls, Buttons, CheckLst, db,
   ImgList, Menus, MapChar, CommCtrl, ShellApi, ToolWin, IniFiles, LCLType, Process,
   FileUtil, lconvencoding, LCLProc, Variants, LCLIntf;
