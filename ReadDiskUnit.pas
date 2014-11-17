@@ -1423,8 +1423,6 @@ begin
   with MyFiles3Form do
   begin
     mNotesExit(nil);
-    if Assigned(notedb) then
-      notedb.freebookmark(notebm);
     notedb := nil;
   end;
   lvDrives.Enabled := False;

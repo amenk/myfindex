@@ -28,7 +28,7 @@ uses
   {Windows, }Messages, SysUtils, Forms, ShlObj, CommCtrl, ToolWin,
   ExtCtrls, Menus, StdCtrls, Dialogs, Controls, ComCtrls, Classes, Graphics,
   ShellAPI, Spin, Buttons, ImgList, Grids, IniFiles, FileUtil, Variants,
-  Clipbrd, CheckLst, SplashFUnit, DBGrids, Registry, sqldb, xplorerimagelist;
+  Clipbrd, CheckLst, SplashFUnit, DBGrids, Registry, sqldb, xplorerimagelist, Crt;
 
 const
   lvt_file = 1;
@@ -52,10 +52,13 @@ type
   end;
   PTVData = ^TTVData;
   TTVData = record
-    diskid, folderid: integer;
+    MediaID, FolderID: integer;
   end;
 
 type
+
+  { TMyFiles3Form }
+
   TMyFiles3Form = class(TForm)
     MainMenu: TMainMenu;
     menFile: TMenuItem;
@@ -357,6 +360,8 @@ type
     menDeleteColItem: TMenuItem;
     menFAQ: TMenuItem;
     procedure FormCreate(Sender: TObject);
+    procedure ListViewCompare(Sender: TObject; Item1, Item2: TListItem;
+      Data: Integer; var Compare: Integer);
     procedure ListViewMouseMove(Sender: TObject; Shift: TShiftState; X,
       Y: Integer);
     procedure ListViewCustomDrawItem(Sender: TCustomListView;
@@ -787,6 +792,7 @@ begin
   Result := Copy(s, p + 1, Length(s));
 end;
 
+{
 function GenSortProc(Item1, Item2: TListItem; ParamSort: integer): integer; stdcall;
 var
   i1, i2 : TMyItem;
@@ -803,6 +809,7 @@ begin
     Result := MyCompareItems(MyFiles3Form.LvColumns.DID[abs(ParamSort)-1],i1,i2);
   if paramsort < 0 then Result := -Result;
 end;
+}
 
 { ListView Switching }
 { + 128 -> nur laden }
@@ -1129,6 +1136,25 @@ begin
     Free;
   end;
 end;
+
+procedure TMyFiles3Form.ListViewCompare(Sender: TObject; Item1, Item2: TListItem; Data: Integer; var Compare: Integer);
+var
+  i1, i2 : TMyItem;
+  t1, t2 : Byte;
+begin
+  i1 := PLVData(item1.Data)^.Item;
+  i2 := PLVData(item2.Data)^.Item;
+  t1 := i1.typ;
+  t2 := i2.typ;
+  if t1 = 4 then t1 := ek_folder;
+  if t2 = 4 then t2 := ek_folder;
+  if (t1 <> t2) and ((t1 <> ek_file) or (t2 <> ek_file)) then
+    Compare := MyCompareItems(cl_typ,i1,i2) else
+      Compare := MyCompareItems(MyFiles3Form.LvColumns.DID[abs(ParamSort)-1],i1,i2);
+  if paramsort < 0 then Compare := -Compare;
+end;
+end;
+
 {//ToBeConverted
 procedure TMyFiles3Form.begindrag(copymode: Boolean);
 var
@@ -1319,8 +1345,6 @@ begin
     mNotesExit(nil);
   except end;
 
-  if Assigned(notedb) then
-    notedb.freebookmark(notebm);
   notedb := nil;
 
 
@@ -1379,64 +1403,50 @@ begin
             defhint := str_verbund + ': ' + ListView.Selected.Caption;
           //end;
         end;
-      lvt_disk: with dm, tblDisks do
-        begin
-          IndexName := '';
-          setkey;
-          tblDisksDISKID.Value := data.item.id.diskid;
-          Gotokey;
-          notedb := tblDisks;
-          notebm := GetBookmark;
-          mNotes.Text := tblDisksNote.AsString;
+      lvt_disk: begin
+          dm.sqlqMedia.IndexName := '';
+          dm.sqlqMedia.Locate('MediaID', data.item.id.diskid, []);
+          notedb := dm.sqlqMedia;
+          bookMarkedNote := dm.sqlqMedia.FieldByName('MediaID').AsInteger;
+          mNotes.Text := dm.sqlqMedia.FieldByName('Note').AsString;
           defhint := str_xdisk + ': ' + ListView.Selected.Caption;
-        end;
-      lvt_ordner, lvt_file:
-        with dm, tblFiles do
-        begin
-          SetKey;
-          with data do
-          begin
-            tblFilesDISKID.Value := item.id.diskid;
-            tblFilesFOLDERID.Value := item.id.folderid;
-            tblFilesFILEID.Value := item.id.fileid;
-          end;
-          GotoKey;
-          notedb := tblFiles;
-          notebm := GetBookmark;
-          if (data.item.typ = lvt_ordner) and (trim(tblFilesNote.AsString) = '') then
-            with tblFolders do
+      end;
+      lvt_ordner, lvt_file: begin
+          dm.sqlqFiles.Locate('MediaID;FolderID;FileID', VarArrayOf([data.item.id.diskid, data.item.id.folderid, data.item.id.fileid]), []);
+          notedb := dm.sqlqFiles;
+          bookmarkedNote := dm.sqlqFiles.FieldByName('FileID').AsInteger;
+          if (data.item.typ = lvt_ordner) and (trim(dm.sqlqFiles.FieldByName('Note').AsString) = '') then
             begin
-              IndexName := '';
-              s := LookUp('FOLDERID', data.item.id.folderid, 'Folder') + item.Caption + '\';
-              SetKey;
-              tblFoldersDISKID.Value := -1;
-              tblFoldersFolder.Value := s;
-              if GotoKey then
-                with mNotes do
-                begin
-                  Text := tblFoldersNote.Value;
-                  Font.Color := clBlue;
-                  Tag := 0;
-                end;
+              dm.sqlqFolders.IndexName := '';
+              s := dm.sqlqFolders.LookUp('FOLDERID', data.item.id.folderid, 'Folder') + item.Caption + '\';
+              if dm.sqlqFolders.Locate('MediaID;Folder', VarArrayOf([-1, s]), []) then
+              mNotes.Text := dm.sqlqFolders.FieldByName('Note').Value;
+              mNotes.Font.Color := clBlue;
+              mNotes.Tag := 0;
             end
           else
-            mNotes.Text := tblFilesNote.AsString;
+            mNotes.Text := dm.sqlqFolders.FieldByName('Note').AsString;
           defhint := GetLVIFileName(ListView.selected, True);
         end;
     end; {case}
     { Wenn Datei: Vorschau anzeigen }
     if data.item.typ = lvt_file then
-      with dm, tblFiles do
+      //with dm, tblFiles do
       begin
         pnlPAudio.Tag := 0;
         imgPImages.Tag := 0;
         lvPZip.Tag := 0;
-        case tblFilesBKind.Value of { Binär }
-          pk_img: begin prev := True; imgPImages.Tag := 1; picprev(tblFilesBinPreview); end;
+        case dm.sqlqFiles.FieldByName('BKind').Value of { Binär }
+          pk_img: begin prev := True; imgPImages.Tag := 1; picprev(TBlobField(dm.sqlqFiles.FieldByName('BinPreview'))); end;
           pk_mp3: begin prev := True; pnlPAudio.Tag := 1; mp3prev; end;
         end;
-        case tblFilesTKind.Value of { Text }
-          pk_zipfile: begin prev := True; lvPZip.Tag := 1; zipprev(tblFilesTextPreview.Value); end;
+        case dm.sqlqFiles.FieldByName('TKind').Value of { Text }
+          pk_zipfile:
+          begin
+            prev := True;
+            lvPZip.Tag := 1;
+            zipprev(dm.sqlqFiles.FieldByName('TextPreview').Value);
+          end;
 (*         pk_html: begin; prev := True; mPGen.Tag := 1; genprev(tblFilesTextPreview.Value, true); end;
           pk_txt: begin; prev := True; mPGen.Tag := 1; genprev(tblFilesTextPreview.Value, false); end;
           pk_verinfo: begin prev := True; mPGen.Tag := 1; verinfoprev(tblFilesTextPreview.Value); end;
@@ -1465,17 +1475,14 @@ begin
     end else
     begin
       defhint := str_nothing;
-      with tmrSumSize do
-        begin Enabled := False; Enabled := True; end; { Timer neu starten }
+      tmrSumSize.Enabled := False; tmrSumSize.Enabled := True; { Timer neu starten }
     end;
 
   sbMain.Panels[2].Text := defhint;
-//  tsNote.TabVisible := ListView.Selcount = 1;
-//  tsPreview.tabvisible := prev;
 
   { Fett-Druck der Listen-Liste Updaten }
   if pc1.ActivePage = tsListen then
-    lvLists.UpdateItems(0, maxInt);
+    lvLists.Update; //UpdateItems(0, maxInt);
 
   pnlProps.Visible := ListView.SelCount = 1;
 
@@ -1492,11 +1499,6 @@ begin
   Inc(h, pnlPrev.Tag);
 
   pnlProps.Height := h + 5;
-
-//  sbPropsResize(nil);
-
-(*  if not tsNote.TabVisible then
-    pcStatus.ActivePage := tsDriveState; *)
 end;
 
 procedure TMyFiles3Form.menAnyDiskAddClick(Sender: TObject);
@@ -1575,41 +1577,41 @@ var
   newNode: TTreeNode;
   s: string;
 begin
-  with dm, tv, tblFolders do
-  begin
+  //with dm, tv, tblFolders do
+  //begin
     // Einträge
-    disableControls;
+    dm.sqlqFolders.disableControls;
     s := 'Folder = ''' + escape(folder) + '*'' and Level = ' + IntToStr(level);
     if disk <> -1 then
       s := s + ' and DISKID = ' + inttostr(disk);
-    Filter := s;
-    Filtered := True;
-    First;
+    dm.sqlqFolders.Filter := s;
+    dm.sqlqFolders.Filtered := True;
+    dm.sqlqFolders.First;
     newNode := nil;
-    while not eof do
+    while not dm.sqlqFolders.eof do
     try
-      s := ExtractLastFEntry(tblFoldersFolder.AsString);
+      s := ExtractLastFEntry(dm.sqlqFolders.FieldByName('Folder').AsString);
       if Assigned(newNode) then { Doppelte Einträge (Verbundanzeige!) verhindern ... }
         if lowercase(newNode.Text) = lowercase(s) then
           continue;
-      newNode := Items.AddChild(ParentNode, s);
+      newNode := tv.Items.AddChild(ParentNode, s);
       newNode.ImageIndex := idi_closef;
       newNode.SelectedIndex := idi_openf;
       newNode.Data := New(PTVData);
       with PTVData(newNode.Data)^ do
       begin
-        diskid := disk;
-        folderid := tblFoldersFOLDERID.Value;
+        MediaID := disk;
+        FolderID := dm.sqlqFolders.FieldByName('FolderID').Value;
       end;
         // Dummy Eintrag?
-      if tblFoldersHasSubFolders.Value then
-        Items.AddChild(newNode, ''); // Jepp!
+      if dm.sqlqFolders.FieldByName('HasSubFolders').Value then
+        tv.Items.AddChild(newNode, ''); // Jepp!
     finally
-      Next;
+      dm.sqlqFolders.Next;
     end;
-    Filtered := false;
-    EnableControls
-  end;
+    dm.sqlqFolders.Filtered := false;
+    dm.sqlqFolders.EnableControls
+  //end;
 end;
 
 procedure TMyFiles3Form.updatetvs;
@@ -1620,9 +1622,9 @@ begin
   cleartvs;
   if not ini.ReadBool(ini_colpre + curcol, ini_combodis, False) then
   begin
-    with dm do
-    begin
-      tblFolders.DisableControls;
+    //with dm do
+    //begin
+      dm.sqlqFolders.DisableControls;
       topNode := tvVerbund.Items.Add(nil, ini.ReadString(ini_collections, curcol, 'root'));
       with topNode do
       begin
@@ -1630,9 +1632,9 @@ begin
         SelectedIndex := idi_root;
       end;
       AddFolder2TV(tvVerbund, -1, '\', 2, topNode);
-      tblFolders.EnableControls;
-      tblFolders.Filtered := False;
-    end;
+      dm.sqlqFolders.EnableControls;
+      dm.sqlqFolders.Filtered := False;
+    //end;
     topNode.Expand(false);
   end;
 
@@ -1643,38 +1645,38 @@ begin
     ImageIndex := idi_root;
     SelectedIndex := idi_root;
   end;
-  with dm, tblDisks do
-  begin
-    Filtered := False;
-    indexname := 'IdxLabel';
-    First;
-    while not eof do
+  //with dm, tblDisks do
+  //begin
+    dm.sqlqMedia.Filtered := False;
+    dm.sqlqMedia.indexname := 'IdxLabel';
+    dm.sqlqMedia.First;
+    while not dm.sqlqMedia.eof do
     begin
-      newNode := tvDisks.Items.AddChild(topNode, tblDisksLabel.DisplayText);
+      newNode := tvDisks.Items.AddChild(topNode, dm.sqlqMedia.FieldByName('Label').DisplayText);
       with newNode do
       begin
         ImageIndex := idi_disk;
         SelectedIndex := idi_disk;
         Data := New(PTVData);
-        with PTVData(Data)^ do
-        begin
-          diskid := tblDisksDISKID.Value;
-          folderid := -1;
-        end;
+        //with PTVData(Data)^ do
+        //begin
+          PTVData(Data)^.MediaID := dm.sqlqMedia.FieldByName('MediaID').Value;
+          PTVData(Data)^.FolderID := -1;
+        //end;
       end;
-      with dm, tblFolders do
-      begin
-        IndexName := '';
-        Filter := 'DISKID = '+IntToStr(tblDisksDISKID.Value);
-        Filtered := True;
-        First;
-        Next;
-        if not eof then  tvDisks.Items.AddChild(newNode, '');
-        Filtered := False;
-      end;
+      //with dm, tblFolders do
+      //begin
+        dm.sqlqFolders.IndexName := '';
+        dm.sqlqFolders.Filter := 'MediaID = '+IntToStr(dm.sqlqMedia.FieldByName('MediaID').Value);
+        dm.sqlqFolders.Filtered := True;
+        dm.sqlqFolders.First;
+        dm.sqlqFolders.Next;
+        if not dm.sqlqFolders.eof then  tvDisks.Items.AddChild(newNode, '');
+        dm.sqlqFolders.Filtered := False;
+      //end;
       Next;
     end;
-  end;
+  //end;
   topNode.Expand(false);
 end;
 
@@ -1915,10 +1917,10 @@ var
   i : integer;
 begin
   i := 0;
-  with dm, tblFiles do
-  begin
-    if Locate('FolderID', fid, []) then
-      while (tblFilesFolderID.Value = FID) and (not eof) do
+  //with dm, tblFiles do
+  //begin
+    if dm.sqlqFiles.Locate('FolderID', fid, []) then
+      while (dm.sqlqFolders.FieldByName('FolderID').Value = FID) and (not dm.sqlqFolders.eof) do
       begin
         Inc(i);
         if i = 100 then
@@ -1931,7 +1933,7 @@ begin
         Next;
         if i > 100 then StepWait(Self);
       end;
-  end;
+  //end;
   StopWait;
   pbProgress.Smooth := False;
 end;
@@ -1940,7 +1942,7 @@ procedure TMyFiles3Form.tvVerbundChange(Sender: TObject; Node: TTreeNode);
 var
   i: integer;
 begin
-  tvVerbund.ChangeDelay := 250;
+  Delay(250); // tvVerbund.ChangeDelay := 250; => Wait in OnChange einbauen
   if (tvVerbund.Selected = nil) then Exit;
   with tvDisks do
   begin
@@ -1958,12 +1960,12 @@ end;
 procedure TMyFiles3Form.ListViewColumnClick(Sender: TObject;
   Column_: TListColumn);
 begin
-  with (Sender as TListView) do
-  begin
-    if Column_.Tag + 1 = Tag then Tag := -Tag else
-      Tag := Column_.tag + 1;
-    CustomSort(@GenSortProc, Tag);
-  end;
+  //with (Sender as TListView) do
+  //begin
+    if Column_.Tag + 1 = TListView(Sender).Tag then TListView(Sender).Tag := -Tag else
+      TListView(Sender).Tag := Column_.tag + 1;
+    TListView(Sender).AlphaSort; //CustomSort(@GenSortProc, Tag);
+  //end;
 end;
 
 { Enter/Doppelklick im ListView Handler }
@@ -2113,7 +2115,7 @@ begin
     tvDisks.Items.Delete(Node.getFirstChild);
     s := GetPathFromTNode(Node, 2, level);
     if s <> '' then s := s + '\';
-    AddFolder2TV(tvDisks, PTVData(Node.Data)^.diskid, '\' + s, level + 2, Node);
+    AddFolder2TV(tvDisks, PTVData(Node.Data)^.MediaID, '\' + s, level + 2, Node);
   end;
 end;
 
@@ -4896,6 +4898,11 @@ begin
   updateLV;
 end;
 
+procedure TMyFiles3Form.ListViewGetImageIndex(Sender: TObject; Item: TListItem);
+begin
+
+end;
+
 {//ToBeConverted
 procedure TMyFiles3Form.ListViewGetImageIndex(Sender: TObject;
   Item: TListItem);
@@ -5609,7 +5616,7 @@ begin
   end;
 
   if s = Node.Text then Exit;
-  UpdateLabel(PTVData(Node.Data)^.diskid,s);
+  UpdateLabel(PTVData(Node.Data)^.MediaID,s);
   address := '<'+s+'>\';
   UpdateLV;
   lvDriveState.Refresh;
@@ -5624,7 +5631,7 @@ begin
     Exit;
   end;
   if Node <> tvDisks.Items.GetFirstNode then
-    AllowEdit := PTVData(Node.Data)^.folderid = -1
+    AllowEdit := PTVData(Node.Data)^.FolderID = -1
   else
     AllowEdit := False;
 end;
@@ -7373,7 +7380,7 @@ begin
   if not ((cdsFocused in state) or (cdsSelected in state) ) then
     if Assigned(Node.Data) then
       tvDisks.Canvas.Font.Color :=
-        GetObjectColor(lvt_ordner,PTVData(Node.Data)^.diskid,PTVData(Node.Data)^.folderid,'');
+        GetObjectColor(lvt_ordner,PTVData(Node.Data)^.MediaID,PTVData(Node.Data)^.FolderID,'');
 end;
 
 procedure TMyFiles3Form.tvVerbundCustomDrawItem(Sender: TCustomTreeView;
@@ -7382,7 +7389,7 @@ begin
   if not ((cdsFocused in state) or (cdsSelected in state) ) then
     if Assigned(Node.Data) then
       tvVerbund.Canvas.Font.Color :=
-        GetObjectColor(lvt_verbund,PTVData(Node.Data)^.diskid,PTVData(Node.Data)^.folderid,'');
+        GetObjectColor(lvt_verbund,PTVData(Node.Data)^.MediaID,PTVData(Node.Data)^.FolderID,'');
 end;
 
 procedure TMyFiles3Form.CreateTempList;

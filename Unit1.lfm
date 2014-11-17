@@ -1323,7 +1323,7 @@ object MyFiles3Form: TMyFiles3Form
         Left = 8
         Height = 42
         Top = 17
-        Width = 1296
+        Width = 1660
         Alignment = taCenter
         Anchors = [akTop, akLeft, akRight]
         AutoSize = False
@@ -1889,9 +1889,11 @@ object MyFiles3Form: TMyFiles3Form
       ParentShowHint = False
       PopupMenu = pmListView
       RowSelect = True
+      SortType = stData
       TabOrder = 0
       ViewStyle = vsReport
       OnColumnClick = ListViewColumnClick
+      OnCompare = ListViewCompare
       OnContextPopup = ListViewContextPopup
       OnCustomDrawItem = ListViewCustomDrawItem
       OnCustomDrawSubItem = ListViewCustomDrawSubItem
