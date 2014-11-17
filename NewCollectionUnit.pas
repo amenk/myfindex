@@ -70,6 +70,7 @@ var
   i, res: integer;
   SR: TSearchRec;
   m: integer;
+  editTextLowerCase : string;
 begin
   if col = '' then
   begin
@@ -77,8 +78,8 @@ begin
     m := Length(edtName.Text);
     if m > 6 then m := 6;
     for i := 1 to m do
-      if UTF8LowerCase(edtName.Text[i])[1] in ['a'..'z', 'ä', 'ö', 'ü', 'ß', '0'..'9'] then
-        s := s + lowercase(edtName.Text[i]);
+      //if UTF8LowerCase(edtName.Text[i])[1] in ['a'..'z', 'ä', 'ö', 'ü', 'ß', '0'..'9'] then
+      s := s + UTF8LowerCase(edtName.Text[i]);
     s2 := s;
     i := 1;
     while (s2 = '') or (MyFiles3Form.ini.ReadString('Collections', s2, '') <> '') do

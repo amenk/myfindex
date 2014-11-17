@@ -1,27 +1,25 @@
 object frmSammlung: TfrmSammlung
   Left = 522
+  Height = 256
   Top = 317
+  Width = 200
   HelpContext = 1000
   BorderStyle = bsDialog
   Caption = 'Neue Sammlung'
   ClientHeight = 256
   ClientWidth = 200
   Color = clBtnFace
-  Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
   Font.Name = 'MS Sans Serif'
-  Font.Style = []
-  OldCreateOrder = False
-  Position = poOwnerFormCenter
   OnCreate = FormCreate
-  PixelsPerInch = 96
-  TextHeight = 13
+  Position = poOwnerFormCenter
+  LCLVersion = '1.2.6.0'
   object btnOk: TSpeedButton
     Left = 8
+    Height = 25
     Top = 222
     Width = 86
-    Height = 25
     Caption = 'OK'
     Enabled = False
     Glyph.Data = {
@@ -40,61 +38,68 @@ object frmSammlung: TfrmSammlung
       33333333A222433333333333338F338F00003333333333333A22433333333333
       3338F38F000033333333333333A223333333333333338F830000333333333333
       333A333333333333333338330000333333333333333333333333333333333333
-      0000}
+      0000
+    }
     NumGlyphs = 2
     OnClick = btnOkClick
   end
   object btnAbort: TSpeedButton
     Left = 106
+    Height = 25
     Top = 222
     Width = 86
-    Height = 25
     Caption = 'Abbrechen'
   end
   object gb1: TGroupBox
     Left = 8
+    Height = 57
     Top = 8
     Width = 185
-    Height = 57
     Caption = ' Name der Sammlung '
+    ClientHeight = 39
+    ClientWidth = 181
     TabOrder = 0
     object edtName: TEdit
       Left = 16
+      Height = 21
       Top = 24
       Width = 153
-      Height = 21
       HelpContext = 1001
       MaxLength = 100
-      TabOrder = 0
       OnChange = Validate
+      TabOrder = 0
     end
   end
   object gb2: TGroupBox
     Left = 8
+    Height = 137
     Top = 72
     Width = 185
-    Height = 137
     Caption = ' Optionen '
+    ClientHeight = 119
+    ClientWidth = 181
     TabOrder = 1
     object Label2: TLabel
       Left = 15
+      Height = 13
       Top = 20
       Width = 114
-      Height = 13
       Caption = 'Überwachte Laufwerke:'
+      ParentColor = False
     end
     object Label1: TLabel
       Left = 16
+      Height = 13
       Top = 88
       Width = 135
-      Height = 13
       Caption = 'Datenträgeridentifikation via:'
+      ParentColor = False
     end
     object cbAutoUpdate: TCheckBox
       Left = 15
+      Height = 19
       Top = 58
-      Width = 154
-      Height = 17
+      Width = 155
       HelpContext = 1003
       Caption = 'Status automatisch abfragen'
       Checked = True
@@ -103,27 +108,28 @@ object frmSammlung: TfrmSammlung
     end
     object edtDrives: TEdit
       Left = 16
+      Height = 21
       Top = 36
       Width = 153
-      Height = 21
       HelpContext = 1002
-      CharCase = ecUpperCase
+      CharCase = ecUppercase
       MaxLength = 100
-      TabOrder = 0
       OnKeyPress = edtDrivesKeyPress
+      TabOrder = 0
     end
     object cbIdent: TComboBox
       Left = 16
+      Height = 21
       Top = 104
       Width = 153
-      Height = 21
       HelpContext = 1004
-      Style = csDropDownList
       ItemHeight = 13
-      TabOrder = 2
       Items.Strings = (
         'Seriennummer (empfohlen)'
-        'Datenträgerbezeichnung')
+        'Datenträgerbezeichnung'
+      )
+      Style = csDropDownList
+      TabOrder = 2
     end
   end
-end
+end
