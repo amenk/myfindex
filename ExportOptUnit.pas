@@ -5,8 +5,8 @@ interface
 
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  StdCtrls, Buttons, JvSpin, ExtCtrls, ComCtrls,
-  CheckLst, IniFiles, ToolWin;
+  StdCtrls, Buttons, ExtCtrls, ComCtrls,
+  CheckLst, IniFiles, ToolWin, FileUtil;
 
 type
   TfrmListExport = class(TForm)

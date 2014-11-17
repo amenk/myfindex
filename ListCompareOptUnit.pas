@@ -169,7 +169,7 @@ begin
       0 : begin
           NewList.Caption := 'Doppelt: '+FirstList.Caption;
           MyFiles3Form.StartWait(FirstList.Count*2-1,'');
-          NewList.AddDoubleItems(FirstList, IndexSpec, MyFiles3Form.StepWait);
+          NewList.AddDoubleItems(FirstList, IndexSpec, @MyFiles3Form.StepWait);
           end;
       1,2 : begin
           NewList.Caption := FirstList.Caption+' '+modechar+' '+SecondList.Caption;
@@ -177,12 +177,12 @@ begin
           if (FirstList.Count < SecondList.Count) or (modechar = '-') then
           begin
             MyFiles3Form.StartWait(FirstList.Count*2,'');
-            NewList.AddCombinedItems(FirstList, SecondList, IndexSpec, cbHow.ItemIndex=1, MyFiles3Form.StepWait)
+            NewList.AddCombinedItems(FirstList, SecondList, IndexSpec, cbHow.ItemIndex=1, @MyFiles3Form.StepWait)
           end
             else { ggf. Vertauschen }
             begin
               MyFiles3Form.StartWait(SecondList.Count*2,'');
-              NewList.AddCombinedItems(SecondList, FirstList, IndexSpec, cbHow.ItemIndex=1, MyFiles3Form.StepWait);
+              NewList.AddCombinedItems(SecondList, FirstList, IndexSpec, cbHow.ItemIndex=1, @MyFiles3Form.StepWait);
             end;
           end;
       3 : with NewList do

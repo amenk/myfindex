@@ -43,7 +43,7 @@
         <PackageName Value="LCL"/>
       </Item3>
     </RequiredPackages>
-    <Units Count="27">
+    <Units Count="26">
       <Unit0>
         <Filename Value="MyFiles.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -81,7 +81,9 @@
       <Unit5>
         <Filename Value="NewCollectionUnit.pas"/>
         <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmSammlung"/>
         <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
         <UnitName Value="NewCollectionUnit"/>
       </Unit5>
       <Unit6>
@@ -99,7 +101,9 @@
       <Unit8>
         <Filename Value="ListCompareOptUnit.pas"/>
         <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmListCompareOpt"/>
         <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
         <UnitName Value="ListCompareOptUnit"/>
       </Unit8>
       <Unit9>
@@ -120,90 +124,88 @@
         <UnitName Value="ListviewConfig"/>
       </Unit11>
       <Unit12>
-        <Filename Value="RepairUnit.pas"/>
-        <IsPartOfProject Value="True"/>
-        <HasResources Value="True"/>
-        <UnitName Value="RepairUnit"/>
-      </Unit12>
-      <Unit13>
         <Filename Value="myf_lists.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="myf_lists"/>
-      </Unit13>
-      <Unit14>
+      </Unit12>
+      <Unit13>
         <Filename Value="SplashFUnit.pas"/>
         <IsPartOfProject Value="True"/>
         <HasResources Value="True"/>
         <UnitName Value="SplashFUnit"/>
-      </Unit14>
-      <Unit15>
+      </Unit13>
+      <Unit14>
         <Filename Value="myf_main.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="myf_main"/>
-      </Unit15>
-      <Unit16>
+      </Unit14>
+      <Unit15>
         <Filename Value="ExtSelectUnit.pas"/>
         <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmExtSelect"/>
         <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
         <UnitName Value="ExtSelectUnit"/>
-      </Unit16>
-      <Unit17>
+      </Unit15>
+      <Unit16>
         <Filename Value="WaitForDiskUnit.pas"/>
         <IsPartOfProject Value="True"/>
         <HasResources Value="True"/>
         <UnitName Value="WaitForDiskUnit"/>
-      </Unit17>
-      <Unit18>
+      </Unit16>
+      <Unit17>
         <Filename Value="SysIconCache.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="SysIconCache"/>
-      </Unit18>
-      <Unit19>
+      </Unit17>
+      <Unit18>
         <Filename Value="NoRegUnit.pas"/>
         <IsPartOfProject Value="True"/>
         <HasResources Value="True"/>
         <UnitName Value="NoRegUnit"/>
-      </Unit19>
-      <Unit20>
+      </Unit18>
+      <Unit19>
         <Filename Value="StringEditUnit.pas"/>
         <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmStringEdit"/>
         <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
         <UnitName Value="StringEditUnit"/>
-      </Unit20>
-      <Unit21>
+      </Unit19>
+      <Unit20>
         <Filename Value="StringListEditUnit.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="frmBegriffe"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="StringListEditUnit"/>
-      </Unit21>
-      <Unit22>
+      </Unit20>
+      <Unit21>
         <Filename Value="myf_search.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="myf_search"/>
-      </Unit22>
-      <Unit23>
+      </Unit21>
+      <Unit22>
         <Filename Value="myf_plugins.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="myf_plugins"/>
-      </Unit23>
-      <Unit24>
+      </Unit22>
+      <Unit23>
         <Filename Value="CopyToDisksUnit.pas"/>
         <IsPartOfProject Value="True"/>
         <HasResources Value="True"/>
         <UnitName Value="CopyToDisksUnit"/>
-      </Unit24>
-      <Unit25>
+      </Unit23>
+      <Unit24>
         <Filename Value="mapchar.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="mapchar"/>
-      </Unit25>
-      <Unit26>
-        <Filename Value="TUtil32.pas"/>
+      </Unit24>
+      <Unit25>
+        <Filename Value="xplorerimagelist.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="TUtil32"/>
-      </Unit26>
+        <UnitName Value="XplorerImageList"/>
+      </Unit25>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

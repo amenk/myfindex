@@ -5,9 +5,9 @@ interface
 
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  StdCtrls, JvSpin, Buttons, ComCtrls, myf_consts, Registry, ActiveX, ComObj,
+  StdCtrls, Buttons, ComCtrls, myf_consts, Registry, ActiveX, ComObj,
   ShlObj, UseFulPrcs, CheckLst,
-  myf_plugins, Mask, ExtCtrls, Spin, JvMaskEdit;
+  myf_plugins, ExtCtrls, Spin, FileUtil;
 
 
 type

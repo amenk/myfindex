@@ -1,5 +1,4 @@
 {$R+}
-{$MODE OBJFPC}{$H+}
 (*
 
 - Toolbars
@@ -18,25 +17,18 @@ misc(str_...,'name')  -> str_....
 
 unit Unit1;
 
+{$MODE Delphi}
+
 interface
 
-{$ifdef WINDOWS}
+
 uses
-  myf_consts, myf_main, myf_lists, myf_search, myf_plugins,
+  {$ifdef WINDOWS}{$else}cmem, {$endif}myf_consts, myf_main, myf_lists, myf_search, myf_plugins,
   SysIconCache, UsefulPrcs, db,
   {Windows, }Messages, SysUtils, Forms, ShlObj, CommCtrl, ToolWin,
   ExtCtrls, Menus, StdCtrls, Dialogs, Controls, ComCtrls, Classes, Graphics,
-  ShellAPI, Spin, Buttons, ImgList, Grids, IniFiles,
-  Clipbrd, CheckLst, SplashFUnit, DBGrids, Registry, sqldb;
-{$else}
- uses
-  cmem, myf_consts, myf_main, myf_lists, myf_search, myf_plugins,
-  SysIconCache, UsefulPrcs, db,
-  Windows, Messages, SysUtils, Forms, ShlObj, CommCtrl, ToolWin,
-  ExtCtrls, Menus, StdCtrls, Dialogs, Controls, ComCtrls, Classes, Graphics,
-  ShellAPI, Spin, Buttons, ImgList, Grids, IniFiles,
-  Clipbrd, CheckLst, SplashFUnit, DBGrids, Registry, sqldb;
-{$endif}
+  ShellAPI, Spin, Buttons, ImgList, Grids, IniFiles, FileUtil, Variants,
+  Clipbrd, CheckLst, SplashFUnit, DBGrids, Registry, sqldb, xplorerimagelist;
 
 const
   lvt_file = 1;
@@ -81,7 +73,7 @@ type
     tsVerbund: TTabSheet;
     tsDisks: TTabSheet;
     tsSearch: TTabSheet;
-    ilMoreImages: TImageList;
+    ilMoreImages: TXplorerImageList;
     pcStatus: TPageControl;
     tsDriveState: TTabSheet;
     lvDriveState: TListView;
@@ -668,7 +660,7 @@ type
   public
     colAv, colCache, colGray : integer;
     idi_root, idi_disk, idi_nodisk, idi_openf, idi_closef: Integer; // ImageList ID's
-    notebm: TBookmark;
+    bookmarkedNote: integer;
     notedb: TSQLQuery;
     splash: TfrmSplash;
     verlauf: integer;
@@ -680,7 +672,7 @@ type
     address, location, curcol, curcolname,jumpname: string;
     drivestate: TStringList;
     avdiskids: string; { Verfügbare Diskids, durch Komma getrennt ... }
-    SmallImages: TImageList;
+    SmallImages: TXplorerImageList;
 //    lvstyle: Byte;
 //    lvcolbit: Byte; // Bits 0 - 7
 //    lvcols: array[0..7] of ShortInt;
@@ -729,12 +721,11 @@ var
 implementation
 
 uses ReadDiskUnit, NewCollectionUnit, NewListUnit,
-  ExportOptUnit, ListCompareOptUnit, SetupUnit, ListviewConfig,
-  RepairUnit, DataModule, ExtSelectUnit, WaitForDiskUnit,
+  ExportOptUnit, ListCompareOptUnit, SetupUnit, ListviewConfig, DataModule, ExtSelectUnit, WaitForDiskUnit,
   NoRegUnit, StringEditUnit, CopyToDisksUnit;
 
 {$R *.lfm}
-{$R ICNS.RES}
+{$R icns.lrs}
 
 { Was wird in der Spalte "Notiz" angezeigt? }
 function GetNoteColumn(Item: TMyItem): string;
@@ -782,23 +773,9 @@ begin
 end;
 
 procedure TMyFiles3Form.Createimages;
-var
-  SysIL: uint;
-  SFI: TSHFileInfo;
 begin
-(*  LargeImages := TImageList.Create(MainForm);
-  SysIL := SHGetFileInfo('', 0, SFI, SizeOf(SFI), SHGFI_SYSICONINDEX or SHGFI_LARGEICON);
-  if SysIL <> 0 then begin
-    LargeImages.Handle := SysIL;
-    LargeImages.ShareImages := True;
-  end; *)
-  SmallImages := TImageList.Create(MyFiles3Form);
-  SysIL := SHGetFileInfo('', 0, SFI, SizeOf(SFI), SHGFI_SYSICONINDEX or SHGFI_SMALLICON);
-  if SysIL <> 0 then begin
-    SmallImages.Handle := SysIL;
-    SmallImages.ShareImages := True;
-  end;
-//  MainForm.ListView.LargeImages:=LargeImages;
+  ilMoreImages := TXplorerImageList.Create(MyFiles3Form);
+  SmallImages := TXplorerImageList.Create(MyFiles3Form);
   MyFiles3Form.ListView.SmallImages := SmallImages;
 end;
 
@@ -924,73 +901,24 @@ end;
 
 { ImageList Managment }
 
-function AddFileIconToIL(il: TImageList; FileName: string; flags: uint): integer;
-var
-  icnTemp: TIcon;
-  SFI: TSHFileInfo;
+function AddFileIconToIL(il: TXplorerImageList; FileName: string): integer;
 begin
-  SHGetFileInfo(PChar(FileName), 0, SFI, SizeOf(TSHFileInfo), SHGFI_ICON or flags);
-  icnTemp := TIcon.Create;
-  icnTemp.Handle := SFI.hIcon;
-  Result := il.AddIcon(icnTemp);
-  icnTemp.Free;
+  result := GetIconImageAndIndex(Filename, il, true);
 end;
 
-function AddResIconToIL(il: TImageList; id: integer): integer;
+function AddResIconToIL(il: TImageList; icon: string): integer;
 var
   icnTemp: TIcon;
 begin
+  //il.
   icnTemp := TIcon.Create;
-  icnTemp.Handle := LoadIcon(hInstance, PChar(id));
+  icnTemp.LoadFromLazarusResource(icon); //Handle := LoadIcon(hInstance, PChar(id));
   Result := il.AddIcon(icnTemp);
   icnTemp.Free;
 end;
 
 procedure TMyFiles3Form.LoadPlugins;
-var
-  sr: TSearchRec;
-  res : integer;
-  PlugInDirectory : string;
-  dontload : TStringList;
-
-  Item : TMenuItem;
-  i : integer;
 begin
-  PlugInDirectory := dir_plugins;
-  res := FindFirstUTF8(PlugInDirectory+'*.myp',faAnyFile,sr); { *Converted from FindFirst* }
-  dontload := TStringList.Create;
-  try
-    dontload.CommaText := ini.ReadString(ini_plugins, ini_pidisabled, '');
-    while res = 0 do
-    begin
-      if dontload.indexof(sr.Name) = -1 then
-        try
-          FPlugIns.Add(TMyPlugin.Create( PlugInDirectory + sr.Name, ini.FileName ));
-        except
-          Application.MessageBox(PChar(Format(
-            'Die PlugIn-Datei ''%s'' ist ungültig und wird deaktiviert.'#13#10+
-            'Das PlugIn kann unter Ansicht | Einstellungen wieder aktviert'#13#10+
-            'werden.', [sr.Name] )),
-            'PlugIn-Fehler',
-            mb_ok or mb_iconerror);
-          dontload.Add( sr.Name );
-        end;
-      res := FindNextUTF8(sr); { *Converted from FindNext* }
-    end;
-    ini.WriteString(ini_plugins, ini_pidisabled, dontload.CommaText);
-  finally
-    dontload.Free;
-    FindCloseUTF8(sr); { *Converted from FindClose* }
-  end;
-
-  for i := 0 to FPlugIns.AllProps.Count-1 do
-  begin
-    Item := TMenuItem.Create(menNew);
-    Item.Caption := FPlugIns.AllProps[i];
-    Item.OnClick := genNewFieldClick;
-    menNew.Add(Item);
-  end;
-
 end;
 
 
@@ -1060,7 +988,7 @@ begin
   ilThumbs.Height := thumbmaxh + 8;
 
   FPlugIns := TMyPlugins.Create;
-  LoadPlugins;
+  {//ToBeConverted LoadPlugins;}
 
   if not ini.ReadBool(ini_gui, ini_toolbg, False) then ControlBar.Picture := nil;
 
@@ -1089,12 +1017,12 @@ begin
   { Init }
   CreateImages;
 
-  idi_root := AddResIconToIL(ilMoreImages, 501);
-  idi_disk := AddResIconToIL(ilMoreImages, 502);
-  idi_nodisk := AddResIconToIL(ilMoreImages, 503);
+  idi_root := AddResIconToIL(ilMoreImages, 'ico501.ico');
+  idi_disk := AddResIconToIL(ilMoreImages, 'ico502.ico');
+  idi_nodisk := AddResIconToIL(ilMoreImages, 'ico503.ico');
 
-  idi_closef := AddFileIconToIL(ilMoreImages, extractfilepath(application.exename), SHGFI_SMALLICON);
-  idi_openf := AddFileIconToIL(ilMoreImages, extractfilepath(application.exename), SHGFI_SMALLICON or SHGFI_OPENICON);
+  idi_closef := AddFileIconToIL(ilMoreImages, extractfilepath(application.exename));
+  idi_openf := AddFileIconToIL(ilMoreImages, extractfilepath(application.exename));
 //  AddFileIconToIL(ilThumbs,extractfilepath(application.exename),SHGFI_SMALLICON or SHGFI_OPENICON);
 
   with sgProps do
@@ -1120,7 +1048,7 @@ begin
     splash.lblColStat.Caption := 'Ladevorgang:'#13#10+str_s1+#13#10+str_s2;
   { welche Sammlung? }
   for i := 1 to paramcount do // Parameter zusammenfügen
-    s := s + ParamStr(i) + ' ';
+    s := s + ParamStrUTF8(i) + ' ';
   callbyparam := paramcount <> 0;
   if Pos('myfiles:', lowercase(s)) = 1 then Delete(s, 1, 8);
   s := trim(s);
@@ -1245,26 +1173,25 @@ begin
   if dblock then Exit;  
   if (typ = lvt_verbund) then
   begin
-    with dm, tblFolders do
-    begin
-      flder := LookUp('FOLDERID', folderid, 'Folder');
+    //with dm, tblFolders do
+    //begin
+      flder := dm.sqlqFolders.Lookup('FOLDERID', folderid, 'Folder');
       if Caption <> '' then flder := flder + Caption + '\';
-      // flder := '\';
-      Filter := 'Folder = ''' + escape(flder) + '''';
-      Filtered := True;
+      dm.sqlqFolders.Filter := 'Folder = ''' + escape(flder) + '''';
+      dm.sqlqFolders.Filtered := True;
       none_available := True;
-      First;
-      while not eof do
+      dm.sqlqFolders.First;
+      while not dm.sqlqFolders.eof do
       begin
-        if Pos(',' + tblFoldersDISKID.AsString + ',', avdiskids) <> 0 then
+        if Pos(',' + dm.sqlqFolders.FieldByName('MediaID').AsString + ',', avdiskids) <> 0 then
         begin
           none_available := False;
           break;
         end;
-        Next;
+        dm.sqlqFolders.Next;
       end;
-      Filtered := False;
-    end;
+      dm.sqlqFolders.Filtered := False;
+    //end;
     if none_available then
     begin
       Result := colGray;
@@ -1358,10 +1285,10 @@ var
 
 
   begin
-    MS := dm.tblFiles.CreateBlobStream(bf, bmRead);
+    MS := dm.sqlqFiles.CreateBlobStream(bf, bmRead);
     jpg := TJPEGImage.Create;
     try
-      jpg.Performance := jpBestQuality;
+      jpg.CompressionQuality := 80;
       MS.seek(0, soFromBeginning);
       jpg.LoadFromStream(MS);
 
@@ -1434,26 +1361,23 @@ begin
     end;
     case data.Item.typ of
       lvt_verbund: begin
-          with dm, tblFolders do
-          begin
-            IndexName := '';
-            s := dm.tblFolders.LookUp('FOLDERID', data.item.id.folderid, 'Folder') + item.Caption + '\';
-            setkey;
-            tblFoldersDISKID.Value := -1;
-            tblFoldersFolder.Value := s;
-            if Gotokey then
-              mNotes.Text := tblFoldersNote.AsString else
+          //with dm, tblFolders do
+          //begin
+            dm.sqlqFolders.IndexName := '';
+            s := dm.sqlqFolders.LookUp('FOLDERID', data.item.id.folderid, 'Folder') + item.Caption + '\';
+            if dm.sqlqFolders.Locate('MediaID;Folder', VarArrayOf([-1, s]), []) then
+              mNotes.Text := dm.sqlqFolders.FieldByName('Note').AsString else
             begin
-              Append;
-              tblFoldersDISKID.Value := -1;
-              tblFoldersFolder.Value := s;
-              Post;
+              dm.sqlqFolders.Append;
+              dm.sqlqFolders.FieldByName('MediaID').Value := -1;
+              dm.sqlqFolders.FieldByName('Folder').Value := s;
+              dm.sqlqFolders.Post;
             end;
             mNotes.Tag := 128;
-            notedb := tblFolders;
-            notebm := GetBookmark;
+            notedb := dm.sqlqFolders;
+            notebm := dm.sqlqFolders.FieldByName('FolderID').AsInteger;
             defhint := str_verbund + ': ' + ListView.Selected.Caption;
-          end;
+          //end;
         end;
       lvt_disk: with dm, tblDisks do
         begin
@@ -2108,7 +2032,7 @@ begin
   {//ToBeConverted
   with elpMan.players[0] do // sch*** MP3-Player freigeben :)
     if Initialized then Deinit;
-  deletefile(elpMan.players[0].InputName);
+  DeleteFileUTF8(elpMan.players[0].InputName);
   }
   FPlugIns.Free;
   ClearSearchCache;
@@ -4853,7 +4777,7 @@ begin
     begin
       Stop;
       InitStream;
-      deletefile(elpMan.Players[0].InputName);
+      DeleteFileUTF8(elpMan.Players[0].InputName);
     end;
   except
   end;
@@ -5143,7 +5067,7 @@ begin
 
       { PlugIns laden }
       FPlugIns.Clear;
-      LoadPlugins;
+      {//ToBeConverted LoadPlugins;}
       ListView.Refresh;
       tvVerbund.Refresh;
       tvDisks.Refresh;
@@ -5860,7 +5784,7 @@ begin
 
 end;
 
-procedure TMyFiles3Form.StepWait;
+procedure TMyFiles3Form.StepWait(Sender: TObject);
 var
   s : string;
 begin
@@ -7627,8 +7551,6 @@ begin
   menLCopyToFolderClick(menQuickCopy);
   tbLDelClick(nil);
 end;
-
-//  FileSetDate( T.Handle, FileGetDate( S.Handle ) )
 
 procedure TMyFiles3Form.menColEditorClick(Sender: TObject);
 begin

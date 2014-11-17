@@ -5,7 +5,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  Buttons, StdCtrls, UseFulPrcs, myf_consts, LCLProc;
+  Buttons, StdCtrls, UseFulPrcs, myf_consts, LCLProc, fileutil;
 
 type
   TfrmSammlung = class(TForm)
@@ -78,8 +78,11 @@ begin
     m := Length(edtName.Text);
     if m > 6 then m := 6;
     for i := 1 to m do
+    begin
       //if UTF8LowerCase(edtName.Text[i])[1] in ['a'..'z', 'ä', 'ö', 'ü', 'ß', '0'..'9'] then
-      s := s + UTF8LowerCase(edtName.Text[i]);
+      if ord(UTF8ToAnsi(UTF8LowerCase(edtName.Text[i]))[1]) in [97..122, 132, 148, 129, 225, 48..57] then
+        s := s + UTF8LowerCase(edtName.Text[i]);
+    end;
     s2 := s;
     i := 1;
     while (s2 = '') or (MyFiles3Form.ini.ReadString('Collections', s2, '') <> '') do

@@ -5,7 +5,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  StdCtrls, ExtCtrls, Mask, ShellApi, ComCtrls, UseFulPrcs,
+  StdCtrls, ExtCtrls, ShellApi, ComCtrls, UseFulPrcs,
   Buttons;
 
 type
@@ -48,11 +48,8 @@ type
   private
     { Private-Deklarationen }
     FMode : ShortInt;
-    procedure WMNCHITTEST(Var Msg: TWMNCHITTEST); message WM_NCHITTEST;
   public
     property Value:string read GetValue Write SetValue;
-  protected
-    procedure CreateParams(var Params : TCreateParams); override;
   end;
 
 var
@@ -63,26 +60,6 @@ implementation
 uses StringListEditUnit, myf_search, Unit1;
 
 {$R *.lfm}
-
-procedure TfrmStringEdit.WMNCHITTEST(Var Msg: TWMNCHITTEST);
-var
-  relp : TPoint;
-begin
-  Inherited;
-  If Msg.Result = htClient Then
-  Begin
-    relp := pnlHead.ScreenToClient(Point(Msg.XPos,Msg.YPos));
-    if PtInRect(Rect(0,0,pnlHead.Width,pnlHead.Height),relp) then
-      Msg.Result:= htCaption;
-  End;
-end;
-
-procedure TfrmStringEdit.CreateParams(var Params : TCreateParams);
-begin
-  Inherited Createparams(Params);
-  with Params do
-    Style := (Style or WS_POPUP) and not WS_DLGFRAME;
-end;
 
 procedure TfrmStringEdit.SetValue(Value: string);
 begin
