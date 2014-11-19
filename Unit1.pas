@@ -27,7 +27,8 @@ uses
   SysIconCache, UsefulPrcs, db, Messages, SysUtils, Forms, ShlObj, CommCtrl, ToolWin,
   ExtCtrls, Menus, StdCtrls, Dialogs, Controls, ComCtrls, Classes, Graphics,
   ShellAPI, Spin, Buttons, ImgList, Grids, IniFiles, FileUtil, Variants,
-  Clipbrd, CheckLst, SplashFUnit, DBGrids, Registry, sqldb, xplorerimagelist, Crt;
+  Clipbrd, CheckLst, SplashFUnit, DBGrids, Registry, sqldb, xplorerimagelist, Crt,
+  LCLIntf;
 
 const
   lvt_file = 1;
@@ -1148,10 +1149,9 @@ begin
   if t1 = 4 then t1 := ek_folder;
   if t2 = 4 then t2 := ek_folder;
   if (t1 <> t2) and ((t1 <> ek_file) or (t2 <> ek_file)) then
-    Compare := MyCompareItems(cl_typ,i1,i2) else
-      Compare := MyCompareItems(MyFiles3Form.LvColumns.DID[abs(ParamSort)-1],i1,i2);
-  if paramsort < 0 then Compare := -Compare;
-end;
+    Compare := MyCompareItems(cl_typ,i1,i2)// else
+      {//ToBeConverted Compare := MyCompareItems(MyFiles3Form.LvColumns.DID[abs(ParamSort)-1],i1,i2);
+    if paramsort < 0 then Compare := -Compare;}
 end;
 
 {//ToBeConverted
@@ -2012,9 +2012,6 @@ var
 begin
   if Assigned(splash) then splash.Free;
   tmrDrivestate.Enabled := false;
-  if Assigned(notedb) then
-    notedb.freebookmark(notebm);
-  notedb := nil;
   smallimages.Free;
   savesettings;
   ApplicationPropertiesDeactivate(nil);
@@ -2081,14 +2078,12 @@ begin
             item.Subitems.Add(drivestate[i]);
             item.ImageIndex := idi_disk;
 
-            with dm, tblDisks do
-            begin
-              IndexName := 'IdxLabel';
-              SetKey;
-              tblDisksLabel.Value := drivestate[i];
-              if GotoKey then
-                avdiskids := avdiskids + tblDisksDISKID.AsString + ',';
-            end;
+            //with dm, tblDisks do
+            //begin
+              dm.sqlqMedia.IndexName := 'IdxLabel';
+              if dm.sqlqMedia.Locate('Label', drivestate[i], []) then
+                avdiskids := avdiskids + dm.sqlqMedia.FieldByName('MediaID').AsString + ',';
+            //end;
           end;
         end;
       end;
@@ -2123,7 +2118,7 @@ var
   s, s2: string;
   i: integer;
 begin
-  tvDisks.ChangeDelay := 250;
+  Delay(250); //tvDisks.ChangeDelay := 250;
   if (tvDisks.Selected = nil) then Exit;
   with tvVerbund do
   begin
@@ -2210,9 +2205,9 @@ begin
       Height := thumbmaxh + 8;
       LargeImages := TImageList.Create(MyFiles3Form);
       try
-        SysIL := SHGetFileInfo('', 0, SFI, SizeOf(SFI), SHGFI_SYSICONINDEX or SHGFI_LARGEICON);
+        {//ToBeConverted SysIL := SHGetFileInfo('', 0, SFI, SizeOf(SFI), SHGFI_SYSICONINDEX or SHGFI_LARGEICON);
         if SysIL <> 0 then
-          LargeImages.Handle := SysIL;
+          LargeImages.Handle := SysIL;}
         LargeImages.ShareImages := True;
         Canvas.Brush.Color := clFuchsia;
         ico := TIcon.Create;
@@ -7679,4 +7674,4 @@ begin
 end;
 
 end.
-
+

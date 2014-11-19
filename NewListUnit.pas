@@ -4,7 +4,7 @@ unit NewListUnit;
 interface
 
 uses
-  {$ifdef WINDOWS}Windows, {$else}{$endif}Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
+  {$ifdef WINDOWS}Windows, {$else}{$endif}Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   StdCtrls, Buttons, ShlObj;
 
 type
