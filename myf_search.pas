@@ -3,8 +3,8 @@ unit myf_search;
 
 interface
 
-uses myf_main, myf_lists, DataModule,
-     SysUtils, Classes, UsefulPrcs, ComCtrls, CommCtrl, Windows;
+uses {$ifdef WINDOWS}Windows, {$else}{$endif}myf_main, myf_lists, DataModule,
+     SysUtils, Classes, UsefulPrcs, ComCtrls, CommCtrl;
 
 type
   { Wird für jedes gef. Element aufgerufen;

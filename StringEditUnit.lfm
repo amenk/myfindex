@@ -69,10 +69,11 @@ object frmStringEdit: TfrmStringEdit
       Tag = 1
       Cursor = crHandPoint
       Left = 8
-      Height = 19
+      Height = 21
       Top = 4
-      Width = 171
+      Width = 188
       Caption = 'Suche nach einzelnen Begriffen'
+      Checked = True
       Font.Color = clBlue
       Font.Height = -11
       Font.Name = 'MS Sans Serif'
@@ -96,10 +97,11 @@ object frmStringEdit: TfrmStringEdit
       Tag = 2
       Cursor = crHandPoint
       Left = 8
-      Height = 19
+      Height = 21
       Top = 0
-      Width = 96
+      Width = 107
       Caption = 'Wildcard-Suche'
+      Checked = True
       Font.Color = clBlue
       Font.Height = -11
       Font.Name = 'MS Sans Serif'
@@ -123,10 +125,11 @@ object frmStringEdit: TfrmStringEdit
       Tag = 3
       Cursor = crHandPoint
       Left = 8
-      Height = 19
+      Height = 21
       Top = 0
-      Width = 114
+      Width = 127
       Caption = 'Regulärer Ausdruck'
+      Checked = True
       Font.Color = clBlue
       Font.Height = -11
       Font.Name = 'MS Sans Serif'
@@ -148,39 +151,39 @@ object frmStringEdit: TfrmStringEdit
     TabOrder = 1
     object Label1: TLabel
       Left = 8
-      Height = 13
+      Height = 14
       Top = 48
-      Width = 176
+      Width = 206
       Caption = 'Diese Begriffe MÜSSEN vorkommen:'
       ParentColor = False
     end
     object Label2: TLabel
       Left = 8
-      Height = 13
+      Height = 14
       Top = 91
-      Width = 211
+      Width = 243
       Caption = 'Diese Begriffe DÜRFEN NICHT vorkommen:'
       ParentColor = False
     end
     object Label6: TLabel
       Left = 8
-      Height = 13
+      Height = 14
       Top = 5
-      Width = 217
+      Width = 262
       Caption = 'Mind. einer dieser Begriffe MUSS vorkommen:'
       ParentColor = False
     end
     object Label7: TLabel
       Left = 8
-      Height = 13
+      Height = 14
       Top = 136
-      Width = 69
+      Width = 84
       Caption = 'Fehlertoleranz:'
       ParentColor = False
     end
     object Label8: TLabel
       Left = 120
-      Height = 12
+      Height = 11
       Top = 136
       Width = 22
       Caption = 'keine'
@@ -192,7 +195,7 @@ object frmStringEdit: TfrmStringEdit
     end
     object Label9: TLabel
       Left = 247
-      Height = 12
+      Height = 11
       Top = 136
       Width = 20
       Anchors = [akTop, akRight]
@@ -205,7 +208,7 @@ object frmStringEdit: TfrmStringEdit
     end
     object cedtAND: TEdit
       Left = 8
-      Height = 21
+      Height = 26
       Hint = 'Alt+Nach unten öffnet den Begriffseditor.'
       Top = 64
       Width = 267
@@ -216,7 +219,7 @@ object frmStringEdit: TfrmStringEdit
     end
     object cedtNOT: TEdit
       Left = 8
-      Height = 21
+      Height = 26
       Hint = 'Alt+Nach unten öffnet den Begriffseditor.'
       Top = 107
       Width = 267
@@ -227,7 +230,7 @@ object frmStringEdit: TfrmStringEdit
     end
     object cedtOR: TEdit
       Left = 8
-      Height = 21
+      Height = 26
       Hint = 'Alt+Nach unten öffnet den Begriffseditor.'
       Top = 21
       Width = 267
@@ -238,7 +241,7 @@ object frmStringEdit: TfrmStringEdit
     end
     object tbLevel: TTrackBar
       Left = 148
-      Height = 19
+      Height = 35
       Top = 135
       Width = 91
       Max = 3
@@ -260,15 +263,15 @@ object frmStringEdit: TfrmStringEdit
     TabOrder = 3
     object Label3: TLabel
       Left = 8
-      Height = 13
+      Height = 14
       Top = 5
-      Width = 142
+      Width = 173
       Caption = 'Suchtext (Platzhalter möglich):'
       ParentColor = False
     end
     object Label4: TLabel
       Left = 28
-      Height = 12
+      Height = 11
       Top = 45
       Width = 234
       Anchors = [akTop]
@@ -281,7 +284,7 @@ object frmStringEdit: TfrmStringEdit
     end
     object edtWildcard: TEdit
       Left = 8
-      Height = 21
+      Height = 26
       Top = 21
       Width = 267
       Anchors = [akTop, akLeft, akRight]
@@ -300,18 +303,18 @@ object frmStringEdit: TfrmStringEdit
     TabOrder = 5
     object Label5: TLabel
       Left = 8
-      Height = 13
+      Height = 14
       Top = 5
-      Width = 48
+      Width = 56
       Caption = 'Ausdruck:'
       ParentColor = False
     end
     object lblSyntaxLink: TLabel
       Cursor = crHandPoint
-      Left = 25
-      Height = 12
+      Left = 26
+      Height = 11
       Top = 45
-      Width = 181
+      Width = 179
       Anchors = [akTop]
       Caption = 'Syntax von Regulären Ausdrücken (Online)'
       Font.Color = clBlue
@@ -324,11 +327,11 @@ object frmStringEdit: TfrmStringEdit
     end
     object edtRegExp: TEdit
       Left = 8
-      Height = 21
+      Height = 26
       Top = 21
       Width = 267
       Anchors = [akTop, akLeft, akRight]
       TabOrder = 0
     end
   end
-end
+end

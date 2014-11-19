@@ -56,12 +56,12 @@ object frmSammlung: TfrmSammlung
     Top = 8
     Width = 185
     Caption = ' Name der Sammlung '
-    ClientHeight = 39
+    ClientHeight = 41
     ClientWidth = 181
     TabOrder = 0
     object edtName: TEdit
       Left = 16
-      Height = 21
+      Height = 26
       Top = 24
       Width = 153
       HelpContext = 1001
@@ -76,30 +76,30 @@ object frmSammlung: TfrmSammlung
     Top = 72
     Width = 185
     Caption = ' Optionen '
-    ClientHeight = 119
+    ClientHeight = 121
     ClientWidth = 181
     TabOrder = 1
     object Label2: TLabel
       Left = 15
-      Height = 13
+      Height = 14
       Top = 20
-      Width = 114
+      Width = 133
       Caption = 'Überwachte Laufwerke:'
       ParentColor = False
     end
     object Label1: TLabel
       Left = 16
-      Height = 13
+      Height = 14
       Top = 88
-      Width = 135
+      Width = 165
       Caption = 'Datenträgeridentifikation via:'
       ParentColor = False
     end
     object cbAutoUpdate: TCheckBox
       Left = 15
-      Height = 19
+      Height = 21
       Top = 58
-      Width = 155
+      Width = 174
       HelpContext = 1003
       Caption = 'Status automatisch abfragen'
       Checked = True
@@ -108,7 +108,7 @@ object frmSammlung: TfrmSammlung
     end
     object edtDrives: TEdit
       Left = 16
-      Height = 21
+      Height = 26
       Top = 36
       Width = 153
       HelpContext = 1002
@@ -119,11 +119,11 @@ object frmSammlung: TfrmSammlung
     end
     object cbIdent: TComboBox
       Left = 16
-      Height = 21
+      Height = 29
       Top = 104
       Width = 153
       HelpContext = 1004
-      ItemHeight = 13
+      ItemHeight = 0
       Items.Strings = (
         'Seriennummer (empfohlen)'
         'Datenträgerbezeichnung'
@@ -132,4 +132,4 @@ object frmSammlung: TfrmSammlung
       TabOrder = 2
     end
   end
-end
+end

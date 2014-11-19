@@ -6,7 +6,7 @@ unit SysIconCache;
 
 interface
 
-uses SysUtils, Classes, ShellApi, Windows, FileUtil;
+uses {$ifdef WINDOWS}Windows, {$else}{$endif}SysUtils, Classes, ShellApi, FileUtil;
 
 const
   nocache = '\.exe\.ico\.lnk\.cur\.ani\';

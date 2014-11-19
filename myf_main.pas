@@ -3,9 +3,8 @@ unit myf_main;
 
 interface
 
-uses SysUtils, Classes,
-  ComCtrls, CommCtrl, Windows, { für Listview }
-  UsefulPrcs, SysIconCache, Registry;
+uses {$ifdef WINDOWS}Windows, {$else}{$endif}SysUtils, Classes,
+  ComCtrls, CommCtrl, UsefulPrcs, SysIconCache, Registry;
 
 { Elementart in files.db (Ordner, Datei) }
 const

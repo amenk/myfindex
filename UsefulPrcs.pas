@@ -3,8 +3,7 @@ unit UsefulPrcs;
 
 interface
 
-uses Windows, Sysutils, {ActiveX, ComObj,}
-  {ShlObj, }Mapchar, classes, FileUtil, LCLType, LCLProc;
+uses {$ifdef WINDOWS}Windows, {$else}{$endif}Sysutils, Mapchar, classes, FileUtil, LCLType, LCLProc;
 type CharSet = set of char;
 
 

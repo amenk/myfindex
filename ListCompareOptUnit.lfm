@@ -139,14 +139,14 @@ object frmListCompareOpt: TfrmListCompareOpt
     Top = 200
     Width = 225
     Caption = ' Wie vergleichen? '
-    ClientHeight = 135
+    ClientHeight = 137
     ClientWidth = 221
     TabOrder = 0
     object Label1: TLabel
       Left = 16
-      Height = 13
+      Height = 14
       Top = 52
-      Width = 297
+      Width = 362
       Caption = 'Dateien sind auch gleich, wenn diese &Kriterien übereinstimmen:'
       ParentColor = False
     end
@@ -159,12 +159,13 @@ object frmListCompareOpt: TfrmListCompareOpt
       ItemHeight = 0
       OnClick = clbOptionsClick
       TabOrder = 0
+      TopIndex = -1
     end
     object cbIDs: TCheckBox
       Left = 16
-      Height = 19
+      Height = 21
       Top = 24
-      Width = 194
+      Width = 215
       Caption = 'Dateien identisch (Disk, Pfad, Name)'
       OnClick = cbIDsClick
       TabOrder = 1
@@ -192,14 +193,14 @@ object frmListCompareOpt: TfrmListCompareOpt
     Top = 56
     Width = 329
     Caption = ' Vergleichsregeln '
-    ClientHeight = 119
+    ClientHeight = 121
     ClientWidth = 325
     TabOrder = 1
     object lbl1: TLabel
       Left = 72
-      Height = 13
+      Height = 14
       Top = 48
-      Width = 64
+      Width = 70
       Caption = 'in der Liste'
       Font.Color = clWindowText
       Font.Height = -11
@@ -210,27 +211,27 @@ object frmListCompareOpt: TfrmListCompareOpt
     end
     object lblV1: TLabel
       Left = 8
-      Height = 13
+      Height = 14
       Top = 48
-      Width = 40
+      Width = 49
       Caption = '(&1. Liste)'
       FocusControl = cbList1
       ParentColor = False
     end
     object lblVHow: TLabel
       Left = 8
-      Height = 13
+      Height = 14
       Top = 72
-      Width = 50
+      Width = 60
       Caption = '(&Vergleich)'
       FocusControl = cbHow
       ParentColor = False
     end
     object lblV2: TLabel
       Left = 8
-      Height = 13
+      Height = 14
       Top = 96
-      Width = 40
+      Width = 49
       Caption = '(&2. Liste)'
       FocusControl = cbList2
       ParentColor = False
@@ -238,9 +239,9 @@ object frmListCompareOpt: TfrmListCompareOpt
     end
     object lblInsg: TLabel
       Left = 72
-      Height = 13
+      Height = 14
       Top = 24
-      Width = 231
+      Width = 249
       Caption = 'Erzeuge eine neue Liste mit Dateien, die'
       Font.Color = clWindowText
       Font.Height = -11
@@ -251,9 +252,9 @@ object frmListCompareOpt: TfrmListCompareOpt
     end
     object lbl2: TLabel
       Left = 232
-      Height = 13
+      Height = 14
       Top = 96
-      Width = 85
+      Width = 94
       Caption = 'enthalten sind.'
       Font.Color = clWindowText
       Font.Height = -11
@@ -265,9 +266,9 @@ object frmListCompareOpt: TfrmListCompareOpt
     end
     object lblHow: TLabel
       Left = 224
-      Height = 13
+      Height = 14
       Top = 72
-      Width = 85
+      Width = 94
       Caption = 'enthalten sind.'
       Font.Color = clWindowText
       Font.Height = -11
@@ -278,10 +279,10 @@ object frmListCompareOpt: TfrmListCompareOpt
     end
     object cbHow: TComboBox
       Left = 72
-      Height = 21
+      Height = 29
       Top = 64
       Width = 145
-      ItemHeight = 13
+      ItemHeight = 0
       Items.Strings = (
         'doppelt'
         'und auch in der Liste'
@@ -294,24 +295,24 @@ object frmListCompareOpt: TfrmListCompareOpt
     end
     object cbList1: TComboBox
       Left = 144
-      Height = 21
+      Height = 29
       Top = 40
       Width = 153
-      ItemHeight = 13
+      ItemHeight = 0
       OnChange = cbListChange
       Style = csDropDownList
       TabOrder = 1
     end
     object cbList2: TComboBox
       Left = 72
-      Height = 21
+      Height = 29
       Top = 88
       Width = 153
-      ItemHeight = 13
+      ItemHeight = 0
       OnChange = cbListChange
       Style = csDropDownList
       TabOrder = 2
       Visible = False
     end
   end
-end
+end

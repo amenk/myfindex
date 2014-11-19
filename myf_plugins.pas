@@ -3,7 +3,7 @@ unit myf_plugins;
 
 interface
 
-uses Classes, Dialogs, SysUtils, Windows;
+uses {$ifdef WINDOWS}Windows, {$else}{$endif}Classes, Dialogs, SysUtils;
 
 type
   TMyPlugin_getInterfaceVersion =  function : Integer; stdcall;

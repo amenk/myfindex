@@ -5,7 +5,7 @@ unit DataModule;
 interface
 
 uses
-  {Windows, }Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
+  {$ifdef WINDOWS}Windows, {$else}{$endif}Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   Db, myf_main, UsefulPrcs, sqlite3conn, sqldb, Variants;
 
 type

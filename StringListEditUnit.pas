@@ -4,7 +4,7 @@ unit StringListEditUnit;
 interface
 
 uses
-  {Windows,} Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
+  {$ifdef WINDOWS}Windows, {$else}{$endif}, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   StdCtrls, ExtCtrls, Buttons,LCLType, LCLIntf;
 
 type
@@ -131,4 +131,4 @@ begin
   //
 end;
 
-end.
+end.

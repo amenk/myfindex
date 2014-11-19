@@ -24,8 +24,7 @@ interface
 
 uses
   {$ifdef WINDOWS}{$else}cmem, {$endif}myf_consts, myf_main, myf_lists, myf_search, myf_plugins,
-  SysIconCache, UsefulPrcs, db,
-  {Windows, }Messages, SysUtils, Forms, ShlObj, CommCtrl, ToolWin,
+  SysIconCache, UsefulPrcs, db, Messages, SysUtils, Forms, ShlObj, CommCtrl, ToolWin,
   ExtCtrls, Menus, StdCtrls, Dialogs, Controls, ComCtrls, Classes, Graphics,
   ShellAPI, Spin, Buttons, ImgList, Grids, IniFiles, FileUtil, Variants,
   Clipbrd, CheckLst, SplashFUnit, DBGrids, Registry, sqldb, xplorerimagelist, Crt;
@@ -7680,4 +7679,4 @@ begin
 end;
 
 end.
-
+

@@ -67,7 +67,7 @@ object frmExtSelect: TfrmExtSelect
       item
         Alignment = taRightJustify
         Caption = 'Dateien'
-        Width = 60
+        Width = 66
       end>
     ColumnClick = False
     HideSelection = False
@@ -78,4 +78,4 @@ object frmExtSelect: TfrmExtSelect
     Visible = False
     ViewStyle = vsReport
   end
-end
+end

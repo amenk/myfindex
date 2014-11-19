@@ -4,7 +4,7 @@ unit SetupUnit;
 interface
 
 uses
-  Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
+  {$ifdef WINDOWS}Windows, {$else}{$endif}Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   StdCtrls, Buttons, ComCtrls, myf_consts, Registry, ActiveX, ComObj,
   ShlObj, UseFulPrcs, CheckLst,
   myf_plugins, ExtCtrls, Spin, FileUtil;
@@ -410,4 +410,4 @@ begin
   end;
 end;
 }
-end.
+end.

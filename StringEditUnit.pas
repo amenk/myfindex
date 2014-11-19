@@ -4,7 +4,7 @@ unit StringEditUnit;
 interface
 
 uses
-  Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
+  {$ifdef WINDOWS}Windows, {$else}{$endif}Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   StdCtrls, ExtCtrls, ShellApi, ComCtrls, UseFulPrcs,
   Buttons;
 
@@ -171,4 +171,4 @@ begin
   //
 end;
 
-end.
+end.
