@@ -712,6 +712,54 @@ object MyFiles3Form: TMyFiles3Form
                 OnClick = chkMinDateClick
                 TabOrder = 0
               end
+              object dtpMinDate: TZVDateTimePicker
+                Left = 8
+                Height = 21
+                Hint = 'Datum.'
+                Top = 24
+                Width = 81
+                CenturyFrom = 1941
+                MaxDate = 2958465
+                MinDate = -53780
+                TabOrder = 3
+                TrailingSeparator = False
+                LeadingZeros = True
+                Visible = False
+                Kind = dtkDate
+                TimeFormat = tf24
+                TimeDisplay = tdHMS
+                DateMode = dmComboBox
+                Date = 37167
+                Time = 0.691070937500626
+                UseDefaultSeparators = True
+                HideDateTimeParts = []
+                MonthNames = 'Long'
+                OnChange = dtpMinDateChange
+              end
+              object dtpMaxDate: TZVDateTimePicker
+                Left = 8
+                Height = 21
+                Hint = 'Datum.'
+                Top = 72
+                Width = 81
+                CenturyFrom = 1941
+                MaxDate = 2958465
+                MinDate = -53780
+                TabOrder = 5
+                TrailingSeparator = False
+                LeadingZeros = True
+                Visible = False
+                Kind = dtkDate
+                TimeFormat = tf24
+                TimeDisplay = tdHMS
+                DateMode = dmComboBox
+                Date = 37167
+                Time = 0.691070937500626
+                UseDefaultSeparators = True
+                HideDateTimeParts = []
+                MonthNames = 'Long'
+                OnChange = dtpMaxDateChange
+              end
               object chkMaxDate: TCheckBox
                 Left = 8
                 Height = 17
@@ -721,6 +769,54 @@ object MyFiles3Form: TMyFiles3Form
                 Caption = '&größtes (jüngstes) Datum'
                 OnClick = chkMaxDateClick
                 TabOrder = 1
+              end
+              object dtpMinTime: TZVDateTimePicker
+                Left = 96
+                Height = 21
+                Hint = 'Uhrzeit.'
+                Top = 24
+                Width = 73
+                CenturyFrom = 1941
+                MaxDate = 2958465
+                MinDate = -53780
+                TabOrder = 2
+                TrailingSeparator = False
+                LeadingZeros = True
+                Visible = False
+                Kind = dtkTime
+                TimeFormat = tf24
+                TimeDisplay = tdHMS
+                DateMode = dmComboBox
+                Date = 37167
+                Time = 0
+                UseDefaultSeparators = True
+                HideDateTimeParts = []
+                MonthNames = 'Long'
+                OnChange = dtpMinTimeChange
+              end
+              object dtpMaxTime: TZVDateTimePicker
+                Left = 96
+                Height = 21
+                Hint = 'Uhrzeit.'
+                Top = 72
+                Width = 73
+                CenturyFrom = 1941
+                MaxDate = 2958465
+                MinDate = -53780
+                TabOrder = 4
+                TrailingSeparator = False
+                LeadingZeros = True
+                Visible = False
+                Kind = dtkTime
+                TimeFormat = tf24
+                TimeDisplay = tdHMS
+                DateMode = dmComboBox
+                Date = 37167
+                Time = 0
+                UseDefaultSeparators = True
+                HideDateTimeParts = []
+                MonthNames = 'Long'
+                OnChange = dtpMaxTimeChange
               end
             end
             object pHSearchDate: TPanel
@@ -1325,7 +1421,7 @@ object MyFiles3Form: TMyFiles3Form
         Left = 8
         Height = 42
         Top = 17
-        Width = 2734
+        Width = 3826
         Alignment = taCenter
         Anchors = [akTop, akLeft, akRight]
         AutoSize = False

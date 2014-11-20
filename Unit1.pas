@@ -26,7 +26,7 @@ uses
   ExtCtrls, Menus, StdCtrls, Dialogs, Controls, ComCtrls, Classes, Graphics,
   ShellAPI, Spin, Buttons, ImgList, Grids, IniFiles, FileUtil, Variants,
   Clipbrd, CheckLst, SplashFUnit, DBGrids, Registry, sqldb, xplorerimagelist, Crt,
-  LCLIntf, LCLType;
+  LCLIntf, LCLType, zvdatetimepicker;
 
 const
   lvt_file = 1;
@@ -248,8 +248,8 @@ type
     pHSize: TPanel;
     lblSize: TLabel;
     pSearchDate: TPanel;
-    //dtpMinDate: TDateTimePicker;
-    //dtpMaxDate: TDateTimePicker;
+    dtpMinDate: TZVDateTimePicker;
+    dtpMaxDate: TZVDateTimePicker;
     pHSearchDate: TPanel;
     lblSearchDate: TLabel;
     pSearchIn: TPanel;
@@ -287,8 +287,8 @@ type
     seMaxSize: TSpinEdit;
     chkMinDate: TCheckBox;
     chkMaxDate: TCheckBox;
-    //dtpMinTime: TDateTimePicker;
-    //dtpMaxTime: TDateTimePicker;
+    dtpMinTime: TZVDateTimePicker;
+    dtpMaxTime: TZVDateTimePicker;
     pBottom: TPanel;
     btnStart: TSpeedButton;
     fbSearchReset: TSpeedButton;
@@ -2584,36 +2584,35 @@ var
       if search.MinDate <> -1 then
       begin
         chkMinDate.Checked := true;
-        dtpMinDate.DateTime := MinDate;
-        dtpMinTime.DateTime := MinDate;
+        dtpMinDate.DateTime := search.MinDate;
+        dtpMinTime.DateTime := search.MinDate;
       end;
-      if MaxDate <> -1 then
+      if search.MaxDate <> -1 then
       begin
         chkMaxDate.Checked := true;
-        dtpMaxDate.DateTime := MaxDate;
-        dtpMaxTime.DateTime := MaxDate;
+        dtpMaxDate.DateTime := search.MaxDate;
+        dtpMaxTime.DateTime := search.MaxDate;
       end;
       { Attribute }
       for i := 0 to 3 do
-        if BOOL(AttrSet and attrs[i]) then
+        if BOOL(Search.AttrSet and attrs[i]) then
           (pSearchAttribute.Controls[i] as TCheckBox).State := cbChecked else
-            if BOOL(AttrUSet and attrs[i]) then
+            if BOOL(Search.AttrUSet and attrs[i]) then
               (pSearchAttribute.Controls[i] as TCheckBox).State := cbUnChecked;
 
       { Suchen in }
-      with SearchIn do
-        for i := 0 to Count - 1 do
-          lbSearchIn.Items.Add(Strings[i]);
+      for i := 0 to Search.SearchIn.Count - 1 do
+          lbSearchIn.Items.Add(Search.SearchIn.Strings[i]);
       { Inhalt }
-      for i := 0 to Notes.Count - 1 do
+      for i := 0 to Search.Notes.Count - 1 do
         lbContents.Items.Add(
-          Notes[i] + ': ' + (Notes.Objects[i] as TMySearchString).Value );
+          Search.Notes[i] + ': ' + (Search.Notes.Objects[i] as TMySearchString).Value );
 
-      if (MinSize <> -1) or (MaxSize <> -1) then ToggleControl(lblSize, pSearchSize);
-      if (AttrSet <> 0) or (AttrUSet <> 0) then ToggleControl(lblAttribute, pSearchAttribute);
-      if (MinDate <> -1) or (MaxDate <> -1) then ToggleControl(lblSearchDate, pSearchDate);
-      if Notes.Count > 0 then ToggleControl(lblContents, pSearchContents);
-      if SearchIn.Count > 0 then ToggleControl(lblSearchIn, pSearchIn);
+      if (Search.MinSize <> -1) or (Search.MaxSize <> -1) then ToggleControl(lblSize, pSearchSize);
+      if (Search.AttrSet <> 0) or (Search.AttrUSet <> 0) then ToggleControl(lblAttribute, pSearchAttribute);
+      if (Search.MinDate <> -1) or (Search.MaxDate <> -1) then ToggleControl(lblSearchDate, pSearchDate);
+      if Search.Notes.Count > 0 then ToggleControl(lblContents, pSearchContents);
+      if Search.SearchIn.Count > 0 then ToggleControl(lblSearchIn, pSearchIn);
     finally
       Free;
     end;
