@@ -1325,7 +1325,7 @@ object MyFiles3Form: TMyFiles3Form
         Left = 8
         Height = 42
         Top = 17
-        Width = 2370
+        Width = 2734
         Alignment = taCenter
         Anchors = [akTop, akLeft, akRight]
         AutoSize = False

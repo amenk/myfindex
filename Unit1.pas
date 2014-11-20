@@ -17,8 +17,6 @@ misc(str_...,'name')  -> str_....
 
 unit Unit1;
 
-{$MODE Delphi}
-
 interface
 
 
@@ -28,7 +26,7 @@ uses
   ExtCtrls, Menus, StdCtrls, Dialogs, Controls, ComCtrls, Classes, Graphics,
   ShellAPI, Spin, Buttons, ImgList, Grids, IniFiles, FileUtil, Variants,
   Clipbrd, CheckLst, SplashFUnit, DBGrids, Registry, sqldb, xplorerimagelist, Crt,
-  LCLIntf;
+  LCLIntf, LCLType;
 
 const
   lvt_file = 1;
@@ -2213,13 +2211,13 @@ begin
         ico := TIcon.Create;
         try
           with Canvas do fillrect(cliprect);
-          SHGetFileInfo(PChar(ExtractFilePath(Application.exename)), 0, SFI, SizeOf(TSHFileInfo), SHGFI_SYSIconIndex);
+          {//ToBeConverted SHGetFileInfo(PChar(ExtractFilePath(Application.exename)), 0, SFI, SizeOf(TSHFileInfo), SHGFI_SYSIconIndex);}
           LargeImages.GetIcon(SFI.iIcon, ico);
           Canvas.draw(20, 20, ico);
           ilThumbs.AddMasked(bm,clFuchsia);
 
           with Canvas do fillrect(cliprect);
-          SHGetFileInfo(PChar('c:\dummyfile.dummmyext'), FILE_ATTRIBUTE_NORMAL, SFI, SizeOf(TSHFileInfo), SHGFI_USEFILEATTRIBUTES or SHGFI_SYSIconIndex);
+          {//ToBeConverted SHGetFileInfo(PChar('c:\dummyfile.dummmyext'), FILE_ATTRIBUTE_NORMAL, SFI, SizeOf(TSHFileInfo), SHGFI_USEFILEATTRIBUTES or SHGFI_SYSIconIndex);}
           LargeImages.GetIcon(SFI.iIcon, ico);
           Canvas.draw(20, 20, ico);
           ilThumbs.AddMasked(bm, clFuchsia);
@@ -2297,6 +2295,7 @@ begin
     end;
     if Count < oldcount then
     begin
+
       Application.MessageBox(
         PChar( Format(str_listinvalid,[(oldcount-Count)*1.0]) ) ,
         PChar( str_notice ),
@@ -2329,7 +2328,7 @@ end;
 procedure TMyFiles3Form.updateLV;
 var
   drv, path: string;
-  diskid, i: integer;
+  MediaID, i: integer;
   s: string;
   ListToShow : TMyList;
 begin
@@ -2383,17 +2382,17 @@ begin
         // custlistview(2);
         custlistview('');
         ListView.Items.EndUpdate;
-        with dm, dm.tblDisks do
-        begin
-          Filtered := False;
-          indexname := 'IdxLabel';
-          First;
-          while not eof do
+        //with dm, dm.tblDisks do
+        //begin
+          dm.sqlqMedia.Filtered := False;
+          dm.sqlqMedia.indexname := 'IdxLabel';
+          dm.sqlqMedia.First;
+          while not dm.sqlqMedia.eof do
           begin
             AddItemToListview(dbCurrentDisk, false);
-            Next;
+            dm.sqlqMedia.Next;
           end;
-        end;
+        //end;
         location := '';
       end else
       begin { ### root von drv ### }
@@ -2407,18 +2406,18 @@ begin
           custlistview(path);
           if ListView.ViewStyle <> vsIcon then ListView.Items.EndUpdate;
         // FolderIDs aller betroffenen Ordner herausfinden & hinzufügen
-          with dm, tblFolders do
-          begin
-            Filter := 'Folder = ''' + escape(path) + '''';
-            Filtered := True;
-            First;
-            while not eof do
+          //with dm, tblFolders do
+          //begin
+            dm.sqlqFolders.Filter := 'Folder = ''' + escape(path) + '''';
+            dm.sqlqFolders.Filtered := True;
+            dm.sqlqFolders.First;
+            while not dm.sqlqFolders.eof do
             begin
-              AddFolder2ListView(tblFoldersFOLDERID.Value, true);
-              Next;
+              AddFolder2ListView(dm.sqlqFolders.FieldByName('FolderID').Value, true);
+              dm.sqlqFolders.Next;
             end;
-            Filtered := False;
-          end;
+            dm.sqlqFolders.Filtered := False;
+          //end;
           if ListView.ViewStyle = vsIcon then ListView.Items.EndUpdate;
           location := path;
         end
@@ -2431,27 +2430,25 @@ begin
           if ListView.ViewStyle <> vsIcon then
             ListView.Items.EndUpdate;
           // FolderID herausfinden & hinzufügen
-          with dm, dm.tblDisks do
-          begin
-            tblDisks.IndexName := 'IdxLabel';
-            SetKey;
-            tblDisksLABEL.Value := drv;
-            if gotokey then
-              diskid := tblDisksDiskID.AsInteger
+          //with dm, dm.tblDisks do
+          //begin
+            dm.sqlqMedia.IndexName := 'IdxLabel';
+            if dm.sqlqMedia.Locate('Label', drv, []) then
+              MediaID := dm.sqlqMedia.FieldByName('MediaID').AsInteger
             else
               raise Exception.Create(Format(str_Ednotfound, [drv]));
-            tblDisks.IndexName := '';
-          end;
-          with dm, dm.tblFolders do
-          begin
-            Filter := 'Folder = ''' + escape(path) + ''' and DISKID = ' + IntToStr(diskid);
-            Filtered := True;
-            if RecordCount = 0 then
-              raise Exception.Create(Format(str_Efnotfound, ['<' + drv + '>' + path, InttoStr(diskid)]));
-            First;
-            AddFolder2ListView(tblFoldersFOLDERID.AsInteger, false);
-            Filtered := False;
-          end;
+            dm.sqlqMedia.IndexName := '';
+          //end;
+          //with dm, dm.tblFolders do
+          //begin
+            dm.sqlqFolders.Filter := 'Folder = ''' + escape(path) + ''' and MediaID = ' + IntToStr(MediaID);
+            dm.sqlqMedia.Filtered := True;
+            if dm.sqlqMedia.RecordCount = 0 then
+              raise Exception.Create(Format(str_Efnotfound, ['<' + drv + '>' + path, InttoStr(MediaID)]));
+            dm.sqlqMedia.First;
+            AddFolder2ListView(dm.sqlqMedia.FieldByName('FolderID').AsInteger, false);
+            dm.sqlqMedia.Filtered := False;
+          //end;
           if ListView.ViewStyle = vsIcon then ListView.Items.EndUpdate;
           location := '<' + drv + '>' + path;
         end;
@@ -2463,7 +2460,7 @@ begin
     with ListView do
     begin
       if abs(ListView.Tag) > ListView.Columns.Count then ListView.Tag := 1;
-      CustomSort(@GenSortProc, ListView.Tag);
+      {//ToBeConverted CustomSort(@GenSortProc, ListView.Tag);}
       if Items.Count > 0 then
         Items[0].Focused := True;
       if jumpname <> '' then donamejump;
@@ -2514,7 +2511,7 @@ var
       Node := tv.Items[0];
       if s = '' then
       begin
-        tv.ChangeDelay := 0;
+        //tv.ChangeDelay := 0; //Unnötig, da ein manueller Delay wenn benötigt eingefügt wurde
         tv.Selected := tv.Items[0];
       end else
         while s <> '' do
@@ -2522,14 +2519,14 @@ var
           s2 := lowercase(Copy(s, 1, Pos('\', s) - 1));
           ok := False;
           for i := 0 to Node.Count - 1 do
-            if lowercase(Node.Item[i].Text) = s2 then
+            if lowercase(Node.Items[i].Text) = s2 then
             begin
-              Node := Node.Item[i];
+              Node := Node.Items[i];
               Delete(s, 1, Length(s2) + 1);
               if s <> '' then
                 Node.Expand(False) else
               begin
-                tv.ChangeDelay := 0;
+                //tv.ChangeDelay := 0; //Unnötig, da wenn benötigt ein manueller Delay eingebaut wurde.
                 tv.Selected := Node;
               end;
               ok := True;
@@ -2545,7 +2542,7 @@ var
               if tv.selected = Node then
                 donamejump else
               begin
-                tv.ChangeDelay := 0;
+                //tv.ChangeDelay := 0; //Unnötig, da wenn benötigt ein manueller Delay eingebaut wurde.
                 tv.Selected := Node;
               end;
             end else raise Exception.Create(pfad + ' ' + str_Epnotfound);
@@ -2565,25 +2562,26 @@ var
   procedure parsesearchcmd(cmd: string);
   var
     i : integer;
+    search : TMySearch;
   begin
     fbSearchResetClick(nil);
-    with TMySearch.Create(copy(cmd,8,MaxInt)) do
+    search := TMySearch.Create(copy(cmd,8,MaxInt));
     try
-      ScbName.Text := NameStr.Value;
-      if MinSize <> -1 then
+      ScbName.Text := search.NameStr.Value;
+      if search.MinSize <> -1 then
       begin
         chkMinSize.Checked := true;
         {//ToBeConverted seMinSize.Value := MinSize;}
         {//ToBeConverted cbMinSize.ItemIndex := 0;}
       end;
-      if MaxSize <> -1 then
+      if search.MaxSize <> -1 then
       begin
         chkMaxSize.Checked := true;
         {//ToBeConverted seMaxSize.Value := MaxSize;}
         cbMaxSize.ItemIndex := 0;
       end;
 
-      if MinDate <> -1 then
+      if search.MinDate <> -1 then
       begin
         chkMinDate.Checked := true;
         dtpMinDate.DateTime := MinDate;
