@@ -21,7 +21,7 @@ interface
 
 
 uses
-  {$ifdef WINDOWS}{$else}cmem, {$endif}myf_consts, myf_main, myf_lists, myf_search, myf_plugins,
+  {$ifdef WINDOWS}windows, {$else}cmem, {$endif}myf_consts, myf_main, myf_lists, myf_search, myf_plugins,
   SysIconCache, UsefulPrcs, db, Messages, SysUtils, Forms, ShlObj, CommCtrl, ToolWin,
   ExtCtrls, Menus, StdCtrls, Dialogs, Controls, ComCtrls, Classes, Graphics,
   ShellAPI, Spin, Buttons, ImgList, Grids, IniFiles, FileUtil, Variants,
@@ -627,7 +627,7 @@ type
     procedure AddCurrentFile2Listview(VerbundMode: boolean);
     {//ToBeConverted procedure begindrag(copymode: Boolean);}
     function doDiskDelete(lbl: string): Boolean;
-    procedure DeleteDisk(diskid: smallint);
+    procedure DeleteDisk(MediaID: smallint);
     function doDiskAdd(disk: char; upd: boolean): Boolean;
     procedure updatecolmenu;
     procedure OpenCol(colid: string; Tag: integer; loc: string);
@@ -3057,20 +3057,23 @@ var
 begin
   if (mNotes.Tag = -1) or (notedb = nil) then mNotes.Text := '' else
   begin
-    with notedb do
-    begin
-      indexname := '';
-      GotoBookmark(notebm);
+    //with notedb do
+    //begin
+      notedb.indexname := '';
+      if notedb=dm.sqlqFolders then //GotoBookmark(notebm);
+         notedb.Locate('FolderID', bookmarkedNote, []);
+      if notedb=dm.sqlqFiles then
+         notedb.Locate('FileID', bookmarkedNote, []);
+      if notedb=dm.sqlqMedia then
+         notedb.Locate('MediaID', bookmarkedNote, []);
       if (mNotes.Tag = 128) and (mNotes.Text = '') then
       begin
-        FreeBookmark(notebm);
-        notebm := nil; notedb := nil;
-        Delete;
+        notedb.Delete;
       end else
       begin
-        Edit;
-        FieldByName('Note').AsString := mNotes.Text;
-        Post;
+        notedb.Edit;
+        notedb.FieldByName('Note').AsString := mNotes.Text;
+        notedb.Post;
       end;
     end;
     if mNotes.Tag = 128 then
@@ -3101,7 +3104,7 @@ begin
         if col <> -1 then
           SubItems[col-2] := LvColumns[PLVData(Data)^.Item,col]; *)
       end;
-  end;
+  //end;
 {
     if (lvcols[cl_note] <> -1) and Assigned(ListView.Selected) then
       if (trim(mNotes.Text) = '') and (mNotes.Tag in [lvt_ordner, lvt_file]) then
@@ -3128,7 +3131,7 @@ begin
   mNotesChange(nil);  
 end;
 
-procedure TMyFiles3Form.DeleteDisk(diskid: Smallint);
+procedure TMyFiles3Form.DeleteDisk(MediaID: Smallint);
 var
   i: integer;
   sl: TStringList;
@@ -3138,37 +3141,35 @@ begin
   try
     StartWait(3,'');
     sbMain.Panels[2].Text := str_delete1;
-    with dm, tblDisks do
-    begin
-      tblDisks.IndexName := '';
-      SetKey;
-      tblDisksDISKID.Value := diskid;
-      if gotokey then
-        lbl := tblDisksLABEL.AsString
-    end;
+    //with dm, tblDisks do
+    //begin
+      dm.sqlqMedia.IndexName := '';
+      if dm.sqlqMedia.Locate('MediaID', MediaID, []) then
+        lbl := dm.sqlqMedia.FieldByName('Label').AsString;
+    //end;
 
     StepWait(Self);
-    with dm, tblFiles do
-    begin
-      if RecordCount > 0 then First;
-      while not Eof do
-        if tblFilesDISKID.Value = diskid
-          then try Delete except end
-        else Next;
-    end;
+    //with dm, tblFiles do
+    //begin
+      if dm.sqlqFiles.RecordCount > 0 then dm.sqlqFiles.First;
+      while not dm.sqlqFiles.Eof do
+        if dm.sqlqFiles.FieldByName('MediaID').Value = MediaID
+          then try dm.sqlqFiles.Delete except end
+        else dm.sqlqFiles.Next;
+    //end;
 
     sbMain.Panels[2].Text := str_delete2;
     StepWait(Self);
 
-    with dm, tblFolders do
-    begin
-      if RecordCount > 0 then First;
-      while not Eof do
-        if tblFoldersDISKID.Value = diskid
-          then Delete
-        else Next;
-    end;
-    if lbl <> '' then dm.tblDisks.Delete;
+    //with dm, tblFolders do
+    //begin
+      if dm.sqlqFolders.RecordCount > 0 then dm.sqlqFolders.First;
+      while not dm.sqlqFolders.Eof do
+        if dm.sqlqFolders.FieldByName('MediaID').Value = MediaID
+          then dm.sqlqFolders.Delete
+        else dm.sqlqFolders.Next;
+    //end;
+    if lbl <> '' then dm.sqlqMedia.Delete;
     // Label-Definitionen entfernen
     sl := TStringList.Create;
     try
@@ -3193,25 +3194,20 @@ end;
 function TMyFiles3Form.doDiskDelete(lbl: string): Boolean;
 begin
   mNotesExit(nil);
-  if Assigned(notedb) then
-    notedb.freebookmark(notebm);
-  notedb := nil;
 
   Result := False;
 
   if Application.Messagebox(PChar(Format(str_deldisk, [lbl])), PChar(str_deldisk2),
     mb_yesno or mb_iconquestion or mb_defbutton2) = idNo
       then Exit;
-  with dm, tblDisks do
-  begin
-    tblDisks.IndexName := 'IdxLabel';
-    SetKey;
-    tblDisksLABEL.AsString := lbl;
-    if gotokey then
-      DeleteDisk(tblDisksDiskID.AsInteger)
+  //with dm, tblDisks do
+  //begin
+    dm.sqlqMedia.IndexName := 'IdxLabel';
+    if dm.sqlqMedia.Locate('Label', lbl, []) then
+      DeleteDisk(dm.sqlqMedia.FieldByName('MediaID').AsInteger)
     else
       raise Exception.Create(Format(str_Ednotfound, [lbl]));
-  end;
+  //end;
   InvalidateAllLists;
   updatetvs;
   updatelv;
@@ -3462,14 +3458,14 @@ begin
       menDiskDelete2.Enabled := False;
     end else
     begin
-      with dm.tblDisks do
-      begin
-        IndexName := 'IdxLabel';
-        if not Locate('Label', lbl, []) then
+      //with dm.tblDisks do
+      //begin
+        dm.sqlqMedia.IndexName := 'IdxLabel';
+        if not dm.sqlqMedia.Locate('Label', lbl, []) then
           menDiskRefresh.Enabled := False;
         menDiskAdd.Enabled := not menDiskRefresh.Enabled;
         menDiskDelete2.Enabled := menDiskRefresh.Enabled;
-      end;
+      //end;
     end;
   end;
 end;
@@ -3540,7 +3536,7 @@ begin
           sbMain.panels[2].Text := str_sb6;
         end else
         begin
-          DeleteDisk(ReadDiskid);
+          DeleteDisk(frmReadDisk.readmediaid);
           sbMain.panels[2].Text := str_sb7;
         end;
     end;
@@ -3581,12 +3577,12 @@ begin
   if item.ImageIndex = idi_nodisk then
     lvDriveState.Canvas.Font.Color := clGrayText
   else
-    with dm.tblDisks do
-    begin
-      IndexName := 'IdxLabel';
-      if not Locate('Label', Item.Subitems[0], []) then
+    //with dm.tblDisks do
+    //begin
+      dm.sqlqMedia.IndexName := 'IdxLabel';
+      if not dm.sqlqMedia.Locate('Label', Item.Subitems[0], []) then
         lvDriveState.Canvas.Font.Color := clGrayText
-    end;
+    //end;
 end;
 
 procedure TMyFiles3Form.menDiskRefreshClick(Sender: TObject);
@@ -3606,12 +3602,7 @@ begin
   try
     InitDrives;
     if ShowModal = mrOk then
-    begin
       openCol(col, -1, '*');
-    end else
-           (* begin
-            updatecolmenu;
-            end;          *)
   finally
     Free;
   end;
@@ -3826,9 +3817,6 @@ begin
     SaveAndFreeLists;
     ClearSearchCache;
     mNotesExit(nil);
-    if Assigned(notedb) then
-      notedb.freebookmark(notebm);
-    notedb := nil;
     if curcol <> '' then
       savehistory;
     if Assigned(ColIni) then ColIni.Free;
@@ -3857,50 +3845,7 @@ begin
     DBDir := dir_db + colid + '\';
     ColIni := TIniFile.Create(DBDir + 'col.ini');
     try
-
-      with dm do
-      try
-        with database do
-        begin
-          Connected := False;
-          DatabaseName := DBDir;
-          Connected := True;
-        end;
-        with tblDisks do
-        begin
-          Active := False;
-          DatabaseName := DBDir;
-          Active := True;
-        end;
-        with tblFolders do
-        begin
-          Active := False;
-          DatabaseName := DBDir;
-          Active := True;
-        end;
-        with tblFiles do
-        begin
-          Active := False;
-          DatabaseName := DBDir;
-          Active := True;
-        end;
-        if Assigned(splash) then splash.step;
-      except
-        //
-        on E: EDBEngineError do
-        begin
-          for i := 0 to E.ErrorCount-1 do
-            case E.Errors[i].ErrorCode of
-              $210C, $2109, $3E02, $3E03, $3E04, $3E05, $3E06, $2108 :
-              begin
-                renameidapi(E.Errors[i].ErrorCode);
-                raise EAbort.Create('');
-              end;
-            end;
-          raise;
-        end;
-
-      end;
+      if Assigned(splash) then splash.step;
       try
         { DiskID Cleanup }
         fixdisks := TStringList.Create;
@@ -3954,13 +3899,13 @@ begin
           FindCloseUTF8(SR); { *Converted from FindClose* }
         end;
       except
-        with dm do
-        begin
-          database.Connected := False;
-          tblDisks.Active := False;
-          tblFolders.Active := False;
-          tblFiles.Active := False;
-        end;
+        //with dm do
+        //begin
+          dm.sqlite3con.Connected := False;
+          dm.sqlqMedia.Active := False;
+          dm.sqlqFolders.Active := False;
+          dm.sqlqFiles.Active := False;
+        //end;
         if Assigned(ColIni) then ColIni.Free;
         ColIni := nil;
         curcol := '';
@@ -4014,7 +3959,6 @@ begin
             pc1.ActivePage := tsVerbund;
             with tvVerbund do
             begin
-              ChangeDelay := 0;
               Selected := Items[0];
             end;
           end else
@@ -4022,9 +3966,7 @@ begin
             pc1.ActivePage := tsDisks;
             with tvDisks do
             begin
-              ChangeDelay := 0;
               Selected := Items[0];
-  //        updateLV;
             end;
           end;
       if Assigned(splash) then splash.step;
@@ -4060,7 +4002,7 @@ begin
       updatetvs;
       UpdateCaption;
       if ExtractLastFEntry(location) = '' then
-        setwindowtext(Application.Handle, PChar('MyFindex - ' + curcolname));
+        setwindowtext(MyFiles3Form.Handle, PChar('MyFindex - ' + curcolname));
       tmrDrivestateTimer(nil);
     end;
   finally
@@ -4164,22 +4106,22 @@ begin
           begin
             case item.typ of
               lvt_file: ListAction(item.ID, modeflag, items[i]);
-              lvt_disk: with dm, dm.tblFiles do
-                begin
-                  filter := 'DISKID = ''' + IntToStr(item.id.diskid) + '''';
-                  Filtered := True;
-                  First;
-                  StartWait(RecordCount, '');
-                  while not eof do
+              lvt_disk: //with dm, dm.tblFiles do
+              begin
+                  dm.sqlqMedia.filter := 'MediaID = ' + quotedstr(IntToStr(item.id.diskid));
+                  dm.sqlqMedia.Filtered := True;
+                  dm.sqlqMedia.First;
+                  StartWait(dm.sqlqMedia.RecordCount, '');
+                  while not dm.sqlqMedia.eof do
                   begin
-                    if tblFilesEntryKind.Value <> ek_folder then
+                    if dm.sqlqFiles.FieldByName('EntryKind').Value <> ek_folder then
                       ListAction(dbCurrentID, modeflag, nil);
-                    Next;
+                    dm.sqlqMedia.Next;
                     StepWait(Self);
                   end;
-                  Filtered := False;
+                  dm.sqlqMedia.Filtered := False;
                   didup := False;
-                end;
+              end;
               lvt_ordner, lvt_verbund: begin { Ordner / Verbundordner rekursiv hinzufügen }
                   with dm, dm.tblFolders do
                   begin
