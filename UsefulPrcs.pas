@@ -3,7 +3,8 @@ unit UsefulPrcs;
 
 interface
 
-uses {$ifdef WINDOWS}Windows, {$else}{$endif}Sysutils, Mapchar, classes, FileUtil, LCLType, LCLProc;
+uses {$ifdef WINDOWS}Windows, {$else}{$endif}Sysutils, Mapchar, classes, FileUtil, LCLType, LCLProc,
+  Process;
 type CharSet = set of char;
 
 
@@ -197,41 +198,8 @@ begin
   {$endif}
 end; {IsWindowsNT}
 
-procedure EjectDrive98(drive: char);
-var
-  DevIoHandle: THandle;
-  BytesReturned: DWord;
-  Reg: TDevIoCtl_Reg;
-begin
-
-  with Reg do
-  begin
-    Reg_EAX := $440D;
-    Reg_EBX := Ord(drive) - Ord('A') + 1;
-
-    Reg_ECX := $0849; //  08 = Laufwerkskategorie
-                         //  49 = Eject
-  end;
-
-  // Handle für DeviceIoControl besorgen.
-  DevIoHandle := FileCreate('\\.\vwin32'); { *Converted from CreateFile* }
-  // Mit DeviceIoControl die Disk auswerfen.
-  if DevIoHandle <> Invalid_Handle_Value then
-  begin
-    DeviceIoControl(DevIoHandle,
-      VWin32_DIOC_DOS_IoCtl,
-      @Reg,
-      SizeOf(Reg),
-      @Reg,
-      SizeOf(Reg),
-      BytesReturned,
-      nil);
-    // Handle wieder freigeben.
-    FileClose(DevIoHandle); { *Converted from CloseHandle* }
-  end;
-end;
-
-procedure EjectDrive(drive: char);
+{$ifdef windows}
+procedure EjectDrive(drive: string);
 var
   hDevice: integer;
   cb: DWORD;
@@ -239,8 +207,8 @@ var
 const
   IOCTL_STORAGE_EJECT_MEDIA = $2D4808;
 begin
-  if not IsWindowsNT then EjectDrive98(drive) else
-  begin
+  //if not IsWindowsNT then EjectDrive98(drive) else
+  //begin
     s := '\\.\' + drive + ':';
     hDevice := FileCreate(pchar(s)); { *Converted from CreateFile* }
 
@@ -251,9 +219,20 @@ begin
       nil, 0, cb, nil);
 
     FileClose(hDevice); { *Converted from CloseHandle* }
-  end;
+  //end;
+end;
+{$else}
+procedure EjectDrive(drive: string);
+var
+   ejectProcess : TProcess;
+begin
+     ejectProcess := TProcess.Create(nil);
+     ejectProcess.CommandLine := 'eject ' + drive;
+     ejectProcess.Execute;
+     ejectProcess.Free;
 end;
 
+{$endif}
 
 { Like prüft die Übereinstimmung eines Strings mit einem Muster.
   So liefert Like('Delphi', 'D*p?i') true.
@@ -346,9 +325,12 @@ begin
 end; {Michael Winter}
 
 function SpecialDirectory(ID: integer): string;
+{$ifdef windows}
 var pidl: PItemIDList;
   Path: PChar;
+{$endif}
 begin
+  {$ifdef windows}
   if SUCCEEDED(SHGetSpecialFolderLocation(0, ID, pidl)) then begin
     Path := StrAlloc(max_path);
     SHGetPathFromIDList(pidl, Path);
@@ -356,37 +338,10 @@ begin
     if Result[length(Result)] <> '\' then
       Result := Result + '\';
   end;
+  {$else}
+  Result := '';
+  {$endif}
 end; {SpecialDirectory}
-
-function DirectoryExistsUTF8(const Name: string): Boolean;
-var
-  Code: Dword;
-begin
-  Code := GetFileAttributes(PChar(Name));
-  Result := (Code <> dword(-1)) and (FILE_ATTRIBUTE_DIRECTORY and Code <> 0);
-end;
-
-function StrToOem(const AnsiStr: string): string;
-begin
-  SetLength(Result, Length(AnsiStr));
-  if Length(Result) > 0 then
-{$IFDEF WIN32}
-    CharToOemBuff(PChar(AnsiStr), PChar(Result), Length(Result));
-{$ELSE}
-    AnsiToOemBuff(@AnsiStr[1], @Result[1], Length(Result));
-{$ENDIF}
-end;
-
-function OemToAnsiStr(const OemStr: string): string;
-begin
-  SetLength(Result, Length(OemStr));
-  if Length(Result) > 0 then
-{$IFDEF WIN32}
-    OemToCharBuff(PChar(OemStr), PChar(Result), Length(Result));
-{$ELSE}
-    OemToAnsiBuff(@OemStr[1], @Result[1], Length(Result));
-{$ENDIF}
-end;
 
 function AttrToString(a: integer): string;
 var
@@ -450,7 +405,7 @@ end;
 function GetFileSize(const FileName: string): Int64;
 var
   srecResult: TSearchRec;
-  FindData: TWin32FindData;
+  //FindData: TWin32FindData;
 begin
   if FindFirstUTF8(FileName, faAnyFile, srecResult) = 0 then
   begin
@@ -463,17 +418,8 @@ begin
   end;
 end;
 
-function lowercase(s: string): string;
-var
-  buf: PChar;
-begin
-  GetMem(buf, Length(s) + 1);
-  StrPCopy(buf, s);
-  result := StrPas(charlower(buf));
-  FreeMem(buf);
-end;
-
-function VolumeSN(DriveChar: char): string;
+function VolumeSN(Drive: string): string;
+{$ifdef windows}
 var
   OldErrorMode: Integer;
   Sernum, Unused, VolFlags: DWORD;
@@ -481,7 +427,7 @@ var
 begin
   OldErrorMode := SetErrorMode(SEM_FAILCRITICALERRORS);
   try
-    if GetVolumeInformation(PChar(DriveChar + ':\'), Buf,
+    if GetVolumeInformation(PChar(Drive + ':\'), Buf,
       sizeof(Buf), @Sernum, Unused, VolFlags,
       nil, 0) then
       Result := IntToHex(sernum, 8)
@@ -490,8 +436,50 @@ begin
     SetErrorMode(OldErrorMode);
   end;
 end;
+{$else}
+var
+  hdparmProc : TProcess;
+  grepProc : TProcess;
+  AStringList : TStringList;
+  ReadSize,ReadCount : integer;
+  Buffer : array[0..127] of char;
+begin
+  hdparmProc := TProcess.Create(nil);
+  grepProc := TProcess.Create(nil);
+  AStringList := TStringList.Create;
+  hdparmProc.CommandLine := 'hdparm -I '+Drive; //+' | grep Serial';
+  grepProc.CommandLine := 'grep Serial';
 
-function VolumeID(DriveChar: char): string;
+  hdparmProc.Execute;
+  grepProc.Execute;
+
+  while hdparmProc.Running or (hdparmProc.Output.NumBytesAvailable > 0) do
+  begin
+       if hdparmProc.Output.NumBytesAvailable > 0 then
+       begin
+            readSize := hdparmProc.Output.NumBytesAvailable;
+            if readSize > SizeOf(Buffer) then
+               ReadSize := sizeOf(Buffer);
+            ReadCount := hdparmProc.Output.Read(Buffer[0], ReadSize);
+            grepProc.Input.Write(Buffer[0], ReadCount);
+       end;
+  end;
+  grepProc.CloseInput;
+
+  While grepProc.Running do
+        Sleep(1);
+
+  AStringList.LoadFromStream(grepProc.Output);
+  result := AStringList.Text;
+  hdparmProc.Free;
+  grepProc.Free;
+  AStringList.Free;
+end;
+{$endif}
+
+
+function VolumeID(Drive: string): string;
+{$ifdef windows}
 var
   OldErrorMode: Integer;
   Sernum, Unused, VolFlags: DWORD;
@@ -499,7 +487,7 @@ var
 begin
   OldErrorMode := SetErrorMode(SEM_FAILCRITICALERRORS);
   try
-    if GetVolumeInformation(PChar(DriveChar + ':\'), Buf,
+    if GetVolumeInformation(PChar(Drive + ':\'), Buf,
       sizeof(Buf), @Sernum, Unused, VolFlags,
       nil, 0) then
     begin
@@ -510,15 +498,47 @@ begin
     SetErrorMode(OldErrorMode);
   end;
 end;
-
-function GetTempDir: string;
+{$else}
 var
-  Buf: array[0..MAX_PATH] of Char;
+  hdparmProc : TProcess;
+  grepProc : TProcess;
+  AStringList : TStringList;
+  ReadSize,ReadCount : integer;
+  Buffer : array[0..127] of char;
 begin
-  GetTempPath(MAX_PATH, Buf);
-  Result := Buf;
-  if Result[Length(Result)] <> '\' then Result := Result + '\';
+  hdparmProc := TProcess.Create(nil);
+  grepProc := TProcess.Create(nil);
+  AStringList := TStringList.Create;
+  hdparmProc.CommandLine := 'hdparm -I '+Drive; //+' | grep Serial';
+  grepProc.CommandLine := 'grep Serial';
+
+  hdparmProc.Execute;
+  grepProc.Execute;
+
+  while hdparmProc.Running or (hdparmProc.Output.NumBytesAvailable > 0) do
+  begin
+       if hdparmProc.Output.NumBytesAvailable > 0 then
+       begin
+            readSize := hdparmProc.Output.NumBytesAvailable;
+            if readSize > SizeOf(Buffer) then
+               ReadSize := sizeOf(Buffer);
+            ReadCount := hdparmProc.Output.Read(Buffer[0], ReadSize);
+            grepProc.Input.Write(Buffer[0], ReadCount);
+       end;
+  end;
+  grepProc.CloseInput;
+
+  While grepProc.Running do
+        Sleep(1);
+
+  AStringList.LoadFromStream(grepProc.Output);
+  result := AStringList.Text;
+  result := 'SN: ' +result;
+  hdparmProc.Free;
+  grepProc.Free;
+  AStringList.Free;
 end;
+{$endif}
 
 
 var
