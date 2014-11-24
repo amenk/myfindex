@@ -6,7 +6,7 @@ unit SysIconCache;
 
 interface
 
-uses {$ifdef WINDOWS}Windows, {$else}{$endif}SysUtils, Classes, ShellApi, FileUtil;
+uses {$ifdef WINDOWS}Windows, ShellApi, {$else}{$endif}SysUtils, Classes, FileUtil;
 
 const
   nocache = '\.exe\.ico\.lnk\.cur\.ani\';
@@ -98,6 +98,7 @@ begin
 end;
 
 procedure TIconCache.AskWindows(fname:string; cacheable:Boolean);
+{$ifdef windows}
 var
   Info: TSHFileInfo;
   Item: PCacheItem;
@@ -126,6 +127,23 @@ begin
     FList.AddObject(fname, TObject(Item) );
   end;
 end;
-
+{$else}
+var
+  FileDesc : string;
+begin
+if not cacheable then { datei existiert }
+begin
+  FileDesc := GetFileDescription(fname);
+  if FileDesc = '' then
+     FTyp := Copy(Uppercase(extractfileext(fname)), 2, maxInt) + '-Datei'
+  else
+     FTyp := FileDesc;
+end
+else
+begin
+  {//ToBeConverted}
+end;
+{$endif}
+end;
 
 end.

@@ -18,20 +18,15 @@ const
 
 function killzeros(const s:string):string;
 function Filter(s:string;Forbidden:CharSet):string;
-function VolumeSN(DriveChar: char): string; { Seriennummer (HEX) }
-function VolumeID(DriveChar: char): string; { Label oder Seriennummer, falls ungelabelt }
-function GetTempDir: string;
-function lowercase(s: string): string;
+function VolumeSN(Drive: string): string; { Seriennummer (HEX) }
+function VolumeID(Drive: string): string; { Label oder Seriennummer, falls ungelabelt }
 function GetFileSize(const FileName: string): Int64;
 function SizeToStr(Size: Int64; fmt : ShortInt; explorerlike:Boolean): string;
 function AttrToString(a: integer): string;
-function StrToOem(const AnsiStr: string): string;
-function OemToAnsiStr(const OemStr: string): string;
-function DirectoryExistsUTF8(const Name: string): Boolean;
 function SpecialDirectory(ID: integer): string;
 function Decrypt(const S: string; Key: Word): string;
 function Like(const AString, APattern: string): Boolean;
-procedure EjectDrive(drive: char);
+procedure EjectDrive(drive: string);
 function UrlEncode(s: string): string;
 function UrlEncodeQuote(s: string): string;
 function UrlDecode(s: string): string;
@@ -101,7 +96,7 @@ begin
   case FStrFormat of
     0 : Result := StringReplace(s, #13#10, ' ', [rfReplaceAll]);
     1 : ;
-    2 : Result := StrToOem(s);
+    2 : ;
     3 : Result := StringReplace(ansi2xml(s), #13#10, '<br>', [rfReplaceAll]);
   end;
 end;
@@ -500,29 +495,31 @@ begin
 end;
 {$else}
 var
-  hdparmProc : TProcess;
+  mountProc : TProcess;
   grepProc : TProcess;
   AStringList : TStringList;
   ReadSize,ReadCount : integer;
-  Buffer : array[0..127] of char;
+  Buffer : array[0..255] of char;
+  strLabel : string;
+  i,j : integer;
 begin
-  hdparmProc := TProcess.Create(nil);
+  mountProc := TProcess.Create(nil);
   grepProc := TProcess.Create(nil);
   AStringList := TStringList.Create;
-  hdparmProc.CommandLine := 'hdparm -I '+Drive; //+' | grep Serial';
-  grepProc.CommandLine := 'grep Serial';
+  mountProc.CommandLine := 'mount -l';
+  grepProc.CommandLine := 'grep'+QuotedStr(Drive);
 
-  hdparmProc.Execute;
+  mountProc.Execute;
   grepProc.Execute;
 
-  while hdparmProc.Running or (hdparmProc.Output.NumBytesAvailable > 0) do
+  while mountProc.Running or (mountProc.Output.NumBytesAvailable > 0) do
   begin
-       if hdparmProc.Output.NumBytesAvailable > 0 then
+       if mountProc.Output.NumBytesAvailable > 0 then
        begin
-            readSize := hdparmProc.Output.NumBytesAvailable;
+            readSize := mountProc.Output.NumBytesAvailable;
             if readSize > SizeOf(Buffer) then
                ReadSize := sizeOf(Buffer);
-            ReadCount := hdparmProc.Output.Read(Buffer[0], ReadSize);
+            ReadCount := mountProc.Output.Read(Buffer[0], ReadSize);
             grepProc.Input.Write(Buffer[0], ReadCount);
        end;
   end;
@@ -532,9 +529,24 @@ begin
         Sleep(1);
 
   AStringList.LoadFromStream(grepProc.Output);
-  result := AStringList.Text;
-  result := 'SN: ' +result;
-  hdparmProc.Free;
+  if AStringList.Text <> '' then
+  begin
+       for i := 1 to length(AStringList.Text) do begin
+           if AStringList.Text[i] = '[' then
+           begin
+                for j := i+1 to length(AStringList.Text)-1 do
+                begin
+                   strLabel := strLabel + AStringList.Text[j];
+                end;
+           end;
+       end;
+       result := strLabel;
+  end
+  else
+  begin
+    result := 'SN: ' + VolumeSN(Drive);
+  end;
+  mountProc.Free;
   grepProc.Free;
   AStringList.Free;
 end;
@@ -641,12 +653,12 @@ var
   i : integer;
 begin
   d := '';
-  if Copy(s,Length(s),1) <> '\' then s := s + '\';
+  if Copy(s,Length(s),1) <> PathDelim then s := s + PathDelim;
   for i := 1 to length(s) do
     begin
     d:=d+s[i];
-    if s[i] = '\' then
-      CreateDirectory(pchar(d),nil);
+    if s[i] = PathDelim then
+      CreateDirUTF8(d);
     end;
 end;
 

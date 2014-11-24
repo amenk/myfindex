@@ -4,7 +4,7 @@ unit myf_main;
 interface
 
 uses {$ifdef WINDOWS}Windows, {$else}{$endif}SysUtils, Classes,
-  ComCtrls, CommCtrl, UsefulPrcs, SysIconCache, Registry;
+  ComCtrls, UsefulPrcs, SysIconCache, Registry;
 
 { Elementart in files.db (Ordner, Datei) }
 const
