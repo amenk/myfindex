@@ -4,7 +4,7 @@ unit myf_search;
 interface
 
 uses {$ifdef WINDOWS}Windows, {$else}{$endif}myf_main, myf_lists, DataModule,
-     SysUtils, Classes, UsefulPrcs, ComCtrls, CommCtrl;
+     SysUtils, Classes, UsefulPrcs, ComCtrls;
 
 type
   { Wird für jedes gef. Element aufgerufen;
@@ -389,7 +389,7 @@ var
 begin
   Result := '';
   for i := 0 to 3 do
-    if bool(a and attrs[i]) then Result := Result + attrs_str[i+1];
+    if Boolean(a and attrs[i]) then Result := Result + attrs_str[i+1];
 end;
 
 function strtoattr(s:string):integer;
@@ -527,7 +527,7 @@ begin
       end else
         Inc(idx);
     end;
-    if BOOL(FAttrUSet and FAttrSet) then
+    if Boolean(FAttrUSet and FAttrSet) then
       raise Exception.Create('Die angegebenen Attribute sind widersprüchlich.');
   finally
     Free;

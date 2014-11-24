@@ -79,7 +79,6 @@ function MyID(fDiskID,fFolderID,fFileID: Integer): TMyID;
 function MyIDToStr(ID: TMyID):string;
 function MyCompareItems(strDID:string;i1,i2 : TMyItem):integer;
 function MyCompareItemsEx(strDIDex:string;i1,i2 : TMyItem;ansi:boolean):integer;
-procedure RegMe(s:string);
 procedure checkreg;
 function MyItemToStr(Item:TMyItem; myDID:string; SF:ShortInt):string;
 function ExtractProp(tx,prop:string):string;
@@ -289,12 +288,12 @@ end;
 
 function TMyColumns.GetWidth(Index: Integer):integer;
 begin
-  Result := Integer(FColumns.Objects[Index]);
+  Result := PtrUint(FColumns.Objects[Index]);
 end;
 
 procedure TMyColumns.SetWidth(Index: Integer; Value: Integer);
 begin
-  FColumns.Objects[Index] := TObject(Value);
+  FColumns.Objects[Index] := TObject(PtrUint(Value));
 end;
 
 function TMyColumns.GetColumnAsText(Item: TMyItem; Index: Integer): string;
@@ -393,7 +392,7 @@ begin
         if FColumns[i] = cl_Size then
           Alignment := taRightJustify;
       end;
-    ListView_SetColumnOrderArray(lv.Handle,Length(FOrder),PInteger(FOrder));
+    {$ifdef windows}{//ToBeConverted} ListView_SetColumnOrderArray(lv.Handle,Length(FOrder),PInteger(FOrder));{$endif}
   finally
     lv.columns.endupdate;
 //    LockWindowUpdate(0);
@@ -408,15 +407,15 @@ begin
   if lv.Columns.Count <> FColumns.Count then
     raise EMyColumnsError.Create('ListView hat ungültige Anzahl an Spalten');
   SetLength(FOrder, FColumns.Count);
-  ListView_GetColumnOrderArray(lv.Handle, FColumns.Count, PInteger(FOrder));
+  {//ToBeConverted}{$ifdef windows}ListView_GetColumnOrderArray(lv.Handle, FColumns.Count, PInteger(FOrder));{$endif}
 
   SetLength(NormOrder, FColumns.Count);
   for i := 0 to High(NormOrder) do NormOrder[i] := i;
-  ListView_SetColumnOrderArray(lv.Handle,Length(NormOrder),PInteger(NormOrder));
+  {//ToBeConverted}{$ifdef windows}ListView_SetColumnOrderArray(lv.Handle,Length(NormOrder),PInteger(NormOrder));{$endif}
 
   for i := 0 to FColumns.Count-1 do
     SetWidth(i, lv.Columns[i].Width);
-  ListView_SetColumnOrderArray(lv.Handle,Length(FOrder),PInteger(FOrder));
+  {//ToBeConverted}{$ifdef windows}ListView_SetColumnOrderArray(lv.Handle,Length(FOrder),PInteger(FOrder));{$endif}
 end;
 
 procedure TMyColumns.ReorderStringList(sl: TStringList); { Sortiert Elemente einer Stringlist entsprechend um }
@@ -557,40 +556,6 @@ begin
   end;
   if isreg then regname := s;
 end;
-
-procedure RegMe(s:string);
-var
-  Name, Key : string;
-begin
-  if messagebox(0,'Registriercode übernehmen?', 'Registrierung', mb_yesno or mb_iconquestion) =
-    idYes then
-  begin
-    Delete(s,1,1);
-    Name := URLDecode(StringReplace(Copy(s,1,Pos('$',s)-1),'/','%',[rfReplaceAll, rfIgnoreCase]));
-    Delete(s,1,Pos('$',s));
-    key := Copy(s,1,Pos('$',s)-1);
-    if not checkall(key) then
-    begin
-      messagebox(0,'Der Eingegebene Registriercode ist ungültig.'#13#10+
-                   'Bitte stelle sicher, dass bei manueller Eingabe keine'#13#10+
-                   'Tippfehler gemacht wurden.', 'Fehler', mb_ok or mb_iconerror);
-      Exit;
-    end;
-    with TRegistry.Create do
-    try
-      Access := KEY_ALL_ACCESS;
-      OpenKey('Software\self-soft\MyFiles', True);
-      writestring('RegName', Name);
-      writeString('Key', Key);
-    finally
-      Free;
-    end;
-    messagebox(0,pchar('Der Registriercode für '''+Name+''' wurde übernommen.'#13#10+
-       'Um MyFindex registriert zu nutzen, musst du MyFindex neu starten.'), 'Registrierung', mb_ok or mb_iconinformation);
-  end;
-
-end;
-
 
 initialization
   ICache := TIconCache.Create;
