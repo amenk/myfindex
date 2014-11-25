@@ -21,11 +21,11 @@ interface
 
 
 uses
-  {$ifdef WINDOWS}windows, ShlObj, CommCtrl, ShellAPI, {$else}cmem, {$endif}myf_consts, myf_main, myf_lists, myf_search, myf_plugins,
+  {$ifdef WINDOWS}windows, ShlObj, CommCtrl, ShellAPI, xplorerimagelist, {$else}cmem, {$endif}myf_consts, myf_main, myf_lists, myf_search, myf_plugins,
   SysIconCache, UsefulPrcs, db, Messages, SysUtils, Forms, ToolWin,
   ExtCtrls, Menus, StdCtrls, Dialogs, Controls, ComCtrls, Classes, Graphics,
   Spin, Buttons, ImgList, Grids, IniFiles, FileUtil, Variants,
-  Clipbrd, CheckLst, SplashFUnit, DBGrids, Registry, sqldb, xplorerimagelist, Crt,
+  Clipbrd, CheckLst, SplashFUnit, DBGrids, Registry, sqldb, Crt,
   LCLIntf, LCLType, zvdatetimepicker;
 
 const
@@ -74,7 +74,11 @@ type
     tsVerbund: TTabSheet;
     tsDisks: TTabSheet;
     tsSearch: TTabSheet;
+    {$ifdef windows}
     ilMoreImages: TXplorerImageList;
+    {$else}
+    ilMoreImages: TImageList;
+    {$endif}
     pcStatus: TPageControl;
     tsDriveState: TTabSheet;
     lvDriveState: TListView;
@@ -675,7 +679,11 @@ type
     address, location, curcol, curcolname,jumpname: string;
     drivestate: TStringList;
     avdiskids: string; { Verfügbare Diskids, durch Komma getrennt ... }
+    {$ifdef windows}
     SmallImages: TXplorerImageList;
+    {$else}
+    SmallImages: TImageList;
+    {$endif}
 //    lvstyle: Byte;
 //    lvcolbit: Byte; // Bits 0 - 7
 //    lvcols: array[0..7] of ShortInt;

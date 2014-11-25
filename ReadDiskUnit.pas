@@ -7,11 +7,11 @@ interface
 uses
   myf_consts, myf_main, myf_plugins,
   {$ifdef WINDOWS}
-  Windows,
+  Windows, CommCtrl, ShellApi,
   {$endif}
   Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   StdCtrls, ComCtrls, UsefulPrcs, ExtCtrls, Buttons, CheckLst, db,
-  ImgList, Menus, MapChar, CommCtrl, ShellApi, ToolWin, IniFiles, LCLType, Process,
+  ImgList, Menus, MapChar, ToolWin, IniFiles, LCLType, Process,
   FileUtil, lconvencoding, LCLProc, Variants, LCLIntf, Math;
 
 type
@@ -2097,4 +2097,4 @@ initialization
 finalization
   TPicture.UnRegisterGraphicClass(TJPEGImage);
 
-end.
+end.

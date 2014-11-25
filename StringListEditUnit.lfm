@@ -1,7 +1,7 @@
 object frmBegriffe: TfrmBegriffe
-  Left = 812
+  Left = 701
   Height = 208
-  Top = 349
+  Top = 323
   Width = 216
   BorderStyle = bsDialog
   Caption = 'frmBegriffe'
@@ -91,6 +91,8 @@ object frmBegriffe: TfrmBegriffe
     ParentFont = False
     TabOrder = 1
     OnMouseDown = pnlHeadMouseDown
+    OnMouseMove = pnlHeadMouseMove
+    OnMouseUp = pnlHeadMouseUp
     object btnCancel: TSpeedButton
       Left = 2
       Height = 20
@@ -124,12 +126,14 @@ object frmBegriffe: TfrmBegriffe
     ItemHeight = 0
     OnClick = lbListClick
     OnDblClick = lbListDblClick
+    ScrollWidth = 197
     Sorted = True
     TabOrder = 2
+    TopIndex = -1
   end
   object edtString: TEdit
     Left = 8
-    Height = 21
+    Height = 26
     Top = 32
     Width = 199
     Anchors = [akTop, akLeft, akRight]
@@ -137,4 +141,4 @@ object frmBegriffe: TfrmBegriffe
     OnKeyPress = edtStringKeyPress
     TabOrder = 0
   end
-end
+end

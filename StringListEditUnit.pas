@@ -8,6 +8,9 @@ uses
   StdCtrls, ExtCtrls, Buttons,LCLType, LCLIntf;
 
 type
+
+  { TfrmBegriffe }
+
   TfrmBegriffe = class(TForm)
     pnlHead: TPanel;
     btnCancel: TSpeedButton;
@@ -27,6 +30,10 @@ type
     procedure edtStringChange(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure pnlHeadMouseMove(Sender: TObject; Shift: TShiftState; X,
+      Y: Integer);
+    procedure pnlHeadMouseUp(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
   private
     { Private-Deklarationen }
     procedure updcount;
@@ -38,6 +45,11 @@ type
 
 var
   frmBegriffe: TfrmBegriffe;
+  {$ifdef windows}
+  {$else}
+  md :boolean;
+  x0, y0 :integer;
+  {$endif}
 
 implementation
 
@@ -106,8 +118,57 @@ procedure TfrmBegriffe.pnlHeadMouseDown(Sender: TObject;
   Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
 begin
   ReleaseCapture;
+  {$ifdef windows}
   SendMessage(Self.Handle, WM_SYSCOMMAND, 61458, 0);
+  {$else}
+  md := True;
+  x0 := x;
+  y0 := y;
+  {$endif}
 end;
+
+procedure TfrmBegriffe.lbListDblClick(Sender: TObject);
+begin
+
+end;
+
+procedure TfrmBegriffe.edtStringChange(Sender: TObject);
+begin
+
+end;
+
+procedure TfrmBegriffe.FormShow(Sender: TObject);
+begin
+
+end;
+
+procedure TfrmBegriffe.FormCreate(Sender: TObject);
+begin
+
+end;
+
+procedure TfrmBegriffe.pnlHeadMouseMove(Sender: TObject; Shift: TShiftState; X,
+  Y: Integer);
+begin
+{$ifdef windows}
+{$else}
+if md then
+begin
+  Left := Left - x0 + x;
+  Top := Top - y0 + y;
+end;
+{$endif}
+end;
+
+procedure TfrmBegriffe.pnlHeadMouseUp(Sender: TObject; Button: TMouseButton;
+  Shift: TShiftState; X, Y: Integer);
+begin
+  {$ifdef windows}
+  {$else}
+  md := False;
+  {$endif}
+end;
+
 
 procedure TfrmBegriffe.lbListDblClick(Sender: TObject);
 begin
@@ -131,4 +192,4 @@ begin
   //
 end;
 
-end.
+end.

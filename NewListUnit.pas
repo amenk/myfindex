@@ -4,8 +4,8 @@ unit NewListUnit;
 interface
 
 uses
-  {$ifdef WINDOWS}Windows, {$else}{$endif}Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  StdCtrls, Buttons, ShlObj;
+  {$ifdef WINDOWS}Windows, ShlObj, {$else}{$endif}Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
+  StdCtrls, Buttons;
 
 type
   TfrmNewList = class(TForm)
