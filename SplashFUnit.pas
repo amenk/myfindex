@@ -8,10 +8,6 @@ uses
   StdCtrls, ExtCtrls, ComCtrls, myf_consts, myf_main, UsefulPrcs;
 
 type
-  TSetLayeredWindowAttributes =  function (hwnd: HWND; crKey: LongInt;
-bAlpha: Byte; dwFlags: LongInt): LongInt; stdcall;
-
-type
   TfrmSplash = class(TForm)
     imgSplash: TImage;
     lblReg1: TLabel;
@@ -33,14 +29,12 @@ type
     procedure FormClose(Sender: TObject; var caAction: TCloseAction);
     procedure tmrCloseTimer(Sender: TObject);
   private
-    SetLayeredWindowAttributes : TSetLayeredWindowAttributes;
     aHandle                    : integer;
     blend : integer;
     { Private-Deklarationen }
   public
     CloseReq : Boolean;
     procedure step;
-    procedure Alpha(intBlend:Integer);
     { Public-Deklarationen }
   end;
 
@@ -65,24 +59,6 @@ begin
   Application.ProcessMessages;
 end;
 
-procedure TfrmSplash.Alpha(intBlend:Integer);
-const
-  WS_EX_LAYERED = $80000;
-  LWA_ALPHA     = $2;
-var
-  l                          : LongInt;
-
-begin
-  //Win 2K and ME only, it makes the form partially transparent...
-  if @SetLayeredWindowAttributes <> nil then
-        begin
-          l := GetWindowLong(Handle, GWL_EXSTYLE);
-          l := l or WS_EX_LAYERED;
-          SetWindowLong(Handle, GWL_EXSTYLE, l);
-          SetLayeredWindowAttributes(Handle, 0, intBlend, LWA_ALPHA);
-        end;
-end;
-
 procedure TfrmSplash.FormCreate(Sender: TObject);
 var
   usecs : Int64;
@@ -91,13 +67,6 @@ var
 
 begin
   closereq := False;
-  aHandle := LoadLibrary('user32.dll');
-  if aHandle <> 0 then
-    begin
-      @SetLayeredWindowAttributes := GetProcAddress(aHandle,
-'SetLayeredWindowAttributes');
-      Alpha(0);
-    end else @SetLayeredWindowAttributes := nil;
 
   { Statistische Daten auslesen }
   with MyFiles3Form do
@@ -174,7 +143,6 @@ begin
       blend := 255;
       if CloseReq then tmrFade.Interval := 500 else tmrFade.Enabled := False;
     end;
-    Alpha(blend);
   end;
 end;
 

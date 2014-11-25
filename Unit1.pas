@@ -21,10 +21,10 @@ interface
 
 
 uses
-  {$ifdef WINDOWS}windows, ShlObj, CommCtrl,{$else}cmem, {$endif}myf_consts, myf_main, myf_lists, myf_search, myf_plugins,
+  {$ifdef WINDOWS}windows, ShlObj, CommCtrl, ShellAPI, {$else}cmem, {$endif}myf_consts, myf_main, myf_lists, myf_search, myf_plugins,
   SysIconCache, UsefulPrcs, db, Messages, SysUtils, Forms, ToolWin,
   ExtCtrls, Menus, StdCtrls, Dialogs, Controls, ComCtrls, Classes, Graphics,
-  ShellAPI, Spin, Buttons, ImgList, Grids, IniFiles, FileUtil, Variants,
+  Spin, Buttons, ImgList, Grids, IniFiles, FileUtil, Variants,
   Clipbrd, CheckLst, SplashFUnit, DBGrids, Registry, sqldb, xplorerimagelist, Crt,
   LCLIntf, LCLType, zvdatetimepicker;
 

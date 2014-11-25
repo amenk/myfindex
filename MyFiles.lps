@@ -22,16 +22,16 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="Unit1"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="4"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="10"/>
-        <CursorPos X="35" Y="24"/>
+        <TopLine Value="12"/>
+        <CursorPos X="56" Y="24"/>
         <UsageCount Value="99"/>
         <Bookmarks Count="1">
           <Item0 X="24" Y="914" ID="1"/>
         </Bookmarks>
         <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit1>
       <Unit2>
@@ -170,10 +170,12 @@
         <IsPartOfProject Value="True"/>
         <HasResources Value="True"/>
         <UnitName Value="SplashFUnit"/>
+        <EditorIndex Value="5"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="40"/>
-        <CursorPos X="14" Y="50"/>
+        <TopLine Value="18"/>
+        <CursorPos X="1" Y="32"/>
         <UsageCount Value="99"/>
+        <Loaded Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit13>
       <Unit14>
@@ -308,10 +310,13 @@
         <Filename Value="xplorerimagelist.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="XplorerImageList"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="6"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="52"/>
-        <CursorPos X="3" Y="83"/>
+        <TopLine Value="19"/>
+        <CursorPos X="3" Y="43"/>
         <UsageCount Value="49"/>
+        <Loaded Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit25>
       <Unit26>
@@ -355,124 +360,124 @@
     </General>
     <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
-        <Filename Value="UsefulPrcs.pas"/>
-        <Caret Line="26" Column="1" TopLine="13"/>
+        <Filename Value="myf_main.pas"/>
+        <Caret Line="324" Column="24" TopLine="313"/>
       </Position1>
       <Position2>
         <Filename Value="myf_main.pas"/>
-        <Caret Line="7" Column="44" TopLine="1"/>
+        <Caret Line="55" Column="22" TopLine="40"/>
       </Position2>
       <Position3>
-        <Filename Value="SysIconCache.pas"/>
-        <Caret Line="9" Column="73" TopLine="1"/>
+        <Filename Value="myf_main.pas"/>
+        <Caret Line="62" Column="58" TopLine="40"/>
       </Position3>
       <Position4>
-        <Filename Value="SysIconCache.pas"/>
-        <Caret Line="103" Column="1" TopLine="89"/>
+        <Filename Value="myf_main.pas"/>
+        <Caret Line="292" Column="20" TopLine="277"/>
       </Position4>
       <Position5>
-        <Filename Value="SysIconCache.pas"/>
-        <Caret Line="100" Column="24" TopLine="89"/>
+        <Filename Value="myf_main.pas"/>
+        <Caret Line="297" Column="53" TopLine="282"/>
       </Position5>
       <Position6>
-        <Filename Value="SysIconCache.pas"/>
-        <Caret Line="91" Column="26" TopLine="70"/>
+        <Filename Value="myf_main.pas"/>
+        <Caret Line="601" Column="5" TopLine="571"/>
       </Position6>
       <Position7>
-        <Filename Value="SysIconCache.pas"/>
-        <Caret Line="29" Column="26" TopLine="16"/>
+        <Filename Value="myf_main.pas"/>
+        <Caret Line="391" Column="19" TopLine="382"/>
       </Position7>
       <Position8>
-        <Filename Value="SysIconCache.pas"/>
-        <Caret Line="91" Column="32" TopLine="70"/>
+        <Filename Value="myf_main.pas"/>
+        <Caret Line="396" Column="119" TopLine="381"/>
       </Position8>
       <Position9>
-        <Filename Value="SysIconCache.pas"/>
-        <Caret Line="97" Column="13" TopLine="77"/>
+        <Filename Value="myf_main.pas"/>
+        <Caret Line="411" Column="118" TopLine="396"/>
       </Position9>
       <Position10>
-        <Filename Value="SysIconCache.pas"/>
-        <Caret Line="106" Column="6" TopLine="97"/>
+        <Filename Value="myf_main.pas"/>
+        <Caret Line="419" Column="116" TopLine="400"/>
       </Position10>
       <Position11>
         <Filename Value="myf_main.pas"/>
-        <Caret Line="7" Column="11" TopLine="1"/>
+        <Caret Line="587" Column="53" TopLine="571"/>
       </Position11>
       <Position12>
         <Filename Value="myf_main.pas"/>
-        <Caret Line="290" Column="29" TopLine="279"/>
+        <Caret Line="561" Column="1" TopLine="537"/>
       </Position12>
       <Position13>
-        <Filename Value="myf_main.pas"/>
-        <Caret Line="324" Column="24" TopLine="313"/>
-      </Position13>
-      <Position14>
-        <Filename Value="myf_main.pas"/>
-        <Caret Line="55" Column="22" TopLine="40"/>
-      </Position14>
-      <Position15>
-        <Filename Value="myf_main.pas"/>
-        <Caret Line="62" Column="58" TopLine="40"/>
-      </Position15>
-      <Position16>
-        <Filename Value="myf_main.pas"/>
-        <Caret Line="292" Column="20" TopLine="277"/>
-      </Position16>
-      <Position17>
-        <Filename Value="myf_main.pas"/>
-        <Caret Line="297" Column="53" TopLine="282"/>
-      </Position17>
-      <Position18>
-        <Filename Value="myf_main.pas"/>
-        <Caret Line="601" Column="5" TopLine="571"/>
-      </Position18>
-      <Position19>
-        <Filename Value="myf_main.pas"/>
-        <Caret Line="391" Column="19" TopLine="382"/>
-      </Position19>
-      <Position20>
-        <Filename Value="myf_main.pas"/>
-        <Caret Line="396" Column="119" TopLine="381"/>
-      </Position20>
-      <Position21>
-        <Filename Value="myf_main.pas"/>
-        <Caret Line="411" Column="118" TopLine="396"/>
-      </Position21>
-      <Position22>
-        <Filename Value="myf_main.pas"/>
-        <Caret Line="419" Column="116" TopLine="400"/>
-      </Position22>
-      <Position23>
-        <Filename Value="myf_main.pas"/>
-        <Caret Line="587" Column="53" TopLine="571"/>
-      </Position23>
-      <Position24>
-        <Filename Value="myf_main.pas"/>
-        <Caret Line="561" Column="1" TopLine="537"/>
-      </Position24>
-      <Position25>
         <Filename Value="myf_search.pas"/>
         <Caret Line="46" Column="13" TopLine="35"/>
-      </Position25>
-      <Position26>
+      </Position13>
+      <Position14>
         <Filename Value="myf_search.pas"/>
         <Caret Line="7" Column="45" TopLine="1"/>
-      </Position26>
-      <Position27>
+      </Position14>
+      <Position15>
         <Filename Value="myf_search.pas"/>
         <Caret Line="392" Column="17" TopLine="377"/>
-      </Position27>
-      <Position28>
+      </Position15>
+      <Position16>
         <Filename Value="myf_search.pas"/>
         <Caret Line="717" Column="1" TopLine="687"/>
-      </Position28>
-      <Position29>
+      </Position16>
+      <Position17>
         <Filename Value="myf_search.pas"/>
         <Caret Line="392" Column="15" TopLine="377"/>
-      </Position29>
-      <Position30>
+      </Position17>
+      <Position18>
         <Filename Value="Unit1.pas"/>
         <Caret Line="5475" Column="53" TopLine="5469"/>
+      </Position18>
+      <Position19>
+        <Filename Value="Unit1.pas"/>
+        <Caret Line="24" Column="35" TopLine="10"/>
+      </Position19>
+      <Position20>
+        <Filename Value="SplashFUnit.pas"/>
+        <Caret Line="50" Column="14" TopLine="40"/>
+      </Position20>
+      <Position21>
+        <Filename Value="SplashFUnit.pas"/>
+        <Caret Line="11" Column="30" TopLine="1"/>
+      </Position21>
+      <Position22>
+        <Filename Value="SplashFUnit.pas"/>
+        <Caret Line="36" Column="31" TopLine="22"/>
+      </Position22>
+      <Position23>
+        <Filename Value="SplashFUnit.pas"/>
+        <Caret Line="68" Column="1" TopLine="61"/>
+      </Position23>
+      <Position24>
+        <Filename Value="SplashFUnit.pas"/>
+        <Caret Line="1" Column="1" TopLine="1"/>
+      </Position24>
+      <Position25>
+        <Filename Value="SplashFUnit.pas"/>
+        <Caret Line="12" Column="7" TopLine="1"/>
+      </Position25>
+      <Position26>
+        <Filename Value="SplashFUnit.pas"/>
+        <Caret Line="43" Column="1" TopLine="19"/>
+      </Position26>
+      <Position27>
+        <Filename Value="SplashFUnit.pas"/>
+        <Caret Line="76" Column="3" TopLine="55"/>
+      </Position27>
+      <Position28>
+        <Filename Value="SplashFUnit.pas"/>
+        <Caret Line="151" Column="1" TopLine="126"/>
+      </Position28>
+      <Position29>
+        <Filename Value="SplashFUnit.pas"/>
+        <Caret Line="10" Column="1" TopLine="1"/>
+      </Position29>
+      <Position30>
+        <Filename Value="xplorerimagelist.pas"/>
+        <Caret Line="83" Column="3" TopLine="52"/>
       </Position30>
     </JumpHistory>
   </ProjectSession>
