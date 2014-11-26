@@ -129,11 +129,10 @@ object frmBegriffe: TfrmBegriffe
     ScrollWidth = 197
     Sorted = True
     TabOrder = 2
-    TopIndex = -1
   end
   object edtString: TEdit
     Left = 8
-    Height = 26
+    Height = 21
     Top = 32
     Width = 199
     Anchors = [akTop, akLeft, akRight]
@@ -141,4 +140,4 @@ object frmBegriffe: TfrmBegriffe
     OnKeyPress = edtStringKeyPress
     TabOrder = 0
   end
-end
+end

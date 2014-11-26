@@ -62,13 +62,14 @@ begin
     Delete(s, 1, 2);
   if Pos('myfiles:', lowercase(s)) = 1 then Delete(s, 1, 8);
   s := trim(s);
+  {
   if Copy(s,1,1) = '$' then
   begin
     regme(s);
     Exit;
   end;
   checkreg;
-
+  }
 
   Application.Title := 'MyFindex';
   Application.HintHidePause := 9000;

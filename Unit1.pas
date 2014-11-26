@@ -2630,11 +2630,13 @@ var
 
 begin
 
+  {
   if Copy(address,1,1) = '$' then
   begin
     regme(address);
     Exit;
   end;
+  }
 
   jumpname := '';
   if curcol = '' then Exit;
@@ -4131,43 +4133,43 @@ begin
                   didup := False;
               end;
               lvt_ordner, lvt_verbund: begin { Ordner / Verbundordner rekursiv hinzufügen }
-                  with dm, dm.tblFolders do
-                  begin
+                  //with dm, dm.tblFolders do
+                  //begin
                     if item.typ = lvt_ordner then
-                      s := 'DISKID = ''' + IntToStr(item.id.diskid) + ''' and ' else
+                      s := 'MediaID = ''' + IntToStr(item.id.diskid) + ''' and ' else
                       s := '';
-                    s := s + 'Folder = ' + AnsiQuotedStr(MyGetPath(item.id) + Items[i].caption + '\*', '''');
-                    Filter := s;
-                    Filtered := True;
+                    s := s + 'Folder = ' + QuotedStr(MyGetPath(item.id) + Items[i].caption + '\*');
+                    dm.sqlqFolders.Filter := s;
+                    dm.sqlqFolders.Filtered := True;
                     s := '';
-                    First;
-                    while not eof do
+                    dm.sqlqFolders.First;
+                    while not dm.sqlqFolders.eof do
                     begin
-                      if tblFoldersFOLDERID.AsString <> '' then
-                        s := s + 'FOLDERID = ''' +
-                          tblFoldersFOLDERID.AsString + ''' or ';
-                      Next;
+                      if dm.sqlqFolders.FieldByName('FolderID').AsString <> '' then
+                        s := s + 'FolderID = ''' +
+                          dm.sqlqFolders.FieldByName('FolderID').AsString + ''' or ';
+                      dm.sqlqFolders.Next;
                     end;
-                    Filtered := False;
-                  end;
+                    dm.sqlqFolders.Filtered := False;
+                  //end;
                   if s <> '' then
                   begin
                     Delete(s, Length(S) - 3, 4);
-                    with dm, dm.tblFiles do
-                    begin
-                      filter := s;
-                      Filtered := True;
-                      StartWait(RecordCount,'Ordner: ' + Items[i].Caption);
-                      First;
-                      while not eof do
+                    //with dm, dm.tblFiles do
+                    //begin
+                      dm.sqlqFiles.filter := s;
+                      dm.sqlqFiles.Filtered := True;
+                      StartWait(dm.sqlqFiles.RecordCount,'Ordner: ' + Items[i].Caption);
+                      dm.sqlqFiles.First;
+                      while not dm.sqlqFiles.eof do
                       begin
-                        if tblFilesEntryKind.Value <> ek_folder then
+                        if dm.sqlqFiles.FieldByName('EntryKind').Value <> ek_folder then
                           ListAction(dbCurrentID, modeflag, nil);
-                        Next;
+                        dm.sqlqFiles.Next;
                         StepWait(Self);
                       end;
-                      Filtered := False;
-                    end;
+                      dm.sqlqFiles.Filtered := False;
+                    //end;
                   end;
                   didup := False;
                 end;
@@ -7621,4 +7623,4 @@ begin
 end;
 
 end.
-
+

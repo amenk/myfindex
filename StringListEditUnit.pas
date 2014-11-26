@@ -45,8 +45,7 @@ type
 
 var
   frmBegriffe: TfrmBegriffe;
-  {$ifdef windows}
-  {$else}
+  {$ifndef windows}
   md :boolean;
   x0, y0 :integer;
   {$endif}
@@ -127,31 +126,10 @@ begin
   {$endif}
 end;
 
-procedure TfrmBegriffe.lbListDblClick(Sender: TObject);
-begin
-
-end;
-
-procedure TfrmBegriffe.edtStringChange(Sender: TObject);
-begin
-
-end;
-
-procedure TfrmBegriffe.FormShow(Sender: TObject);
-begin
-
-end;
-
-procedure TfrmBegriffe.FormCreate(Sender: TObject);
-begin
-
-end;
-
 procedure TfrmBegriffe.pnlHeadMouseMove(Sender: TObject; Shift: TShiftState; X,
   Y: Integer);
 begin
-{$ifdef windows}
-{$else}
+{$ifndef windows}
 if md then
 begin
   Left := Left - x0 + x;
@@ -163,8 +141,7 @@ end;
 procedure TfrmBegriffe.pnlHeadMouseUp(Sender: TObject; Button: TMouseButton;
   Shift: TShiftState; X, Y: Integer);
 begin
-  {$ifdef windows}
-  {$else}
+  {$ifndef windows}
   md := False;
   {$endif}
 end;
@@ -192,4 +169,4 @@ begin
   //
 end;
 
-end.
+end.

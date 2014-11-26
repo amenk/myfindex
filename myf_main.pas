@@ -3,7 +3,7 @@ unit myf_main;
 
 interface
 
-uses {$ifdef WINDOWS}Windows, {$else}{$endif}SysUtils, Classes,
+uses {$ifdef WINDOWS}Windows, CommCtrl, {$else}{$endif}SysUtils, Classes,
   ComCtrls, UsefulPrcs, SysIconCache, Registry;
 
 { Elementart in files.db (Ordner, Datei) }
@@ -79,7 +79,6 @@ function MyID(fDiskID,fFolderID,fFileID: Integer): TMyID;
 function MyIDToStr(ID: TMyID):string;
 function MyCompareItems(strDID:string;i1,i2 : TMyItem):integer;
 function MyCompareItemsEx(strDIDex:string;i1,i2 : TMyItem;ansi:boolean):integer;
-procedure checkreg;
 function MyItemToStr(Item:TMyItem; myDID:string; SF:ShortInt):string;
 function ExtractProp(tx,prop:string):string;
 function GetLineProp(tx:string):string;
@@ -533,29 +532,6 @@ begin
 {  if Copy(k,(l * 3) + 3,1) <> Copy(c(c4),3,1) then raise EAbort.Create('bogus error'); }
 end;
 
-procedure checkreg;
-var
-  s, key : string;
-begin
-  isreg := True;
-  regname := tx_unreg;
-  try
-    with TRegistry.Create do
-    try
-      access := KEY_READ;
-      if not OpenKey('Software\self-soft\MyFiles', false) then raise Exception.Create('no key');
-      s := ReadString('RegName');
-      key := ReadString('Key');
-      if not checkall(key) then raise Exception.Create('error');
-      check(s,key);
-    finally
-      Free;
-    end;
-  except
-    isreg := False;
-  end;
-  if isreg then regname := s;
-end;
 
 initialization
   ICache := TIconCache.Create;
