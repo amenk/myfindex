@@ -1549,12 +1549,26 @@ begin
       begin
         Caption := '('+drives[i]+':)';
         case GetDriveType(PChar(drives[i]+':\')) of
+          {$ifdef windows}
           DRIVE_RAMDISK: ImageIndex := 5;
           DRIVE_REMOVABLE: ImageIndex:=4;
           DRIVE_REMOTE: ImageIndex := 3;
           DRIVE_FIXED : ImageIndex := 2;
           DRIVE_CDROM : ImageIndex := 1;
           else ImageIndex := 0;
+          {$else}
+          6: ImageIndex := 5;
+          2: ImageIndex :=4;
+          4: ImageIndex := 3;
+          3: ImageIndex := 2;
+          5: ImageIndex := 1;
+          else ImageIndex := 0;
+          {$endif}
+
+
+        end;
+        end;
+        end;
         end;
         Checked := Pos(drives[i],uebwdrives) <> 0;
       end;

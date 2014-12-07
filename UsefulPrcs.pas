@@ -38,6 +38,10 @@ function MyFormatStr(s:string;FStrFormat:integer):string;
 function GetSpaceText(sl:TStrings): string;
 procedure PCharToList(str:PChar;list:TStringList);
 procedure CreateDirRecursiv(s:string);
+{$ifndef windows}
+function GetDriveType(mountpoint : string) : integer;
+function getDeviceByMountpoint(mountpoint : string) : string;
+{$endif}
 
 implementation
 
@@ -661,6 +665,87 @@ begin
       CreateDirUTF8(d);
     end;
 end;
+
+{$ifndef windows}
+function GetDriveType(mountpoint : string) : integer;
+var
+  mountedInfoProc : TProcess;
+  lsprocSL, deviceSL : TStringList;
+  device, DEVTYPE, ID_BUS : string;
+  i, block, driveType : integer;
+
+begin
+  // Windows GetDriveType replacement
+  device := getDeviceByMountpoint(mountpoint);
+  mountedInfoProc := TProcess.Create(nil);
+  lsprocSL := TStringList.Create;
+  deviceSL := TStringList.Create;
+  mountedInfoProc.CommandLine := 'udevadm info --query=property --name='+device;
+  mountedInfoProc.Options:=mountedInfoProc.Options + [poUsePipes];
+  mountedInfoProc.Execute;
+  lsprocSL.LoadFromStream(mountedInfoProc.Output);
+  driveType:=0;
+  if (lsprocSL.Count > 0) AND (mountpoint <> 'tmpfs') then
+  begin
+    for i:=0 to lsprocSL.Count-1 do
+    begin
+      if pos('DEVTYPE', lsprocSL[i]) > 0 then
+        DEVTYPE := copy(lsprocSL[i], 9, length(lsprocSL[i])-8);
+      if pos('ID_BUS', lsprocSL[i]) > 0 then
+        ID_BUS := copy(lsprocSL[i], 8, length(lsprocSL[i])-7);
+      if pos('ID_CDROM', lsprocSL[i]) > 0 then
+        driveType:=5;
+      if pos('SUBSYSTEM=net', lsprocSL[i]) > 0 then
+        driveType:=4;
+    end;
+  end
+  else
+   if mountpoint='tmpfs' then
+     driveType:=6;
+  if driveType < 4 then
+  begin
+    if ID_BUS='usb' then
+      driveType:=2;
+    if ID_BUS='ata' then
+      driveType:=3;
+  end;
+  result := driveType;
+  mountedInfoProc.Free;
+  lsprocSL.Free;
+  deviceSL.Free;
+end;
+
+function getDeviceByMountpoint(mountpoint : string) : string;
+var
+  mountedInfoProc : TProcess;
+  mountedSL : TStringList;
+  i, j : integer;
+begin
+  mountedInfoProc := TProcess.Create(nil);
+  mountedSL := TStringList.Create;
+  mountedInfoProc.CommandLine := 'mount';
+  mountedInfoProc.Options:=mountedInfoProc.Options + [poUsePipes];
+  mountedInfoProc.Execute;
+  mountedSL.LoadFromStream(mountedInfoProc.Output);
+  if mountedSL.Count > 0 then
+  begin
+    for i := 0 to mountedSL.Count - 1 do
+    begin
+      if AnsiPos(' '+mountpoint+' ', mountedSL[i]) > 0 then
+      begin
+        j := 1;
+        while mountedSL[i][j] <> ' ' do
+        begin
+          result := result + mountedSL[i][j];
+          inc(j);
+        end;
+      end;
+    end;
+  end;
+  mountedSL.Free;
+  mountedInfoProc.Free;
+end;
+{$endif}
 
 initialization
   LevenshteinPQR(1, 1, 1);
