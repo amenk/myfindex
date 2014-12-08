@@ -16,6 +16,17 @@ const
   attrs : array[0..3] of integer = (faArchive, faHidden, SysUtils.faReadOnly, faSysFile);
   attrs_str = 'ahrs';
 
+{$ifndef windows}
+const
+  DRIVE_UNKNOWN = 0;
+  DRIVE_NO_ROOT_DIR = 1;
+  DRIVE_REMOVABLE = 2;
+  DRIVE_FIXED = 3;
+  DRIVE_REMOTE = 4;
+  DRIVE_CDROM = 5;
+  DRIVE_RAMDISK = 6;
+{$endif}
+
 function killzeros(const s:string):string;
 function Filter(s:string;Forbidden:CharSet):string;
 function VolumeSN(Drive: string): string; { Seriennummer (HEX) }

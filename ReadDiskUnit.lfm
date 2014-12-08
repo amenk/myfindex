@@ -30,7 +30,7 @@ object frmReadDisk: TfrmReadDisk
     Left = 57
     Height = 28
     Top = 2
-    Width = 235
+    Width = 236
     Caption = 'Datenträger einlesen'
     Color = clWhite
     Font.Color = 10485760
@@ -207,30 +207,30 @@ object frmReadDisk: TfrmReadDisk
     Options = [nboMultiLine]
     object TabSheet1: TTabSheet
       Caption = '&Auswahl'
-      ClientHeight = 194
-      ClientWidth = 409
+      ClientHeight = 196
+      ClientWidth = 415
       object GroupBox1: TGroupBox
         Left = 6
         Height = 121
         Top = 2
         Width = 395
         Caption = ' &Datenträger / Laufwerk '
-        ClientHeight = 103
+        ClientHeight = 105
         ClientWidth = 391
         TabOrder = 0
         object Label12: TLabel
           Left = 235
-          Height = 13
+          Height = 14
           Top = 100
-          Width = 87
+          Width = 107
           Caption = 'Datei-/Ordnerfilter:'
           ParentColor = False
         end
         object ckUpdatePrev: TCheckBox
           Left = 7
-          Height = 19
+          Height = 21
           Top = 99
-          Width = 203
+          Width = 240
           Caption = 'Vorschau, Infos und Notizen neu lesen'
           TabOrder = 2
         end
@@ -249,10 +249,10 @@ object frmReadDisk: TfrmReadDisk
         end
         object cbStapel: TCheckBox
           Left = 7
-          Height = 19
+          Height = 21
           Hint = 'Aktiviert den Stapelmodus. Alle in die mit einem Haken makierten Laufwerke eingeleten Datenträger werden eingelesen, falls noch nicht in der Sammlung vorhanden.'
           Top = 99
-          Width = 198
+          Width = 242
           Caption = 'mehrere Datenträger einlesen (&Stapel)'
           OnClick = cbStapelClick
           ParentShowHint = False
@@ -261,7 +261,7 @@ object frmReadDisk: TfrmReadDisk
         end
         object cbIncludeFiles: TEdit
           Left = 330
-          Height = 21
+          Height = 26
           Hint = 'Gib hier Datei- oder Ordnermasken an, die nicht eingelesen werden sollen. Alt+Nach unten öffnet den Editor.'
           Top = 96
           Width = 61
@@ -274,21 +274,21 @@ object frmReadDisk: TfrmReadDisk
         Top = 128
         Width = 249
         Caption = ' Datenträger '
-        ClientHeight = 39
+        ClientHeight = 41
         ClientWidth = 245
         TabOrder = 1
         object Label5: TLabel
           Left = 8
-          Height = 13
+          Height = 14
           Top = 30
-          Width = 65
+          Width = 76
           Caption = '&Bezeichnung:'
           FocusControl = edtLabel
           ParentColor = False
         end
         object edtLabel: TEdit
           Left = 80
-          Height = 21
+          Height = 26
           Hint = 'Name des Datenträgers. (kann in MyFiles verändert werden, falls vergessen wurde, den Datenträger beim Brennen richtig zu bennen)'
           Top = 24
           Width = 152
@@ -309,7 +309,7 @@ object frmReadDisk: TfrmReadDisk
         Top = 128
         Width = 137
         Caption = ' Einlese-Optionen '
-        ClientHeight = 39
+        ClientHeight = 41
         ClientWidth = 133
         TabOrder = 2
         object ToolBar1: TToolBar
@@ -339,9 +339,9 @@ object frmReadDisk: TfrmReadDisk
             ShowHint = True
           end
           object tbSave: TToolButton
-            Left = 62
+            Left = 1
             Hint = 'Einleseoptionen speichern. Wähle als Dateinamen "default" um die Optionen beim Einlesen immer automatisch zu laden.'
-            Top = 0
+            Top = 36
             Caption = '&Speichern'
             ImageIndex = 53
             OnClick = tbSaveClick
@@ -351,8 +351,8 @@ object frmReadDisk: TfrmReadDisk
     end
     object tsPlugIns: TTabSheet
       Caption = 'Datei &Infos (PlugIns)'
-      ClientHeight = 0
-      ClientWidth = 0
+      ClientHeight = 196
+      ClientWidth = 415
       ImageIndex = 2
       object Label1: TLabel
         Left = 8
@@ -506,7 +506,7 @@ object frmReadDisk: TfrmReadDisk
           end        
           item
             Caption = 'zuständiges Plugin'
-            Width = 100
+            Width = 111
           end>
         ColumnClick = False
         HideSelection = False
@@ -522,8 +522,8 @@ object frmReadDisk: TfrmReadDisk
     end
     object TabSheet2: TTabSheet
       Caption = '&Optionen'
-      ClientHeight = 0
-      ClientWidth = 0
+      ClientHeight = 196
+      ClientWidth = 415
       ImageIndex = 1
       object gbMM: TGroupBox
         Left = 128
@@ -531,7 +531,7 @@ object frmReadDisk: TfrmReadDisk
         Top = 8
         Width = 273
         Caption = ' MultiMedia Vorschau '
-        ClientHeight = 76
+        ClientHeight = 78
         ClientWidth = 269
         TabOrder = 1
         object fbCfgMP3: TSpeedButton
@@ -581,7 +581,7 @@ object frmReadDisk: TfrmReadDisk
         Top = 8
         Width = 113
         Caption = ' &Notizen auslesen '
-        ClientHeight = 76
+        ClientHeight = 78
         ClientWidth = 109
         TabOrder = 0
         object ckFILEIDDIZ: TCheckBox
@@ -609,7 +609,7 @@ object frmReadDisk: TfrmReadDisk
         Top = 107
         Width = 393
         Caption = ' Nicht einlesen'
-        ClientHeight = 63
+        ClientHeight = 65
         ClientWidth = 389
         TabOrder = 2
         object Label6: TLabel
@@ -668,8 +668,8 @@ object frmReadDisk: TfrmReadDisk
     end
     object tsStatus: TTabSheet
       Caption = 'Status'
-      ClientHeight = 0
-      ClientWidth = 0
+      ClientHeight = 196
+      ClientWidth = 415
       ImageIndex = 4
       TabVisible = False
       object lblCurF: TLabel
@@ -760,7 +760,7 @@ object frmReadDisk: TfrmReadDisk
         Height = 57
         Top = 8
         Width = 393
-        ClientHeight = 39
+        ClientHeight = 53
         ClientWidth = 389
         TabOrder = 3
         object Label7: TLabel
@@ -2118,4 +2118,4 @@ object frmReadDisk: TfrmReadDisk
     left = 368
     top = 232
   end
-end
+end

@@ -59,7 +59,9 @@ begin
   if (Pos(uppercase(key), edtDrives.Text) <> 0) and
     (Pos(uppercase(key), edtDrives.SelText) = 0) then
   begin
+    {$ifdef windows}
     MessageBeep(0);
+    {$endif}
     Key := #0;
   end;
 end;
