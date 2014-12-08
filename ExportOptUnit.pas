@@ -5,8 +5,7 @@ interface
 
 uses
   {$ifdef WINDOWS}Windows, {$else}{$endif}Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  StdCtrls, Buttons, ExtCtrls, ComCtrls,
-  CheckLst, IniFiles, ToolWin, FileUtil;
+  StdCtrls, Buttons, ExtCtrls, ComCtrls, CheckLst, IniFiles, ToolWin, FileUtil, LCLType;
 
 type
   TfrmListExport = class(TForm)

@@ -31,6 +31,8 @@ object frmStringEdit: TfrmStringEdit
     ParentFont = False
     TabOrder = 6
     OnMouseDown = pnlHeadMouseDown
+    OnMouseMove = pnlHeadMouseMove
+    OnMouseUp = pnlHeadMouseUp
     object btnCancel: TSpeedButton
       Left = 2
       Height = 20
@@ -81,6 +83,7 @@ object frmStringEdit: TfrmStringEdit
       OnClick = rbGenClick
       ParentFont = False
       TabOrder = 0
+      TabStop = True
     end
   end
   object p2: TPanel
@@ -109,6 +112,7 @@ object frmStringEdit: TfrmStringEdit
       OnClick = rbGenClick
       ParentFont = False
       TabOrder = 0
+      TabStop = True
     end
   end
   object p3: TPanel
@@ -137,6 +141,7 @@ object frmStringEdit: TfrmStringEdit
       OnClick = rbGenClick
       ParentFont = False
       TabOrder = 0
+      TabStop = True
     end
   end
   object pnlBegriffe: TPanel

@@ -4,13 +4,15 @@ unit SetupUnit;
 interface
 
 uses
-  {$ifdef WINDOWS}Windows, {$else}{$endif}Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  StdCtrls, Buttons, ComCtrls, myf_consts, Registry, ActiveX, ComObj,
-  ShlObj, UseFulPrcs, CheckLst,
-  myf_plugins, ExtCtrls, Spin, FileUtil;
+  {$ifdef WINDOWS}Windows, ActiveX, ComObj, ShlObj, {$else}{$endif}Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
+  StdCtrls, Buttons, ComCtrls, myf_consts, Registry, UseFulPrcs, CheckLst,
+  myf_plugins, ExtCtrls, Spin, FileUtil, LCLType;
 
 
 type
+
+  { TfrmConfig }
+
   TfrmConfig = class(TForm)
     btnOk: TSpeedButton;
     btnAbort: TSpeedButton;
@@ -86,6 +88,7 @@ type
     cedtFile: TEdit;
     Label29: TLabel;
     ckFastSwitch: TCheckBox;
+    procedure ckStartMenChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure btnResetClick(Sender: TObject);
     procedure btnOkClick(Sender: TObject);
@@ -117,6 +120,7 @@ uses Unit1, myf_main, StringListEditUnit;
 const
   IID_IPersistFile: TGUID = (D1: $0000010B; D2: $0000; D3: $0000; D4: ($C0, $00, $00, $00, $00, $00, $00, $46));
 
+{$ifdef windows}
 function CreateLink(lpszPathObj, lpszPathLink, lpszDesc: string): Boolean;
 var psl: IShellLink;
   ppf: IPersistFile;
@@ -131,7 +135,7 @@ begin
     end;
   end;
 end; {CreateLink}
-
+{$endif}
  // ---
 
 procedure TfrmConfig.readini;
@@ -211,6 +215,7 @@ begin
     end;
   end;
 
+  {$ifdef windows}
   { Protocol }
   with TRegistry.Create do
   try
@@ -221,6 +226,7 @@ begin
   end;
   { Link }
   ckStartMen.Checked := FileExistsUTF8(SpecialDirectory(CSIDL_Startmenu) + txt_startm); { *Converted from FileExists* }
+  {$endif}
 end;
 
 procedure TfrmConfig.writeini;
@@ -292,6 +298,7 @@ begin
 //    begin { deinstallieren }
 //      DeleteKey(txt_protocol);
 //    end;
+  {$ifdef windows}
   if ckStartMen.Checked then
   begin
     if not FileExistsUTF8(SpecialDirectory(CSIDL_Startmenu) + txt_startm) { *Converted from FileExists* } then
@@ -299,6 +306,8 @@ begin
         SpecialDirectory(CSIDL_Startmenu) + txt_startm, 'MyFiles');
   end else
     DeleteFileUTF8(SpecialDirectory(CSIDL_Startmenu) + txt_startm); { *Converted from DeleteFile* }
+end;
+  {$endif}
 end;
 
 procedure TfrmConfig.FormCreate(Sender: TObject);
@@ -310,6 +319,11 @@ begin
   ckSplash.Enabled := isreg;
 //  ckAds.Enabled := isreg;
   lblHinweis.Visible := not isreg;
+end;
+
+procedure TfrmConfig.ckStartMenChange(Sender: TObject);
+begin
+
 end;
 
 procedure TfrmConfig.btnResetClick(Sender: TObject);

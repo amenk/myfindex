@@ -4,11 +4,14 @@ unit StringEditUnit;
 interface
 
 uses
-  {$ifdef WINDOWS}Windows, {$else}{$endif}Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  StdCtrls, ExtCtrls, ShellApi, ComCtrls, UseFulPrcs,
+  {$ifdef WINDOWS}Windows, ShellApi, {$else}{$endif}Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
+  StdCtrls, ExtCtrls, ComCtrls, UseFulPrcs,
   Buttons;
 
 type
+
+  { TfrmStringEdit }
+
   TfrmStringEdit = class(TForm)
     pnlHead: TPanel;
     btnCancel: TSpeedButton;
@@ -38,6 +41,10 @@ type
     tbLevel: TTrackBar;
     Label8: TLabel;
     Label9: TLabel;
+    procedure pnlHeadMouseMove(Sender: TObject; Shift: TShiftState; X,
+      Y: Integer);
+    procedure pnlHeadMouseUp(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
     procedure rbGenClick(Sender: TObject);
     procedure lblSyntaxLinkClick(Sender: TObject);
     procedure SetValue(Value : string);
@@ -54,6 +61,10 @@ type
 
 var
   frmStringEdit: TfrmStringEdit;
+  {$ifndef windows}
+  md :boolean;
+  x0, y0 :integer;
+  {$endif}
 
 implementation
 
@@ -136,6 +147,27 @@ begin
       self.ClientHeight := Top + Height + 5;
 
 end;
+
+procedure TfrmStringEdit.pnlHeadMouseUp(Sender: TObject; Button: TMouseButton;
+  Shift: TShiftState; X, Y: Integer);
+begin
+  {$ifndef windows}
+  md := False;
+  {$endif}
+end;
+
+procedure TfrmStringEdit.pnlHeadMouseMove(Sender: TObject; Shift: TShiftState;
+  X, Y: Integer);
+begin
+  {$ifndef windows}
+  if md then
+  begin
+    Left := Left - x0 + x;
+    Top := Top - y0 + y;
+  end;
+  {$endif}
+end;
+
 {//ToBeConverted
 procedure TfrmStringEdit.cedtButtonClick(Sender: TObject);
 var
@@ -162,8 +194,14 @@ end;
 procedure TfrmStringEdit.pnlHeadMouseDown(Sender: TObject;
   Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
 begin
+  {$ifdef windows}
   ReleaseCapture;
   SendMessage(Self.Handle, WM_SYSCOMMAND, 61458, 0);
+  {$else}
+  md := True;
+  x0 := x;
+  y0 := y;
+  {$endif}
 end;
 
 procedure TfrmStringEdit.FormCreate(Sender: TObject);

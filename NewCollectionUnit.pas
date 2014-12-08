@@ -130,6 +130,7 @@ var Drives: array[1..255] of char;
   s: string;
 begin
   cbIdent.ItemIndex := 0;
+  {$ifdef windows}
   s := '';
   LWListe := TStringList.Create;
   try
@@ -140,10 +141,12 @@ begin
     for i := 0 to LWListe.Count - 1 do
       if GetDriveType(PChar(LWListe[i])) in [DRIVE_CDROM] then
         s := s + upcase(LWListe[i][1]);
+
     edtDrives.Text := s;
   finally
     LWListe.Free;
   end;
+  {$endif}
 end;
 
 

@@ -31,6 +31,8 @@ object frmExtSelect: TfrmExtSelect
     ParentFont = False
     TabOrder = 0
     OnMouseDown = pnlHeadMouseDown
+    OnMouseMove = pnlHeadMouseMove
+    OnMouseUp = pnlHeadMouseUp
     object btnCancel: TSpeedButton
       Left = 2
       Height = 20

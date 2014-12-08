@@ -116,8 +116,8 @@ end;
 procedure TfrmBegriffe.pnlHeadMouseDown(Sender: TObject;
   Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
 begin
-  ReleaseCapture;
   {$ifdef windows}
+  ReleaseCapture;
   SendMessage(Self.Handle, WM_SYSCOMMAND, 61458, 0);
   {$else}
   md := True;
@@ -169,4 +169,4 @@ begin
   //
 end;
 
-end.
+end.
