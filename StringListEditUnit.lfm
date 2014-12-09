@@ -1,7 +1,7 @@
 object frmBegriffe: TfrmBegriffe
-  Left = 701
+  Left = 699
   Height = 208
-  Top = 323
+  Top = 329
   Width = 216
   BorderStyle = bsDialog
   Caption = 'frmBegriffe'

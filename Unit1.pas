@@ -26,7 +26,7 @@ uses
   ExtCtrls, Menus, StdCtrls, Dialogs, Controls, ComCtrls, Classes, Graphics,
   Spin, Buttons, ImgList, Grids, IniFiles, FileUtil, Variants,
   Clipbrd, CheckLst, SplashFUnit, DBGrids, Registry, sqldb, Crt,
-  LCLIntf, LCLType, zvdatetimepicker;
+  LCLIntf, LCLType, zvdatetimepicker, fpmimetypes;
 
 const
   lvt_file = 1;
@@ -785,8 +785,13 @@ end;
 
 procedure TMyFiles3Form.Createimages;
 begin
+  {$ifdef windows}
   ilMoreImages := TXplorerImageList.Create(MyFiles3Form);
   SmallImages := TXplorerImageList.Create(MyFiles3Form);
+  {$else}
+  ilMoreImages := TImageList.Create(MyFiles3Form);
+  SmallImages := TImageList.Create(MyFiles3Form);
+  {$endif}
   MyFiles3Form.ListView.SmallImages := SmallImages;
 end;
 
@@ -912,11 +917,23 @@ begin
   *)
 end;
 
-{ ImageList Managment }
-
+{ ImageList Management }
+{$ifdef windows}
 function AddFileIconToIL(il: TXplorerImageList; FileName: string): integer;
+{$else}
+function AddFileIconToIL(il: TImageList; FileName: string): integer;
+var
+  TheMimeType : string;
+{$endif}
 begin
+  {$ifdef windows}
   result := GetIconImageAndIndex(Filename, il, true);
+  {$else}
+  TheMimeType := MimeTypes.GetMimeType(ExtractFileExt(AFileName));
+  //...
+  {$endif}
+end;
+
 end;
 
 function AddResIconToIL(il: TImageList; icon: string): integer;
@@ -7623,4 +7640,4 @@ begin
 end;
 
 end.
-
+
