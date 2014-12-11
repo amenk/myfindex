@@ -692,7 +692,9 @@ type
     procedure CustListView(adr:string); // Listview-Layout automatisch laden
     procedure updateLV; // Listview entsprechend cbAdresse füllen + Location setzen
     procedure updateTV; // richtiges Treeview entsprechend cbAdresse scrollen / zeigen
+    {$ifdef windows}
     procedure resetThumbs;
+    {$endif}
     procedure parseaddr(s: string; var drv, path: string);
     procedure parseaddr2(s: string; var drv, path, fn: string);
     procedure updatetvs; // Treeview Grundstruktur neu aus der DB lesen
@@ -929,7 +931,7 @@ begin
   {$ifdef windows}
   result := GetIconImageAndIndex(Filename, il, true);
   {$else}
-  TheMimeType := MimeTypes.GetMimeType(ExtractFileExt(AFileName));
+  TheMimeType := MimeTypes.GetMimeType(ExtractFileExt(FileName));
   //...
   {$endif}
 end;
@@ -1023,7 +1025,11 @@ begin
 
   dodefaultlayouts;
 
+  {$ifdef windows}
   sdExport.InitialDir := SpecialDirectory(CSIDL_Desktop);
+  {$else}
+  sdExport.InitialDir := GetAppConfigDir(false);
+  {$endif}
   ApplicationPropertiesActivate(Sender);
   Toolbar.ShowCaptions := ini.ReadBool(ini_gui, ini_tbcaptions, True);
   if (ini.ReadBool(ini_gui, ini_splash, true)) or (not isreg) then
@@ -2209,6 +2215,7 @@ begin
   end;
 end;
 
+{$ifdef windows}
 procedure TMyFiles3Form.resetThumbs;
 var
   bm: TBitmap;
@@ -2262,6 +2269,7 @@ begin
     end;
   end;
 end;
+{$endif}
 
 procedure TMyFiles3Form.cleartvs;
 var
@@ -2296,8 +2304,13 @@ begin
     end;
     Clear;
   end;
+  {$ifdef windows}
   resetThumbs;
+  {$else}
+  //ToBeConverted
+  {$endif}
 end;
+
 
 // Ungültige Einträge entfernen, ggf. Meldung anzeigen
 procedure TMyFiles3Form.CheckList(ListToCheck:TMyList);
@@ -3792,53 +3805,12 @@ var
   TempListe :  TMyList;
   i : integer;
   s : string;
-
-  procedure renameidapi(ErrNum : integer);
-  var
-    p : string;
-    ErrCaption : string;
-  const
-    iddll = 'IDAPI32.DLL';
-    const
-      str_idapidisabled =
-      'Auf deinem System ist bereits ein Datenbanktreiber aktiv. Der mitgelieferte'+#13#10+
-      'Treiber wurde deaktiviert. Du solltest nun eine Sammlung öffnen/erstellen können.';
-      str_idapirestore =
-      'MyFindex konnte keinen vorhanden Datenbanktreiber laden. Der mitgelieferte'+#13#10+
-      'Treiber wurde wieder aktiviert deaktiviert. Du solltest nun eine Sammlung öffnen/erstellen können.';
-      str_noidapi =
-      'MyFindex konnte keinen Datenbanktreiber finden. Bitte prüfe, ob du evtl. versehentlich ein'+
-      'Update von MyFindex installiert hast, ohne das zuvor eine komplette Version vorhanden war.';
-
-  begin
-    p := ExtractFilePath(Application.ExeName);
-    ErrCaption := str_error + ' $'+IntToHex(ErrNum,4);
-    if FileExistsUTF8(p+iddll) { *Converted from FileExists* } then
-    begin
-      MoveFileEx(PChar(p+iddll), PChar(p+'_'+iddll),MOVEFILE_REPLACE_EXISTING);
-      Application.messagebox(PChar(str_idapidisabled),
-        PChar(ErrCaption),
-        mb_ICONERROR or MB_OK);
-    end
-    else
-      if FileExistsUTF8(p+'_'+iddll) { *Converted from FileExists* } then
-      begin
-        MoveFileEx(PChar(p+'_'+iddll), PChar(p+iddll),MOVEFILE_REPLACE_EXISTING);
-        Application.messagebox(PChar(str_idapirestore),
-          PChar(ErrCaption),
-          mb_ICONERROR or MB_OK);
-      end
-      else
-        Application.messagebox(PChar(str_noidapi),
-        PChar(ErrCaption),
-        mb_ICONERROR or MB_OK);
-
-  end;
-
 begin
   FEditorMode := false;
-  menColEditor.Checked := false;  
+  menColEditor.Checked := false;
+  {$ifdef windows}
   lockwindowupdate(Toolbar.Handle);
+  {$endif}
   try
     SaveAndFreeLists;
     ClearSearchCache;
@@ -4001,7 +3973,9 @@ begin
       sl.Free;
     end;
   finally
+    {$ifdef windows}
     lockwindowupdate(0);
+    {$endif}
   end;
 end;
 
@@ -4027,8 +4001,10 @@ begin
       UpdateColMenu;
       updatetvs;
       UpdateCaption;
+      {$ifdef windows}
       if ExtractLastFEntry(location) = '' then
         setwindowtext(MyFiles3Form.Handle, PChar('MyFindex - ' + curcolname));
+      {$endif}
       tmrDrivestateTimer(nil);
     end;
   finally
@@ -4524,7 +4500,9 @@ procedure TMyFiles3Form.menViewClick(Sender: TObject);
     with ListView do
       for i := 0 to Items.Count - 1 do
         Items[i].ImageIndex := x;
+    {$ifdef windows}
     resetthumbs;
+    {$endif}
   end;
 
 begin
@@ -4558,9 +4536,12 @@ begin
 
 //        ListView.IconOptions.AutoArrange := True;
         ListView.IconOptions.AutoArrange := False;
+        {$ifdef windows}
         ListView_SetIconSpacing(ListView.Handle, thumbmaxw + (4 * 2) + 8, thumbmaxh + (listview.Canvas.textheight('H')) + 32);
         Listview_arrange(listview.Handle, LVA_DEFAULT);
-
+        {$else}
+        //ToBeConverted
+        {$endif}
         menVPreview.Checked := True;
         menViewPreview.Checked := True;
       end;
@@ -5179,7 +5160,9 @@ begin
         s := str_list + ' ' + Copy(location,6,maxInt) else
         s := PChar(ExtractLastFEntry(location));
     if s = '' then s := 'MyFindex - ' + curcolname + '';
+    {$ifdef windows}
     setwindowtext(MyFiles3Form.Handle, PChar(s));
+    {$endif}
   end;
 end;
 
@@ -5220,7 +5203,11 @@ begin
       if Items[i].selected then
       begin
         url := 'myfiles:(' + curcol + ')' + GetLVIFileName(Items[i], False);
+        {$ifdef windows}
         with TIniFile.Create(SpecialDirectory(CSIDL_desktopdirectory) + items[i].Caption + '.url') do
+        {$else}
+        with TIniFile.Create(GetAppConfigDir(false) + items[i].Caption + '.url') do
+        {$endif}
         try
           writestring('DEFAULT', 'BASEURL', url);
           writestring('InternetShortcut', 'URL', url);
@@ -5697,10 +5684,18 @@ begin
   ControlBar.Enabled := False;
   pListView.Enabled := False;
 
+  {$ifdef windows}
   Len := GetWindowTextLength(MyFiles3Form.Handle);
+  {$else}
+  Len := length(MyFiles3Form.Caption);
+  {$endif}
   SetString(FSaveCaption, PChar(nil), Len);
   if Len <> 0 then
+    {$ifdef windows}
     GetWindowText(MyFiles3Form.Handle,Pointer(FSaveCaption), Len + 1);
+    {$else}
+    FSaveCaption := MyFiles3Form.Caption;
+    {$endif}
   Steps := pbProgress.Width div 15;
   FWaitStep := MaxW div Steps;
   with pbProgress do
@@ -5742,7 +5737,11 @@ begin
   begin
     pbProgress.StepIt;
     s := IntToStr(pbProgress.Position * 100 div pbProgress.Max)+'%';
+    {$ifdef windows}
     SetWindowText(MyFiles3Form.Handle,PChar(s));
+    {$else}
+    MyFiles3Form.Caption := s;
+    {$endif}
     application.processmessages;
   end;
 end;
@@ -5753,7 +5752,11 @@ begin
   Screen.cursor := crDefault;
   Self.Enabled := True;
   sbMain.Panels[2].Text := '';
+  {$ifdef windows}
   SetWindowText(MyFiles3Form.Handle,PChar(FSaveCaption));
+  {$else}
+  MyFiles3Form.Caption := FSaveCaption;
+  {$endif}
 
   pnlLeft.Enabled := True;
   ControlBar.Enabled := True;
@@ -6082,7 +6085,7 @@ function GetSLCommaText(sl:TStringList): string;
 var
   S: string;
   P: PChar;
-  I, Count: Integer;
+  I, J, ASCIICode, Count: Integer;
 begin
   Count := sl.Count;
   begin
@@ -6091,7 +6094,17 @@ begin
     begin
       S := sl[I];
       P := PChar(S);
+      {$ifdef windows}
       while not (P^ in [#0..' ','"',',']) do P := CharNext(P);
+      {$else}
+      {//ToBeConverted
+      for j := 1 to length(S) do begin
+        ASCIICode := ord(UTF8ToAnsi(S[j]));
+        if not ASCIICode in [0..39, 44] then
+          P^ := S[j];
+      end;
+      }
+      {$endif}
       if (P^ <> #0) then S := AnsiQuotedStr(S, '"');
       Result := Result + S + ' ';
     end;
@@ -7631,4 +7644,4 @@ begin
 end;
 
 end.
-
+
