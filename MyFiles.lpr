@@ -35,8 +35,6 @@ uses
   myf_plugins in 'myf_plugins.pas',
   CopyToDisksUnit in 'CopyToDisksUnit.pas' {frmCopyDisksUsed};
 
-{$R *.res}
-
 {TODO 2 -cFeature : eigenschaften bei mehreren Dateien
 - es wäre wünschenswert, die eigenschaften von mehreren Selektierten Dateien gleichzeitig bearbeiten zu können}
 {TODO 3 -cBug? : datenträger aktualisieren}
