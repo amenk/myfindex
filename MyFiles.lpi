@@ -218,11 +218,12 @@
     <Version Value="11"/>
     <PathDelim Value="\"/>
     <SearchPaths>
+      <IncludeFiles Value="$(ProjOutDir)"/>
       <OtherUnitFiles Value="ZVDateTimeCtrls"/>
     </SearchPaths>
     <Parsing>
       <SyntaxOptions>
-        <SyntaxMode Value="delphi"/>
+        <SyntaxMode Value="Delphi"/>
       </SyntaxOptions>
     </Parsing>
     <Linking>
@@ -233,6 +234,9 @@
       </Options>
     </Linking>
     <Other>
+      <Verbosity>
+        <ShowDebugInfo Value="True"/>
+      </Verbosity>
       <CompilerMessages>
         <MsgFileName Value=""/>
       </CompilerMessages>

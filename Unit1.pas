@@ -22,7 +22,7 @@ interface
 
 uses
   {$ifdef WINDOWS}windows, ShlObj, CommCtrl, ShellAPI, xplorerimagelist, {$else}cmem, {$endif}myf_consts, myf_main, myf_lists, myf_search, myf_plugins,
-  SysIconCache, UsefulPrcs, db, Messages, SysUtils, Forms, ToolWin,
+  SysIconCache, UsefulPrcs, db, LMessages, SysUtils, Forms, ToolWin,
   ExtCtrls, Menus, StdCtrls, Dialogs, Controls, ComCtrls, Classes, Graphics,
   Spin, Buttons, ImgList, Grids, IniFiles, FileUtil, Variants,
   Clipbrd, CheckLst, SplashFUnit, DBGrids, Registry, sqldb, Crt,
@@ -179,7 +179,6 @@ type
     pmNote: TPopupMenu;
     menNoteNext: TMenuItem;
     spToleranz: TSpeedButton;
-    menRepair: TMenuItem;
     ControlBar: TControlBar;
     ToolBar: TToolBar;
     tbCol: TToolButton;
@@ -469,7 +468,6 @@ type
       var S: String);
     procedure ListViewEditing(Sender: TObject; Item: TListItem;
       var AllowEdit: Boolean);
-    procedure menRepairClick(Sender: TObject);
     procedure ControlBarBandInfo(Sender: TObject; Control: TControl;
       var Insets: TRect; var PreferredSize, RowCount: Integer);
     procedure ControlBarBandMove(Sender: TObject; Control: TControl;
@@ -531,7 +529,7 @@ type
     procedure chkMaxDateClick(Sender: TObject);
     procedure dtpMaxTimeChange(Sender: TObject);
     procedure dtpMinTimeChange(Sender: TObject);
-    procedure FormShortCut(var Msg: TWMKey; var Handled: Boolean);
+    procedure FormShortCut(var Msg: TLMKey; var Handled: Boolean);
     procedure lbSearchInDblClick(Sender: TObject);
     procedure pnlHFileNameEnter(Sender: TObject);
     procedure pnlHSearchInEnter(Sender: TObject);
@@ -585,7 +583,9 @@ type
     procedure menColEditorClick(Sender: TObject);
     procedure menDeleteColItemClick(Sender: TObject);
     procedure menFAQClick(Sender: TObject);
-	procedure cbContChange(Sender: TObject);
+    procedure cbContChange(Sender: TObject);
+    procedure ApplicationEventsActivate(Sender: TObject);
+    procedure ApplicationEventsDeactivate(Sender: TObject);
   private
     dblock : Boolean;
     FPlugIns : TMyPlugins;
@@ -699,7 +699,7 @@ type
     procedure formcontrol(en: Boolean); // Controls aktivieren bzw. deaktivieren
     procedure quickinfo(hctx: integer);
     function MyVolumeId(drive: char): string;
-    procedure UpdateLabel(diskid:integer;s:string);
+    procedure UpdateLabel(mediaid:integer;s:string);
     procedure AddItemToListview(Item:TMyItem; VerbundMode: Boolean);
     { Progressbar }
     procedure StartWait(MaxW:Int64;WaitText: string);
@@ -736,7 +736,7 @@ uses ReadDiskUnit, NewCollectionUnit, NewListUnit,
   NoRegUnit, StringEditUnit, CopyToDisksUnit;
 
 {$R *.lfm}
-{$R icns.lrs}
+{$R icns.res}
 
 { Was wird in der Spalte "Notiz" angezeigt? }
 function GetNoteColumn(Item: TMyItem): string;
@@ -934,7 +934,6 @@ begin
   {$endif}
 end;
 
-end;
 
 function AddResIconToIL(il: TImageList; icon: string): integer;
 var
@@ -4485,10 +4484,8 @@ begin
   begin
     min := Top + 25;
     max := Top + Height;
-    aniFind.Top := min + (max - min) div 2 - 25;
     min := Left;
     max := Left + width;
-    aniFind.Left := min + (max - min) div 2 - 25;
   end;
 end;
 
@@ -5024,8 +5021,8 @@ begin
     if Sender is TSpeedButton then
     begin
       case (Sender as TSpeedButton).Tag of
-        1 : tv.Selected := tv.Items[0].getNextSibling.Item[1].Item[0];
-        2 : tv.Selected := tv.Items[0].getNextSibling.Item[1].Item[1];
+        1 : tv.Selected := tv.Items[0].getNextSibling.Items[1].Items[0];
+        2 : tv.Selected := tv.Items[0].getNextSibling.Items[1].Items[1];
       end;
     end;
     if ShowModal <> mrAbort then
@@ -5182,7 +5179,7 @@ begin
         s := str_list + ' ' + Copy(location,6,maxInt) else
         s := PChar(ExtractLastFEntry(location));
     if s = '' then s := 'MyFindex - ' + curcolname + '';
-    setwindowtext(Application.Handle, PChar(s));
+    setwindowtext(MyFiles3Form.Handle, PChar(s));
   end;
 end;
 
@@ -5367,16 +5364,17 @@ procedure TMyFiles3Form.lvDriveStateDblClick(Sender: TObject);
 begin
   with lvDriveState do
     if Assigned(selected) then
-      with dm.tblDisks do
-      begin
-        IndexName := 'IdxLabel';
-        if Locate('Label', Selected.Subitems[0], []) then
+      //with dm.tblDisks do
+      //begin
+        dm.sqlqMedia.IndexName := 'IdxLabel';
+        if dm.sqlqMedia.Locate('Label', lvDriveState.Selected.Subitems[0], []) then
         begin
-          address := '<' + Selected.Subitems[0] + '>';
+          address := '<' + lvDriveState.Selected.Subitems[0] + '>';
           updateTV;
         end else
           menDiskAddClick(nil);
-      end else menColConfigClick(nil);
+      //end else menColConfigClick(nil);
+      //end;
 end;
 
 procedure TMyFiles3Form.menJumpClick(Sender: TObject);
@@ -5429,20 +5427,21 @@ begin
   menSearchClick(nil);
   if tvitem.level = 0 then
     Exit;
-  with dm, tblFolders do
-  begin
-    Filtered := False;
+  //with dm, tblFolders do
+  //begin
+    dm.sqlqFolders.Filtered := False;
     fid := Integer(PTVData(tvitem.Data)^.folderid);
     if fid = -1 then
       fldr := '\' else
     begin
-      Locate('FOLDERID', fid, []);
-      fldr := tblFoldersFolder.Value;
+      dm.sqlqFolders.Locate('FOLDERID', fid, []);
+      fldr := dm.sqlqFolders.FieldByName('Folder').Value;
     end;
-    if pmTreeView.PopupComponent = tvVerbund
-      then s := fldr
-    else s := DiskId2String(PTVData(tvitem.Data)^.diskid, False) + fldr
-  end;
+    if pmTreeView.PopupComponent = tvVerbund then
+      s := fldr
+    else
+      s := DiskId2String(PTVData(tvitem.Data)^.mediaid, False) + fldr;
+  //end;
   lbSearchIn.Items.CommaText := '"' + s + '"';
   ToggleControl(lblSearchIn, pSearchIn);
   ScbName.SetFocus;
@@ -5524,22 +5523,20 @@ begin
     Result := VolumeID(drive);
 end;
 
-procedure TMyFiles3Form.UpdateLabel(diskid:integer;s:string);
+procedure TMyFiles3Form.UpdateLabel(mediaid:integer;s:string);
 var
   i   : integer;
   sl  : TStringList;
   lbl : string;
 begin
- with dm, tblDisks do
-  begin
-    IndexName := '';
-    SetKey;
-    tblDisksDISKID.Value := diskid;
-    Gotokey;
-    Edit;
-    lbl := tblDisksLabel.Value;
-    tblDisksLabel.Value := Copy(s,1,tblDisksLabel.Size);
-  end;
+  //with dm, tblDisks do
+  //begin
+    dm.sqlqMedia.IndexName := '';
+    dm.sqlqMedia.Locate('MediaID', mediaid, []);
+    dm.sqlqMedia.Edit;
+    lbl := dm.sqlqMedia.FieldByName('Label').Value;
+    dm.sqlqMedia.FieldByName('Label').Value := Copy(s,1,dm.sqlqMedia.FieldByName('Label').Size);
+  //end;
   sl := TStringList.Create;
   try
     with ColIni do
@@ -5561,19 +5558,17 @@ begin
   if s = '' then
     s := Node.Text;
 
-  with dm, tblDisks do
-  begin
-    IndexName := 'IdxLabel';
-    SetKey;
-    tblDisksLabel.Value := s;
-    if GotoKey then
-      if tblDisksDISKID.Value <> PTVData(Node.Data)^.diskid then
+  //with dm, tblDisks do
+  //begin
+    dm.sqlqMedia.IndexName := 'IdxLabel';
+    if dm.sqlqMedia.Locate('Label', s, []) then
+      if dm.sqlqMedia.FieldByName('MediaID').Value <> PTVData(Node.Data)^.mediaid then
     begin
       s := Node.Text;
       Application.messagebox(PChar(str_cantrename),
         PChar(str_error), mb_ICONERROR or MB_OK);
     end;
-  end;
+  //end;
 
   if s = Node.Text then Exit;
   UpdateLabel(PTVData(Node.Data)^.MediaID,s);
@@ -5603,19 +5598,17 @@ begin
   if s = '' then
     s := Item.Caption;
 
-  with dm, tblDisks do
-  begin
-    IndexName := 'IdxLabel';
-    SetKey;
-    tblDisksLabel.Value := s;
-    if GotoKey then
-      if tblDisksDISKID.Value <> PLVData(Item.Data)^.item.id.diskid then
+  //with dm, tblDisks do
+  //begin
+    dm.sqlqMedia.IndexName := 'IdxLabel';
+    if dm.sqlqMedia.Locate('Label', s, []) then
+      if dm.sqlqMedia.FieldByName('MediaID').Value <> PLVData(Item.Data)^.item.id.diskid then
       begin
         s := Item.Caption;
         Application.messagebox(PChar(str_cantrename),
           PChar(str_error), mb_ICONERROR or MB_OK);
       end;
-  end;
+  //end;
 
   if s = Item.Caption then Exit;
   UpdateLabel(PLVData(Item.Data)^.item.id.diskid,s);
@@ -5633,17 +5626,6 @@ begin
   end;
   AllowEdit := location = '';
   ListView.PopupMenu := nil;
-end;
-
-procedure TMyFiles3Form.menRepairClick(Sender: TObject);
-begin
-  mNotesExit(nil);
-  with TfrmRepair.Create(Self) do
-  try
-    ShowModal;
-  finally
-    Free;
-  end;
 end;
 
 procedure TMyFiles3Form.ControlBarBandInfo(Sender: TObject; Control: TControl;
@@ -5715,10 +5697,10 @@ begin
   ControlBar.Enabled := False;
   pListView.Enabled := False;
 
-  Len := GetWindowTextLength(Application.Handle);
+  Len := GetWindowTextLength(MyFiles3Form.Handle);
   SetString(FSaveCaption, PChar(nil), Len);
   if Len <> 0 then
-    GetWindowText(Application.Handle,Pointer(FSaveCaption), Len + 1);
+    GetWindowText(MyFiles3Form.Handle,Pointer(FSaveCaption), Len + 1);
   Steps := pbProgress.Width div 15;
   FWaitStep := MaxW div Steps;
   with pbProgress do
@@ -5760,7 +5742,7 @@ begin
   begin
     pbProgress.StepIt;
     s := IntToStr(pbProgress.Position * 100 div pbProgress.Max)+'%';
-    SetWindowText(Application.Handle,PChar(s));
+    SetWindowText(MyFiles3Form.Handle,PChar(s));
     application.processmessages;
   end;
 end;
@@ -5771,7 +5753,7 @@ begin
   Screen.cursor := crDefault;
   Self.Enabled := True;
   sbMain.Panels[2].Text := '';
-  SetWindowText(Application.Handle,PChar(FSaveCaption));
+  SetWindowText(MyFiles3Form.Handle,PChar(FSaveCaption));
 
   pnlLeft.Enabled := True;
   ControlBar.Enabled := True;
@@ -5930,7 +5912,7 @@ begin
       pchar(str_question), mb_yesno or mb_iconquestion
       or mb_defbutton2) <> idYes then Exit;
   List := TMyList(lvLists.Selected.Data);
-  DeleteFileUTF8(PChar(dm.tblFiles.DatabaseName + List.ListName + '.myl')); { *Converted from DeleteFile* }
+  DeleteFileUTF8(PChar('media.sqlite')); { *Converted from DeleteFile* }
   List.Free;
   lvLists.Selected.Delete;
 end;
@@ -6226,7 +6208,7 @@ begin
   try
     custlistview('Search: '+ AsText);
     sbMain.Panels[0].Text := Format(str_sb1, [0.0]);
-    StartWait(dm.tblFiles.RecordCount,'Suche... (ESC bricht ab)');
+    StartWait(dm.sqlqFiles.RecordCount,'Suche... (ESC bricht ab)');
     OnItem := EnumSearch;
     OnProgress := StepWait;
     if not Execute(lvLists) then
@@ -6710,7 +6692,7 @@ begin
   dtpMinDate.Time := dtpMinTime.Time;
 end;
 
-procedure TMyFiles3Form.FormShortCut(var Msg: TWMKey;
+procedure TMyFiles3Form.FormShortCut(var Msg: TLMKey;
   var Handled: Boolean);
 begin
   Handled := Assigned(CurSearch);
@@ -6853,7 +6835,7 @@ begin
     if Visible then
     begin
       clicklabel.Font.Style := [fsUnderline,fsBold];
-      sbProps.ScrollInView(Control);
+      {//ToBeConverted sbProps.ScrollInView(Control);}
     end
     else
       clicklabel.Font.Style := [fsUnderline];
@@ -7138,7 +7120,7 @@ var
   begin
     Result := TMenuItem.Create(Parent);
     Result.Caption := StringReplace(Caption,'&','&&',[rfReplaceAll]);
-    Result.AutoHotkeys := maManual;
+    {//ToBeConverted Result.AutoHotkeys := maManual;}
     Parent.Add(Result);
     if (s = str_thelaydisk) then Result.Hint := str_laydisk
       else
@@ -7404,7 +7386,7 @@ begin
   CreateDirRecursiv(Zielverz);
   with Operation do begin
     {Parent Window}
-    wnd:=Application.Handle;
+    wnd:=MyFiles3Form.Handle;
     {was soll gemacht werden?}
     wFunc:=FO_Copy;
 
@@ -7556,56 +7538,52 @@ var
 
 procedure DeleteFileFromCol(ID:TMyID);
 begin
-  with dm, tblFiles do
-  begin
-    IndexName := '';
-    SetKey;
-    tblFilesDISKID.Value := id.DiskID;
-    tblFilesFOLDERID.Value := id.FolderID;
-    tblFilesFILEID.Value := id.FileID;
-    if GotoKey then
-       Delete;
-  end;
+  //with dm, tblFiles do
+  //begin
+    dm.sqlqFiles.IndexName := '';
+    if dm.sqlqFiles.Locate('MediaID;FolderID;FileID', VarArrayOf([id.DiskID, id.FolderID, id.FileID]), []) then
+      dm.sqlqFiles.Delete;
+  //end;
 end;
 
 procedure DeleteFolderFromCol(Item:TMyItem);
 var
   s : string;
 begin
-  with dm, dm.tblFolders do
-  begin
-    s := 'DISKID = ''' + IntToStr(Item.ID.diskid) + ''' and ';
+  //with dm, dm.tblFolders do
+  //begin
+    s := 'MediaID = ''' + IntToStr(Item.ID.diskid) + ''' and ';
     s := s + 'Folder = ' + AnsiQuotedStr(MyGetPath(Item.ID) + Item.Name + '\*', '''');
-    Filter := s;
-    Filtered := True;
+    dm.sqlqFolders.Filter := s;
+    dm.sqlqFolders.Filtered := True;
     s := '';
-    First;
-    while not eof do
+    dm.sqlqFolders.First;
+    while not dm.sqlqFolders.eof do
     begin
-      if tblFoldersFOLDERID.AsString <> '' then
-        s := s + 'FOLDERID = ''' +
-          tblFoldersFOLDERID.AsString + ''' or ';
-      Delete;
+      if dm.sqlqFolders.FieldByName('FolderID').AsString <> '' then
+        s := s + 'FolderID = ''' +
+          dm.sqlqFolders.FieldByName('FolderID').AsString + ''' or ';
+      dm.sqlqFolders.Delete;
     end;
-    Filtered := False;
-  end;
+    dm.sqlqFolders.Filtered := False;
+  //end;
   if s <> '' then
   begin
     Delete(s, Length(S) - 3, 4);
-    with dm, dm.tblFiles do
-    begin
-      filter := s;
-      Filtered := True;
-      StartWait(RecordCount,'Lösche den kompletten Ordner');
-      First;
-      while not eof do
+    //with dm, dm.tblFiles do
+    //begin
+      dm.sqlqFiles.filter := s;
+      dm.sqlqFiles.Filtered := True;
+      StartWait(dm.sqlqFiles.RecordCount,'Lösche den kompletten Ordner');
+      dm.sqlqFiles.First;
+      while not dm.sqlqFiles.eof do
       begin
-        Delete;
+        dm.sqlqFiles.Delete;
 //        Next;
         StepWait(Self);
       end;
-      Filtered := False;
-    end;
+      dm.sqlqFiles.Filtered := False;
+    //end;
   end;
   DeleteFileFromCol(Item.ID);
 end;
@@ -7639,5 +7617,18 @@ begin
   //Dummyfunction
 end;
 
+procedure TMyFiles3Form.ApplicationEventsActivate(Sender: TObject);
+begin
+  timestamp := GetTickCount;
+end;
+
+procedure TMyFiles3Form.ApplicationEventsDeactivate(Sender: TObject);
+var
+  secs: dword;
+begin
+  secs := (GetTickCount - timestamp) div 1000;
+  ini.WriteString('Stats', 'UsageTime', IntToStr(StrToInt64(ini.ReadString('Stats', 'UsageTime', '0')) + secs));
+end;
+
 end.
-
+

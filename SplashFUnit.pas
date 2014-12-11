@@ -104,8 +104,8 @@ begin
     if curcol <> '' then
       lblColStat.Caption :=
         'Sammlung '''+curcol+''':' + #13#10 +
-        Format(str_stat3, [dm.tblDisks.RecordCount * 1.0]) + #13#10 +
-        Format(str_stat4, [dm.tblFiles.RecordCount * 1.0]);
+        Format(str_stat3, [dm.sqlqMedia.RecordCount * 1.0]) + #13#10 +
+        Format(str_stat4, [dm.sqlqFiles.RecordCount * 1.0]);
     with lblColStat do
       Caption := Caption + #13#10 +
         Format(str_stat5, [lvLists.Items.Count * 1.0]);

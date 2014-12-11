@@ -87,14 +87,14 @@ object frmConfig: TfrmConfig
     Top = 8
     Width = 265
     Caption = ' Schriftfarben in der Dateiliste '
-    ClientHeight = 145
+    ClientHeight = 143
     ClientWidth = 261
     TabOrder = 0
     object Label19: TLabel
       Left = 16
-      Height = 14
+      Height = 13
       Top = 24
-      Width = 279
+      Width = 231
       Caption = 'Klicke auf ein Feld um die Schriftfarbe zu ändern.'
       ParentColor = False
     end
@@ -143,14 +143,14 @@ object frmConfig: TfrmConfig
     Top = 8
     Width = 265
     Caption = ' Hörproben (MP3-Dateien)'
-    ClientHeight = 145
+    ClientHeight = 143
     ClientWidth = 261
     TabOrder = 7
     object Label5: TLabel
       Left = 8
-      Height = 14
+      Height = 13
       Top = 24
-      Width = 40
+      Width = 39
       Caption = 'Dauer:'
       Font.Color = clWindowText
       Font.Height = -11
@@ -161,17 +161,17 @@ object frmConfig: TfrmConfig
     end
     object Label6: TLabel
       Left = 64
-      Height = 14
+      Height = 13
       Top = 48
-      Width = 6
+      Width = 5
       Caption = 's'
       ParentColor = False
     end
     object Label4: TLabel
       Left = 104
-      Height = 14
+      Height = 13
       Top = 24
-      Width = 53
+      Width = 49
       Caption = 'Qualität:'
       Font.Color = clWindowText
       Font.Height = -11
@@ -182,9 +182,9 @@ object frmConfig: TfrmConfig
     end
     object Label12: TLabel
       Left = 8
-      Height = 14
+      Height = 13
       Top = 80
-      Width = 148
+      Width = 131
       Caption = 'Kompressionsparamter:'
       Font.Color = clWindowText
       Font.Height = -11
@@ -196,7 +196,7 @@ object frmConfig: TfrmConfig
     object seDur: TSpinEdit
       Tag = 1
       Left = 16
-      Height = 26
+      Height = 21
       Top = 40
       Width = 41
       HelpContext = 91111
@@ -204,11 +204,11 @@ object frmConfig: TfrmConfig
     end
     object cbQual: TComboBox
       Left = 112
-      Height = 29
+      Height = 21
       Top = 40
       Width = 73
       HelpContext = 9112
-      ItemHeight = 0
+      ItemHeight = 13
       Items.Strings = (
         '8kbps'
         '16kbps'
@@ -224,7 +224,7 @@ object frmConfig: TfrmConfig
     end
     object edtParam: TEdit
       Left = 16
-      Height = 26
+      Height = 21
       Top = 96
       Width = 225
       HelpContext = 9113
@@ -239,15 +239,15 @@ object frmConfig: TfrmConfig
     Top = 8
     Width = 265
     Caption = ' PlugIns'
-    ClientHeight = 145
+    ClientHeight = 143
     ClientWidth = 261
     TabOrder = 8
     Visible = False
     object lblNotLoad: TLabel
       Left = 8
-      Height = 14
+      Height = 13
       Top = 130
-      Width = 543
+      Width = 453
       Caption = 'Dieses PlugIn ist momentan nicht geladen. Es wird ggf. nach schließen dieses Fensters geladen.'
       ParentColor = False
       Visible = False
@@ -288,7 +288,6 @@ object frmConfig: TfrmConfig
       ItemHeight = 0
       OnClick = clbPlugInsClick
       TabOrder = 0
-      TopIndex = -1
     end
   end
   object gb211: TGroupBox
@@ -298,14 +297,14 @@ object frmConfig: TfrmConfig
     Top = 8
     Width = 265
     Caption = ' Bilder '
-    ClientHeight = 145
+    ClientHeight = 143
     ClientWidth = 261
     TabOrder = 5
     object Label13: TLabel
       Left = 8
-      Height = 14
+      Height = 13
       Top = 24
-      Width = 199
+      Width = 178
       Caption = 'Maximale Abmessung (in Pixel):'
       Font.Color = clWindowText
       Font.Height = -11
@@ -316,25 +315,25 @@ object frmConfig: TfrmConfig
     end
     object Label2: TLabel
       Left = 17
-      Height = 14
+      Height = 13
       Top = 58
-      Width = 38
+      Width = 30
       Caption = 'Breite:'
       ParentColor = False
     end
     object Label1: TLabel
       Left = 122
-      Height = 14
+      Height = 13
       Top = 57
-      Width = 33
+      Width = 29
       Caption = 'Höhe:'
       ParentColor = False
     end
     object Label9: TLabel
       Left = 8
-      Height = 14
+      Height = 13
       Top = 88
-      Width = 53
+      Width = 49
       Caption = 'Qualität:'
       Font.Color = clWindowText
       Font.Height = -11
@@ -345,7 +344,7 @@ object frmConfig: TfrmConfig
     end
     object Label3: TLabel
       Left = 17
-      Height = 11
+      Height = 12
       Top = 127
       Width = 143
       Caption = 'niedrige Qualität viel Speicherplatz'
@@ -357,9 +356,9 @@ object frmConfig: TfrmConfig
     end
     object Label8: TLabel
       Left = 165
-      Height = 11
+      Height = 12
       Top = 127
-      Width = 141
+      Width = 139
       Alignment = taRightJustify
       Caption = 'hohe Qualität wenig Speicherplatz'
       Font.Color = clWindowText
@@ -371,7 +370,7 @@ object frmConfig: TfrmConfig
     object seWidth: TSpinEdit
       Tag = 1
       Left = 53
-      Height = 26
+      Height = 21
       Top = 50
       Width = 44
       HelpContext = 9121
@@ -380,7 +379,7 @@ object frmConfig: TfrmConfig
     object seHeight: TSpinEdit
       Tag = 1
       Left = 157
-      Height = 26
+      Height = 21
       Top = 50
       Width = 44
       HelpContext = 9122
@@ -406,14 +405,14 @@ object frmConfig: TfrmConfig
     Top = 8
     Width = 265
     Caption = ' Vorschau '
-    ClientHeight = 145
+    ClientHeight = 143
     ClientWidth = 261
     TabOrder = 6
     object Label20: TLabel
       Left = 8
-      Height = 14
+      Height = 13
       Top = 24
-      Width = 81
+      Width = 74
       Caption = 'Bildvorschau'
       Font.Color = clWindowText
       Font.Height = -11
@@ -424,40 +423,40 @@ object frmConfig: TfrmConfig
     end
     object Label21: TLabel
       Left = 17
-      Height = 14
+      Height = 13
       Top = 74
-      Width = 38
+      Width = 30
       Caption = 'Breite:'
       ParentColor = False
     end
     object Label22: TLabel
       Left = 122
-      Height = 14
+      Height = 13
       Top = 73
-      Width = 33
+      Width = 29
       Caption = 'Höhe:'
       ParentColor = False
     end
     object Label23: TLabel
       Left = 17
-      Height = 14
+      Height = 13
       Top = 42
-      Width = 267
+      Width = 218
       Caption = 'Größe der Einzelbilder in der Thumbnailansicht'
       ParentColor = False
     end
     object Label24: TLabel
       Left = 73
-      Height = 14
+      Height = 13
       Top = 98
-      Width = 132
+      Width = 110
       Caption = '(MyFiles Neustart nötig)'
       ParentColor = False
     end
     object sePrevWidth: TSpinEdit
       Tag = 1
       Left = 53
-      Height = 26
+      Height = 21
       Top = 66
       Width = 44
       HelpContext = 9121
@@ -466,7 +465,7 @@ object frmConfig: TfrmConfig
     object sePrevHeight: TSpinEdit
       Tag = 1
       Left = 157
-      Height = 26
+      Height = 21
       Top = 66
       Width = 44
       HelpContext = 9122
@@ -480,14 +479,14 @@ object frmConfig: TfrmConfig
     Top = 8
     Width = 265
     Caption = ' Oberfläche '
-    ClientHeight = 145
+    ClientHeight = 143
     ClientWidth = 261
     TabOrder = 4
     object lblHinweis: TLabel
       Left = 113
-      Height = 11
+      Height = 12
       Top = 24
-      Width = 335
+      Width = 336
       Caption = 'Die Deaktivierung des Splashscreens ist nur in der registrierten Version möglich.'
       Font.Color = clWindowText
       Font.Height = -9
@@ -498,9 +497,9 @@ object frmConfig: TfrmConfig
     end
     object Label15: TLabel
       Left = 8
-      Height = 14
+      Height = 13
       Top = 24
-      Width = 96
+      Width = 85
       Caption = 'Programmstart:'
       Font.Color = clWindowText
       Font.Height = -11
@@ -511,9 +510,9 @@ object frmConfig: TfrmConfig
     end
     object Label10: TLabel
       Left = 8
-      Height = 14
+      Height = 13
       Top = 72
-      Width = 51
+      Width = 48
       Caption = 'Toolbar:'
       Font.Color = clWindowText
       Font.Height = -11
@@ -524,9 +523,9 @@ object frmConfig: TfrmConfig
     end
     object ckSplash: TCheckBox
       Left = 16
-      Height = 21
+      Height = 19
       Top = 40
-      Width = 93
+      Width = 86
       Caption = 'SplashScreen'
       Checked = True
       State = cbChecked
@@ -534,34 +533,34 @@ object frmConfig: TfrmConfig
     end
     object ckToolbarShowCaptions: TCheckBox
       Left = 16
-      Height = 21
+      Height = 19
       Top = 88
-      Width = 219
+      Width = 192
       Caption = 'Beschriftung (MyFiles Neustart nötig)'
       TabOrder = 1
     end
     object ckOfficeXP: TCheckBox
       Left = 8
-      Height = 21
+      Height = 19
       Top = 136
-      Width = 62
+      Width = 57
       Caption = 'XPStyle'
       OnClick = ckOfficeXPClick
       TabOrder = 3
     end
     object ckToolbarPicture: TCheckBox
       Left = 16
-      Height = 21
+      Height = 19
       Top = 104
-      Width = 237
+      Width = 204
       Caption = 'Hintergrundbild (MyFiles Neustart nötig)'
       TabOrder = 2
     end
     object ckOfficeXPGrad: TCheckBox
       Left = 104
-      Height = 21
+      Height = 19
       Top = 136
-      Width = 143
+      Width = 124
       Caption = 'Menüs mit Farbverlauf'
       TabOrder = 4
     end
@@ -573,14 +572,14 @@ object frmConfig: TfrmConfig
     Top = 8
     Width = 265
     Caption = ' Shellintergration '
-    ClientHeight = 145
+    ClientHeight = 143
     ClientWidth = 261
     TabOrder = 2
     object ckProt: TCheckBox
       Left = 16
-      Height = 21
+      Height = 19
       Top = 24
-      Width = 126
+      Width = 108
       HelpContext = 9210
       Caption = '"myfiles:" Protokoll'
       OnClick = ckProtClick
@@ -590,9 +589,9 @@ object frmConfig: TfrmConfig
     end
     object ckStartMen: TCheckBox
       Left = 16
-      Height = 21
+      Height = 19
       Top = 48
-      Width = 116
+      Width = 100
       HelpContext = 9220
       Caption = 'Startmenüeintrag'
       OnChange = ckStartMenChange
@@ -606,22 +605,22 @@ object frmConfig: TfrmConfig
     Top = 8
     Width = 265
     Caption = ' Einstellungen '
-    ClientHeight = 145
+    ClientHeight = 143
     ClientWidth = 261
     TabOrder = 3
     object Label7: TLabel
       Left = 146
-      Height = 14
+      Height = 13
       Top = 42
-      Width = 51
+      Width = 42
       Caption = 'Einträge:'
       ParentColor = False
     end
     object Label11: TLabel
       Left = 8
-      Height = 14
+      Height = 13
       Top = 24
-      Width = 81
+      Width = 73
       Caption = 'Adressleiste:'
       Font.Color = clWindowText
       Font.Height = -11
@@ -632,9 +631,9 @@ object frmConfig: TfrmConfig
     end
     object Label14: TLabel
       Left = 8
-      Height = 14
+      Height = 13
       Top = 72
-      Width = 137
+      Width = 123
       Caption = 'Sammlung beim Start:'
       Font.Color = clWindowText
       Font.Height = -11
@@ -645,9 +644,9 @@ object frmConfig: TfrmConfig
     end
     object ckHist: TCheckBox
       Left = 18
-      Height = 21
+      Height = 19
       Top = 41
-      Width = 116
+      Width = 102
       HelpContext = 9210
       Caption = 'Verlauf speichern'
       TabOrder = 0
@@ -655,7 +654,7 @@ object frmConfig: TfrmConfig
     object seHist: TSpinEdit
       Tag = 1
       Left = 195
-      Height = 26
+      Height = 21
       Top = 37
       Width = 38
       HelpContext = 9121
@@ -663,19 +662,19 @@ object frmConfig: TfrmConfig
     end
     object cbDefCol: TComboBox
       Left = 16
-      Height = 29
+      Height = 21
       Top = 92
       Width = 233
       HelpContext = 9300
-      ItemHeight = 0
+      ItemHeight = 13
       Style = csDropDownList
       TabOrder = 2
     end
     object ckFastSwitch: TCheckBox
       Left = 8
-      Height = 21
+      Height = 19
       Top = 128
-      Width = 282
+      Width = 253
       Caption = 'Registerkartenwechsel zeigt Inhalt an (fastswitch)'
       TabOrder = 3
     end
@@ -687,22 +686,22 @@ object frmConfig: TfrmConfig
     Top = 8
     Width = 265
     Caption = ' MyFiles Cache '
-    ClientHeight = 145
+    ClientHeight = 143
     ClientWidth = 261
     TabOrder = 10
     object Label16: TLabel
       Left = 16
-      Height = 14
+      Height = 13
       Top = 64
-      Width = 83
+      Width = 69
       Caption = 'Cache Ordner:'
       ParentColor = False
     end
     object Label17: TLabel
-      Left = -109
-      Height = 11
+      Left = -110
+      Height = 12
       Top = 109
-      Width = 458
+      Width = 460
       Anchors = [akTop]
       Caption = '$myfiles der MyFiles-Ordner $col der Name der Quell-Sammlung $disk'#9'der Name des Quell-Datenträgers'
       Font.Color = clWindowText
@@ -713,15 +712,15 @@ object frmConfig: TfrmConfig
     end
     object Label18: TLabel
       Left = 16
-      Height = 14
+      Height = 13
       Top = 24
-      Width = 504
+      Width = 418
       Caption = 'Gib hier den Ordner an, in dem Dateien auf Wunsch zwischengespeichert werden sollen.'
       ParentColor = False
     end
     object Edit1: TEdit
       Left = 16
-      Height = 26
+      Height = 21
       Top = 80
       Width = 233
       TabOrder = 0
@@ -735,45 +734,45 @@ object frmConfig: TfrmConfig
     Top = 8
     Width = 265
     Caption = ' Eintrags-Infos'
-    ClientHeight = 145
+    ClientHeight = 143
     ClientWidth = 261
     TabOrder = 9
     Visible = False
     object Label25: TLabel
       Left = 16
-      Height = 14
+      Height = 13
       Top = 24
-      Width = 163
+      Width = 136
       Caption = 'Standard-Eigenschaftsfelder:'
       ParentColor = False
     end
     object Label26: TLabel
       Left = 16
-      Height = 14
+      Height = 13
       Top = 64
-      Width = 72
+      Width = 59
       Caption = 'Datenträger:'
       ParentColor = False
     end
     object Label27: TLabel
       Left = 16
-      Height = 14
+      Height = 13
       Top = 96
-      Width = 44
+      Width = 35
       Caption = 'Ordner:'
       ParentColor = False
     end
     object Label29: TLabel
       Left = 16
-      Height = 14
+      Height = 13
       Top = 128
-      Width = 47
+      Width = 40
       Caption = 'Dateien:'
       ParentColor = False
     end
     object cedtDisk: TEdit
       Left = 84
-      Height = 26
+      Height = 21
       Hint = 'Alt+Nach unten öffnet den Eigenschaftseditor.'
       Top = 57
       Width = 169
@@ -784,7 +783,7 @@ object frmConfig: TfrmConfig
     end
     object cedtFolder: TEdit
       Left = 84
-      Height = 26
+      Height = 21
       Hint = 'Alt+Nach unten öffnet den Eigenschaftseditor.'
       Top = 89
       Width = 169
@@ -795,7 +794,7 @@ object frmConfig: TfrmConfig
     end
     object cedtFile: TEdit
       Left = 84
-      Height = 26
+      Height = 21
       Hint = 'Alt+Nach unten öffnet den Eigenschaftseditor.'
       Top = 121
       Width = 169
@@ -846,4 +845,4 @@ object frmConfig: TfrmConfig
     left = 376
     top = 16
   end
-end
+end

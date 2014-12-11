@@ -53,6 +53,7 @@ procedure CreateDirRecursiv(s:string);
 function GetDriveType(mountpoint : string) : integer;
 function getDeviceByMountpoint(mountpoint : string) : string;
 {$endif}
+function StripHotkey(TheCaption : string) : string;
 
 implementation
 
@@ -757,6 +758,28 @@ begin
   mountedInfoProc.Free;
 end;
 {$endif}
+
+function StripHotkey(TheCaption : string) : string;
+var
+  i : integer;
+begin
+  if length(TheCaption) > 0 then
+  begin
+    if length(TheCaption) > 1 then
+    begin
+    if TheCaption[1] = '&' then
+      for i := 2 to length(TheCaption) do
+        result := result + TheCaption[i];
+    end
+    else
+      if TheCaption = '&' then
+        result := ''
+      else
+        result := TheCaption;
+  end
+  else
+    result := '';
+end;
 
 initialization
   LevenshteinPQR(1, 1, 1);

@@ -306,7 +306,6 @@ begin
         SpecialDirectory(CSIDL_Startmenu) + txt_startm, 'MyFiles');
   end else
     DeleteFileUTF8(SpecialDirectory(CSIDL_Startmenu) + txt_startm); { *Converted from DeleteFile* }
-end;
   {$endif}
 end;
 
@@ -424,4 +423,4 @@ begin
   end;
 end;
 }
-end.
+end.

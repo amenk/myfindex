@@ -22,7 +22,6 @@ uses
   myf_consts in 'myf_consts.pas',
   SetupUnit in 'SetupUnit.pas' {frmConfig},
   ListviewConfig in 'ListviewConfig.pas' {frmListViewConfig},
-  RepairUnit in 'RepairUnit.pas' {frmRepair},
   myf_lists in 'myf_lists.pas',
   SplashFUnit in 'SplashFUnit.pas' {frmSplash},
   myf_main in 'myf_main.pas',
