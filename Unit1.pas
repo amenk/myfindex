@@ -976,24 +976,18 @@ var
   i, idx: integer;
   r : TGridRect;
   tempsl : TStringList;
-  inilocation : string;
+  inilocation, appConfigDir : string;
 begin
   vers := 'v3.4';
-  with TIniFile.Create(changefileext(Application.exename, 'Inst.INI')) do
-  try
-    inilocation := ReadString('MyFiles','INI',changefileext(Application.exename, '.INI'));
-  finally
-    Free;
-  end;
-
-  ini := TIniFile.Create(inilocation);
-
-  dir_db := ini.ReadString(ini_folders, 'collections', ExtractFilePath(Application.ExeName)+'collections\');
-  dir_rawdb := ini.ReadString(ini_folders, 'rawdb', ExtractFilePath(Application.ExeName)+'system\db\');
-  dir_templ := ini.ReadString(ini_folders, 'templates', ExtractFilePath(Application.ExeName)+'templates\');
-  dir_plugins := ini.ReadString(ini_folders, 'plugins', ExtractFilePath(Application.ExeName)+'plugins\');
-  file_lame := ini.ReadString(ini_folders, 'LAME.EXE', ExtractFilePath(Application.ExeName)+'system\lame.exe');
-  file_mpdll := ini.ReadString(ini_folders, 'ELAMP.BSP', ExtractFilePath(Application.ExeName)+'system\elamp.esp');
+  appConfigDir := GetAppConfigDir(false);
+  ini := TIniFile.Create(appConfigDir + ExtractFileNameOnly(Application.exename) + '.ini');
+  inilocation := appConfigDir + ExtractFileNameOnly(Application.exename) + '.ini';
+  dir_db := ini.ReadString(ini_folders, 'collections', appConfigDir);
+  dir_rawdb := ini.ReadString(ini_folders, 'rawdb', appConfigDir+'system'+PathDelim+'db'+PathDelim);
+  dir_templ := ini.ReadString(ini_folders, 'templates', appConfigDir+'templates'+PathDelim);
+  dir_plugins := ini.ReadString(ini_folders, 'plugins', appConfigDir+'plugins'+PathDelim);
+  file_lame := ini.ReadString(ini_folders, 'LAME.EXE', appConfigDir+'system'+PathDelim+'lame.exe');
+  file_mpdll := ini.ReadString(ini_folders, 'ELAMP.BSP', appConfigDir+'system'+PathDelim+'elamp.esp');
 
   dblock := False;
   ColIni := nil;
@@ -1028,7 +1022,7 @@ begin
   {$ifdef windows}
   sdExport.InitialDir := SpecialDirectory(CSIDL_Desktop);
   {$else}
-  sdExport.InitialDir := GetAppConfigDir(false);
+  sdExport.InitialDir := appConfigDir;
   {$endif}
   ApplicationPropertiesActivate(Sender);
   Toolbar.ShowCaptions := ini.ReadBool(ini_gui, ini_tbcaptions, True);

@@ -1,10 +1,13 @@
 program MyFiles;
 
-{$MODE Delphi}
+//{$MODE Delphi}
 
 {%ToDo 'MyFiles.todo'}
 
 uses
+  {$ifndef windows}
+  cmem,
+  {$endif}
   Forms,
   IniFiles,
   SysUtils,
