@@ -57,3 +57,5 @@ MyFiles.compiled
 *.ico
 *.compiled
 *.bat
+/MyFiles
+/ppas.sh

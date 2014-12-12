@@ -6710,7 +6710,7 @@ procedure TMyFiles3Form.FormShortCut(var Msg: TLMKey;
 begin
   Handled := Assigned(CurSearch);
   if handled then
-    if Msg.CharCode = 27 then cursearch.abort else messagebeep(0);
+    if Msg.CharCode = 27 then cursearch.abort {$ifdef windows}else messagebeep(0){$endif};
   if not handled then
   begin
     if MainMenu.IsShortCut(Msg) then
@@ -7218,7 +7218,7 @@ begin
     end;
     menSpalten.Tag := 1;
     UpdateLV;
-  end else MessageBeep(0);
+  end {$ifdef windows}else MessageBeep(0){$endif};
 end;
 
 procedure TMyFiles3Form.menLayoutSaveForAdrClick(Sender: TObject);
@@ -7391,6 +7391,7 @@ begin
   tbLDelClick(nil);
 end;
 
+{$ifdef windows}
 function FileCopy(QuellDateien:TStrings;Zielverz:string):boolean;
 var Operation : TSHFileOpStruct;
     i         : integer;
@@ -7418,6 +7419,18 @@ begin
   {Und los gehts!}
   Result:=SHFileOperation(Operation)=0;
 end;
+{$else}
+function FileCopy(QuellDateien:TStrings;Zielverz:string):boolean;
+var
+  i : integer;
+begin
+  CreateDirRecursiv(Zielverz);
+  for i:=0 to QuellDateien.Count-1 do
+  begin
+    CopyFile(QuellDateien[i], AppendPathDelim(ZielVerz) + ExtractFileNameOnly(QuellDateien[i]), []);
+  end;
+end;
+{$endif}
 
 procedure TMyFiles3Form.menLCopyToFolderClick(Sender: TObject);
 var

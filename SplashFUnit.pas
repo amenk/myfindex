@@ -129,9 +129,12 @@ end;
 
 procedure TfrmSplash.FormDestroy(Sender: TObject);
 begin
+  {$ifdef windows}
   if aHandle <> 0 then
     FreeLibrary(aHandle);
+  {$endif}
 end;
+
 
 procedure TfrmSplash.tmrFadeTimer(Sender: TObject);
 begin
