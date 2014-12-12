@@ -59,3 +59,4 @@ MyFiles.compiled
 *.bat
 /MyFiles
 /ppas.sh
+*.ini
