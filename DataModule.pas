@@ -6,7 +6,7 @@ interface
 
 uses
   {$ifdef WINDOWS}Windows, {$else}{$endif}Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  Db, myf_main, UsefulPrcs, sqlite3conn, sqldb, Variants;
+  Db, myf_main, UsefulPrcs, sqlite3conn, sqldb, Variants, FileUtil;
 
 type
 
@@ -71,78 +71,97 @@ implementation
 {$R *.lfm}
 
 procedure Tdm.DataModuleCreate(Sender: TObject);
+var
+  debug : string;
 begin
   try
-     SQLite3Con.DatabaseName := 'media.sqlite';
+     CreateDirUTF8(GetAppConfigDir(false));
+     SQLite3Con.DatabaseName := GetAppConfigDir(false) + 'media.sqlite';
      SQLTransact.DataBase := SQLite3Con;
      sqlqMedia.Transaction := SQLTransact;
      sqlqFiles.Transaction := SQLTransact;
      sqlqFolders.Transaction := SQLTransact;
 
+     if not FileExistsUTF8(GetAppConfigDir(false) + 'media.sqlite') then
+     begin
      sqlqMedia.SQL.Text :=
-       'CREATE TABLE IF NOT EXISTS `tblMedia` ('+
-       '`MediaID`	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,'+
-       '`Label`	TEXT,'+
-       '`Read`	INTEGER,'+
-       '`Size`	REAL,'+
-       '`Note`	TEXT'+#59;
+       'CREATE TABLE IF NOT EXISTS '+quotedstr('tblMedia')+' ('+
+       quotedstr('MediaID') + ' INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,'+
+       quotedstr('Label')+ ' TEXT,'+
+       quotedstr('Read') + ' INTEGER,'+
+       quotedstr('Size') + ' REAL,'+
+       quotedstr('Note') + ' TEXT)';
+     debug := sqlqMedia.SQL.Text;
      sqlqMedia.ExecSQL;
      SQLTransact.Commit;
 
      sqlqFiles.SQL.Text:=
-       'CREATE TABLE IF NOT EXISTS `tblFiles` ('+
-       '`FileID`	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,'+
-       '`DiskID`	INTEGER,'+
-       '`FolderID`	INTEGER,'+
-       '`FileName`	TEXT,'+
-       '`EntryKind`	INTEGER,'+
-       '`Changed`	INTEGER,'+
-       '`Attr`	INTEGER,'+
-       '`Size`	REAL,'+
-       '`Note`	NUMERIC,'+
-       '`TKind`	INTEGER,'+
-       '`BKind`	INTEGER,'+
-       '`TextPreview`	TEXT,'+
-       '`BinPreview`	BLOB'+#59;
+       'CREATE TABLE IF NOT EXISTS '+quotedstr('tblFiles') + ' ('+
+       quotedstr('FileID') + ' INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,'+
+       quotedstr('DiskID') + ' INTEGER,'+
+       quotedstr('FolderID') + ' INTEGER,'+
+       quotedstr('FileName') + ' TEXT,'+
+       quotedstr('EntryKind') + ' INTEGER,'+
+       quotedstr('Changed') + ' INTEGER,'+
+       quotedstr('Attr') + ' INTEGER,'+
+       quotedstr('Size') + ' REAL,'+
+       quotedstr('Note') + ' NUMERIC,'+
+       quotedstr('TKind') + ' INTEGER,'+
+       quotedstr('BKind') + ' INTEGER,'+
+       quotedstr('TextPreview') + ' TEXT,'+
+       quotedstr('BinPreview') + ' BLOB)';
+     debug := sqlqFiles.SQL.Text;
      sqlqFiles.ExecSQL;
      SQLTransact.Commit;
 
      sqlqFolders.SQL.Text :=
-       'CREATE TABLE IF NOT EXISTS `tblFolders` ('+
-       '`FolderID`	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,'+
-       '`Folder`	TEXT,'+
-       '`Level`	INTEGER,'+
-       '`HasSubFolders`	INTEGER,'+
-       '`Note` TEXT,'+
-       '`MediaID` INTEGER'+#59;
+       'CREATE TABLE IF NOT EXISTS '+quotedstr('tblFolders') + ' ('+
+       quotedstr('FolderID') + ' INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,'+
+       quotedstr('Folder') + ' TEXT,'+
+       quotedstr('Level') + ' INTEGER,'+
+       quotedstr('HasSubFolders') + ' INTEGER,'+
+       quotedstr('Note') + ' TEXT,'+
+       quotedstr('MediaID') + ' INTEGER)';
+     debug := sqlqFolders.SQL.Text;
      sqlqFolders.ExecSQL;
      SQLTransact.Commit;
 
      sqlqMedia.SQL.Text :=
-       'select if ('+
+     'CREATE INDEX Idx_Label ON tblMedia (' + quotedstr('Label') + ')';
+       {'select if ('+
        '  exists('+
        '    select distinct index_name from information_schema.statistics'+
-       '    where table_schema = `schema_db_name`'+
-       '    and table_name = `tblMedia` and index_name like `IdxLabel`'+
+       '    where table_schema = '+quotedstr('schema_db_name')+
+       '    and table_name = '+quotedstr('tblMedia') + ' and index_name like '+quotedstr('IdxLabel')+
        ')'+
-       ',`select ``index IdxLabel exists`` _______;`'+
-       ',`create index IdxLabel on tblMedia(column_name_names)`) into @a;'+
+       ','+quotedstr('select ' + quotedstr(quotedstr('index IdxLabel exists')) + ' _______;')+
+       ','+quotedstr('create index IdxLabel on tblMedia(column_name_names)') + ') into @a;'+
        'PREPARE stmt1 FROM @a;'+
        'EXECUTE stmt1;'+
-       'DEALLOCATE PREPARE stmt1;';
+       'DEALLOCATE PREPARE stmt1;'; }
+     debug := sqlqMedia.SQL.Text;
      sqlqMedia.ExecSQL;
      SQLTransact.Commit;
-
+     end;
      sqlqMedia.close;
+     sqlqMedia.PacketRecords := -1;
      sqlqMedia.SQL.Text := 'SELECT * FROM tblMedia';
+     sqlqMedia.ExecSQL;
+     SQLTransact.Commit;
      sqlqMedia.open;
 
      sqlqFiles.close;
+     sqlqFiles.PacketRecords := -1;
      sqlqFiles.SQL.Text := 'SELECT * FROM tblFiles';
+     sqlqFiles.ExecSQL;
+     SQLTransact.Commit;
      sqlqFiles.Open;
 
      sqlqFolders.close;
+     sqlqFolders.PacketRecords := -1;
      sqlqFolders.SQL.Text := 'SELECT * FROM tblFolders';
+     sqlqFolders.ExecSQL;
+     SQLTransact.Commit;
      sqlqFolders.Open;
   except
     on E: EDatabaseError do
