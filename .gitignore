@@ -60,3 +60,5 @@ MyFiles.compiled
 /MyFiles
 /ppas.sh
 *.ini
+/link.res
+/MyFiles.reslst
