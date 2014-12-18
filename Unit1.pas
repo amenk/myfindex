@@ -943,7 +943,10 @@ var
 begin
   //il.
   icnTemp := TIcon.Create;
-  icnTemp.LoadFromLazarusResource(icon); //Handle := LoadIcon(hInstance, PChar(id));
+  try
+    icnTemp.LoadFromLazarusResource(icon); //Handle := LoadIcon(hInstance, PChar(id));
+  except
+  end;
   Result := il.AddIcon(icnTemp);
   icnTemp.Free;
 end;
@@ -7651,4 +7654,4 @@ begin
 end;
 
 end.
-
+
