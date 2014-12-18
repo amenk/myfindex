@@ -941,11 +941,24 @@ function AddResIconToIL(il: TImageList; icon: string): integer;
 var
   icnTemp: TIcon;
 begin
-  //il.
   icnTemp := TIcon.Create;
   try
+    icnTemp.LoadFromResourceID(hinstance, 501);
     icnTemp.LoadFromLazarusResource(icon); //Handle := LoadIcon(hInstance, PChar(id));
-  except
+  finally
+  end;
+  Result := il.AddIcon(icnTemp);
+  icnTemp.Free;
+end;
+
+function AddResIconByIDToIL(il: TImageList; id: integer): integer;
+var
+  icnTemp: TIcon;
+begin
+  icnTemp := TIcon.Create;
+  try
+    icnTemp.LoadFromResourceID(hinstance, id);
+  finally
   end;
   Result := il.AddIcon(icnTemp);
   icnTemp.Free;
@@ -1049,9 +1062,9 @@ begin
   { Init }
   CreateImages;
 
-  idi_root := AddResIconToIL(ilMoreImages, 'ico501.ico');
-  idi_disk := AddResIconToIL(ilMoreImages, 'ico502.ico');
-  idi_nodisk := AddResIconToIL(ilMoreImages, 'ico503.ico');
+  idi_root := AddResIconByIDToIL(ilMoreImages, 501); //idi_root := AddResIconToIL(ilMoreImages, 'ico501.ico');
+  idi_disk := AddResIconByIDToIL(ilMoreImages, 502); //idi_disk := AddResIconToIL(ilMoreImages, 'ico502.ico');
+  idi_nodisk := AddResIconByIDToIL(ilMoreImages, 503); //idi_nodisk := AddResIconToIL(ilMoreImages, 'ico503.ico');
 
   idi_closef := AddFileIconToIL(ilMoreImages, extractfilepath(application.exename));
   idi_openf := AddFileIconToIL(ilMoreImages, extractfilepath(application.exename));
@@ -4330,9 +4343,13 @@ begin
     colGray := ReadInteger(ini_colors,'Gray',clGrayText);
 
     ReadSection(ini_lays,cbLayout.Items);
+    //ToBeTested
+    cbLayout.sorted := false;
     with cbLayout do
       for i := 0 to Items.Count - 1 do
         Items[i] := URLDecode(Items[i]);
+    cbLayout.sorted := true;
+    //EndToBeTested
     Width := readinteger(ini_guimain, 'width', width);
     Height := readinteger(ini_guimain, 'height', height);
     Top := readinteger(ini_guimain, 'top', top);
@@ -7654,4 +7671,4 @@ begin
 end;
 
 end.
-
+

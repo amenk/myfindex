@@ -20,14 +20,14 @@ object MyFiles3Form: TMyFiles3Form
   LCLVersion = '1.2.6.0'
   object Splitter1: TSplitter
     Left = 250
-    Height = 548
+    Height = 552
     Top = 54
     Width = 5
   end
   object sbMain: TStatusBar
     Left = 0
-    Height = 23
-    Top = 602
+    Height = 19
+    Top = 606
     Width = 809
     Panels = <    
       item
@@ -53,13 +53,13 @@ object MyFiles3Form: TMyFiles3Form
   end
   object pnlLeft: TPanel
     Left = 0
-    Height = 548
+    Height = 552
     Top = 54
     Width = 250
     Align = alLeft
     BevelOuter = bvNone
     BorderWidth = 2
-    ClientHeight = 548
+    ClientHeight = 552
     ClientWidth = 250
     Font.Color = clWindowText
     Font.Height = -11
@@ -84,7 +84,7 @@ object MyFiles3Form: TMyFiles3Form
       Cursor = crVSplit
       Left = 2
       Height = 2
-      Top = 426
+      Top = 430
       Width = 246
       Align = alBottom
       AutoSnap = False
@@ -111,15 +111,15 @@ object MyFiles3Form: TMyFiles3Form
       object tsVerbund: TTabSheet
         HelpContext = 910
         Caption = '&Verbund'
-        ClientHeight = 201
-        ClientWidth = 238
+        ClientHeight = 203
+        ClientWidth = 244
         OnContextPopup = ListViewContextPopup
         OnEnter = tspc1Enter
         object tvVerbund: TTreeView
           Left = 0
-          Height = 201
+          Height = 203
           Top = 0
-          Width = 238
+          Width = 244
           Align = alClient
           DefaultItemHeight = 16
           HideSelection = False
@@ -533,16 +533,16 @@ object MyFiles3Form: TMyFiles3Form
           Top = 41
           Width = 238
           HorzScrollBar.Increment = 20
-          HorzScrollBar.Page = 200
+          HorzScrollBar.Page = 207
           HorzScrollBar.Smooth = True
           HorzScrollBar.Tracking = True
-          VertScrollBar.Increment = 12
-          VertScrollBar.Page = 120
+          VertScrollBar.Increment = 15
+          VertScrollBar.Page = 158
           VertScrollBar.Smooth = True
           VertScrollBar.Tracking = True
           Align = alClient
-          ClientHeight = 137
-          ClientWidth = 217
+          ClientHeight = 154
+          ClientWidth = 231
           Color = clWindow
           ParentColor = False
           TabOrder = 1
@@ -553,8 +553,8 @@ object MyFiles3Form: TMyFiles3Form
             Width = 202
             BevelOuter = bvNone
             Caption = 'pnlSearch'
-            ClientHeight = 735
-            ClientWidth = 202
+            ClientHeight = 731
+            ClientWidth = 198
             Color = clWindow
             ParentColor = False
             TabOrder = 0
@@ -590,7 +590,7 @@ object MyFiles3Form: TMyFiles3Form
                 Top = 8
                 Width = 40
                 Anchors = [akTop, akRight]
-                ItemHeight = 13
+                ItemHeight = 0
                 Items.Strings = (
                   'B'
                   'KB'
@@ -609,7 +609,7 @@ object MyFiles3Form: TMyFiles3Form
                 Top = 32
                 Width = 40
                 Anchors = [akTop, akRight]
-                ItemHeight = 13
+                ItemHeight = 0
                 Items.Strings = (
                   'B'
                   'KB'
@@ -663,8 +663,8 @@ object MyFiles3Form: TMyFiles3Form
               Width = 202
               Align = alTop
               BevelOuter = bvNone
-              ClientHeight = 17
-              ClientWidth = 202
+              ClientHeight = 13
+              ClientWidth = 198
               Color = clWindow
               ParentColor = False
               TabOrder = 1
@@ -826,8 +826,8 @@ object MyFiles3Form: TMyFiles3Form
               Width = 202
               Align = alTop
               BevelOuter = bvNone
-              ClientHeight = 17
-              ClientWidth = 202
+              ClientHeight = 13
+              ClientWidth = 198
               Color = clWindow
               ParentColor = False
               TabOrder = 3
@@ -922,6 +922,7 @@ object MyFiles3Form: TMyFiles3Form
                 OnDblClick = lbSearchInDblClick
                 ScrollWidth = 53
                 TabOrder = 0
+                TopIndex = -1
               end
             end
             object pnlHSearchIn: TPanel
@@ -931,8 +932,8 @@ object MyFiles3Form: TMyFiles3Form
               Width = 202
               Align = alTop
               BevelOuter = bvNone
-              ClientHeight = 17
-              ClientWidth = 202
+              ClientHeight = 13
+              ClientWidth = 198
               Color = clWindow
               ParentColor = False
               TabOrder = 6
@@ -986,8 +987,8 @@ object MyFiles3Form: TMyFiles3Form
               Width = 202
               Align = alTop
               BevelOuter = bvNone
-              ClientHeight = 17
-              ClientWidth = 202
+              ClientHeight = 13
+              ClientWidth = 198
               Color = clActiveCaption
               Font.Color = clWindowText
               Font.Height = -11
@@ -1017,8 +1018,8 @@ object MyFiles3Form: TMyFiles3Form
               Width = 202
               Align = alTop
               BevelOuter = bvNone
-              ClientHeight = 17
-              ClientWidth = 202
+              ClientHeight = 13
+              ClientWidth = 198
               Color = clWindow
               ParentColor = False
               TabOrder = 8
@@ -1127,7 +1128,7 @@ object MyFiles3Form: TMyFiles3Form
                 Top = 24
                 Width = 184
                 Anchors = [akTop, akLeft, akRight]
-                ItemHeight = 13
+                ItemHeight = 0
                 Items.Strings = (
                   '[alles]'
                   'Titel'
@@ -1156,6 +1157,7 @@ object MyFiles3Form: TMyFiles3Form
                 OnDblClick = lbContentsDblClick
                 ScrollWidth = 181
                 TabOrder = 2
+                TopIndex = -1
               end
             end
             object pHAttribute: TPanel
@@ -1165,8 +1167,8 @@ object MyFiles3Form: TMyFiles3Form
               Width = 202
               Align = alTop
               BevelOuter = bvNone
-              ClientHeight = 17
-              ClientWidth = 202
+              ClientHeight = 13
+              ClientWidth = 198
               Color = clWindow
               ParentColor = False
               TabOrder = 10
@@ -1256,8 +1258,8 @@ object MyFiles3Form: TMyFiles3Form
               Width = 202
               Align = alTop
               BevelOuter = bvNone
-              ClientHeight = 73
-              ClientWidth = 202
+              ClientHeight = 69
+              ClientWidth = 198
               Color = clWindow
               ParentColor = False
               TabOrder = 12
@@ -1331,7 +1333,7 @@ object MyFiles3Form: TMyFiles3Form
     object pcStatus: TPageControl
       Left = 2
       Height = 118
-      Top = 428
+      Top = 432
       Width = 246
       HelpContext = 970
       ActivePage = tsDriveState
@@ -1346,14 +1348,14 @@ object MyFiles3Form: TMyFiles3Form
       Options = [nboMultiLine]
       object tsDriveState: TTabSheet
         Caption = 'Status'
-        ClientHeight = 110
-        ClientWidth = 219
+        ClientHeight = 116
+        ClientWidth = 201
         object lvDriveState: TListView
           Left = 0
-          Height = 90
+          Height = 96
           Hint = '*Überblick über den Status der überwachten Laufwerke.'
           Top = 0
-          Width = 219
+          Width = 201
           HelpContext = 971
           Align = alClient
           Columns = <          
@@ -1376,19 +1378,19 @@ object MyFiles3Form: TMyFiles3Form
         object pnlManUpdate: TPanel
           Left = 0
           Height = 20
-          Top = 90
-          Width = 219
+          Top = 96
+          Width = 201
           Align = alBottom
           BevelOuter = bvNone
           ClientHeight = 20
-          ClientWidth = 219
+          ClientWidth = 201
           TabOrder = 1
           Visible = False
           object spUpdateDrv: TSpeedButton
             Left = 2
             Height = 17
             Top = 2
-            Width = 216
+            Width = 198
             Anchors = [akTop, akLeft, akRight]
             Caption = 'Laufwerksstatus abfragen'
             Font.Color = clWindowText
@@ -1403,16 +1405,16 @@ object MyFiles3Form: TMyFiles3Form
     end
     object sbProps: TScrollBox
       Left = 2
-      Height = 195
+      Height = 199
       Top = 231
       Width = 246
-      HorzScrollBar.Page = 208
+      HorzScrollBar.Page = 244
       HorzScrollBar.Tracking = True
-      VertScrollBar.Page = 157
+      VertScrollBar.Page = 186
       VertScrollBar.Tracking = True
       Align = alClient
-      ClientHeight = 174
-      ClientWidth = 225
+      ClientHeight = 189
+      ClientWidth = 244
       Color = clWindow
       ParentColor = False
       TabOrder = 1
@@ -1421,7 +1423,7 @@ object MyFiles3Form: TMyFiles3Form
         Left = 8
         Height = 42
         Top = 17
-        Width = 7704
+        Width = 8069
         Alignment = taCenter
         Anchors = [akTop, akLeft, akRight]
         AutoSize = False
@@ -1526,10 +1528,10 @@ object MyFiles3Form: TMyFiles3Form
           object Label9: TLabel
             Cursor = crHandPoint
             Left = 160
-            Height = 13
+            Height = 14
             Hint = 'öffnet ==> Einschränkung des Suchbereichs.'
             Top = 123
-            Width = 36
+            Width = 43
             Caption = 'Befehle'
             FocusControl = pnlHProps
             Font.Color = clBlue
@@ -1671,9 +1673,9 @@ object MyFiles3Form: TMyFiles3Form
             end
             object cbAutoPlay: TCheckBox
               Left = 37
-              Height = 19
+              Height = 21
               Top = 4
-              Width = 101
+              Width = 114
               Caption = 'autom. abspielen'
               Font.Color = clWindowText
               Font.Height = -11
@@ -1906,7 +1908,7 @@ object MyFiles3Form: TMyFiles3Form
       end
       object cbAdresse: TComboBox
         Left = 66
-        Height = 21
+        Height = 27
         Hint = 'Adresse der angezeigten Dateien. Syntax: <Datenträger> = Datenträgerinhalt <Datenträger>\Pfad = Normaler Ordner\Pfad = Verbundordner Search: Begriffe /parameter = Suchergebnis|Adresse der angezeigten Dateien. List:Listenname = Dateiliste [<Datenträger>]\Pfad\Dateiname = Öffnet die angegebene Datei (<Datenträger optional>)'
         Top = 0
         Width = 466
@@ -1916,7 +1918,7 @@ object MyFiles3Form: TMyFiles3Form
         Font.Color = clWindowText
         Font.Height = -11
         Font.Name = 'MS Sans Serif'
-        ItemHeight = 13
+        ItemHeight = 0
         Items.Strings = (
           'test'
         )
@@ -1944,7 +1946,7 @@ object MyFiles3Form: TMyFiles3Form
       end
       object cbLayout: TComboBox
         Left = 604
-        Height = 21
+        Height = 27
         Top = 0
         Width = 145
         HelpContext = 952
@@ -1952,7 +1954,7 @@ object MyFiles3Form: TMyFiles3Form
         Font.Color = clWindowText
         Font.Height = -11
         Font.Name = 'MS Sans Serif'
-        ItemHeight = 13
+        ItemHeight = 0
         OnDropDown = cbLayoutDropDown
         OnEnter = cbLayoutEnter
         OnKeyPress = cbLayoutKeyPress
@@ -1964,18 +1966,18 @@ object MyFiles3Form: TMyFiles3Form
   end
   object pListview: TPanel
     Left = 255
-    Height = 548
+    Height = 552
     Top = 54
     Width = 554
     Align = alClient
     BevelOuter = bvNone
-    ClientHeight = 548
+    ClientHeight = 552
     ClientWidth = 554
     TabOrder = 1
     object ListView: TListView
       Tag = 1
       Left = 0
-      Height = 548
+      Height = 552
       Top = 0
       Width = 554
       HelpContext = 960
@@ -2007,9 +2009,9 @@ object MyFiles3Form: TMyFiles3Form
     end
     object cbCopyFilesCreateSub: TCheckBox
       Left = 216
-      Height = 19
+      Height = 21
       Top = 32
-      Width = 117
+      Width = 141
       Caption = 'Unterordner anlegen'
       TabOrder = 1
       Visible = False
@@ -14163,4 +14165,4 @@ object MyFiles3Form: TMyFiles3Form
       OnClick = menLayoutAutoSaveClick
     end
   end
-end
+end

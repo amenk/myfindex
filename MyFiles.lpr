@@ -55,6 +55,7 @@ begin
   Randomize;
 
   Application.Initialize;
+  s := '';
 
   for i := 1 to paramcount do // Parameter zusammenfügen
     s := s + ParamStr(i) + ' ';
