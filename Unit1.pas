@@ -26,7 +26,7 @@ uses
   ExtCtrls, Menus, StdCtrls, Dialogs, Controls, ComCtrls, Classes, Graphics,
   Spin, Buttons, ImgList, Grids, IniFiles, FileUtil, Variants,
   Clipbrd, CheckLst, SplashFUnit, DBGrids, Registry, sqldb, Crt,
-  LCLIntf, LCLType, zvdatetimepicker, fpmimetypes;
+  LCLIntf, LCLType, zvdatetimepicker, fpmimetypes, LResources;
 
 const
   lvt_file = 1;
@@ -738,7 +738,6 @@ uses ReadDiskUnit, NewCollectionUnit, NewListUnit,
   NoRegUnit, StringEditUnit, CopyToDisksUnit;
 
 {$R *.lfm}
-{$R icns.res}
 
 { Was wird in der Spalte "Notiz" angezeigt? }
 function GetNoteColumn(Item: TMyItem): string;
@@ -943,7 +942,6 @@ var
 begin
   icnTemp := TIcon.Create;
   try
-    icnTemp.LoadFromResourceID(hinstance, 501);
     icnTemp.LoadFromLazarusResource(icon); //Handle := LoadIcon(hInstance, PChar(id));
   finally
   end;
@@ -1045,7 +1043,7 @@ begin
   if (ini.ReadBool(ini_gui, ini_splash, true)) or (not isreg) then
   begin
     splash := TfrmSplash.Create(Self);
-    splash.show;
+    {//ToBeConverted splash.show;}
     splash.Enabled := False;
   end
     else splash := nil;
@@ -1062,9 +1060,9 @@ begin
   { Init }
   CreateImages;
 
-  idi_root := AddResIconByIDToIL(ilMoreImages, 501); //idi_root := AddResIconToIL(ilMoreImages, 'ico501.ico');
-  idi_disk := AddResIconByIDToIL(ilMoreImages, 502); //idi_disk := AddResIconToIL(ilMoreImages, 'ico502.ico');
-  idi_nodisk := AddResIconByIDToIL(ilMoreImages, 503); //idi_nodisk := AddResIconToIL(ilMoreImages, 'ico503.ico');
+  idi_root := AddResIconToIL(ilMoreImages, 'ico501'); //idi_root := AddResIconToIL(ilMoreImages, 'ico501.ico');
+  idi_disk := AddResIconToIL(ilMoreImages, 'ico502'); //idi_disk := AddResIconToIL(ilMoreImages, 'ico502.ico');
+  idi_nodisk := AddResIconToIL(ilMoreImages, 'ico503'); //idi_nodisk := AddResIconToIL(ilMoreImages, 'ico503.ico');
 
   idi_closef := AddFileIconToIL(ilMoreImages, extractfilepath(application.exename));
   idi_openf := AddFileIconToIL(ilMoreImages, extractfilepath(application.exename));
@@ -7669,6 +7667,11 @@ begin
   secs := (GetTickCount - timestamp) div 1000;
   ini.WriteString('Stats', 'UsageTime', IntToStr(StrToInt64(ini.ReadString('Stats', 'UsageTime', '0')) + secs));
 end;
+
+initialization
+
+{$I MyFiles.lrs}
+{$I icns.lrs}
 
 end.
 
