@@ -30,7 +30,6 @@ type
     cbDefCol: TComboBox;
     gb11: TGroupBox;
     ckSplash: TCheckBox;
-    lblHinweis: TLabel;
     Label15: TLabel;
     ckToolbarShowCaptions: TCheckBox;
     gb211: TGroupBox;
@@ -316,7 +315,6 @@ begin
   tv.FullExpand;
   ckSplash.Enabled := isreg;
 //  ckAds.Enabled := isreg;
-  lblHinweis.Visible := not isreg;
 end;
 
 procedure TfrmConfig.ckStartMenChange(Sender: TObject);
