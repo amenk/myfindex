@@ -311,7 +311,6 @@ end;
 
 procedure TfrmConfig.FormCreate(Sender: TObject);
 begin
-  //
   tv.selected := tv.Items[0];
   readini;
   tv.FullExpand;
@@ -423,4 +422,4 @@ begin
   end;
 end;
 }
-end.
+end.
