@@ -1043,7 +1043,7 @@ begin
   if (ini.ReadBool(ini_gui, ini_splash, true)) or (not isreg) then
   begin
     splash := TfrmSplash.Create(Self);
-    {//ToBeConverted splash.show;}
+    splash.show;
     splash.Enabled := False;
   end
     else splash := nil;
