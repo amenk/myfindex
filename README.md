@@ -1,6 +1,6 @@
 README
 =======
-MyFindex makes it possible to import an type of media (Harddrives, CDs, DVDs, USB Sticks...). It then is possible to search
+MyFindex makes it possible to import any type of media (Harddrives, CDs, DVDs, USB Sticks...). It then is possible to search
 files and content with its powerful searchfunction, even if the media is not inserted.
 
 If the file was found, it can be opened directly within MyFindex, with all the power of a real filebrowser. If needed, MyFindex asks
@@ -13,6 +13,6 @@ For every file, folder and media,  information and notes can be archived. This i
 an extra column. 
 
 Copyright (c) 2002-2008 Alexander Menk
-Copyright (c) 2014 Tim Richter
+Copyright (c) 2014-2016 Tim Lindner
 
 Licensed under the MIT license (see LICENSE.md)
