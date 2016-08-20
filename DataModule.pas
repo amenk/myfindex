@@ -98,7 +98,7 @@ begin
      sqlqFiles.SQL.Text:=
        'CREATE TABLE IF NOT EXISTS '+quotedstr('tblFiles') + ' ('+
        quotedstr('FileID') + ' INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,'+
-       quotedstr('DiskID') + ' INTEGER,'+
+       quotedstr('MediaID') + ' INTEGER,'+
        quotedstr('FolderID') + ' INTEGER,'+
        quotedstr('FileName') + ' TEXT,'+
        quotedstr('EntryKind') + ' INTEGER,'+
