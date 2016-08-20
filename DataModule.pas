@@ -105,7 +105,7 @@ begin
        quotedstr('Changed') + ' INTEGER,'+
        quotedstr('Attr') + ' INTEGER,'+
        quotedstr('Size') + ' REAL,'+
-       quotedstr('Note') + ' NUMERIC,'+
+       quotedstr('Note') + ' TEXT,'+
        quotedstr('TKind') + ' INTEGER,'+
        quotedstr('BKind') + ' INTEGER,'+
        quotedstr('TextPreview') + ' TEXT,'+
