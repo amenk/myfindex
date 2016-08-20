@@ -89,7 +89,7 @@ begin
        quotedstr('MediaID') + ' INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,'+
        quotedstr('Label')+ ' TEXT,'+
        quotedstr('Read') + ' INTEGER,'+
-       quotedstr('Size') + ' INTEGER,'+
+       quotedstr('Size') + ' REAL,'+
        quotedstr('Note') + ' TEXT)';
      debug := sqlqMedia.SQL.Text;
      sqlqMedia.ExecSQL;
@@ -104,7 +104,7 @@ begin
        quotedstr('EntryKind') + ' INTEGER,'+
        quotedstr('Changed') + ' INTEGER,'+
        quotedstr('Attr') + ' INTEGER,'+
-       quotedstr('Size') + ' INTEGER,'+
+       quotedstr('Size') + ' REAL,'+
        quotedstr('Note') + ' NUMERIC,'+
        quotedstr('TKind') + ' INTEGER,'+
        quotedstr('BKind') + ' INTEGER,'+
