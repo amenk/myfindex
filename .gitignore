@@ -62,3 +62,8 @@ MyFiles.compiled
 *.ini
 /link.res
 /MyFiles.reslst
+#PdxConvert Files #######
+/PdxConvert/backup
+/PdxConvert/destination
+*.dbg
+#########################
