@@ -66,4 +66,6 @@ MyFiles.compiled
 /PdxConvert/backup
 /PdxConvert/destination
 *.dbg
+/PdxConvert/PdxConvert
+PdxConvert/pxtools/pxcsvdump
 #########################
