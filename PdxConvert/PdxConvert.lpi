@@ -44,6 +44,9 @@
             </Debugging>
             <LinkSmart Value="True"/>
           </Linking>
+          <Other>
+            <CompilerPath Value="$(CompPath)"/>
+          </Other>
         </CompilerOptions>
       </Item2>
     </BuildModes>
@@ -53,7 +56,7 @@
     <RunParams>
       <local>
         <FormatVersion Value="1"/>
-        <CommandLineParams Value="-s=&quot;C:\MyFiles\collections\test&quot; -d=&quot;C:\Users\Tim\Projekte\PdxConvert\destination&quot;"/>
+        <CommandLineParams Value="-s=&quot;\home\tim\Projekte\MyFiles\collections\test&quot; -d=&quot;\home\tim\Projekte\destination&quot;"/>
       </local>
     </RunParams>
     <RequiredPackages Count="1">
@@ -78,6 +81,9 @@
       <IncludeFiles Value="$(ProjOutDir)"/>
       <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
+    <Other>
+      <CompilerPath Value="$(CompPath)"/>
+    </Other>
   </CompilerOptions>
   <Debugging>
     <Exceptions Count="3">

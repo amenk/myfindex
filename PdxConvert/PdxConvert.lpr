@@ -7,12 +7,20 @@ uses {$IFDEF UNIX} {$IFDEF UseCThreads}
   Classes,
   SysUtils,
   CustApp,
-  Paradox,
+  csvdocument,
   sqlite3conn,
   sqldb,
   Db,
   FileUtil,
-  dateutils;
+  dateutils,
+  process;
+
+const
+  {$IFDEF Windows}
+  PXCSVDUMP = 'pxcsvdump.exe';
+  {$ELSE}
+  PXCSVDUMP = 'pxcsvdump';
+  {$ENDIF}
 
 type
 
@@ -20,11 +28,15 @@ type
 
   TPdxConvert = class(TCustomApplication)
   protected
-    pdx: TParadox;
     SQLite3Con: TSQLite3Connection;
     SQLTransact: TSQLTransaction;
     sqlqMedia, sqlqFolders, sqlqFiles : TSQLQuery;
     sourceDir, destDir: string;
+    csvParser : TCSVParser;
+    FileStream : TFileStream;
+    csvFilename : String;
+    csvDelimiter : char;
+    currentRow : integer;
     procedure DoRun; override;
   public
     constructor Create(TheOwner: TComponent); override;
@@ -33,11 +45,11 @@ type
     function HasOption(Const C : Char; Const S : String) : Boolean;
     function GetOptionValue(Const C: Char; Const S : String) : String;
     procedure createSQLiteDBs;
-    procedure insertMediaDataset(Const MediaID : Integer; Const strLabel : String; Const Read : TDateTime; Const Size : Double; Const Note : String);
-    procedure insertFoldersDataset(Const Folder : String; Const MediaID : Integer; Const FolderID : Integer; Const Level : Integer; Const HasSubFolders : Integer; Const Note : String);
-    procedure insertFilesDataset(Const MediaID : Integer; Const FolderID : Integer; Const FileID : Integer; Const FileName : String; Const EntryKind : Integer; Const Changed : TDateTime; Const Attr : Integer; Const Size : Double; Const Note : String; Const TKind : Integer; Const BKind : Integer; Const TextPreview : String; Const BinPreview : TBytes);
-    function PrintBytes(const bytes: TBytes): string;
-    procedure exitAndClose;
+    procedure insertMediaDataset(const MediaID : string; const strLabel : string; const read : string; const size : string; const note : string);
+    procedure insertFoldersDataset(const folder : string; const mediaID : string; const folderID : string; const level : string; const hasSubFolders : string; const note : string);
+    procedure insertFilesDataset(const mediaID : string; const folderID : string; const fileID : string; const fileName : string; const entryKind : string; const changed : string; const attr : string; const size : string; const note : string; const tKind : string; const bKind : string; const textPreview : string; const binPreview : string);
+    procedure exitAndClose(msg : string);
+    function extractCSV(sourceDB, sourceMB, strCsvFilename : string) : boolean;
   end;
 
   { TPdxConvert }
@@ -46,22 +58,12 @@ type
   var
     ErrorMsg: string;
     I : Integer;
+    mediaID, strLabel, read, size, note : string;
+    folder, folderID, level, hasSubFolders : string;
+    fileID, fileName, entryKind, changed, attr, tKind, bKind, textPreview, binPreview : string;
+    sourceDB, sourceMB : string;
+    testint : integer;
   begin
-      {
-      DllHandle := LoadLibrary('pxlib.dll');
-      if DllHandle = 0 then
-        WriteLn(SysErrorMessage(GetLastOSError))
-      else
-        WriteLn('Successfully loaded');
-      }
-  pdx := TParadox.Create(self);
-  SQLite3Con := TSQLite3Connection.Create(self);
-  SQLTransact := TSQLTransaction.Create(self);
-  sqlqMedia := TSQLQuery.Create(self);
-  sqlqFolders := TSQLQuery.Create(self);
-  sqlqFiles := TSQLQuery.Create(self);
-
-
   if HasOption('s', 'source') then begin
      sourceDir := GetOptionValue('s', 'source');
      if not DirectoryExistsUTF8(sourceDir) then begin
@@ -73,21 +75,19 @@ type
   end
   else
   begin
-       exitAndClose;
+       exitAndClose('');
   end;
 
   if HasOption('d', 'destination') then begin
       destDir := GetOptionValue('d', 'destination');
       if not DirectoryExistsUTF8(destDir + PathDelim) then begin
-          ErrorMsg := 'New database folder does not exist.';
-          WriteLn(ErrorMsg);
-          exitAndClose;
+          exitAndClose('New database folder does not exist.');
       end;
   end
   else
   begin
        WriteHelp;
-       exitAndClose;
+       exitAndClose('');
   end;
 
   if FileExists(sourceDir + PathDelim + 'disks.DB') AND
@@ -102,17 +102,40 @@ type
      FileExists(sourceDir + PathDelim + 'folders.DB') AND
      FileExists(sourceDir + PathDelim + 'folders.MB') AND
      FileExists(sourceDir + PathDelim + 'folders.PX') then begin
-         pdx.Close;
-
-         pdx.FileName := sourceDir + PathDelim + 'disks.DB';
-         pdx.Open;
+         sourceDB := sourceDir + PathDelim + 'disks.DB';
+         sourceMB := sourceDir + PathDelim + 'disks.MB';
+         csvFilename := SysUtils.GetTempDir + 'disks.csv';
+         csvDelimiter := #9;
+         if NOT extractCSV(sourceDB, sourceMB, csvFilename) then
+            exitAndClose('Could not extract database data.');
+         FileStream := TFileStream.Create(csvFilename, fmOpenRead+fmShareDenyWrite);
          createSQLiteDBs;
+         csvParser.Delimiter := csvDelimiter;
+         csvParser.SetSource(FileStream);
+
+         testint := csvParser.MaxColCount;
+         if (csvParser.MaxColCount < 4) then // Note wird nicht gelesen? Eigentlich 5
+            exitAndClose('Database data is not compatible.');
+         while csvParser.ParseNextCell do begin
+           if csvParser.CurrentCol = 0 then mediaID := csvParser.CurrentCellText;
+           if csvParser.CurrentCol = 1 then strLabel := csvParser.CurrentCellText;
+           if csvParser.CurrentCol = 2 then read := csvParser.CurrentCellText;
+           if csvParser.CurrentCol = 3 then size := csvParser.CurrentCellText;
+           if csvParser.CurrentCol = 4 then note := csvParser.CurrentCellText;
+
+           if csvParser.CurrentCol = 4 then begin
+              insertMediaDataset(mediaID, strLabel, read, size, note);
+           end;
+         end;
+         {
          while NOT pdx.EOF do begin
              insertMediaDataset(pdx.Fields[0].AsInteger, pdx.Fields[1].AsString, pdx.Fields[2].AsDateTime, pdx.Fields[3].AsInteger, pdx.Fields[4].AsString);
              pdx.Next;
          end;
          pdx.Close;
+         }
 
+         {
          pdx.FileName := sourceDir + PathDelim + 'folders.DB';
          pdx.open;
          while NOT pdx.EOF do begin
@@ -120,13 +143,11 @@ type
                pdx.Next;
          end;
          pdx.Close;
+         }
 
+         {
          pdx.FileName := sourceDir + PathDelim + 'files.DB';
          pdx.open;
-         {
-         pdx.Filter := '';
-         pdx.TargetEncoding:='UTF-8';
-         pdx.Filtered:=false;}
          WriteLn(pdx.BlobFileName);
          while NOT pdx.EOF do begin
              insertFilesDataset(pdx.Fields[0].AsInteger, pdx.Fields[1].AsInteger, pdx.Fields[2].AsInteger, pdx.Fields[3].AsString, pdx.Fields[4].AsInteger, pdx.Fields[5].AsDateTime, pdx.Fields[6].AsInteger, pdx.Fields[7].AsFloat, pdx.Fields[8].AsString, pdx.Fields[9].AsInteger, pdx.Fields[10].AsInteger, pdx.Fields[11].AsString, pdx.Fields[12].AsBytes);
@@ -135,26 +156,32 @@ type
              pdx.next;
          end;
          pdx.Close;
+         }
      end else begin
-         ErrorMsg := 'Files missing for conversion.';
-         WriteLn(ErrorMsg);
-         exitAndClose;
+         exitAndClose('Files missing for conversion.');
      end;
 
   // parse parameters
   if HasOption('h','help') then begin
     WriteHelp;
-    exitAndClose;
+    exitAndClose('');
   end;
 
     // stop program loop
-    exitAndClose;
+    exitAndClose('');
   end;
 
   constructor TPdxConvert.Create(TheOwner: TComponent);
   begin
     inherited Create(TheOwner);
     StopOnException := True;
+    SQLite3Con := TSQLite3Connection.Create(self);
+    SQLTransact := TSQLTransaction.Create(self);
+    sqlqMedia := TSQLQuery.Create(self);
+    sqlqFolders := TSQLQuery.Create(self);
+    sqlqFiles := TSQLQuery.Create(self);
+    csvParser:=TCSVParser.Create;
+    csvDelimiter := ',';
   end;
 
   destructor TPdxConvert.Destroy;
@@ -162,11 +189,14 @@ type
     inherited Destroy;
   end;
 
-  procedure TPdxConvert.exitAndClose;
+  procedure TPdxConvert.exitAndClose(msg : string);
   begin
-    if NOT (pdx = nil) then begin
-       pdx.Close;
-       pdx.Free;
+    WriteLn(msg);
+    if NOT (csvParser = nil) then begin
+       csvParser.Free;
+    end;
+    if NOT (FileStream = nil) then begin
+       FileStream.Free;
     end;
     if NOT (sqlqMedia = nil) then begin
        sqlqMedia.Close;
@@ -205,7 +235,7 @@ type
     writeln('     This help.');
   end;
 
-function TPdxConvert.HasOption(Const C : Char; Const S : String) : Boolean;
+function TPdxConvert.HasOption(const C : Char; const S : String) : Boolean;
 var
   option : String;
   i, j : integer;
@@ -227,7 +257,7 @@ begin
     end;
 end;
 
-function TPdxConvert.GetOptionValue(Const C: Char; Const S : String) : String;
+function TPdxConvert.GetOptionValue(const C: Char; const S : String) : String;
 var
   option : String;
   optionValue : String;
@@ -261,7 +291,7 @@ begin
     result := optionValue;
 end;
 
-procedure TPdxConvert.insertFilesDataset(Const MediaID : Integer; Const FolderID : Integer; Const FileID : Integer; Const FileName : String; Const EntryKind : Integer; Const Changed : TDateTime; Const Attr : Integer; Const Size : Double; Const Note : String; Const TKind : Integer; Const BKind : Integer; Const TextPreview : String; Const BinPreview : TBytes);
+procedure TPdxConvert.insertFilesDataset(const mediaID : string; const folderID : string; const fileID : string; const fileName : string; const entryKind : string; const changed : string; const attr : string; const size : string; const note : string; const tKind : string; const bKind : string; const textPreview : string; const binPreview : string);
 var
   debug : string;
 begin
@@ -277,18 +307,18 @@ try
    sqlqFiles.Open;
    sqlqFiles.Append;
    // sqlqFiles.FieldByName('FileID').AsInteger := FileID;   // IDs are not unique!!!
-   sqlqFiles.FieldByName('MediaID').AsInteger := MediaID;
-   sqlqFiles.FieldByName('FolderID').AsInteger := FolderID;
-   sqlqFiles.FieldByName('FileName').AsString := FileName;
-   sqlqFiles.FieldByName('EntryKind').AsInteger := EntryKind;
-   sqlqFiles.FieldByName('Changed').AsInteger := DateTimeToUnix(Changed);
-   sqlqFiles.FieldByName('Attr').AsInteger := Attr;
-   sqlqFiles.FieldByName('Size').AsFloat := Size;
-   sqlqFiles.FieldByName('Note').AsString := Note;
-   sqlqFiles.FieldByName('TKind').AsInteger := TKind;
-   sqlqFiles.FieldByName('BKind').AsInteger := BKind;
-   sqlqFiles.FieldByName('TextPreview').AsString := TextPreview;
-   sqlqFiles.FieldByName('BinPreview').AsBytes := BinPreview;
+   sqlqFiles.FieldByName('MediaID').AsString := mediaID;
+   sqlqFiles.FieldByName('FolderID').AsString := folderID;
+   sqlqFiles.FieldByName('FileName').AsString := fileName;
+   sqlqFiles.FieldByName('EntryKind').AsString := entryKind;
+   sqlqFiles.FieldByName('Changed').AsString := changed; //DateTimeToUnix(changed);
+   sqlqFiles.FieldByName('Attr').AsString := attr;
+   sqlqFiles.FieldByName('Size').AsString := size;
+   sqlqFiles.FieldByName('Note').AsString := note;
+   sqlqFiles.FieldByName('TKind').AsString := tKind;
+   sqlqFiles.FieldByName('BKind').AsString := bKind;
+   sqlqFiles.FieldByName('TextPreview').AsString := textPreview;
+   //sqlqFiles.FieldByName('BinPreview').AsBytes := binPreview;
 
    sqlqFiles.Post;
    sqlqFiles.UpdateMode := upWhereAll;
@@ -307,7 +337,7 @@ except
 end;
 end;
 
-procedure TPdxConvert.insertMediaDataset(Const MediaID : Integer; Const strLabel : String; Const Read : TDateTime; Const Size : Double; Const Note : String);
+procedure TPdxConvert.insertMediaDataset(const MediaID : string; const strLabel : string; const read : string; const size : string; const note : string);
 var
   debug : string;
 begin
@@ -322,11 +352,11 @@ try
    sqlqMedia.SQL.Text := 'select * from tblMedia';
    sqlqMedia.Open;
    sqlqMedia.Append;
-   sqlqMedia.FieldByName('MediaID').AsInteger := MediaID;
+   sqlqMedia.FieldByName('MediaID').AsString := mediaID;
    sqlqMedia.FieldByName('Label').AsString := strLabel;
-   sqlqMedia.FieldByName('Read').AsInteger := DateTimeToUnix(Read);
-   sqlqMedia.FieldByName('Size').AsFloat := Size;
-   sqlqMedia.FieldByName('Note').AsString := Note;
+   sqlqMedia.FieldByName('Read').AsString := read;//DateTimeToUnix(read);
+   sqlqMedia.FieldByName('Size').AsString := size;
+   sqlqMedia.FieldByName('Note').AsString := note;
 
    sqlqMedia.Post;
    sqlqMedia.UpdateMode := upWhereAll;
@@ -345,7 +375,7 @@ except
 end;
 end;
 
-procedure TPdxConvert.insertFoldersDataset(Const Folder : String; Const MediaID : Integer; Const FolderID : Integer; Const Level : Integer; Const HasSubFolders : Integer; Const Note : String);
+procedure TPdxConvert.insertFoldersDataset(const folder : string; const mediaID : string; const folderID : string; const level : string; const hasSubFolders : string; const note : string);
 var
   debug : string;
 begin
@@ -360,12 +390,12 @@ try
    sqlqFolders.SQL.Text := 'select * from tblFolders';
    sqlqFolders.Open;
    sqlqFolders.Append;
-   sqlqFolders.FieldByName('FolderID').AsInteger := FolderID;
-   sqlqFolders.FieldByName('Folder').AsString := Folder;
-   sqlqFolders.FieldByName('Level').AsInteger := Level;
-   sqlqFolders.FieldByName('HasSubFolders').AsInteger := HasSubFolders;
-   sqlqFolders.FieldByName('Note').AsString := Note;
-   sqlqFolders.FieldByName('MediaID').AsInteger := MediaID;
+   sqlqFolders.FieldByName('FolderID').AsString := folderID;
+   sqlqFolders.FieldByName('Folder').AsString := folder;
+   sqlqFolders.FieldByName('Level').AsString := level;
+   sqlqFolders.FieldByName('HasSubFolders').AsString := hasSubFolders;
+   sqlqFolders.FieldByName('Note').AsString := note;
+   sqlqFolders.FieldByName('MediaID').AsString := mediaID;
 
    sqlqFolders.Post;
    sqlqFolders.UpdateMode := upWhereAll;
@@ -416,12 +446,12 @@ try
      quotedstr('FileName') + ' TEXT,'+
      quotedstr('EntryKind') + ' INTEGER,'+
      quotedstr('Changed') + ' INTEGER,'+
-     quotedstr('Attr') + ' INTEGER,'+
-     quotedstr('Size') + ' REAL,'+
-     quotedstr('Note') + ' TEXT,'+
      quotedstr('TKind') + ' INTEGER,'+
      quotedstr('BKind') + ' INTEGER,'+
      quotedstr('TextPreview') + ' TEXT,'+
+     quotedstr('Attr') + ' INTEGER,'+
+     quotedstr('Size') + ' REAL,'+
+     quotedstr('Note') + ' TEXT,'+
      quotedstr('BinPreview') + ' BLOB)';
    debug := sqlqFiles.SQL.Text;
    sqlqFiles.ExecSQL;
@@ -471,13 +501,30 @@ except
 end;
 end;
 
-function TPdxConvert.PrintBytes(const bytes: TBytes): string;
+function TPdxConvert.extractCSV(sourceDB, sourceMB, strCsvFilename : string) : boolean;
 var
-  i : integer;
+  aProcess : TProcess;
+  output : TStringList;
+  str : string;
 begin
-  for i := 0 to length(bytes) - 1 do begin
-    WriteLn(IntToStr(bytes[i]));
-  end;
+ try
+    aProcess := TProcess.Create(nil);
+    aProcess.CommandLine := PXCSVDUMP + ' -f ' + sourceDB + ' -b ' + sourceMB; // + ' --delimiter=,';
+    aProcess.ShowWindow := swoHIDE;
+    aProcess.Options := [poWaitOnExit, poUsePipes];
+    aProcess.Execute;
+    output := TStringList.Create;
+    output.LoadFromStream(aProcess.Output);
+    DeleteFileUTF8(strCsvFilename);
+    output.SaveToFile(strCsvFilename);
+    aProcess.Free;
+    output.Free;
+ finally
+   if FileExistsUTF8(strCsvFilename) then
+      result := true
+   else
+     result := false;
+ end;
 end;
 
 var
