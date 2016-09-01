@@ -37,7 +37,6 @@ type
     delimitedText : TStrings;
     fileStream : TFileStream;
     procedure DoRun; override;
-  public
     constructor Create(TheOwner: TComponent); override;
     destructor Destroy; override;
     procedure WriteHelp; virtual;
@@ -55,6 +54,7 @@ type
     function readInsertFilesCsv(sourceDB, sourceMB : string) : boolean;
     function explode(const Separator, S: string; Limit: Integer = 0): TStringList;
     procedure unquote(var str : string; quote : ansichar);
+    function datestringToUnix(datestr : string) : integer;
   end;
 
   { TPdxConvert }
@@ -97,20 +97,14 @@ type
   end;
 
   if NOT FileExistsUTF8(PXCSVDUMP) then
-    exitAndClose('Executable ' + PXCSVDUMP + ' ist missing - can not continue conversion process.');
+    exitAndClose('Executable ' + PXCSVDUMP + ' is missing - can not continue conversion process.');
 
   if FileExists(sourceDir + PathDelim + 'disks.DB') AND
      FileExists(sourceDir + PathDelim + 'disks.MB') AND
-     FileExists(sourceDir + PathDelim + 'disks.DB') AND
-     FileExists(sourceDir + PathDelim + 'disks.XG0') AND
-     FileExists(sourceDir + PathDelim + 'disks.YG0') AND
-     FileExists(sourceDir + PathDelim + 'disks.YG0') AND
      FileExists(sourceDir + PathDelim + 'files.DB') AND
      FileExists(sourceDir + PathDelim + 'files.MB') AND
-     FileExists(sourceDir + PathDelim + 'files.PX') AND
      FileExists(sourceDir + PathDelim + 'folders.DB') AND
-     FileExists(sourceDir + PathDelim + 'folders.MB') AND
-     FileExists(sourceDir + PathDelim + 'folders.PX') then begin
+     FileExists(sourceDir + PathDelim + 'folders.MB') then begin
          createSQLiteDBs;
 
          sourceDB := sourceDir + PathDelim + 'disks.DB';
@@ -134,36 +128,6 @@ type
             exitAndClose('Could not extract database data.');
          DeleteFileUTF8(csvFilename);
 
-         {
-         while NOT pdx.EOF do begin
-             insertMediaDataset(pdx.Fields[0].AsInteger, pdx.Fields[1].AsString, pdx.Fields[2].AsDateTime, pdx.Fields[3].AsInteger, pdx.Fields[4].AsString);
-             pdx.Next;
-         end;
-         pdx.Close;
-         }
-
-         {
-         pdx.FileName := sourceDir + PathDelim + 'folders.DB';
-         pdx.open;
-         while NOT pdx.EOF do begin
-               insertFoldersDataset(pdx.Fields[0].AsString, pdx.Fields[1].AsInteger, pdx.Fields[2].AsInteger, pdx.Fields[3].AsInteger, pdx.Fields[4].AsInteger, pdx.Fields[5].AsString);
-               pdx.Next;
-         end;
-         pdx.Close;
-         }
-
-         {
-         pdx.FileName := sourceDir + PathDelim + 'files.DB';
-         pdx.open;
-         WriteLn(pdx.BlobFileName);
-         while NOT pdx.EOF do begin
-             insertFilesDataset(pdx.Fields[0].AsInteger, pdx.Fields[1].AsInteger, pdx.Fields[2].AsInteger, pdx.Fields[3].AsString, pdx.Fields[4].AsInteger, pdx.Fields[5].AsDateTime, pdx.Fields[6].AsInteger, pdx.Fields[7].AsFloat, pdx.Fields[8].AsString, pdx.Fields[9].AsInteger, pdx.Fields[10].AsInteger, pdx.Fields[11].AsString, pdx.Fields[12].AsBytes);
-             PrintBytes(pdx.Fields[3].AsBytes);
-             ReadLn;
-             pdx.next;
-         end;
-         pdx.Close;
-         }
      end else begin
          exitAndClose('Files missing for conversion.');
      end;
@@ -206,9 +170,6 @@ type
     if NOT (fileStream = nil) then begin
        fileStream.Free;
     end;
-    if NOT (FileStream = nil) then begin
-       FileStream.Free;
-    end;
     if NOT (sqlqMedia = nil) then begin
        sqlqMedia.Close;
        sqlqMedia.Free;
@@ -229,8 +190,7 @@ type
        SQLite3Con.Close;
        SQLite3Con.Free;
     end;
-    Terminate;
-    Exit;
+    Halt(0)
   end;
 
   procedure TPdxConvert.WriteHelp;
@@ -365,7 +325,7 @@ try
    sqlqMedia.Append;
    sqlqMedia.FieldByName('MediaID').AsString := mediaID;
    sqlqMedia.FieldByName('Label').AsString := strLabel;
-   sqlqMedia.FieldByName('Read').AsString := read;//DateTimeToUnix(read);
+   sqlqMedia.FieldByName('Read').AsInteger := datestringToUnix(read);
    sqlqMedia.FieldByName('Size').AsString := size;
    sqlqMedia.FieldByName('Note').AsString := note;
 
@@ -711,6 +671,34 @@ begin
     if str[length(str)] = quote then
       delete(str, length(str), 1);
   end;
+end;
+
+function TPdxConvert.datestringToUnix(datestr : string) : integer;
+var
+  datetime : TDateTime;
+  separatedFullStringList : TStringList;
+  separatedDateStringList : TStringList;
+  separatedTimeStringList : TStringList;
+  year, month, day, hour, minute, second : integer;
+begin
+     separatedFullStringList := explode(datestr, ' ', 0);
+     separatedDateStringList := explode(separatedFullStringList[0], '-', 0);
+     separatedTimeStringList := explode(separatedFullStringList[0], ':', 0);
+     if NOT (separatedDateStringList.Count = 3) OR (separatedTimeStringList.Count = 3) then
+       exitAndClose('Corrupted DateTime value in database, can not continue.');
+     year := StrToInt(separatedDateStringList[0]);
+     month := StrToInt(separatedDateStringList[1]);
+     day := StrToInt(separatedDateStringList[2]);
+     hour := StrToInt(separatedTimeStringList[0]);
+     minute := StrToInt(separatedTimeStringList[1]);
+     second := StrToInt(separatedTimeStringList[2]);
+     datetime := EncodeDateTime( year, month, day, hour, minute, second, 0);
+     separatedFullStringList.Free;
+     separatedDateStringList.Free;
+     separatedTimeStringList.Free;
+////DateTimeToUnix(read);
+// 09/02/2000 at 05:06:07.008 (.008 milli-seconds)
+//   myDate := EncodeDateTime(2000, 2, 9, 5, 6, 7, 8);
 end;
 
 var
