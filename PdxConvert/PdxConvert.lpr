@@ -7,7 +7,6 @@ uses {$IFDEF UNIX} {$IFDEF UseCThreads}
   Classes,
   SysUtils,
   CustApp,
-  csvdocument,
   sqlite3conn,
   sqldb,
   Db,
@@ -32,11 +31,11 @@ type
     SQLTransact: TSQLTransaction;
     sqlqMedia, sqlqFolders, sqlqFiles : TSQLQuery;
     sourceDir, destDir: string;
-    csvParser : TCSVParser;
-    FileStream : TFileStream;
     csvFilename : String;
     csvDelimiter : char;
     currentRow : integer;
+    delimitedText : TStrings;
+    fileStream : TFileStream;
     procedure DoRun; override;
   public
     constructor Create(TheOwner: TComponent); override;
@@ -50,6 +49,12 @@ type
     procedure insertFilesDataset(const mediaID : string; const folderID : string; const fileID : string; const fileName : string; const entryKind : string; const changed : string; const attr : string; const size : string; const note : string; const tKind : string; const bKind : string; const textPreview : string; const binPreview : string);
     procedure exitAndClose(msg : string);
     function extractCSV(sourceDB, sourceMB, strCsvFilename : string) : boolean;
+    function readLine( var Stream: TFileStream; var Line: string): boolean;
+    function readInsertMediaCsv(sourceDB, sourceMB : string) : boolean;
+    function readInsertFoldersCsv(sourceDB, sourceMB : string) : boolean;
+    function readInsertFilesCsv(sourceDB, sourceMB : string) : boolean;
+    function explode(const Separator, S: string; Limit: Integer = 0): TStringList;
+    procedure unquote(var str : string; quote : ansichar);
   end;
 
   { TPdxConvert }
@@ -63,6 +68,7 @@ type
     fileID, fileName, entryKind, changed, attr, tKind, bKind, textPreview, binPreview : string;
     sourceDB, sourceMB : string;
     testint : integer;
+    debug : string;
   begin
   if HasOption('s', 'source') then begin
      sourceDir := GetOptionValue('s', 'source');
@@ -90,6 +96,9 @@ type
        exitAndClose('');
   end;
 
+  if NOT FileExistsUTF8(PXCSVDUMP) then
+    exitAndClose('Executable ' + PXCSVDUMP + ' ist missing - can not continue conversion process.');
+
   if FileExists(sourceDir + PathDelim + 'disks.DB') AND
      FileExists(sourceDir + PathDelim + 'disks.MB') AND
      FileExists(sourceDir + PathDelim + 'disks.DB') AND
@@ -102,31 +111,29 @@ type
      FileExists(sourceDir + PathDelim + 'folders.DB') AND
      FileExists(sourceDir + PathDelim + 'folders.MB') AND
      FileExists(sourceDir + PathDelim + 'folders.PX') then begin
+         createSQLiteDBs;
+
          sourceDB := sourceDir + PathDelim + 'disks.DB';
          sourceMB := sourceDir + PathDelim + 'disks.MB';
          csvFilename := SysUtils.GetTempDir + 'disks.csv';
-         csvDelimiter := #9;
-         if NOT extractCSV(sourceDB, sourceMB, csvFilename) then
+         if NOT readInsertMediaCsv(sourceDB, sourceMB) then
+           exitAndClose('Could not extract database data.');
+         DeleteFileUTF8(csvFilename);
+
+         sourceDB := sourceDir + PathDelim + 'folders.DB';
+         sourceMB := sourceDir + PathDelim + 'folders.MB';
+         csvFilename := SysUtils.GetTempDir + 'folders.csv';
+         if NOT readInsertMediaCsv(sourceDB, sourceMB) then
             exitAndClose('Could not extract database data.');
-         FileStream := TFileStream.Create(csvFilename, fmOpenRead+fmShareDenyWrite);
-         createSQLiteDBs;
-         csvParser.Delimiter := csvDelimiter;
-         csvParser.SetSource(FileStream);
+         DeleteFileUTF8(csvFilename);
 
-         testint := csvParser.MaxColCount;
-         if (csvParser.MaxColCount < 4) then // Note wird nicht gelesen? Eigentlich 5
-            exitAndClose('Database data is not compatible.');
-         while csvParser.ParseNextCell do begin
-           if csvParser.CurrentCol = 0 then mediaID := csvParser.CurrentCellText;
-           if csvParser.CurrentCol = 1 then strLabel := csvParser.CurrentCellText;
-           if csvParser.CurrentCol = 2 then read := csvParser.CurrentCellText;
-           if csvParser.CurrentCol = 3 then size := csvParser.CurrentCellText;
-           if csvParser.CurrentCol = 4 then note := csvParser.CurrentCellText;
+         sourceDB := sourceDir + PathDelim + 'files.DB';
+         sourceMB := sourceDir + PathDelim + 'files.MB';
+         csvFilename := SysUtils.GetTempDir + 'files.csv';
+         if NOT readInsertMediaCsv(sourceDB, sourceMB) then
+            exitAndClose('Could not extract database data.');
+         DeleteFileUTF8(csvFilename);
 
-           if csvParser.CurrentCol = 4 then begin
-              insertMediaDataset(mediaID, strLabel, read, size, note);
-           end;
-         end;
          {
          while NOT pdx.EOF do begin
              insertMediaDataset(pdx.Fields[0].AsInteger, pdx.Fields[1].AsString, pdx.Fields[2].AsDateTime, pdx.Fields[3].AsInteger, pdx.Fields[4].AsString);
@@ -180,8 +187,8 @@ type
     sqlqMedia := TSQLQuery.Create(self);
     sqlqFolders := TSQLQuery.Create(self);
     sqlqFiles := TSQLQuery.Create(self);
-    csvParser:=TCSVParser.Create;
-    csvDelimiter := ',';
+    csvDelimiter := #9;
+    delimitedText := TStrings.Create;
   end;
 
   destructor TPdxConvert.Destroy;
@@ -192,8 +199,12 @@ type
   procedure TPdxConvert.exitAndClose(msg : string);
   begin
     WriteLn(msg);
-    if NOT (csvParser = nil) then begin
-       csvParser.Free;
+    DeleteFileUTF8(csvFilename);
+    if NOT (delimitedText = nil) then begin
+       delimitedText.Free;
+    end;
+    if NOT (fileStream = nil) then begin
+       fileStream.Free;
     end;
     if NOT (FileStream = nil) then begin
        FileStream.Free;
@@ -525,6 +536,181 @@ begin
    else
      result := false;
  end;
+end;
+
+function TPdxConvert.readLine( var Stream: TFileStream; var Line: string): boolean;
+var
+  RawLine: UTF8String;
+  ch: AnsiChar;
+begin
+result := False;
+ch := #0;
+while (Stream.Read( ch, 1) = 1) and (ch <> #13) do
+  begin
+  result := True;
+  RawLine := RawLine + ch
+  end;
+Line := RawLine;
+if ch = #13 then
+  begin
+  result := True;
+  if (Stream.Read( ch, 1) = 1) and (ch <> #10) then
+    Stream.Seek(-1, soCurrent) // unread it if not LF character.
+  end
+end;
+
+function TPdxConvert.readInsertMediaCsv(sourceDB, sourceMB : string) : boolean;
+var
+  line : string;
+  debug : string;
+  str : string;
+begin
+     result := false;
+     if NOT extractCSV(sourceDB, sourceMB, csvFilename) then
+        exitAndClose('Could not extract database data.');
+     fileStream := TFileStream.Create(csvFilename, fmOpenRead+fmShareDenyWrite);
+
+     while readLine(fileStream, line) do begin
+           delimitedText := explode(csvDelimiter, line, 0);
+           if NOT delimitedText.Count = 4 then
+              exitAndClose('Could not extract database data.');
+           str := delimitedText[0];
+           str := delimitedText[1];
+           unquote(str, '"'); // Remove string quote
+           str := delimitedText[2];
+           unquote(str, #39); // Remove date quote
+           str := delimitedText[3];
+           insertMediaDataset(delimitedText[0], delimitedText[1], delimitedText[2], delimitedText[3], ''); // Note wird nicht gelesen? Eigentlich 5 Parameter
+           result := true;
+     end;
+
+     delimitedText.Clear;
+end;
+
+function TPdxConvert.readInsertFoldersCsv(sourceDB, sourceMB : string) : boolean;
+var
+  line : string;
+  debug : string;
+  str : string;
+begin
+{     quotedstr('FolderID') + ' INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,'+
+     quotedstr('Folder') + ' TEXT,'+
+     quotedstr('Level') + ' INTEGER,'+
+     quotedstr('HasSubFolders') + ' INTEGER,'+
+     quotedstr('Note') + ' TEXT,'+
+     quotedstr('MediaID') + ' INTEGER)';}
+     result := false;
+     if NOT extractCSV(sourceDB, sourceMB, csvFilename) then
+        exitAndClose('Could not extract database data.');
+     fileStream := TFileStream.Create(csvFilename, fmOpenRead+fmShareDenyWrite);
+
+     while readLine(fileStream, line) do begin
+           delimitedText := explode(csvDelimiter, line, 0);
+           if NOT delimitedText.Count = 6 then
+              exitAndClose('Could not extract database data.');
+           str := delimitedText[0];
+           str := delimitedText[1];
+           //unquote(str, '"'); // Remove string quote
+           str := delimitedText[2];
+           //unquote(str, #39); // Remove date quote
+           str := delimitedText[3];
+           str := delimitedText[4];
+           str := delimitedText[5];
+           insertFoldersDataset(delimitedText[0], delimitedText[1], delimitedText[2], delimitedText[3], delimitedText[4], delimitedText[5]);
+           result := true;
+     end;
+
+     delimitedText.Clear;
+end;
+
+function TPdxConvert.readInsertFilesCsv(sourceDB, sourceMB : string) : boolean;
+var
+  line : string;
+  debug : string;
+  str : string;
+begin
+{     quotedstr('FileID') + ' INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,'+
+     quotedstr('MediaID') + ' INTEGER,'+
+     quotedstr('FolderID') + ' INTEGER,'+
+     quotedstr('FileName') + ' TEXT,'+
+     quotedstr('EntryKind') + ' INTEGER,'+
+     quotedstr('Changed') + ' INTEGER,'+
+     quotedstr('TKind') + ' INTEGER,'+
+     quotedstr('BKind') + ' INTEGER,'+
+     quotedstr('TextPreview') + ' TEXT,'+
+     quotedstr('Attr') + ' INTEGER,'+
+     quotedstr('Size') + ' REAL,'+
+     quotedstr('Note') + ' TEXT,'+
+     quotedstr('BinPreview') + ' BLOB)'; }
+     result := false;
+     if NOT extractCSV(sourceDB, sourceMB, csvFilename) then
+        exitAndClose('Could not extract database data.');
+     fileStream := TFileStream.Create(csvFilename, fmOpenRead+fmShareDenyWrite);
+
+     while readLine(fileStream, line) do begin
+           delimitedText := explode(csvDelimiter, line, 0);
+           if NOT delimitedText.Count = 4 then
+              exitAndClose('Could not extract database data.');
+           str := delimitedText[0];
+           str := delimitedText[1];
+           //unquote(str, '"'); // Remove string quote
+           str := delimitedText[2];
+           //unquote(str, #39); // Remove date quote
+           str := delimitedText[3];
+           str := delimitedText[4];
+           str := delimitedText[5];
+           str := delimitedText[6];
+           str := delimitedText[7];
+           str := delimitedText[8];
+           str := delimitedText[9];
+           str := delimitedText[10];
+           str := delimitedText[11];
+           str := delimitedText[12];
+           insertFilesDataset(delimitedText[0], delimitedText[1], delimitedText[2], delimitedText[3], delimitedText[4], delimitedText[5], delimitedText[6], delimitedText[7], delimitedText[8], delimitedText[9], delimitedText[10],delimitedText[11], delimitedText[12]);
+           result := true;
+     end;
+
+     delimitedText.Clear;
+end;
+
+function TPdxConvert.explode(const Separator, S: string; Limit: Integer = 0): TStringList;
+var
+  SepLen: Integer;
+  F, P: PChar;
+  Index: Integer;
+begin
+  result := TStringList.Create;
+  if (S = '') or (Limit < 0) then Exit;
+  if Separator = '' then
+  begin
+    Result.add(S);
+    Exit;
+  end;
+  SepLen := Length(Separator);
+
+  Index := 0;
+  P := PChar(S);
+  while P^ <> #0 do
+  begin
+    F := P;
+    P := AnsiStrPos(P, PChar(Separator));
+    if (P = nil) or ((Limit > 0) and (Index = Limit - 1)) then
+      P := StrEnd(F);
+    result.Add(copy(AnsiString(F),0,P-F));
+    inc(index,1);
+    if P^ <> #0 then Inc(P, SepLen);
+  end;
+end;
+
+procedure TPdxConvert.unquote(var str : string; quote : ansichar);
+begin
+  if length(str) >= 2 then
+  begin
+    if str[1] = quote then
+      delete(str, 1 ,1);
+    if str[length(str)] = quote then
+      delete(str, length(str), 1);
+  end;
 end;
 
 var
