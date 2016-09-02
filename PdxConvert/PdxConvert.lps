@@ -28,6 +28,7 @@
               <OverflowChecks Value="True"/>
               <StackChecks Value="True"/>
             </Checks>
+            <VerifyObjMethodCallValidity Value="True"/>
             <Optimizations>
               <OptimizationLevel Value="0"/>
             </Optimizations>
@@ -35,6 +36,7 @@
           <Linking>
             <Debugging>
               <DebugInfoType Value="dsDwarf2Set"/>
+              <TrashVariables Value="True"/>
               <UseExternalDbgSyms Value="True"/>
             </Debugging>
           </Linking>
@@ -51,9 +53,9 @@
         <IsVisibleTab Value="True"/>
         <EditorIndex Value="0"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="1"/>
-        <CursorPos X="51" Y="692"/>
-        <UsageCount Value="55"/>
+        <TopLine Value="526"/>
+        <CursorPos X="1" Y="546"/>
+        <UsageCount Value="57"/>
         <Loaded Value="True"/>
       </Unit0>
       <Unit1>
@@ -169,128 +171,128 @@
     <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
         <Filename Value="PdxConvert.lpr"/>
-        <Caret Line="404" Column="1" TopLine="384"/>
+        <Caret Line="699" Column="1" TopLine="666"/>
       </Position1>
       <Position2>
         <Filename Value="PdxConvert.lpr"/>
-        <Caret Line="406" Column="1" TopLine="384"/>
+        <Caret Line="700" Column="1" TopLine="666"/>
       </Position2>
       <Position3>
         <Filename Value="PdxConvert.lpr"/>
-        <Caret Line="404" Column="1" TopLine="384"/>
+        <Caret Line="701" Column="1" TopLine="667"/>
       </Position3>
       <Position4>
         <Filename Value="PdxConvert.lpr"/>
-        <Caret Line="406" Column="1" TopLine="384"/>
+        <Caret Line="702" Column="41" TopLine="671"/>
       </Position4>
       <Position5>
         <Filename Value="PdxConvert.lpr"/>
-        <Caret Line="405" Column="1" TopLine="384"/>
+        <Caret Line="328" Column="1" TopLine="307"/>
       </Position5>
       <Position6>
         <Filename Value="PdxConvert.lpr"/>
-        <Caret Line="406" Column="1" TopLine="384"/>
+        <Caret Line="687" Column="1" TopLine="666"/>
       </Position6>
       <Position7>
         <Filename Value="PdxConvert.lpr"/>
-        <Caret Line="405" Column="1" TopLine="384"/>
+        <Caret Line="688" Column="1" TopLine="666"/>
       </Position7>
       <Position8>
         <Filename Value="PdxConvert.lpr"/>
-        <Caret Line="406" Column="1" TopLine="384"/>
+        <Caret Line="689" Column="1" TopLine="666"/>
       </Position8>
       <Position9>
         <Filename Value="PdxConvert.lpr"/>
-        <Caret Line="400" Column="1" TopLine="384"/>
+        <Caret Line="690" Column="1" TopLine="666"/>
       </Position9>
       <Position10>
         <Filename Value="PdxConvert.lpr"/>
-        <Caret Line="407" Column="1" TopLine="385"/>
+        <Caret Line="691" Column="1" TopLine="666"/>
       </Position10>
       <Position11>
         <Filename Value="PdxConvert.lpr"/>
-        <Caret Line="408" Column="1" TopLine="386"/>
+        <Caret Line="692" Column="1" TopLine="666"/>
       </Position11>
       <Position12>
         <Filename Value="PdxConvert.lpr"/>
-        <Caret Line="409" Column="1" TopLine="387"/>
+        <Caret Line="693" Column="1" TopLine="666"/>
       </Position12>
       <Position13>
         <Filename Value="PdxConvert.lpr"/>
-        <Caret Line="411" Column="1" TopLine="390"/>
+        <Caret Line="695" Column="1" TopLine="666"/>
       </Position13>
       <Position14>
         <Filename Value="PdxConvert.lpr"/>
-        <Caret Line="425" Column="1" TopLine="412"/>
+        <Caret Line="696" Column="1" TopLine="666"/>
       </Position14>
       <Position15>
         <Filename Value="PdxConvert.lpr"/>
-        <Caret Line="412" Column="1" TopLine="399"/>
+        <Caret Line="697" Column="1" TopLine="666"/>
       </Position15>
       <Position16>
         <Filename Value="PdxConvert.lpr"/>
-        <Caret Line="425" Column="1" TopLine="412"/>
+        <Caret Line="698" Column="1" TopLine="666"/>
       </Position16>
       <Position17>
         <Filename Value="PdxConvert.lpr"/>
-        <Caret Line="412" Column="1" TopLine="399"/>
+        <Caret Line="699" Column="1" TopLine="666"/>
       </Position17>
       <Position18>
         <Filename Value="PdxConvert.lpr"/>
-        <Caret Line="425" Column="1" TopLine="412"/>
+        <Caret Line="700" Column="1" TopLine="666"/>
       </Position18>
       <Position19>
         <Filename Value="PdxConvert.lpr"/>
-        <Caret Line="542" Column="30" TopLine="518"/>
+        <Caret Line="701" Column="1" TopLine="667"/>
       </Position19>
       <Position20>
         <Filename Value="PdxConvert.lpr"/>
-        <Caret Line="46" Column="33" TopLine="35"/>
+        <Caret Line="702" Column="1" TopLine="668"/>
       </Position20>
       <Position21>
         <Filename Value="PdxConvert.lpr"/>
-        <Caret Line="310" Column="41" TopLine="306"/>
+        <Caret Line="703" Column="1" TopLine="669"/>
       </Position21>
       <Position22>
         <Filename Value="PdxConvert.lpr"/>
-        <Caret Line="86" Column="1" TopLine="74"/>
+        <Caret Line="704" Column="1" TopLine="670"/>
       </Position22>
       <Position23>
         <Filename Value="PdxConvert.lpr"/>
-        <Caret Line="394" Column="1" TopLine="380"/>
+        <Caret Line="705" Column="1" TopLine="671"/>
       </Position23>
       <Position24>
         <Filename Value="PdxConvert.lpr"/>
-        <Caret Line="322" Column="1" TopLine="309"/>
+        <Caret Line="709" Column="1" TopLine="675"/>
       </Position24>
       <Position25>
         <Filename Value="PdxConvert.lpr"/>
-        <Caret Line="323" Column="1" TopLine="309"/>
+        <Caret Line="329" Column="1" TopLine="308"/>
       </Position25>
       <Position26>
         <Filename Value="PdxConvert.lpr"/>
-        <Caret Line="324" Column="1" TopLine="309"/>
+        <Caret Line="330" Column="51" TopLine="308"/>
       </Position26>
       <Position27>
         <Filename Value="PdxConvert.lpr"/>
-        <Caret Line="325" Column="1" TopLine="309"/>
+        <Caret Line="333" Column="1" TopLine="308"/>
       </Position27>
       <Position28>
         <Filename Value="PdxConvert.lpr"/>
-        <Caret Line="326" Column="1" TopLine="309"/>
+        <Caret Line="334" Column="1" TopLine="308"/>
       </Position28>
       <Position29>
         <Filename Value="PdxConvert.lpr"/>
-        <Caret Line="675" Column="67" TopLine="655"/>
+        <Caret Line="335" Column="1" TopLine="308"/>
       </Position29>
       <Position30>
         <Filename Value="PdxConvert.lpr"/>
-        <Caret Line="680" Column="35" TopLine="662"/>
+        <Caret Line="347" Column="1" TopLine="314"/>
       </Position30>
     </JumpHistory>
   </ProjectSession>
   <Debugging>
-    <BreakPoints Count="1">
+    <BreakPoints Count="3">
       <Item1>
         <Kind Value="bpkSource"/>
         <WatchScope Value="wpsLocal"/>
@@ -298,12 +300,21 @@
         <Source Value="CSVDOCUMENT\csvdocument.pas"/>
         <Line Value="888"/>
       </Item1>
+      <Item2>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="PdxConvert.lpr"/>
+        <Line Value="328"/>
+      </Item2>
+      <Item3>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="PdxConvert.lpr"/>
+        <Line Value="687"/>
+      </Item3>
     </BreakPoints>
-    <Watches Count="1">
-      <Item1>
-        <Expression Value="ParamCount"/>
-      </Item1>
-    </Watches>
   </Debugging>
   <EditorMacros Count="0"/>
 </CONFIG>

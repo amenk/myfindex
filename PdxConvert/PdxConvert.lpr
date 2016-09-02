@@ -505,16 +505,16 @@ var
 begin
 result := False;
 ch := #0;
-while (Stream.Read( ch, 1) = 1) and (ch <> #13) do
+while (Stream.Read( ch, 1) = 1) and (ch <> #10) do
   begin
   result := True;
   RawLine := RawLine + ch
   end;
 Line := RawLine;
-if ch = #13 then
+if ch = #10 then
   begin
   result := True;
-  if (Stream.Read( ch, 1) = 1) and (ch <> #10) then
+  if (Stream.Read( ch, 1) = 1) then
     Stream.Seek(-1, soCurrent) // unread it if not LF character.
   end
 end;
@@ -537,8 +537,10 @@ begin
            str := delimitedText[0];
            str := delimitedText[1];
            unquote(str, '"'); // Remove string quote
+            delimitedText[1] := str;
            str := delimitedText[2];
            unquote(str, #39); // Remove date quote
+           delimitedText[2] := str;
            str := delimitedText[3];
            insertMediaDataset(delimitedText[0], delimitedText[1], delimitedText[2], delimitedText[3], ''); // Note wird nicht gelesen? Eigentlich 5 Parameter
            result := true;
@@ -680,11 +682,15 @@ var
   separatedDateStringList : TStringList;
   separatedTimeStringList : TStringList;
   year, month, day, hour, minute, second : integer;
+  count1, count2, count3 : integer;
 begin
-     separatedFullStringList := explode(datestr, ' ', 0);
-     separatedDateStringList := explode(separatedFullStringList[0], '-', 0);
-     separatedTimeStringList := explode(separatedFullStringList[0], ':', 0);
-     if NOT (separatedDateStringList.Count = 3) OR (separatedTimeStringList.Count = 3) then
+     separatedFullStringList := explode(' ', datestr, 0);
+     separatedDateStringList := explode('-', separatedFullStringList[0], 0);
+     separatedTimeStringList := explode(':', separatedFullStringList[1], 0);
+     count1 := separatedFullStringList.Count;
+     count2 := separatedDateStringList.Count;
+     count3 := separatedTimeStringList.Count;
+     if (NOT separatedDateStringList.Count = 3) OR ( NOT separatedTimeStringList.Count = 3) then
        exitAndClose('Corrupted DateTime value in database, can not continue.');
      year := StrToInt(separatedDateStringList[0]);
      month := StrToInt(separatedDateStringList[1]);
@@ -693,6 +699,7 @@ begin
      minute := StrToInt(separatedTimeStringList[1]);
      second := StrToInt(separatedTimeStringList[2]);
      datetime := EncodeDateTime( year, month, day, hour, minute, second, 0);
+     result := DateTimeToUnix(datetime);
      separatedFullStringList.Free;
      separatedDateStringList.Free;
      separatedTimeStringList.Free;
