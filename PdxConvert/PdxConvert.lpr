@@ -542,7 +542,9 @@ begin
            unquote(str, #39); // Remove date quote
            delimitedText[2] := str;
            str := delimitedText[3];
-           insertMediaDataset(delimitedText[0], delimitedText[1], delimitedText[2], delimitedText[3], ''); // Note wird nicht gelesen? Eigentlich 5 Parameter
+           if delimitedText.Count = 4 then
+             delimitedText.Add(''); // If note field is empty, it ist not present in csv data. Thus insert empty string.
+           insertMediaDataset(delimitedText[0], delimitedText[1], delimitedText[2], delimitedText[3], delimitedText[4]); // Note wird nicht gelesen? Eigentlich 5 Parameter
            result := true;
      end;
 
