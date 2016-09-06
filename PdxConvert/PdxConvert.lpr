@@ -55,6 +55,7 @@ type
     function explode(const Separator, S: string; Limit: Integer = 0): TStringList;
     procedure unquote(var str : string; quote : ansichar);
     function datestringToUnix(datestr : string) : integer;
+    procedure cleanup;
   end;
 
   { TPdxConvert }
@@ -117,14 +118,14 @@ type
          sourceDB := sourceDir + PathDelim + 'folders.DB';
          sourceMB := sourceDir + PathDelim + 'folders.MB';
          csvFilename := SysUtils.GetTempDir + 'folders.csv';
-         if NOT readInsertMediaCsv(sourceDB, sourceMB) then
+         if NOT readInsertFoldersCsv(sourceDB, sourceMB) then
             exitAndClose('Could not extract database data.');
          DeleteFileUTF8(csvFilename);
 
          sourceDB := sourceDir + PathDelim + 'files.DB';
          sourceMB := sourceDir + PathDelim + 'files.MB';
          csvFilename := SysUtils.GetTempDir + 'files.csv';
-         if NOT readInsertMediaCsv(sourceDB, sourceMB) then
+         if NOT readInsertFilesCsv(sourceDB, sourceMB) then
             exitAndClose('Could not extract database data.');
          DeleteFileUTF8(csvFilename);
 
@@ -145,6 +146,7 @@ type
   constructor TPdxConvert.Create(TheOwner: TComponent);
   begin
     inherited Create(TheOwner);
+    cleanup;
     StopOnException := True;
     SQLite3Con := TSQLite3Connection.Create(self);
     SQLTransact := TSQLTransaction.Create(self);
@@ -163,7 +165,7 @@ type
   procedure TPdxConvert.exitAndClose(msg : string);
   begin
     WriteLn(msg);
-    DeleteFileUTF8(csvFilename);
+    cleanup;
     if NOT (delimitedText = nil) then begin
        delimitedText.Free;
     end;
@@ -390,8 +392,8 @@ var
   debug : string;
 begin
 try
-   if not FileExistsUTF8(destDir + PathDelim + 'media.sqlite') then
-   begin
+   DeleteFileUTF8(destDir + PathDelim + 'media.sqlite');
+   DeleteFileUTF8(destDir + PathDelim + 'media.sqlite-journal');
    SQLite3Con.DatabaseName := destDir + PathDelim + 'media.sqlite';
 
    SQLTransact.DataBase := SQLite3Con;
@@ -459,7 +461,6 @@ try
    sqlqMedia.close;
    sqlqFolders.close;
    sqlqFiles.close;
-   end;
 except
   on E: EDatabaseError do
   begin
@@ -473,23 +474,38 @@ end;
 end;
 
 function TPdxConvert.extractCSV(sourceDB, sourceMB, strCsvFilename : string) : boolean;
+const
+  BUF_SIZE = 2048; // Buffer size for reading the output in chunks
 var
   aProcess : TProcess;
-  output : TStringList;
+  //output : TStringList;
   str : string;
+  OutputStream : TStream;
+  BytesRead    : longint;
+  Buffer       : array[1..BUF_SIZE] of byte;
 begin
  try
     aProcess := TProcess.Create(nil);
     aProcess.CommandLine := PXCSVDUMP + ' -f ' + sourceDB + ' -b ' + sourceMB; // + ' --delimiter=,';
     aProcess.ShowWindow := swoHIDE;
-    aProcess.Options := [poWaitOnExit, poUsePipes];
+    aProcess.Options := [poUsePipes];
     aProcess.Execute;
-    output := TStringList.Create;
-    output.LoadFromStream(aProcess.Output);
-    DeleteFileUTF8(strCsvFilename);
-    output.SaveToFile(strCsvFilename);
+
+    OutputStream := TMemoryStream.Create;
+    repeat
+          BytesRead := AProcess.Output.Read(Buffer, BUF_SIZE);
+          OutputStream.Write(Buffer, BytesRead)
+    until BytesRead = 0;  // Stop if no more data is available
+
     aProcess.Free;
-    output.Free;
+
+    DeleteFileUTF8(strCsvFilename);
+    with TFileStream.Create(strCsvFilename, fmCreate) do
+     begin
+       OutputStream.Position := 0; // Required to make sure all data is copied from the start
+       CopyFrom(OutputStream, OutputStream.Size);
+       Free
+     end;
  finally
    if FileExistsUTF8(strCsvFilename) then
       result := true
@@ -532,7 +548,7 @@ begin
 
      while readLine(fileStream, line) do begin
            delimitedText := explode(csvDelimiter, line, 0);
-           if NOT delimitedText.Count = 4 then
+           if (delimitedText.Count < 4) OR (delimitedText.Count > 5) then // 4=with empty note field ; 5=with note field
               exitAndClose('Could not extract database data.');
            str := delimitedText[0];
            str := delimitedText[1];
@@ -556,6 +572,7 @@ var
   line : string;
   debug : string;
   str : string;
+  debugint : integer;
 begin
 {     quotedstr('FolderID') + ' INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,'+
      quotedstr('Folder') + ' TEXT,'+
@@ -570,16 +587,18 @@ begin
 
      while readLine(fileStream, line) do begin
            delimitedText := explode(csvDelimiter, line, 0);
-           if NOT delimitedText.Count = 6 then
+           debugint := delimitedText.Count;
+           if (delimitedText.Count < 5) OR (delimitedText.Count > 6) then  // 5=with empty blob field; 6=with blob field
               exitAndClose('Could not extract database data.');
            str := delimitedText[0];
+           unquote(str, '"');
+           delimitedText[0] := str;
            str := delimitedText[1];
-           //unquote(str, '"'); // Remove string quote
            str := delimitedText[2];
-           //unquote(str, #39); // Remove date quote
            str := delimitedText[3];
            str := delimitedText[4];
-           str := delimitedText[5];
+           if delimitedText.Count = 5 then
+             delimitedText.Add('');
            insertFoldersDataset(delimitedText[0], delimitedText[1], delimitedText[2], delimitedText[3], delimitedText[4], delimitedText[5]);
            result := true;
      end;
@@ -708,6 +727,32 @@ begin
 ////DateTimeToUnix(read);
 // 09/02/2000 at 05:06:07.008 (.008 milli-seconds)
 //   myDate := EncodeDateTime(2000, 2, 9, 5, 6, 7, 8);
+end;
+
+procedure TPdxConvert.cleanup;
+var
+  DirList : TStringList;
+  SR      : TSearchRec;
+  i       : integer;
+begin
+  DeleteFileUTF8(SysUtils.GetTempDir + 'disks.csv');
+  DeleteFileUTF8(SysUtils.GetTempDir + 'files.csv');
+  DeleteFileUTF8(SysUtils.GetTempDir + 'folders.csv');
+  DirList:=TStringList.Create;
+  try
+    if FindFirst(SysUtils.GetTempDir + 'pxtools.*', faArchive, SR) = 0 then
+    begin
+      repeat
+        DirList.Add(SR.Name); //Fill the list
+      until FindNext(SR) <> 0;
+      FindClose(SR);
+    end;
+
+    for i := 0 to DirList.Count - 1 do
+      DeleteFileUTF8(SysUtils.GetTempDir + DirList[i]);
+  finally
+    DirList.Free;
+  end;
 end;
 
 var
